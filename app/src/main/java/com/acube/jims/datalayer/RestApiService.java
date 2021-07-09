@@ -1,4 +1,4 @@
-package com.acube.jims.network;
+package com.acube.jims.datalayer;
 
 public interface RestApiService {
 }

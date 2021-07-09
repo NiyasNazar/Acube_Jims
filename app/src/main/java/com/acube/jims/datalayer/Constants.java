@@ -1,4 +1,4 @@
-package com.acube.jims.Utils;
+package com.acube.jims.datalayer;
 
 public interface Constants {
     public static String BASE_URL="";

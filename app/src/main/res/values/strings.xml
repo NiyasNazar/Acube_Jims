@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Acube Jims</string>
+    <string name="acube">ACUBE</string>
+    <string name="rfidpowered">RFID Powered Real Time Analytics</string>
+    <string name="hint_email_id">Email ID</string>
+    <string name="hint_password">Password</string>
+    <string name="loginasguest">Login As Guest</string>
+    <string name="err_email">Invalid Email</string>
+    <string name="err_password">Enter Password</string>
 </resources>

@@ -1,6 +1,4 @@
-package com.acube.jims.network;
-
-import com.acube.jims.Utils.Constants;
+package com.acube.jims.datalayer;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

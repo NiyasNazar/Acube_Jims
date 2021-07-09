@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/signinpagebg"
+        tools:context=".Presentation.Login.LoginActivity">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:layout_centerInParent="true"
+            android:elevation="5dp"
+            app:cardCornerRadius="25dp">
+
+            <RelativeLayout
+                android:background="#F5F5F5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/imvlogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/logo">
+
+                </ImageView>
+
+                <TextView
+                    android:id="@+id/tvacube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imvlogo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/karla_bold"
+                    android:text="@string/acube"
+                    android:textColor="#BF8F3A"
+                    android:textSize="70.48sp"></TextView>
+
+                <TextView
+                    android:id="@+id/tvsubtitle"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tvacube"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/karla_bold"
+                    android:text="@string/rfidpowered"
+                    android:textColor="#666666"
+                    android:textSize="14sp"></TextView>
+
+                <EditText
+                    android:id="@+id/ed_email"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/tvsubtitle"
+
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="57dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="57dp"
+                    android:background="@drawable/ed_border"
+                    android:hint="@string/hint_email_id"
+                    android:paddingLeft="24dp"
+                    android:textSize="14sp">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/ed_password"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/ed_email"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ed_border"
+                    android:hint="@string/hint_password"
+                    android:paddingLeft="24dp"
+
+                    android:textSize="14sp">
+
+                </EditText>
+
+                <LinearLayout
+                    android:id="@+id/btn_signin"
+                    android:layout_width="139dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/ed_password"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="57dp"
+
+
+                    android:layout_marginBottom="36dp"
+                    android:background="@drawable/oval_btn_signin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sign in"
+                        android:textColor="#FFFFFF">
+
+                    </TextView>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvguestlogin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ed_password"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="29dp"
+                    android:layout_toRightOf="@id/btn_signin"
+                    android:fontFamily="@font/karla_normal"
+                    android:text="@string/loginasguest"
+                    android:textColor="#4D32403B"
+                    android:textSize="19.48sp"></TextView>
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</layout>

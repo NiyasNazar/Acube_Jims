@@ -51,4 +51,8 @@ dependencies {
     // viewmodel
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation "android.arch.lifecycle:viewmodel:1.1.0"
+
+    //validation
+    implementation 'com.basgeekball:awesome-validation:4.3'
+
 }

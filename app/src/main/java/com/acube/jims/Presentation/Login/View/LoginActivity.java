@@ -1,8 +1,9 @@
-package com.acube.jims.Presentation.Login;
+package com.acube.jims.Presentation.Login.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -33,6 +34,12 @@ public class LoginActivity extends AppCompatActivity {
                 String vaPassword = binding.edPassword.getText().toString();
 
 
+            }
+        });
+        binding.tvguestlogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(),GuestLoginActivity.class));
             }
         });
     }

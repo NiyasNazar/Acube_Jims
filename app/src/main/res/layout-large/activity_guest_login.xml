@@ -8,7 +8,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/signinpagebg"
+        android:background="@drawable/loginasguestbg"
         tools:context=".Presentation.Login.View.LoginActivity">
 
         <androidx.cardview.widget.CardView
@@ -60,13 +60,31 @@
                     android:text="@string/rfidpowered"
                     android:textColor="#666666"
                     android:textSize="14sp"></TextView>
-
                 <EditText
+                    android:id="@+id/ed_mobile"
+                    android:layout_width="300dp"
+                    android:inputType="number"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/tvsubtitle"
+
+
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="57dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="57dp"
+                    android:background="@drawable/ed_border"
+                    android:hint="@string/hint_mobile"
+                    android:paddingLeft="24dp"
+                    android:textSize="14sp">
+
+                </EditText>
+                <EditText
+
                     android:id="@+id/ed_email"
                     android:layout_width="300dp"
                     android:inputType="textEmailAddress"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/tvsubtitle"
+                    android:layout_below="@+id/ed_mobile"
 
 
                     android:layout_centerHorizontal="true"
@@ -81,7 +99,7 @@
                 </EditText>
 
                 <EditText
-                    android:id="@+id/ed_password"
+                    android:id="@+id/ed_guestname"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_below="@+id/ed_email"
@@ -89,7 +107,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/ed_border"
-                    android:hint="@string/hint_password"
+                    android:hint="Guest Name"
                     android:paddingLeft="24dp"
 
                     android:textSize="14sp">
@@ -100,7 +118,7 @@
                     android:id="@+id/btn_signin"
                     android:layout_width="139dp"
                     android:layout_height="50dp"
-                    android:layout_below="@id/ed_password"
+                    android:layout_below="@id/ed_guestname"
                     android:layout_marginTop="20dp"
                     android:layout_marginLeft="57dp"
 
@@ -112,7 +130,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign in"
+                        android:text="@string/loginasguest"
                         android:textColor="#FFFFFF">
 
                     </TextView>
@@ -124,14 +142,14 @@
                     android:id="@+id/tvguestlogin"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/ed_password"
+                    android:layout_below="@id/ed_guestname"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="29dp"
                     android:layout_toRightOf="@id/btn_signin"
                     android:fontFamily="@font/karla_normal"
-                    android:text="@string/loginasguest"
-                    android:textColor="#4D32403B"
+                    android:text="@string/sign_in"
+                    android:textColor="@color/secondarytextcolor"
                     android:textSize="19.48sp"></TextView>
             </RelativeLayout>
 

@@ -9,4 +9,6 @@
     <string name="err_password">Enter Password</string>
     <string name="sign_in">Sign In</string>
     <string name="hint_mobile">Mobile</string>
+    <string name="something_wrong">Something went wrong</string>
+    <string name="no_internet">No Internet</string>
 </resources>

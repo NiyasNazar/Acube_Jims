@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <ImageView
+        android:id="@+id/imvhomeicon"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_dashboard">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/tvhomemenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imvhomeicon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/karla_bold"
+        android:text="asdsad"
+        android:textAllCaps="true"
+        android:textColor="#ab7e2f">
+
+    </TextView>
+
+</RelativeLayout>

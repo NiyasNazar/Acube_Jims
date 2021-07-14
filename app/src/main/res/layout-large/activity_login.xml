@@ -7,6 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:id="@+id/parent"
         android:layout_height="match_parent"
         android:background="@drawable/signinpagebg"
         tools:context=".Presentation.Login.View.LoginActivity">

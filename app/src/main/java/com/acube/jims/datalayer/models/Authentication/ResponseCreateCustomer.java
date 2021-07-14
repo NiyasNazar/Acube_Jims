@@ -1,9 +1,12 @@
-package com.acube.jims.datalayer.models.Login;
+package com.acube.jims.datalayer.models.Authentication;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ResponseCheckCustomer {
+public class ResponseCreateCustomer {
+    @SerializedName("key")
+    @Expose
+    private String key;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -33,7 +36,7 @@ public class ResponseCheckCustomer {
     private String contactNumber;
     @SerializedName("vatNumber")
     @Expose
-    private String vatNumber;
+    private Object vatNumber;
     @SerializedName("companyID")
     @Expose
     private String companyID;
@@ -48,10 +51,18 @@ public class ResponseCheckCustomer {
     private String createdDate;
     @SerializedName("modifiedBy")
     @Expose
-    private String modifiedBy;
+    private Object modifiedBy;
     @SerializedName("modifiedDate")
     @Expose
-    private String modifiedDate;
+    private Object modifiedDate;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public Integer getId() {
         return id;
@@ -125,11 +136,11 @@ public class ResponseCheckCustomer {
         this.contactNumber = contactNumber;
     }
 
-    public String getVatNumber() {
+    public Object getVatNumber() {
         return vatNumber;
     }
 
-    public void setVatNumber(String vatNumber) {
+    public void setVatNumber(Object vatNumber) {
         this.vatNumber = vatNumber;
     }
 
@@ -165,19 +176,19 @@ public class ResponseCheckCustomer {
         this.createdDate = createdDate;
     }
 
-    public String getModifiedBy() {
+    public Object getModifiedBy() {
         return modifiedBy;
     }
 
-    public void setModifiedBy(String modifiedBy) {
+    public void setModifiedBy(Object modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
 
-    public String getModifiedDate() {
+    public Object getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(String modifiedDate) {
+    public void setModifiedDate(Object modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 }

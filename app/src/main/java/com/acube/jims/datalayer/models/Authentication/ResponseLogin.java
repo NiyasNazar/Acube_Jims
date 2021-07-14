@@ -1,4 +1,4 @@
-package com.acube.jims.datalayer.models.Login;
+package com.acube.jims.datalayer.models.Authentication;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

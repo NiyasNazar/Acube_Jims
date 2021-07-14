@@ -1,19 +1,22 @@
 package com.acube.jims;
 
 import android.app.ProgressDialog;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 
 public class BaseActivity extends AppCompatActivity {
 
     protected static final String TAG = BaseActivity.class.getSimpleName();
     protected ProgressDialog mProgressDialog;
 
-    protected void showProgressDialog(String title, String message) {
+    protected void showProgressDialog( ) {
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
-        mProgressDialog = ProgressDialog.show(this, title, message);
+        mProgressDialog = ProgressDialog.show(this, "", "Please wait...");
     }
 
     protected void hideProgressDialog() {
@@ -30,5 +33,10 @@ public class BaseActivity extends AppCompatActivity {
         hideProgressDialog();
     }
 
+    public void customSnackBar(View view, String message) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+                .show();
 
+
+    }
 }

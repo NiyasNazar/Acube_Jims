@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.acube.jims.R;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,10 +34,13 @@ public class AppUtility {
         if (isInternetConnected())
             return true;
         else {
-            //customToast(activity.getResources().getString(R.string.no_internet));
+            // customToast(activity.getResources().getString(R.string.no_internet));
+            // customSnackBar("");
             return false;
         }
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private boolean isInternetConnected() {

@@ -3,6 +3,7 @@
     package="com.acube.jims">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,8 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AcubeJims">
-        <activity android:name=".Presentation.Login.View.GuestLoginActivity"></activity>
+        android:theme="@style/Theme.AcubeJims"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Presentation.HomePage.View.HomePageActivity"></activity>
+        <activity android:name=".Presentation.Login.View.GuestLoginActivity" />
         <activity android:name=".Presentation.Login.View.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Presentation.MainActivity"></activity>
     </application>
 
 </manifest>

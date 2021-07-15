@@ -11,4 +11,5 @@
     <string name="hint_mobile">Mobile</string>
     <string name="something_wrong">Something went wrong</string>
     <string name="no_internet">No Internet</string>
+    <string name="autherror">Username or Password incorrect</string>
 </resources>

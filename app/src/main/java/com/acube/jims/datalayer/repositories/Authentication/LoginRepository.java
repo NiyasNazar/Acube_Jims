@@ -34,7 +34,7 @@ public class LoginRepository {
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                Log.d("onFailure", "onFailure: " + new Gson().toJson(response.body()));
+              //  Log.d("onFailure", "onFailure: " + response.errorBody()));
                 if (response.body() != null && response.code() == 200) {
                     dataset.setValue(response.body());
                 }else dataset.setValue(null);
@@ -46,7 +46,7 @@ public class LoginRepository {
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
                 //   dataset.setValue(null);
                 Log.d("onFailure", "onFailure: ");
-
+                dataset.setValue(null);
             }
         });
 

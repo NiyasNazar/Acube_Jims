@@ -38,6 +38,13 @@ public class GuestLoginActivity extends BaseActivity {
         viewModel = ViewModelProviders.of(this).get(CheckCustomerViewModel.class);
         createCustomerViewModel = ViewModelProviders.of(this).get(CreateCustomerViewModel.class);
         initviewmodels();
+        binding.tvSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                finish();
+            }
+        });
         binding.btnSignin.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -81,8 +88,11 @@ public class GuestLoginActivity extends BaseActivity {
                         // Validate youredittext
                         Log.d("onFocusChange", "onFocusChange: ");
                         String vaphone = binding.edMobile.getText().toString();
-                        viewModel.CheckUserExists(vaphone);
-                        showProgressDialog();
+                        if (!vaphone.equalsIgnoreCase("")) {
+                            viewModel.CheckUserExists(vaphone);
+                            showProgressDialog();
+                        }
+
 
                     }
                 }

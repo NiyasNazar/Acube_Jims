@@ -10,6 +10,6 @@
         android:radius="100dp"
       />
     <stroke
-        android:color="#000000"
+        android:color="#21000000"
         android:width="1px"/>
 </shape>

@@ -7,30 +7,36 @@
 
     </data>
 
-    <RelativeLayout
+    <androidx.drawerlayout.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
-
-
         android:layout_height="match_parent"
-        android:background="@drawable/homepagebg"
-        tools:context=".Presentation.HomePage.View.HomePageActivity">
+        android:fitsSystemWindows="true"
+        tools:openDrawer="start">
 
         <include
-            android:id="@+id/toolbar"
-            layout="@layout/custom_toolbar">
-
-        </include>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyvhomemenu"
+            layout="@layout/content_homepage"
             android:layout_width="match_parent"
-            android:nestedScrollingEnabled="false"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:overScrollMode="never">
+            android:layout_height="match_parent" />
 
-        </androidx.recyclerview.widget.RecyclerView>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:fitsSystemWindows="true"
+            app:headerLayout="@layout/nav_header_main">
 
+            <ExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:background="@android:color/white"
+                android:dividerHeight="0dp"
+                android:groupIndicator="@null" />
 
-    </RelativeLayout>
+        </com.google.android.material.navigation.NavigationView>
+
+    </androidx.drawerlayout.widget.DrawerLayout>
 </layout>

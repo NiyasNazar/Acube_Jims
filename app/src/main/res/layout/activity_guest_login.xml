@@ -4,10 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
 
-
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/loginasguestbg"
         tools:context=".Presentation.Login.View.LoginActivity">
@@ -15,17 +14,18 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
             android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+
+
+            android:layout_marginRight="20dp"
             android:elevation="5dp"
             app:cardCornerRadius="25dp">
 
             <RelativeLayout
-                android:background="#F5F5F5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:background="#F5F5F5">
 
                 <ImageView
                     android:id="@+id/imvlogo"
@@ -47,7 +47,7 @@
                     android:fontFamily="@font/karla_bold"
                     android:text="@string/acube"
                     android:textColor="#BF8F3A"
-                    android:textSize="70.48sp"></TextView>
+                    android:textSize="24sp"></TextView>
 
                 <TextView
                     android:id="@+id/tvsubtitle"
@@ -61,39 +61,42 @@
                     android:text="@string/rfidpowered"
                     android:textColor="#666666"
                     android:textSize="14sp"></TextView>
+
                 <EditText
                     android:id="@+id/ed_mobile"
-                    android:layout_width="300dp"
-                    android:inputType="number"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@+id/tvsubtitle"
-
-
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="57dp"
+                    android:layout_marginLeft="20dp"
+
+
                     android:layout_marginTop="13dp"
-                    android:layout_marginRight="57dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/ed_border"
                     android:hint="@string/hint_mobile"
+                    android:inputType="number"
                     android:paddingLeft="24dp"
+                    android:paddingRight="10dp"
                     android:textSize="14sp">
 
                 </EditText>
+
                 <EditText
 
                     android:id="@+id/ed_email"
-                    android:layout_width="300dp"
-                    android:inputType="textEmailAddress"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@+id/ed_mobile"
-
-
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="57dp"
+
+                    android:paddingRight="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="13dp"
-                    android:layout_marginRight="57dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/ed_border"
                     android:hint="@string/hint_email_id"
+                    android:inputType="textEmailAddress"
                     android:paddingLeft="24dp"
                     android:textSize="14sp">
 
@@ -101,15 +104,18 @@
 
                 <EditText
                     android:id="@+id/ed_guestname"
-                    android:layout_width="300dp"
+                    android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_below="@+id/ed_email"
-
+                    android:paddingRight="10dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="20dp"
                     android:background="@drawable/ed_border"
                     android:hint="Guest Name"
                     android:paddingLeft="24dp"
+
 
                     android:textSize="14sp">
 
@@ -117,11 +123,11 @@
 
                 <LinearLayout
                     android:id="@+id/btn_signin"
-                    android:layout_width="139dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:layout_below="@id/ed_guestname"
-                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="57dp"
+                    android:layout_marginTop="20dp"
 
 
                     android:layout_marginBottom="36dp"
@@ -131,8 +137,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
                         android:text="@string/loginasguest"
-                        android:textColor="#FFFFFF">
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp">
 
                     </TextView>
 
@@ -140,18 +149,18 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tvguestlogin"
+                    android:id="@+id/tvSignIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ed_guestname"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="29dp"
+                    android:layout_marginTop="32dp"
                     android:layout_toRightOf="@id/btn_signin"
                     android:fontFamily="@font/karla_normal"
                     android:text="@string/sign_in"
                     android:textColor="@color/secondarytextcolor"
-                    android:textSize="19.48sp"></TextView>
+                    android:textSize="15sp"></TextView>
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>

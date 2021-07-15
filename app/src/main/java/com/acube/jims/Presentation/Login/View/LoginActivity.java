@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
+import android.text.method.SingleLineTransformationMethod;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -61,6 +63,8 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
+
+
         viewModel.getLiveData().observe(this, new Observer<ResponseLogin>() {
             @Override
             public void onChanged(ResponseLogin responseLogin) {
@@ -68,12 +72,12 @@ public class LoginActivity extends BaseActivity {
                 if (responseLogin != null) {
 
                     startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
+                    finish();
                     LocalPreferences.storeStringPreference(getApplicationContext(), "Token", responseLogin.getToken());
 
 
-
                 } else {
-                    customSnackBar(binding.parent, getResources().getString(R.string.something_wrong));
+                    customSnackBar(binding.parent, getResources().getString(R.string.autherror));
                 }
             }
         });

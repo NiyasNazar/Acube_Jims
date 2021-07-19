@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Presentation.DeviceRegistration.View.DeviceRegistrationFragment">
+
+
+        <RelativeLayout
+            android:id="@+id/parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/signinpagebg"
+            tools:context=".Presentation.Login.View.LoginActivity">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_25sdp"
+
+
+                android:layout_marginRight="@dimen/_25sdp"
+                android:elevation="5dp"
+                app:cardCornerRadius="25dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F5F5F5">
+
+
+                    <TextView
+                        android:id="@+id/tvsubtitle"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/karla_bold"
+                        android:text="Server Settings"
+                        android:textColor="#666666"
+                        android:textSize="@dimen/_17ssp"></TextView>
+
+                    <EditText
+                        android:id="@+id/ed_macaddress"
+                        android:layout_width="@dimen/_300sdp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/tvsubtitle"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="12dp"
+                        android:editable="false"
+
+
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:background="@drawable/ed_rect_border"
+
+                        android:hint="Mac Address"
+                        android:inputType="none"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp">
+
+                    </EditText>
+
+                    <EditText
+                        android:id="@+id/ed_deviceId"
+                        android:layout_width="@dimen/_300sdp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/ed_macaddress"
+                        android:layout_centerHorizontal="true"
+
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="12dp"
+
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:background="@drawable/ed_rect_border"
+
+                        android:hint="Device ID"
+
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp">
+
+                    </EditText>
+
+
+                    <EditText
+                        android:id="@+id/ed_trayname"
+                        android:layout_width="@dimen/_300sdp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/ed_deviceId"
+                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginTop="12dp"
+                        android:layout_centerHorizontal="true"
+
+                        android:layout_marginRight="@dimen/_20sdp"
+                        android:background="@drawable/ed_rect_border"
+
+                        android:hint="Tray name"
+                        android:inputType="text"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp">
+
+                    </EditText>
+
+                    <LinearLayout
+                        android:id="@+id/btn_signin"
+                        android:layout_width="139dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/ed_trayname"
+                        android:layout_centerInParent="true"
+
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginBottom="@dimen/_36sdp"
+
+
+                        android:background="@drawable/oval_btn_signin"
+                        android:backgroundTint="#3699FF"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Update"
+                            android:textColor="#FFFFFF"
+                            android:textSize="@dimen/_14ssp">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+</layout>

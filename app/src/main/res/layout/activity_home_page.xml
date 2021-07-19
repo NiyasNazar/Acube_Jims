@@ -7,36 +7,58 @@
 
     </data>
 
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        tools:openDrawer="start">
+        android:layout_height="match_parent">
 
         <include
-            layout="@layout/content_homepage"
+            android:id="@+id/toolbar"
+            layout="@layout/custom_toolbar">
+
+        </include>
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
+            android:layout_below="@id/toolbar"
             android:fitsSystemWindows="true"
-            app:headerLayout="@layout/nav_header_main">
+            tools:openDrawer="end">
 
-            <ExpandableListView
-                android:id="@+id/expandableListView"
+
+            <include
+
+                android:id="@+id/content"
+                layout="@layout/content_homepage"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
-                android:background="@android:color/white"
-                android:dividerHeight="0dp"
-                android:groupIndicator="@null" />
+                android:layout_height="match_parent" />
 
-        </com.google.android.material.navigation.NavigationView>
+            <com.google.android.material.navigation.NavigationView
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+
+                android:id="@+id/nav_view"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:layout_gravity="end"
+                android:fitsSystemWindows="true"
+                app:headerLayout="@layout/nav_header_main">
+
+                <ExpandableListView
+                    android:id="@+id/expandableListView"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_40sdp"
+                    android:background="@android:color/white"
+                    android:divider="@null"
+
+                    android:dividerHeight="0dp"
+
+                    android:groupIndicator="@null" />
+
+            </com.google.android.material.navigation.NavigationView>
+
+        </androidx.drawerlayout.widget.DrawerLayout>
+    </RelativeLayout>
 </layout>

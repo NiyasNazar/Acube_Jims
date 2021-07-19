@@ -3,6 +3,8 @@ package com.acube.jims.datalayer.api;
 import com.acube.jims.datalayer.models.Authentication.ResponseCheckCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
+import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
+import com.acube.jims.datalayer.models.DeviceRegistration.ResponseGetRegistered;
 import com.google.gson.JsonObject;
 
 import okhttp3.ResponseBody;
@@ -27,5 +29,12 @@ public interface RestApiService {
     @PUT("CustomerRegistration/{id}")
     Call<JsonObject> updateUser(@Path("id") int id, @Body JsonObject body);
 
+    @POST("DeviceMaster/")
+    Call<ResponseDeviceRegistration> registerDevice(@Body JsonObject jsonObject);
 
+    @PUT("DeviceMaster/{key}")
+    Call<JsonObject> updateDeviceRegistration(@Path("key") int id, @Body JsonObject body);
+
+    @GET("DeviceMaster/GetDevice/{macaddress}")
+    Call<ResponseGetRegistered> getRegisteredDetails(@Path("macaddress") String macaddress);
 }

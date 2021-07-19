@@ -3,12 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="7dp">
+
 
     <TextView
         android:id="@+id/lblListItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:drawableLeft="@drawable/ic_submenu"
+        android:drawablePadding="5dp"
         android:fontFamily="@font/karla_normal"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft" />
+
+        android:gravity="center_vertical"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:text="ssss"
+        android:textColor="@color/nav_textcolor"
+        android:textSize="@dimen/_9ssp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:layout_marginRight="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:background="@color/nav_textcolor"
+        android:gravity="center_vertical">
+
+    </View>
 </LinearLayout>

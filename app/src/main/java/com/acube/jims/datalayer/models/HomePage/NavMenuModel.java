@@ -3,7 +3,7 @@ package com.acube.jims.datalayer.models.HomePage;
 public class NavMenuModel {
     public String menuName, url;
     public boolean hasChildren, isGroup;
-    int icon;
+    public int icon;
 
     public NavMenuModel(String menuName, boolean isGroup, boolean hasChildren, int icon) {
 

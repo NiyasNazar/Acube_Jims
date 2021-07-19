@@ -37,6 +37,8 @@ public class LoginActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         viewModel.init();
+        binding.edEmail.setText("Admin");
+        binding.edPassword.setText("Admin@acube");
 
 
         binding.btnSignin.setOnClickListener(new View.OnClickListener() {

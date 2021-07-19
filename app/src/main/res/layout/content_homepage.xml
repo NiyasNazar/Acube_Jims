@@ -7,30 +7,32 @@
 
     </data>
 
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-        android:layout_height="match_parent"
-        android:background="@drawable/homepagebg"
-        tools:context=".Presentation.HomePage.View.HomePageActivity">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/custom_toolbar">
-
-        </include>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyvhomemenu"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:nestedScrollingEnabled="false"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:overScrollMode="never">
-
-        </androidx.recyclerview.widget.RecyclerView>
 
 
-    </RelativeLayout>
+            android:layout_height="match_parent"
+            android:background="@drawable/homepagebg"
+            tools:context=".Presentation.HomePage.View.HomePageActivity">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyvhomemenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </RelativeLayout>
+    </FrameLayout>
 </layout>

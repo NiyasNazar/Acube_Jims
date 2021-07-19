@@ -1,5 +1,6 @@
 package com.acube.jims.Presentation.HomePage.View;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
@@ -7,17 +8,28 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
+import com.acube.jims.Presentation.DeviceRegistration.View.DeviceRegistrationFragment;
 import com.acube.jims.Presentation.HomePage.adapter.ExpandableListAdapter;
 import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
+import com.acube.jims.Presentation.Login.View.LoginActivity;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.databinding.ActivityHomePageBinding;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.models.HomePage.NavMenuModel;
@@ -31,7 +43,7 @@ public class HomePageActivity extends AppCompatActivity {
     List<HomeData> dataset;
     HomeData homeData;
     ExpandableListAdapter expandableListAdapter;
-    ExpandableListView expandableListView;
+
     List<NavMenuModel> headerList = new ArrayList<>();
     HashMap<NavMenuModel, List<NavMenuModel>> childList = new HashMap<>();
 
@@ -42,10 +54,12 @@ public class HomePageActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         init();
         prepareMenuData();
+        populateExpandableList();
         binding.toolbar.optionMenu.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("WrongConstant")
             @Override
             public void onClick(View v) {
-                binding.drawerLayout.openDrawer(Gravity.START);
+                binding.drawerLayout.openDrawer(Gravity.RIGHT);
             }
         });
     }
@@ -60,16 +74,18 @@ public class HomePageActivity extends AppCompatActivity {
         childModelsList.add(childModel);
         childModel = new NavMenuModel("Power Settings", false, false, 0);
         childModelsList.add(childModel);
+        childModel = new NavMenuModel("Device Settings", false, false, 0);
+        childModelsList.add(childModel);
         if (menuModel.hasChildren) {
             Log.d("API123", "here");
             childList.put(menuModel, childModelsList);
         }
-        menuModel = new NavMenuModel("About", true, false, R.drawable.ic_icon_settings); //Menu of Android Tutorial. No sub menus
+        menuModel = new NavMenuModel("About", true, false, R.drawable.ic_user); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
-        menuModel = new NavMenuModel("Logout", true, false, R.drawable.ic_icon_settings); //Menu of Android Tutorial. No sub menus
+        menuModel = new NavMenuModel("Logout", true, false, R.drawable.ic_sign_out); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
@@ -77,8 +93,8 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     public void init() {
-        binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
-        binding.recyvhomemenu.setAdapter(new HomeAdapter(getApplicationContext(), setupHomeData()));
+        binding.content.recyvhomemenu.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
+        binding.content.recyvhomemenu.setAdapter(new HomeAdapter(getApplicationContext(), setupHomeData()));
 
     }
 
@@ -99,19 +115,23 @@ public class HomePageActivity extends AppCompatActivity {
         return dataset;
 
     }
+
     private void populateExpandableList() {
 
         expandableListAdapter = new ExpandableListAdapter(HomePageActivity.this, headerList, childList);
-        expandableListView.setAdapter(expandableListAdapter);
+        binding.expandableListView.setAdapter(expandableListAdapter);
 
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+        binding.expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 
+
                 if (headerList.get(groupPosition).isGroup) {
                     if (!headerList.get(groupPosition).hasChildren) {
-                        /*WebView webView = findViewById(R.id.webView);
-                        webView.loadUrl(headerList.get(groupPosition).url);*/
+                        if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Logout")) {
+
+                            showLogoutAlert();
+                        }
                         onBackPressed();
                     }
                 }
@@ -120,28 +140,59 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        binding.expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
                 if (childList.get(headerList.get(groupPosition)) != null) {
                     NavMenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
-                    if (model.url.length() > 0) {
-                       /* WebView webView = findViewById(R.id.webView);
-                        webView.loadUrl(model.url);*/
-                        onBackPressed();
+                    if (model.menuName.equalsIgnoreCase("Device Settings")) {
+
+                        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, new DeviceRegistrationFragment());
+
                     }
+
+
                 }
 
                 return false;
             }
         });
     }
+
+    private void showLogoutAlert() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(HomePageActivity.this);
+        ViewGroup viewGroup = findViewById(android.R.id.content);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.logout_popup_custom, viewGroup, false);
+        builder.setView(dialogView);
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        alertDialog.show();
+        Button logout = dialogView.findViewById(R.id.signoutButton);
+        Button cancel = dialogView.findViewById(R.id.cancelButton);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                onBackPressed();
+            }
+        });
+
+
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
         }

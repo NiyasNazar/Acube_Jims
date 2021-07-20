@@ -5,4 +5,6 @@ public interface AppConstants {
     public static String IMAGE_URL = "";
     public static String companyID = "HOST";
     public static String applicationID = "JWLWEB";
+    public static String Authorization = "Bearer ";
+
 }

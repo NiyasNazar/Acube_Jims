@@ -151,7 +151,7 @@ public class HomePageActivity extends AppCompatActivity {
                         FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, new DeviceRegistrationFragment());
 
                     }
-
+                    onBackPressed();
 
                 }
 

@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProviders;
 import com.acube.jims.Presentation.Login.ViewModel.LoginViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     protected static final String TAG = BaseActivity.class.getSimpleName();
     protected ProgressDialog mProgressDialog;

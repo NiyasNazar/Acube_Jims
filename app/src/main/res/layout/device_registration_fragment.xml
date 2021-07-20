@@ -9,12 +9,13 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:id="@+id/parent"
         android:layout_height="match_parent"
         tools:context=".Presentation.DeviceRegistration.View.DeviceRegistrationFragment">
 
 
         <RelativeLayout
-            android:id="@+id/parent"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/signinpagebg"
@@ -46,7 +47,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/karla_bold"
-                        android:text="Server Settings"
+                        android:text="Device Settings"
                         android:textColor="#666666"
                         android:textSize="@dimen/_17ssp"></TextView>
 
@@ -116,7 +117,7 @@
                     </EditText>
 
                     <LinearLayout
-                        android:id="@+id/btn_signin"
+                        android:id="@+id/btn_update"
                         android:layout_width="139dp"
                         android:layout_height="50dp"
                         android:layout_below="@id/ed_trayname"
@@ -133,9 +134,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Update"
+                            android:text="Sumbit"
                             android:textColor="#FFFFFF"
-                            android:textSize="@dimen/_14ssp">
+                            android:textSize="@dimen/_10ssp">
 
                         </TextView>
 

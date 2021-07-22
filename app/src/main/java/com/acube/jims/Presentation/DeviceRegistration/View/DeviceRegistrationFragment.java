@@ -56,7 +56,7 @@ public class DeviceRegistrationFragment extends BaseFragment {
         View view = binding.getRoot();
         initViewModels();
 
-        AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), "Token");
+        AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseGetRegistered>() {
             @Override
             public void onChanged(ResponseGetRegistered responseGetRegistered) {
@@ -110,11 +110,11 @@ public class DeviceRegistrationFragment extends BaseFragment {
                 }
             }
         });
-        /*WifiManager wifiManager = (WifiManager)getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wInfo = wifiManager.getConnectionInfo();*/
+     
         String macaddress = getMacAddr();
         binding.edMacaddress.setText(macaddress);
-        Log.d("onCreateView", "onCreateView: " + macaddress);
+
+        showProgressDialog();
         mViewModel.GetDeviceRegistrationDetails(AppConstants.Authorization + AuthToken, macaddress);
         return view;
     }
@@ -131,7 +131,7 @@ public class DeviceRegistrationFragment extends BaseFragment {
 
     private void doAddDeviceRegistrationDetails(String vaMacaddress, String vaTrayname, String vaDeviceID) {
         showProgressDialog();
-        String AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), "Token");
+        String AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("deviceID", vaDeviceID);
         jsonObject.addProperty("macAddress", vaMacaddress);
@@ -141,7 +141,7 @@ public class DeviceRegistrationFragment extends BaseFragment {
 
     private void doUpdateDeviceRegistration(String vaMacaddress, String vaTrayname, String vaDeviceID) {
         showProgressDialog();
-        String AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), "Token");
+        String AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", key);
         jsonObject.addProperty("deviceID", vaDeviceID);

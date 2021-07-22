@@ -6,7 +6,10 @@ import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceUpdation;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseGetRegistered;
+import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -38,5 +41,10 @@ public interface RestApiService {
     Call<ResponseDeviceUpdation> updateDeviceRegistration(@Header("Authorization") String Auth, @Path("key") String key, @Body JsonObject body);
 
     @GET("DeviceMaster/GetDevice/{macaddress}")
-    Call<ResponseGetRegistered> getRegisteredDetails(@Header("Authorization") String Auth,@Path("macaddress") String macaddress);
+    Call<ResponseGetRegistered> getRegisteredDetails(@Header("Authorization") String Auth, @Path("macaddress") String macaddress);
+
+    @GET("AppRoleMenu/{appname}/{rolename}")
+    Call<List<HomeData>> getHomeMenu(@Header("Authorization") String Auth, @Path("appname") String appname, @Path("rolename") String rolename);
+
+
 }

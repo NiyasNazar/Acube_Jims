@@ -75,7 +75,8 @@ public class LoginActivity extends BaseActivity {
 
                     startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
                     finish();
-                    LocalPreferences.storeStringPreference(getApplicationContext(), "Token", responseLogin.getToken());
+                    LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.Token, responseLogin.getToken());
+                    LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserRole, responseLogin.getRoleName());
 
 
                 } else {

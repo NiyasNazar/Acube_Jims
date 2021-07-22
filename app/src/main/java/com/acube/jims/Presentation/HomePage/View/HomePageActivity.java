@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -43,7 +44,7 @@ public class HomePageActivity extends AppCompatActivity {
     List<HomeData> dataset;
     HomeData homeData;
     ExpandableListAdapter expandableListAdapter;
-
+    HomeViewModel viewModel;
     List<NavMenuModel> headerList = new ArrayList<>();
     HashMap<NavMenuModel, List<NavMenuModel>> childList = new HashMap<>();
 
@@ -55,6 +56,7 @@ public class HomePageActivity extends AppCompatActivity {
         init();
         prepareMenuData();
         populateExpandableList();
+        replaceFragment(new HomeFragment());
         binding.toolbar.optionMenu.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("WrongConstant")
             @Override
@@ -93,12 +95,12 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     public void init() {
-        binding.content.recyvhomemenu.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
-        binding.content.recyvhomemenu.setAdapter(new HomeAdapter(getApplicationContext(), setupHomeData()));
+        // binding.content.recyvhomemenu.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
+        //   binding.content.recyvhomemenu.setAdapter(new HomeAdapter(getApplicationContext(), setupHomeData()));
 
     }
 
-    public List<HomeData> setupHomeData() {
+ /*   public List<HomeData> setupHomeData() {
         dataset = new ArrayList<>();
         homeData = new HomeData("DASHBOARD", R.drawable.ic_dashboard);
         dataset.add(homeData);
@@ -114,7 +116,7 @@ public class HomePageActivity extends AppCompatActivity {
         dataset.add(homeData);
         return dataset;
 
-    }
+    }*/
 
     private void populateExpandableList() {
 
@@ -148,8 +150,8 @@ public class HomePageActivity extends AppCompatActivity {
                     NavMenuModel model = childList.get(headerList.get(groupPosition)).get(childPosition);
                     if (model.menuName.equalsIgnoreCase("Device Settings")) {
 
-                        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, new DeviceRegistrationFragment());
 
+                        replaceFragment(new DeviceRegistrationFragment());
                     }
                     onBackPressed();
 
@@ -196,5 +198,9 @@ public class HomePageActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    public void replaceFragment(Fragment fragment) {
+        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment);
     }
 }

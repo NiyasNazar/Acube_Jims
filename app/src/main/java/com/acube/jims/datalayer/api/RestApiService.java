@@ -3,6 +3,7 @@ package com.acube.jims.datalayer.api;
 import com.acube.jims.datalayer.models.Authentication.ResponseCheckCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
+import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceUpdation;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseGetRegistered;
@@ -45,6 +46,14 @@ public interface RestApiService {
 
     @GET("AppRoleMenu/{appname}/{rolename}")
     Call<List<HomeData>> getHomeMenu(@Header("Authorization") String Auth, @Path("appname") String appname, @Path("rolename") String rolename);
+
+
+
+    @GET("ItemCatalog/{PageNum}/{PageSize}/{CatID}/{SubCatID}")
+    Call<List<ResponseCatalogueListing>> getCatalogueItems(@Path("PageNum") String PageNum,
+                                                           @Path("PageSize") String PageSize,
+                                                           @Path("CatID") String CatID,
+                                                           @Path("SubCatID") String SubCatID);
 
 
 }

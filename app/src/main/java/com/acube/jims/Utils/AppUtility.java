@@ -2,6 +2,7 @@ package com.acube.jims.Utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.view.Gravity;
@@ -73,7 +74,11 @@ public class AppUtility {
     public boolean isValidMobile(String phone) {
         return !phone.trim().equals("") && Pattern.matches("\\d+", phone) && !(phone.length() < 10 || phone.length() > 13);
     }
-
+    public  boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
     //email address validation
     public boolean isValidMail(String email) {
         if (email.trim().equals(""))

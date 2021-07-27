@@ -22,5 +22,12 @@
         app:font="@font/roboto_bold"
         app:fontStyle="normal"
         app:fontWeight="700" />
+    <font
+        android:font="@font/montserratsemibold"
+        android:fontStyle="normal"
+        android:fontWeight="700"
+        app:font="@font/montserratsemibold"
+        app:fontStyle="normal"
+        app:fontWeight="400" />
 
 </font-family>

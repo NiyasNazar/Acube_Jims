@@ -29,11 +29,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
 
 
     private final List<HomeData> homemenuList;
+    FragmentTransition fragmenttransition;
 
-
-    public HomeAdapter(Context mCtx, List<HomeData> homemenuList) {
+    public HomeAdapter(Context mCtx, List<HomeData> homemenuList,FragmentTransition fragmenttransition) {
         this.mCtx = mCtx;
         this.homemenuList = homemenuList;
+        this.fragmenttransition=fragmenttransition;
     }
 
     @Override
@@ -89,6 +90,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
             textViewTitle = itemView.findViewById(R.id.tvhomemenu);
 
             imageView = itemView.findViewById(R.id.imvhomeicon);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    fragmenttransition.replaceFragment();
+
+                }
+            });
         }
+    }
+
+    public interface FragmentTransition {
+        void replaceFragment();
+
     }
 }

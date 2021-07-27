@@ -18,7 +18,7 @@
 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/signinpagebg"
+            android:background="@drawable/catalogue_bg"
             tools:context=".Presentation.Login.View.LoginActivity">
 
             <androidx.cardview.widget.CardView

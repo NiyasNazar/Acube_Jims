@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="16.dp"
+
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:background="@drawable/item_border"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                android:src="@drawable/dummy_item_image"></ImageView>
+
+            <TextView
+                android:paddingLeft="@dimen/_5ssp"
+                android:id="@+id/tv_item_name"
+                android:paddingRight="@dimen/_5ssp"
+                android:layout_width="match_parent"
+               android:gravity="center"
+
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserratsemibold"
+                android:letterSpacing="0.01"
+                android:text="Latin Solitare Ring - LSR0002350"
+                android:textColor="#7e1215"
+                android:textSize="@dimen/_8ssp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:paddingLeft="@dimen/_5ssp"
+                android:paddingRight="@dimen/_5ssp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:fontFamily="@font/montserratsemibold"
+                android:letterSpacing="0.01"
+                android:text="18K - Weight : 6.76 g"
+                android:textColor="#7e1215"
+                android:textSize="@dimen/_8ssp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_10sdp"
+                android:fontFamily="@font/montserratsemibold"
+                android:letterSpacing="0.01"
+                android:text="Stone Weight: 1.24 g"
+                android:paddingLeft="@dimen/_5ssp"
+                android:paddingRight="@dimen/_5ssp"
+                android:textColor="#7e1215"
+                android:textSize="@dimen/_8ssp"
+                android:textStyle="normal" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

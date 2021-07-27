@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AcubeJims"
         android:usesCleartextTraffic="true">
-        <activity android:name=".datalayer.repositories.Catalogue.CatalogueActivity"></activity>
+        <activity android:name=".Presentation.Catalogue.CatalogueActivity"></activity>
         <activity android:name=".Presentation.HomePage.View.HomePageActivity" />
         <activity android:name=".Presentation.Login.View.GuestLoginActivity" />
         <activity android:name=".Presentation.Login.View.LoginActivity">

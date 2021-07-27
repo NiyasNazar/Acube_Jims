@@ -50,26 +50,29 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
-      //  holder.textViewTitle.setText(responseCatalogueListing.getItemName());
+        holder.textViewItemName.setText(responseCatalogueListing.getItemName());
         // holder.imageView.setImageResource(homeData.getImage());
-      /*  Glide.with(mCtx)
-                .load(R.drawable.dummy_item_image)
-                //  .placeholder(R.drawable.placeholder)
-                //  .error(R.drawable.imagenotfound)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        // log exception
-                        Log.e("TAG", "Error loading image", e);
-                        return false; // important to return false so the error placeholder can be placed
-                    }
+        if (responseCatalogueListing.getItemSubList().size()>0) {
+            Glide.with(mCtx)
+                    .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
+                    //  .placeholder(R.drawable.placeholder)
+                    //  .error(R.drawable.imagenotfound)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            // log exception
+                            Log.e("TAG", "Error loading image", e);
+                            return false; // important to return false so the error placeholder can be placed
+                        }
 
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .into(holder.imageView);*/
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(holder.imageView);
+        }
+
 
     }
 
@@ -82,15 +85,15 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewTitle;
+        TextView textViewItemName;
         ImageView imageView;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
-         //   textViewTitle = itemView.findViewById(R.id.tvhomemenu);
+            textViewItemName = itemView.findViewById(R.id.tv_item_name);
 
-          //  imageView = itemView.findViewById(R.id.imvhomeicon);
+            imageView = itemView.findViewById(R.id.imageView);
         }
     }
 }

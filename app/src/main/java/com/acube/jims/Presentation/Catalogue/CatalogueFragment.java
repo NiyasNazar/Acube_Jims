@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -14,15 +15,22 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModel;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemAdapter;
+import com.acube.jims.Presentation.Catalogue.adapter.FilterListAdapter;
 import com.acube.jims.Presentation.DeviceRegistration.ViewModel.DeviceRegistrationViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
+import com.acube.jims.Utils.ExpandableListDataPump;
 import com.acube.jims.databinding.FragmentCatalogueBinding;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,7 +52,10 @@ public class CatalogueFragment extends Fragment {
     public CatalogueFragment() {
         // Required empty public constructor
     }
-
+    ExpandableListView expandableListView;
+    FilterListAdapter expandableListAdapter;
+    List<String> expandableListTitle;
+    HashMap<String, List<String>> expandableListDetail;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -74,6 +85,7 @@ public class CatalogueFragment extends Fragment {
 
     FragmentCatalogueBinding binding;
     CatalogViewModel viewModel;
+    PopupWindow mypopupWindow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,6 +95,16 @@ public class CatalogueFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_catalogue, container, false);
         init();
+        setPopUpWindow();
+        binding.imvfilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mypopupWindow.showAsDropDown(v, -153, 0);
+
+
+            }
+        });
+
         viewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseCatalogueListing>>() {
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
@@ -93,7 +115,7 @@ public class CatalogueFragment extends Fragment {
 
             }
         });
-        viewModel.FetchCatalog("1","10","0","0");
+        viewModel.FetchCatalog("1", "10", "0", "0");
 
         View view = binding.getRoot();
         return view;
@@ -104,12 +126,24 @@ public class CatalogueFragment extends Fragment {
     private void init() {
         viewModel = new ViewModelProvider(this).get(CatalogViewModel.class);
         viewModel.init();
-        if(new AppUtility(getActivity()).isTablet(getActivity())){
+        if (new AppUtility(getActivity()).isTablet(getActivity())) {
             binding.recyvcatalog.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        }else{
+        } else {
             binding.recyvcatalog.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
 
     }
 
+    private void setPopUpWindow() {
+        LayoutInflater inflater = (LayoutInflater)
+                getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.filter_layout, null);
+        expandableListView = (ExpandableListView)view. findViewById(R.id.expandableListView);
+        expandableListDetail = ExpandableListDataPump.getData();
+        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        expandableListAdapter = new FilterListAdapter(getActivity(), expandableListTitle, expandableListDetail);
+        expandableListView.setAdapter(expandableListAdapter);
+
+        mypopupWindow = new PopupWindow(view, 500, RelativeLayout.LayoutParams.WRAP_CONTENT, true);
+    }
 }

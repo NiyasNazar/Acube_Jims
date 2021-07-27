@@ -8,8 +8,8 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:background="@drawable/catalogue_bg"
         android:layout_height="match_parent"
+        android:background="@drawable/catalogue_bg"
 
         tools:context=".Presentation.Catalogue.CatalogueFragment">
 

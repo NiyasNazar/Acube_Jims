@@ -28,13 +28,12 @@
 
             </EditText>
 
-            <ExpandableListView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/expandableListView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:divider="@null"
-                android:dividerHeight="0.5dp"
-                android:indicatorRight="?android:attr/expandableListPreferredItemIndicatorRight" />
+                android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

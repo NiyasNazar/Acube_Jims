@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -22,6 +24,7 @@ import android.widget.RelativeLayout;
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModel;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterListAdapter;
+import com.acube.jims.Presentation.Catalogue.adapter.FilterParentAdapter;
 import com.acube.jims.Presentation.DeviceRegistration.ViewModel.DeviceRegistrationViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
@@ -52,10 +55,12 @@ public class CatalogueFragment extends Fragment {
     public CatalogueFragment() {
         // Required empty public constructor
     }
-    ExpandableListView expandableListView;
+
+    RecyclerView expandableListView;
     FilterListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     HashMap<String, List<String>> expandableListDetail;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -138,11 +143,13 @@ public class CatalogueFragment extends Fragment {
         LayoutInflater inflater = (LayoutInflater)
                 getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.filter_layout, null);
-        expandableListView = (ExpandableListView)view. findViewById(R.id.expandableListView);
-        expandableListDetail = ExpandableListDataPump.getData();
-        expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
-        expandableListAdapter = new FilterListAdapter(getActivity(), expandableListTitle, expandableListDetail);
-        expandableListView.setAdapter(expandableListAdapter);
+        expandableListView = (RecyclerView) view.findViewById(R.id.expandableListView);
+        expandableListView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //  expandableListDetail = ExpandableListDataPump.getData();
+        //  expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        //   expandableListAdapter = new FilterListAdapter(getActivity(), expandableListTitle, expandableListDetail);
+        // expandableListView.setAdapter(expandableListAdapter);
+        expandableListView.setAdapter(new FilterParentAdapter(getActivity()));
 
         mypopupWindow = new PopupWindow(view, 500, RelativeLayout.LayoutParams.WRAP_CONTENT, true);
     }

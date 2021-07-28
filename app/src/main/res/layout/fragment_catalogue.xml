@@ -8,9 +8,10 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:id="@+id/parent"
         android:layout_height="match_parent"
         android:background="@drawable/catalogue_bg"
-
+        android:foreground="@drawable/shape_window_dim"
         tools:context=".Presentation.Catalogue.CatalogueFragment">
 
         <RelativeLayout

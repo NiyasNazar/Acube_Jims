@@ -1,52 +1,43 @@
 package com.acube.jims.Presentation.Catalogue.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
 import com.acube.jims.R;
-import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapter.ProductViewHolder> {
+public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.ProductViewHolder> {
 
 
     private Context mCtx;
 
 
-    private List<Catresult> dataset;
+    private List<Karatresult> dataset;
     List<SubCategory> sublist;
 
 
-    public FilterParentAdapter(Context mCtx, List<Catresult> dataset) {
+    public FilterKaratAdapter(Context mCtx, List<Karatresult> dataset) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         sublist = new ArrayList<>();
 
     }
-
-    public FilterParentAdapter(Context mCtx) {
+   
+    public FilterKaratAdapter(Context mCtx) {
         this.mCtx = mCtx;
         sublist = new ArrayList<>();
     }
@@ -63,7 +54,7 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
-        holder.textViewItemName.setText(dataset.get(position).getCategoryName());
+        holder.textViewItemName.setText(dataset.get(position).getKaratName());
         // holder.imageView.setImageResource(homeData.getImage());
 
 
@@ -92,7 +83,7 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int pos = getAdapterPosition();
+                  /*  int pos = getAdapterPosition();
                     sublist = dataset.get(pos).getSubCategories();
                     recyclerView.setAdapter(new FilterChildAdapter(mCtx, sublist));
                     if (recyclerView.getVisibility() == View.VISIBLE) {
@@ -110,7 +101,7 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
                         recyclerView.setVisibility(View.VISIBLE);
 
                     }
-
+*/
 
                 }
             });

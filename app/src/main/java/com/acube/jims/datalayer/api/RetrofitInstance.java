@@ -12,8 +12,8 @@ public class RetrofitInstance {
 
     public static RestApiService getApiService() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+       interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+      OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         if (retrofit == null) {
             retrofit = new Retrofit
                     .Builder()

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
+import com.acube.jims.datalayer.models.Filter.SubCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +24,10 @@ public class FilterChildAdapter extends RecyclerView.Adapter<FilterChildAdapter.
 
 
     //  private final List<ResponseCatalogueListing> dataset;
-    List<String> dataset;
+    List<SubCategory> dataset;
     List<String> sublist;
 
-    public FilterChildAdapter(Context mCtx, List<String> dataset) {
+    public FilterChildAdapter(Context mCtx, List<SubCategory> dataset) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         sublist=new ArrayList<>();
@@ -37,7 +38,7 @@ public class FilterChildAdapter extends RecyclerView.Adapter<FilterChildAdapter.
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.layout_parent_item, parent, false);
+        View view = inflater.inflate(R.layout.layout_child_item, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -45,11 +46,8 @@ public class FilterChildAdapter extends RecyclerView.Adapter<FilterChildAdapter.
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
-        holder.textViewItemName.setText(dataset.get(position));
-        // holder.imageView.setImageResource(homeData.getImage());
-         sublist.add("Ring");
-         sublist.add("Bangle");
-       // holder.recyclerView.setAdapter(new FilterChildAdapter(mCtx, sublist));
+        holder.textViewItemName.setText(dataset.get(position).getSubCategoryName());
+
 
 
     }
@@ -73,7 +71,7 @@ public class FilterChildAdapter extends RecyclerView.Adapter<FilterChildAdapter.
            textViewItemName = itemView.findViewById(R.id.tv_item_name);
             //imageView = itemView.findViewById(R.id.imageView);
             recyclerView = itemView.findViewById(R.id.sublist);
-            recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
+           // recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
 
         }
     }

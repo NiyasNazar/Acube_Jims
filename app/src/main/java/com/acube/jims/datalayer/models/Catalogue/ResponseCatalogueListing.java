@@ -109,6 +109,12 @@ public class ResponseCatalogueListing {
     @Expose
     private String itemBrandName;
 
+    @SerializedName("totalCount")
+    @Expose
+    private String totalCount;
+
+
+
     public Integer getId() {
         return id;
     }
@@ -381,4 +387,11 @@ public class ResponseCatalogueListing {
         this.itemBrandName = itemBrandName;
     }
 
+    public String getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(String totalCount) {
+        this.totalCount = totalCount;
+    }
 }

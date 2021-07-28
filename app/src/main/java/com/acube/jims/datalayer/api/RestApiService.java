@@ -7,6 +7,7 @@ import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceUpdation;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseGetRegistered;
+import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.google.gson.JsonObject;
 
@@ -55,5 +56,6 @@ public interface RestApiService {
                                                            @Path("CatID") String CatID,
                                                            @Path("SubCatID") String SubCatID);
 
-
+    @GET("ItemCatalog/GetItemFilter")
+    Call<ResponseFetchFilters> getFilters();
 }

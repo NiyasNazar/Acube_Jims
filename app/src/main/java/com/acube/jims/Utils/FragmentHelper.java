@@ -17,6 +17,7 @@ public class FragmentHelper {
     public static void replaceFragment(final FragmentActivity activity, final int containerId,
                                        final Fragment fragment) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        transaction.addToBackStack("tag");
         transaction.replace(containerId, fragment);
         transaction.commitAllowingStateLoss();
     }

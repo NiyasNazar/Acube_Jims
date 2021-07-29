@@ -85,7 +85,7 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 catalogVH.textViewItemName.setText(responseCatalogueListing.getItemName());
 
                 // holder.imageView.setImageResource(homeData.getImage());
-                if (responseCatalogueListing.getItemSubList().size() > 0) {
+              if (responseCatalogueListing.getItemSubList().size() > 0) {
                     Glide.with(context)
                             .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
                             //  .placeholder(R.drawable.placeholder)

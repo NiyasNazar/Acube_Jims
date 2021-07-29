@@ -1,4 +1,4 @@
-package com.acube.jims.Presentation.Catalogue;
+package com.acube.jims.Presentation.Catalogue.View;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -20,11 +20,13 @@ import androidx.transition.TransitionManager;
 import android.os.Handler;
 
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -32,8 +34,11 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModel;
+import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.Presentation.Catalogue.ViewModel.FilterViewModel;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemAdapter;
+import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemsAdapter;
+import com.acube.jims.Presentation.Catalogue.adapter.FilterColorAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterKaratAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterListAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterParentAdapter;
@@ -43,6 +48,7 @@ import com.acube.jims.Utils.AppUtility;
 import com.acube.jims.Utils.ExpandableListDataPump;
 import com.acube.jims.Utils.PaginationScrollListener;
 import com.acube.jims.databinding.FragmentCatalogueBinding;
+import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
@@ -56,11 +62,15 @@ import java.util.List;
 public class CatalogueFragment extends Fragment {
 
 
+    CatalogItemsAdapter adapter;
+    GridLayoutManager gridLayoutManager;
+
+
     public CatalogueFragment() {
         // Required empty public constructor
     }
 
-    RecyclerView expandableListView, recyclerViewKarat;
+    RecyclerView expandableListView, recyclerViewKarat, recyclerViewColor;
     FilterListAdapter expandableListAdapter;
     List<String> expandableListTitle;
     List<Catresult> catresult;
@@ -75,6 +85,7 @@ public class CatalogueFragment extends Fragment {
 
     FragmentCatalogueBinding binding;
     CatalogViewModel viewModel;
+    CatalogViewModelNextPage catalogViewModelNextPage;
     FilterViewModel filterViewModel;
     PopupWindow mypopupWindow;
 
@@ -99,34 +110,64 @@ public class CatalogueFragment extends Fragment {
             }
         });
 
-        /*binding.recyvcatalog.addOnScrollListener(new PaginationScrollListener() {
+        binding.recyvcatalog.addOnScrollListener(new PaginationScrollListener(gridLayoutManager) {
             @Override
             protected void loadMoreItems() {
+                isLoading = true;
+                currentPage += 1;
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
 
+                        loadNextPage();
+                    }
+                }, 1000);
             }
 
             @Override
             public int getTotalPageCount() {
-                return 0;
+                return TOTAL_PAGES;
             }
 
             @Override
             public boolean isLastPage() {
-                return false;
+                return isLastPage;
             }
 
             @Override
             public boolean isLoading() {
-                return false;
+                return isLoading;
             }
-        });*/
+        });
 
+        viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, "1", "0", "0", "0");
 
         viewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseCatalogueListing>>() {
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
                 if (responseCatalogueListings != null) {
-                    binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));
+                    /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
+                    TOTAL_PAGES = getTotalPagesFromTotalResult(responseCatalogueListings.get(0).getTotalCount(), AppConstants.Pagesize);
+                    Log.d("onChanged", "onChanged: " + TOTAL_PAGES);
+                    adapter.addAll(responseCatalogueListings);
+                    if (currentPage <= TOTAL_PAGES) adapter.addLoadingFooter();
+                    else isLastPage = true;
+
+                }
+
+            }
+        });
+        catalogViewModelNextPage.getLiveData().observe(getActivity(), new Observer<List<ResponseCatalogueListing>>() {
+            @Override
+            public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
+                if (responseCatalogueListings != null) {
+                    /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
+                    adapter.removeLoadingFooter();
+                    isLoading = false;
+                    Log.d("getLiveDatanewPage", "onChanged: " + TOTAL_PAGES);
+                    adapter.addAll(responseCatalogueListings);
+                    if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
+                    else isLastPage = true;
 
                 }
 
@@ -144,11 +185,9 @@ public class CatalogueFragment extends Fragment {
                     recyclerViewKarat.setAdapter(new FilterKaratAdapter(getActivity(), karatresults));
 
 
-
                 }
             }
         });
-        viewModel.FetchCatalog("1", "10", "0", "0");
         filterViewModel.FetchFilters();
         setPopUpWindow();
         return binding.getRoot();
@@ -156,15 +195,39 @@ public class CatalogueFragment extends Fragment {
 
     }
 
+    private int getTotalPagesFromTotalResult(Integer totalCount, Integer pagesize) {
+        int totalPages_pre = (totalCount / pagesize);
+        return (totalCount % pagesize) == 0 ? totalPages_pre : totalPages_pre + 1;
+    }
+
+    private void loadNextPage() {
+
+
+        catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, "1", "0", "0", "0");
+
+    }
+
     private void init() {
+        adapter = new CatalogItemsAdapter(getActivity());
+        binding.recyvcatalog.setAdapter(adapter);
+
         viewModel = new ViewModelProvider(this).get(CatalogViewModel.class);
+        catalogViewModelNextPage = new ViewModelProvider(this).get(CatalogViewModelNextPage.class);
+
         filterViewModel = new ViewModelProvider(this).get(FilterViewModel.class);
         viewModel.init();
+        catalogViewModelNextPage.init();
         filterViewModel.init();
         if (new AppUtility(getActivity()).isTablet(getActivity())) {
-            binding.recyvcatalog.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+            // binding.recyvcatalog.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+            binding.recyvcatalog.setLayoutManager(gridLayoutManager);
+
         } else {
-            binding.recyvcatalog.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+            gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+            binding.recyvcatalog.setLayoutManager(gridLayoutManager);
+
+            //binding.recyvcatalog.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         }
 
 
@@ -177,12 +240,23 @@ public class CatalogueFragment extends Fragment {
         View view = inflater.inflate(R.layout.filter_layout, null);
         ImageView morecat = view.findViewById(R.id.more_cat);
         ImageView morekarat = view.findViewById(R.id.imvkaratmore);
+        ImageView morecolor = view.findViewById(R.id.imvmorecolor);
+        Button btncancel = view.findViewById(R.id.btn_cancel);
 
         expandableListView = (RecyclerView) view.findViewById(R.id.recyvcategory);
         recyclerViewKarat = (RecyclerView) view.findViewById(R.id.recyvKarat);
+        recyclerViewColor = (RecyclerView) view.findViewById(R.id.recycolor);
+        recyclerViewColor.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewColor.setAdapter(new FilterColorAdapter(getActivity()));
 
         expandableListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewKarat.setLayoutManager(new LinearLayoutManager(getActivity()));
+        morecolor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                expandView(recyclerViewColor);
+            }
+        });
 
         morekarat.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,6 +288,13 @@ public class CatalogueFragment extends Fragment {
         mypopupWindow.setTouchable(true);
         mypopupWindow.setFocusable(false);
         mypopupWindow.setOutsideTouchable(false);
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.parent.getForeground().setAlpha(0);
+                mypopupWindow.dismiss();
+            }
+        });
 
 
     }

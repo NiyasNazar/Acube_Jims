@@ -63,11 +63,12 @@
 
 
             </RelativeLayout>
+
             <androidx.recyclerview.widget.RecyclerView
-                android:visibility="gone"
                 android:id="@+id/recyvcategory"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -88,6 +89,7 @@
                 </TextView>
 
                 <ImageView
+                    android:id="@+id/imvmorecolor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -96,6 +98,14 @@
 
                 </ImageView>
             </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycolor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+            </androidx.recyclerview.widget.RecyclerView>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -123,13 +133,15 @@
 
                 </ImageView>
             </RelativeLayout>
+
             <androidx.recyclerview.widget.RecyclerView
-                android:visibility="gone"
                 android:id="@+id/recyvKarat"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="gone">
 
             </androidx.recyclerview.widget.RecyclerView>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -197,6 +209,7 @@
                 android:layout_marginBottom="10dp">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:background="@drawable/oval_btn_signin"
@@ -206,11 +219,13 @@
                     android:textSize="10sp" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btn_apply"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/oval_btn_signin"
                     android:text="Apply"
+
                     android:textColor="@color/white"
                     android:textSize="10sp" />
             </LinearLayout>

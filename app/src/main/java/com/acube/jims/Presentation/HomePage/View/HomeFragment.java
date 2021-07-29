@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.acube.jims.Presentation.Catalogue.CatalogueFragment;
+import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
 import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;

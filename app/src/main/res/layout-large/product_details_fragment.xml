@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/catalogue_bg"
+        tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/item_border_detailspage">
+
+            <ImageView
+                android:id="@+id/imvsingleitemimage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="26dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/item_border_image"
+                android:padding="10dp"
+                android:src="@drawable/dummy_item_image">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/tv_item_name"
+                android:layout_width="311dp"
+                android:layout_height="22dp"
+                android:layout_below="@id/imvsingleitemimage"
+                android:fontFamily="@font/montserratsemibold"
+
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:text="Latin Solitare Ring - LSR0002350"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:textStyle="normal"></TextView>
+
+            <TextView
+                android:id="@+id/tv_itemweight"
+                android:layout_width="192dp"
+
+                android:layout_height="22dp"
+                android:layout_below="@id/tv_item_name"
+                android:fontFamily="@font/montserratsemibold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:text="18K - Weight : 6.76 g"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tv_item_stoneweight"
+                android:layout_width="192dp"
+
+                android:layout_height="22dp"
+                android:layout_below="@id/tv_itemweight"
+                android:fontFamily="@font/montserratsemibold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:text="18K - Weight : 6.76 g"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:layout_width="253dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@id/imvsingleitemimage"
+                android:fontFamily="@font/montserratsemibold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:textAllCaps="true"
+                android:textColor="#c4224a"
+                android:textSize="14.7sp"
+                android:textStyle="normal"
+                tools:text="Additional Details" />
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

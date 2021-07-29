@@ -1,4 +1,4 @@
-package com.acube.jims.Presentation.Catalogue;
+package com.acube.jims.Presentation.Catalogue.View;
 
 import android.os.Bundle;
 

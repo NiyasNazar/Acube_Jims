@@ -46,7 +46,7 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.layout_child_item, parent, false);
+        View view = inflater.inflate(R.layout.layout_child_item_karat, parent, false);
         return new ProductViewHolder(view);
     }
 

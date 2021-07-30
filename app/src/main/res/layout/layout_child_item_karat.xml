@@ -22,16 +22,15 @@
 
         </TextView>
 
-        <TextView
-            android:textColor="#666666"
-
+        <ImageView
+            android:visibility="invisible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="(10)"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/_8sdp">
+            android:layout_marginRight="@dimen/_8sdp"
+            android:src="@drawable/ic_baseline_expand_more_24">
 
-        </TextView>
+        </ImageView>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -33,6 +33,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModel;
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.Presentation.Catalogue.ViewModel.FilterViewModel;
@@ -59,11 +60,12 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class CatalogueFragment extends Fragment {
+public class CatalogueFragment extends BaseFragment {
 
 
     CatalogItemsAdapter adapter;
     GridLayoutManager gridLayoutManager;
+    String vaSubCatID = "0", vaCatID = "0", vaKaratID = "0";
 
 
     public CatalogueFragment() {
@@ -140,11 +142,11 @@ public class CatalogueFragment extends Fragment {
             }
         });
 
-        viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, "1", "0", "0", "0");
-
+        LoadFirstPage();
         viewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseCatalogueListing>>() {
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
+                hideProgressDialog();
                 if (responseCatalogueListings != null) {
                     /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     TOTAL_PAGES = getTotalPagesFromTotalResult(responseCatalogueListings.get(0).getTotalCount(), AppConstants.Pagesize);
@@ -195,6 +197,13 @@ public class CatalogueFragment extends Fragment {
 
     }
 
+    private void LoadFirstPage() {
+        showProgressDialog();
+
+        viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, "0", vaKaratID);
+
+    }
+
     private int getTotalPagesFromTotalResult(Integer totalCount, Integer pagesize) {
         int totalPages_pre = (totalCount / pagesize);
         return (totalCount % pagesize) == 0 ? totalPages_pre : totalPages_pre + 1;
@@ -203,7 +212,7 @@ public class CatalogueFragment extends Fragment {
     private void loadNextPage() {
 
 
-        catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, "1", "0", "0", "0");
+        catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, "0", vaKaratID);
 
     }
 
@@ -242,6 +251,7 @@ public class CatalogueFragment extends Fragment {
         ImageView morekarat = view.findViewById(R.id.imvkaratmore);
         ImageView morecolor = view.findViewById(R.id.imvmorecolor);
         Button btncancel = view.findViewById(R.id.btn_cancel);
+        Button btnapply = view.findViewById(R.id.btn_apply);
 
         expandableListView = (RecyclerView) view.findViewById(R.id.recyvcategory);
         recyclerViewKarat = (RecyclerView) view.findViewById(R.id.recyvKarat);
@@ -292,6 +302,16 @@ public class CatalogueFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 binding.parent.getForeground().setAlpha(0);
+                mypopupWindow.dismiss();
+            }
+        });
+        btnapply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.parent.getForeground().setAlpha(0);
+                LoadFirstPage();
+
+
                 mypopupWindow.dismiss();
             }
         });

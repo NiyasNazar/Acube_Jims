@@ -67,7 +67,9 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void prepareMenuData() {
-        NavMenuModel menuModel = new NavMenuModel("Settings", true, true, R.drawable.ic_icon_settings); //Menu of Android Tutorial. No sub menus
+        NavMenuModel menuModel = new NavMenuModel("Home", true, true, R.drawable.ic_baseline_home_24); //Menu of Android Tutorial. No sub menus
+        headerList.add(menuModel);
+        menuModel = new NavMenuModel("Settings", true, true, R.drawable.ic_icon_settings); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);
         List<NavMenuModel> childModelsList = new ArrayList<>();
         NavMenuModel childModel = new NavMenuModel("Server Settings", false, false, 0);
@@ -133,6 +135,8 @@ public class HomePageActivity extends AppCompatActivity {
                         if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Logout")) {
 
                             showLogoutAlert();
+                        }else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Home")){
+                            replaceFragment(new HomeFragment());
                         }
                         onBackPressed();
                     }

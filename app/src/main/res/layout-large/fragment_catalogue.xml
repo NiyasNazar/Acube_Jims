@@ -10,8 +10,8 @@
     <FrameLayout
         android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
+        android:layout_height="match_parent"
 
         tools:context=".Presentation.Catalogue.View.CatalogueFragment">
 
@@ -36,7 +36,7 @@
                     android:fontFamily="@font/montserratsemibold"
                     android:gravity="center_horizontal"
                     android:letterSpacing="0.01"
-
+                    android:layout_centerVertical="true"
                     android:text="@string/filter"
                     android:textColor="#c4224a"
                     android:textSize="@dimen/_10ssp"
@@ -44,10 +44,12 @@
 
                 <ImageView
                     android:id="@+id/imvfilter"
+                    android:layout_centerVertical="true"
+
                     android:layout_width="@dimen/_10sdp"
                     android:layout_height="@dimen/_10sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="8dp"
+
                     android:layout_toRightOf="@id/tvfilter"
                     android:src="@drawable/ic_filter"></ImageView>
 
@@ -58,7 +60,7 @@
                     android:layout_marginLeft="@dimen/_12sdp"
                     android:layout_toRightOf="@id/imvfilter"
                     android:fontFamily="@font/montserratsemibold"
-
+                    android:layout_centerVertical="true"
                     android:gravity="center_horizontal"
                     android:letterSpacing="0.01"
                     android:text="@string/sort_by"

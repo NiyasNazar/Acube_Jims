@@ -15,13 +15,22 @@ public class FragmentHelper {
      * @param fragment
      */
     public static void replaceFragment(final FragmentActivity activity, final int containerId,
-                                       final Fragment fragment) {
+                                       final Fragment fragment, String Tag) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-        transaction.addToBackStack(null);
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+
         transaction.replace(containerId, fragment);
+        transaction.addToBackStack(Tag);
         transaction.commitAllowingStateLoss();
     }
+    public static void replaceFragment(final FragmentActivity activity, final int containerId,
+                                       final Fragment fragment) {
+        FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        transaction.replace(containerId, fragment);
 
+        transaction.commitAllowingStateLoss();
+    }
     public static void replaceAndAddFragment(final FragmentActivity activity, final int containerId,
                                              final Fragment fragment) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
@@ -33,7 +42,7 @@ public class FragmentHelper {
     public static void addFragment(final FragmentActivity activity, final int containerId, final Fragment fragment, int animId) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
         transaction.add(containerId, fragment);
-     //   transaction.setCustomAnimations(animId, R.anim.right_slide_out);
+        //   transaction.setCustomAnimations(animId, R.anim.right_slide_out);
         transaction.show(fragment);
         transaction.commitAllowingStateLoss();
     }

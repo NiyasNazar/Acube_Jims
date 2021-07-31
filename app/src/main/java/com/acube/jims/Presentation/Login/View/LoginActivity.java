@@ -3,6 +3,7 @@ package com.acube.jims.Presentation.Login.View;
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.view.WindowManager;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.Presentation.HomePage.View.HomePageActivity;
+import com.acube.jims.Presentation.HomePage.View.HomeViewModel;
 import com.acube.jims.Presentation.Login.ViewModel.LoginViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
@@ -23,11 +25,18 @@ import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityLoginBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
+import com.acube.jims.datalayer.models.HomePage.HomeData;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.acube.jims.datalayer.remote.dbmodel.HomeMenu;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+
+import java.util.List;
 
 public class LoginActivity extends BaseActivity {
     ActivityLoginBinding binding;
     LoginViewModel viewModel;
+    private HomeViewModel mViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,10 +46,12 @@ public class LoginActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         viewModel.init();
+
         binding.edEmail.setText("Admin");
         binding.edPassword.setText("Admin@acube");
 
-
+        mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        mViewModel.init();
         binding.btnSignin.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -67,19 +78,35 @@ public class LoginActivity extends BaseActivity {
         });
 
 
-        viewModel.getLiveData().observe(this, new Observer<ResponseLogin>() {
+        mViewModel.getLiveData().observe(this, new Observer<List<HomeData>>() {
             @Override
-            public void onChanged(ResponseLogin responseLogin) {
+            public void onChanged(List<HomeData> homeData) {
                 hideProgressDialog();
-                if (responseLogin != null) {
+                if (homeData != null) {
+                    setList("HomeMenu", homeData);
+                 /*   DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                         .homeMenuDao()
+                          .insert(homeData);*/
+
 
                     startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
                     finish();
+                }
+                // binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
+            }
+        });
+        viewModel.getLiveData().observe(this, new Observer<ResponseLogin>() {
+            @Override
+            public void onChanged(ResponseLogin responseLogin) {
+
+                if (responseLogin != null) {
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.Token, responseLogin.getToken());
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserRole, responseLogin.getRoleName());
+                    mViewModel.getHomeMenu(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token), AppConstants.HomeMenuAppName, responseLogin.getRoleName());
 
 
                 } else {
+                    hideProgressDialog();
                     customSnackBar(binding.parent, getResources().getString(R.string.autherror));
                 }
             }
@@ -100,5 +127,11 @@ public class LoginActivity extends BaseActivity {
         jsonObject.addProperty("userName", vaEmail);
         jsonObject.addProperty("password", vaPassword);
         viewModel.Login(jsonObject);
+    }
+
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        LocalPreferences.storeStringPreference(getApplicationContext(), key, json);
     }
 }

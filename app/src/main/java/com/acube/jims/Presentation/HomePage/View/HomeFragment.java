@@ -23,7 +23,10 @@ import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.HomeFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class HomeFragment extends Fragment implements HomeAdapter.FragmentTransition {
@@ -43,15 +46,17 @@ public class HomeFragment extends Fragment implements HomeAdapter.FragmentTransi
                 inflater, R.layout.home_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-        mViewModel.init();
+        binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), getList(), HomeFragment.this::replaceFragment));
+
+      /*  mViewModel.init();
         mViewModel.getHomeMenu(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token), AppConstants.HomeMenuAppName, LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserRole));
         mViewModel.getLiveData().observe(getActivity(), new Observer<List<HomeData>>() {
             @Override
             public void onChanged(List<HomeData> homeData) {
                 if (homeData != null)
-                    binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
+                   // binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
             }
-        });
+        });*/
 
         return binding.getRoot();
 
@@ -61,5 +66,17 @@ public class HomeFragment extends Fragment implements HomeAdapter.FragmentTransi
     @Override
     public void replaceFragment() {
         FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
+    }
+
+    public List<HomeData> getList() {
+        List<HomeData> mMainCategory = null;
+        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), "HomeMenu");
+        if (serializedObject != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<HomeData>>() {
+            }.getType();
+            mMainCategory = gson.fromJson(serializedObject, type);
+        }
+        return mMainCategory;
     }
 }

@@ -2,7 +2,6 @@ package com.acube.jims.Presentation.Catalogue.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,11 +31,12 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private List<ResponseCatalogueListing> dataset;
     private final Context context;
-
+    replaceFregment replaceFregment;
     private boolean isLoadingAdded = false;
 
-    public CatalogItemsAdapter(Context context) {
+    public CatalogItemsAdapter(Context context,replaceFregment replaceFregment) {
         this.context = context;
+        this.replaceFregment=replaceFregment;
         dataset = new ArrayList<>();
     }
 
@@ -200,8 +201,15 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
-
             imageView = itemView.findViewById(R.id.imageView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos=getAdapterPosition();
+                    String ID= String.valueOf(dataset.get(pos).getId());
+                    replaceFregment.replace(ID);
+                }
+            });
         }
     }
 
@@ -211,6 +219,9 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public LoadingVH(View itemView) {
             super(itemView);
         }
+    }
+    public  interface replaceFregment{
+        void replace(String Id);
     }
 
 

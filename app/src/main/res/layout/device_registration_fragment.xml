@@ -8,8 +8,8 @@
     </data>
 
     <FrameLayout
-        android:layout_width="match_parent"
         android:id="@+id/parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Presentation.DeviceRegistration.View.DeviceRegistrationFragment">
 
@@ -20,6 +20,15 @@
             android:layout_height="match_parent"
             android:background="@drawable/homepagebg"
             tools:context=".Presentation.Login.View.LoginActivity">
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+
+            </include>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -45,11 +54,11 @@
                         android:layout_height="wrap_content"
 
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="18dp"
                         android:fontFamily="@font/karla_bold"
                         android:text="Device Settings"
                         android:textColor="#666666"
-                        android:textSize="@dimen/_17ssp"></TextView>
+                        android:textSize="@dimen/_10ssp"></TextView>
 
                     <EditText
                         android:id="@+id/ed_macaddress"
@@ -59,11 +68,11 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="@dimen/_20sdp"
                         android:layout_marginTop="12dp"
-                        android:editable="false"
-
-
                         android:layout_marginRight="@dimen/_20sdp"
+
+
                         android:background="@drawable/ed_rect_border"
+                        android:editable="false"
 
                         android:hint="Mac Address"
                         android:inputType="none"
@@ -101,9 +110,9 @@
                         android:layout_width="@dimen/_300sdp"
                         android:layout_height="50dp"
                         android:layout_below="@+id/ed_deviceId"
+                        android:layout_centerHorizontal="true"
                         android:layout_marginLeft="@dimen/_20sdp"
                         android:layout_marginTop="12dp"
-                        android:layout_centerHorizontal="true"
 
                         android:layout_marginRight="@dimen/_20sdp"
                         android:background="@drawable/ed_rect_border"

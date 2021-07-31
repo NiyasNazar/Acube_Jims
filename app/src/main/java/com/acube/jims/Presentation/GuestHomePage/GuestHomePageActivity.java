@@ -1,13 +1,4 @@
-package com.acube.jims.Presentation.HomePage.View;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.databinding.DataBindingUtil;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
+package com.acube.jims.Presentation.GuestHomePage;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,14 +11,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.databinding.DataBindingUtil;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
+import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
+import com.acube.jims.Presentation.Catalogue.View.GuestCatalogueFragment;
 import com.acube.jims.Presentation.DeviceRegistration.View.DeviceRegistrationFragment;
+import com.acube.jims.Presentation.HomePage.View.HomeFragment;
+import com.acube.jims.Presentation.HomePage.View.HomeViewModel;
 import com.acube.jims.Presentation.HomePage.adapter.ExpandableListAdapter;
-import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
 import com.acube.jims.Presentation.Login.View.LoginActivity;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
@@ -39,7 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity {
+public class GuestHomePageActivity extends AppCompatActivity {
     ActivityHomePageBinding binding;
     List<HomeData> dataset;
     HomeData homeData;
@@ -56,7 +55,7 @@ public class HomePageActivity extends AppCompatActivity {
         init();
         prepareMenuData();
         populateExpandableList();
-        replaceFragment(new HomeFragment());
+        replaceFragment(new GuestCatalogueFragment());
         binding.toolbar.optionMenu.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("WrongConstant")
             @Override
@@ -128,7 +127,7 @@ public class HomePageActivity extends AppCompatActivity {
 
     private void populateExpandableList() {
 
-        expandableListAdapter = new ExpandableListAdapter(HomePageActivity.this, headerList, childList);
+        expandableListAdapter = new ExpandableListAdapter(GuestHomePageActivity.this, headerList, childList);
         binding.expandableListView.setAdapter(expandableListAdapter);
 
         binding.expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
@@ -173,7 +172,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     private void showLogoutAlert() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(HomePageActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(GuestHomePageActivity.this);
         ViewGroup viewGroup = findViewById(android.R.id.content);
         View dialogView = LayoutInflater.from(this).inflate(R.layout.logout_popup_custom, viewGroup, false);
         builder.setView(dialogView);
@@ -211,6 +210,6 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment fragment) {
-        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment);
+        FragmentHelper.replaceFragment(GuestHomePageActivity.this, R.id.content, fragment);
     }
 }

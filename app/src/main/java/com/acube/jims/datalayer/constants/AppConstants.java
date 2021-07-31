@@ -10,5 +10,6 @@ public interface AppConstants {
     public static String Token = "Token";
     public static String UserRole = "Role";
     public static Integer Pagesize = 10;
+    public static String Menu_DB = "db_homemenu";
 
 }

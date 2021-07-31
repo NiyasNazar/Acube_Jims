@@ -1,6 +1,8 @@
 package com.acube.jims;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -8,10 +10,14 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.acube.jims.Presentation.Login.ViewModel.LoginViewModel;
+import com.acube.jims.Utils.AppUtility;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.List;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
@@ -23,6 +29,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if (new AppUtility(this).isTablet(this)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        }
     }
 
     protected void showProgressDialog() {
@@ -52,4 +66,5 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
     }
+
 }

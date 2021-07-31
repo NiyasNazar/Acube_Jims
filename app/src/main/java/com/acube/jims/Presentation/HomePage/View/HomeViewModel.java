@@ -24,6 +24,7 @@ public class HomeViewModel extends AndroidViewModel {
 
     public void getHomeMenu(String Token, String vaAppname, String vaRole) {
         repository.getHomeMneu(Token, vaAppname, vaRole);
+
     }
 
     public void init() {

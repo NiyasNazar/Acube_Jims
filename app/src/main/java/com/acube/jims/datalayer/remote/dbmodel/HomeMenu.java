@@ -1,4 +1,4 @@
-package com.acube.jims.datalayer.models.HomePage;
+package com.acube.jims.datalayer.remote.dbmodel;
 
 
 import androidx.room.ColumnInfo;
@@ -11,49 +11,28 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 @Entity
-public class HomeData implements Serializable {
+
+public class HomeMenu implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @SerializedName("menuType")
-    @Expose
+
     @ColumnInfo(name = "menuType")
-
     private String menuType;
-    @SerializedName("parentMenuName")
-    @Expose
     @ColumnInfo(name = "parentMenuName")
-
     private String parentMenuName;
-    @SerializedName("menuName")
-    @Expose
     @ColumnInfo(name = "menuName")
-
     private String menuName;
-    @SerializedName("menuCondition")
-    @Expose
     @ColumnInfo(name = "menuCondition")
-
     private String menuCondition;
-    @SerializedName("displayName")
-    @Expose
     @ColumnInfo(name = "displayName")
-
     private String displayName;
-    @SerializedName("menuText")
-    @Expose
     @ColumnInfo(name = "menuText")
-
     private String menuText;
-    @SerializedName("menuIconName")
-    @Expose
     @ColumnInfo(name = "menuIconName")
-
     private String menuIconName;
-    @SerializedName("sortOrder")
-    @Expose
     @ColumnInfo(name = "sortOrder")
-
     private Integer sortOrder;
+
 
     public String getMenuType() {
         return menuType;
@@ -83,10 +62,6 @@ public class HomeData implements Serializable {
         return menuCondition;
     }
 
-    public void setMenuCondition(String menuCondition) {
-        this.menuCondition = menuCondition;
-    }
-
     public String getDisplayName() {
         return displayName;
     }
@@ -107,10 +82,6 @@ public class HomeData implements Serializable {
         return menuIconName;
     }
 
-    public void setMenuIconName(String menuIconName) {
-        this.menuIconName = menuIconName;
-    }
-
     public Integer getSortOrder() {
         return sortOrder;
     }
@@ -125,5 +96,13 @@ public class HomeData implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setMenuCondition(String menuCondition) {
+        this.menuCondition = menuCondition;
+    }
+
+    public void setMenuIconName(String menuIconName) {
+        this.menuIconName = menuIconName;
     }
 }

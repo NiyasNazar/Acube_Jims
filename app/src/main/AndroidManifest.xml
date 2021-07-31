@@ -18,6 +18,7 @@
         <activity android:name=".Presentation.Catalogue.View.CatalogueActivity"></activity>
         <activity android:name=".Presentation.HomePage.View.HomePageActivity" />
         <activity android:name=".Presentation.Login.View.GuestLoginActivity" />
+        <activity android:name=".Presentation.GuestHomePage.GuestHomePageActivity"></activity>
         <activity android:name=".Presentation.Login.View.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

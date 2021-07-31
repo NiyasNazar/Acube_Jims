@@ -1,15 +1,20 @@
 package com.acube.jims.Presentation.Catalogue.View;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -18,38 +23,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
-import android.os.Handler;
-
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.ExpandableListView;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModel;
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.Presentation.Catalogue.ViewModel.FilterViewModel;
-import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemsAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterColorAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterKaratAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterListAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterParentAdapter;
-import com.acube.jims.Presentation.DeviceRegistration.ViewModel.DeviceRegistrationViewModel;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.ExpandableListDataPump;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.PaginationScrollListener;
 import com.acube.jims.databinding.FragmentCatalogueBinding;
@@ -64,7 +50,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapter.replaceFregment{
+public class GuestCatalogueFragment extends BaseFragment  implements CatalogItemsAdapter.replaceFregment{
 
 
     CatalogItemsAdapter adapter;
@@ -72,7 +58,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     String vaSubCatID = "0", vaCatID = "0", vaKaratID = "0";
 
 
-    public CatalogueFragment() {
+    public GuestCatalogueFragment() {
         // Required empty public constructor
     }
 
@@ -102,28 +88,11 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_catalogue, container, false);
-        binding.parent.setForeground(getResources().getDrawable(R.drawable.shape_window_dim));
         binding.parent.getForeground().setAlpha(0);
-        binding.toolbar.tvFragname.setText("Catalogue");
-        binding.toolbar.dashboardLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
-            }
-        });
         init();
 
         // This callback will only be called when MyFragment is at least Started.
-       /* OnBackPressedCallback callback = new OnBackPressedCallback(true *//* enabled by default *//*) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-                Toast.makeText(getActivity(),"OnBackPressed",Toast.LENGTH_LONG).show();
-                FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
 
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(),callback);*/
 
         //requireActivity().getOnBackPressedDispatcher().addCallback(this,callback);
         binding.imvfilter.setOnClickListener(new View.OnClickListener() {
@@ -241,7 +210,8 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     }
 
     private void init() {
-        adapter = new CatalogItemsAdapter(getActivity(),CatalogueFragment.this);
+        adapter = new CatalogItemsAdapter(getActivity(),GuestCatalogueFragment.this);
+
         binding.recyvcatalog.setAdapter(adapter);
 
         viewModel = new ViewModelProvider(this).get(CatalogViewModel.class);
@@ -318,7 +288,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         //  dataset.add("Certified by");
         //  expandableListView.setAdapter(new FilterParentAdapter(getActivity(), dataset));
 
-        mypopupWindow = new PopupWindow(view, 700, RelativeLayout.LayoutParams.WRAP_CONTENT, true);
+        mypopupWindow = new PopupWindow(view, 500, RelativeLayout.LayoutParams.WRAP_CONTENT, true);
         mypopupWindow.setTouchable(true);
         mypopupWindow.setFocusable(false);
         mypopupWindow.setOutsideTouchable(false);
@@ -334,8 +304,6 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
             public void onClick(View v) {
                 binding.parent.getForeground().setAlpha(0);
                 LoadFirstPage();
-
-
                 mypopupWindow.dismiss();
             }
         });
@@ -371,9 +339,6 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     @Override
     public void replace(String Id) {
-        Log.d(TAG, "replace: "+this.getClass().getSimpleName());
-        FragmentHelper.replaceFragment(getActivity(), R.id.content, new ProductDetailsFragment(),  this.getClass().getSimpleName());
-
-
+        FragmentHelper.replaceFragment(getActivity(), R.id.content, new ProductDetailsFragment());
     }
 }

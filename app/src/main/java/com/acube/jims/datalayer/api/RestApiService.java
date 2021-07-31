@@ -3,6 +3,7 @@ package com.acube.jims.datalayer.api;
 import com.acube.jims.datalayer.models.Authentication.ResponseCheckCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
+import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceUpdation;
@@ -31,7 +32,7 @@ public interface RestApiService {
     Call<ResponseCheckCustomer> CheckUserExists(@Path("phonenumber") String version);
 
     @POST("CustomerRegistration/")
-    Call<ResponseCreateCustomer> createCustomer(@Body JsonObject jsonObject);
+    Call<ResponseCreateCustomer> createUser(@Body JsonObject jsonObject);
 
     @PUT("CustomerRegistration/{id}")
     Call<JsonObject> updateUser(@Path("id") int id, @Body JsonObject body);
@@ -60,4 +61,9 @@ public interface RestApiService {
 
     @GET("ItemCatalog/GetItemFilter")
     Call<ResponseFetchFilters> getFilters();
+
+    @GET("ItemCatalog/GetSingle/{id}")
+    Call<ResponseCatalogDetails> getItemDetails(@Path("id") String id);
+
+
 }

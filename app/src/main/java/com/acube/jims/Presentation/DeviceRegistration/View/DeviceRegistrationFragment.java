@@ -1,5 +1,6 @@
 package com.acube.jims.Presentation.DeviceRegistration.View;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -14,12 +15,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.DeviceRegistration.ViewModel.AddDeviceViewModel;
 import com.acube.jims.Presentation.DeviceRegistration.ViewModel.DeviceRegistrationViewModel;
 import com.acube.jims.Presentation.DeviceRegistration.ViewModel.UpdateDeviceViewModel;
+import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.DeviceRegistrationFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
@@ -32,7 +36,8 @@ import java.net.NetworkInterface;
 import java.util.Collections;
 import java.util.List;
 
-public class DeviceRegistrationFragment extends BaseFragment {
+public class DeviceRegistrationFragment extends BaseFragment  {
+
 
     AddDeviceViewModel addDeviceViewModel;
     DeviceRegistrationViewModel mViewModel;
@@ -55,6 +60,15 @@ public class DeviceRegistrationFragment extends BaseFragment {
                 inflater, R.layout.device_registration_fragment, container, false);
         View view = binding.getRoot();
         initViewModels();
+        binding.toolbar.tvFragname.setText("Device Settings");
+        binding.toolbar.tvDashboard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
+
+            }
+        });
+
 
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseGetRegistered>() {
@@ -177,5 +191,7 @@ public class DeviceRegistrationFragment extends BaseFragment {
         }
         return "";
     }
+
+
 }
 

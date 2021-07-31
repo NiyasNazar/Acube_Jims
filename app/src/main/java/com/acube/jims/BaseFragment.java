@@ -1,6 +1,7 @@
 package com.acube.jims;
 
 import android.app.ProgressDialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,15 +13,28 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.acube.jims.Utils.AppUtility;
 import com.google.android.material.snackbar.Snackbar;
 
 public abstract class BaseFragment extends Fragment {
     protected static final String TAG = BaseFragment.class.getSimpleName();
     protected ProgressDialog mProgressDialog;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (new AppUtility(getActivity()).isTablet(getActivity())) {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
+        } else {
+            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        }
+
+    }
 
     protected void showProgressDialog() {
+
         if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
@@ -35,11 +49,12 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
-
     public void customSnackBar(View view, String message) {
         Snackbar.make(view, message, Snackbar.LENGTH_LONG)
                 .show();
 
 
     }
+
+
 }

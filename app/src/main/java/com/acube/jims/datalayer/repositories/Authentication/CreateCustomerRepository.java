@@ -27,7 +27,7 @@ public class CreateCustomerRepository  {
 
     public void CreateCustomer(JsonObject jsonObject) {
         RestApiService restApiService = RetrofitInstance.getApiService();
-        Call<ResponseCreateCustomer> call = restApiService.createCustomer(jsonObject);
+        Call<ResponseCreateCustomer> call = restApiService.createUser(jsonObject);
         call.enqueue(new Callback<ResponseCreateCustomer>() {
             @Override
             public void onResponse(Call<ResponseCreateCustomer> call, Response<ResponseCreateCustomer> response) {

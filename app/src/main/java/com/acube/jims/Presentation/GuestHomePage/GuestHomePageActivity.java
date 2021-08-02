@@ -60,10 +60,10 @@ public class GuestHomePageActivity extends AppCompatActivity {
             @SuppressLint("WrongConstant")
             @Override
             public void onClick(View v) {
-                if (binding.drawerLayout.isDrawerOpen(Gravity.RIGHT)){
+                if (binding.drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                     binding.drawerLayout.closeDrawer(Gravity.RIGHT);
 
-                }else{
+                } else {
                     binding.drawerLayout.openDrawer(Gravity.RIGHT);
 
                 }
@@ -140,7 +140,7 @@ public class GuestHomePageActivity extends AppCompatActivity {
                         if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Logout")) {
 
                             showLogoutAlert();
-                        }else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Home")){
+                        } else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Home")) {
                             replaceFragment(new HomeFragment());
                         }
                         onBackPressed();
@@ -210,6 +210,6 @@ public class GuestHomePageActivity extends AppCompatActivity {
     }
 
     public void replaceFragment(Fragment fragment) {
-        FragmentHelper.replaceFragment(GuestHomePageActivity.this, R.id.content, fragment);
+        FragmentHelper.replaceFragment(GuestHomePageActivity.this, R.id.content, fragment, "");
     }
 }

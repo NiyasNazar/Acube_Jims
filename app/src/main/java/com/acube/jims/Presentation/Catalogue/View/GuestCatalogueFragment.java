@@ -88,6 +88,8 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
 
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_catalogue, container, false);
+        binding.parent.setForeground(getResources().getDrawable(R.drawable.shape_window_dim));
+
         binding.parent.getForeground().setAlpha(0);
         init();
 
@@ -339,6 +341,7 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
 
     @Override
     public void replace(String Id) {
-        FragmentHelper.replaceFragment(getActivity(), R.id.content, new ProductDetailsFragment());
+
+        FragmentHelper.replaceFragment(getActivity(), R.id.content, ProductDetailsFragment.newInstance(Id));
     }
 }

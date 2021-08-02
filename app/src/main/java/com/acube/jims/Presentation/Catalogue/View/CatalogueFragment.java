@@ -114,12 +114,13 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         init();
 
         // This callback will only be called when MyFragment is at least Started.
-       /* OnBackPressedCallback callback = new OnBackPressedCallback(true *//* enabled by default *//*) {
+      /* OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
                 Toast.makeText(getActivity(),"OnBackPressed",Toast.LENGTH_LONG).show();
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
+
 
             }
         };
@@ -372,7 +373,8 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     @Override
     public void replace(String Id) {
         Log.d(TAG, "replace: "+this.getClass().getSimpleName());
-        FragmentHelper.replaceFragment(getActivity(), R.id.content, new ProductDetailsFragment(),  this.getClass().getSimpleName());
+        FragmentHelper.replaceFragment(getActivity(), R.id.content, ProductDetailsFragment.newInstance(Id));
+
 
 
     }

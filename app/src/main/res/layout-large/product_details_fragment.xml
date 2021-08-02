@@ -20,617 +20,624 @@
 
             <include
                 android:id="@+id/toolbar"
+                android:layout_marginTop="10dp"
                 layout="@layout/back_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp">
+                android:layout_gravity="end">
 
             </include>
+<androidx.core.widget.NestedScrollView
+    android:layout_below="@id/toolbar"
+    android:layout_marginTop="2dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
 
-            <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
 
+        android:layout_marginLeft="14dp"
+
+        android:layout_marginRight="14dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/item_border_detailspage">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_item_stoneweight"
+            android:layout_toLeftOf="@id/layout_details"
+            android:gravity="center_horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnback"
+                style="@style/Widget.AppCompat.Button.Borderless"
+
+
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rec_button"
+                android:text="Back"
+                android:textColor="@color/white">
+
+            </androidx.appcompat.widget.AppCompatButton>
+
+            <androidx.appcompat.widget.AppCompatButton
+
+                style="@style/Widget.AppCompat.Button.Borderless"
+
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/rec_button"
+                android:backgroundTint="#3699ff"
+                android:text="Add To Cart"
+                android:textColor="@color/white">
+
+            </androidx.appcompat.widget.AppCompatButton>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imvsingleitemimage"
+            android:layout_width="400dp"
+            android:layout_height="360dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/item_border_image"
+            android:padding="10dp"
+            android:src="@drawable/dummy_item_image">
+
+        </ImageView>
+
+        <TextView
+            android:id="@+id/tv_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:layout_below="@id/imvsingleitemimage"
+
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@id/layout_details"
+            android:fontFamily="@font/montserratsemibold"
+
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.01"
+            android:text="Latin Solitare Ring - LSR0002350"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:textStyle="normal"></TextView>
+
+        <TextView
+            android:id="@+id/tv_itemweight"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:layout_below="@id/tv_item_name"
+
+            android:layout_toLeftOf="@id/layout_details"
+            android:fontFamily="@font/montserratsemibold"
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.01"
+            android:text="18K - Weight : 6.76 g"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/tv_item_stoneweight"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+
+            android:layout_below="@id/tv_itemweight"
+            android:layout_toLeftOf="@id/layout_details"
+            android:fontFamily="@font/montserratsemibold"
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.01"
+            android:text="Stone: 6.76 g"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+
+        <LinearLayout
+            android:id="@+id/layout_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+
+            android:layout_marginBottom="50dp"
+            android:layout_toRightOf="@id/imvsingleitemimage"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="253dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:text="Additional Details"
+                android:textAllCaps="true"
+                android:textColor="#c4224a"
+                android:textSize="14.7sp"
+                android:textStyle="normal" />
+
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/toolbar"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="14dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/item_border_detailspage">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tv_item_stoneweight"
-                    android:layout_toLeftOf="@id/layout_details"
-                    android:gravity="center_horizontal">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnback"
-                        style="@style/Widget.AppCompat.Button.Borderless"
-
-
-                        android:layout_width="90dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/rec_button"
-                        android:text="Back"
-                        android:textColor="@color/white">
-
-                    </androidx.appcompat.widget.AppCompatButton>
-
-                    <androidx.appcompat.widget.AppCompatButton
-
-                        style="@style/Widget.AppCompat.Button.Borderless"
-
-                        android:layout_width="180dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/rec_button"
-                        android:backgroundTint="#3699ff"
-                        android:text="Add To Cart"
-                        android:textColor="@color/white">
-
-                    </androidx.appcompat.widget.AppCompatButton>
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/imvsingleitemimage"
-                    android:layout_width="400dp"
-                    android:layout_height="360dp"
-                    android:layout_marginLeft="26dp"
-                    android:layout_marginTop="48dp"
-                    android:background="@drawable/item_border_image"
-                    android:padding="10dp"
-                    android:src="@drawable/dummy_item_image">
-
-                </ImageView>
-
-                <TextView
-                    android:id="@+id/tv_item_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp"
-                    android:layout_below="@id/imvsingleitemimage"
-
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
-                    android:layout_toLeftOf="@id/layout_details"
-                    android:fontFamily="@font/montserratsemibold"
-
-                    android:gravity="center_horizontal"
-                    android:letterSpacing="0.01"
-                    android:text="Latin Solitare Ring - LSR0002350"
-                    android:textColor="#666666"
-                    android:textSize="12sp"
-                    android:textStyle="normal"></TextView>
-
-                <TextView
-                    android:id="@+id/tv_itemweight"
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp"
-                    android:layout_below="@id/tv_item_name"
-
-                    android:layout_toLeftOf="@id/layout_details"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:gravity="center_horizontal"
-                    android:letterSpacing="0.01"
-                    android:text="18K - Weight : 6.76 g"
-                    android:textColor="#666666"
-                    android:textSize="12sp"
-                    android:textStyle="normal" />
-
-                <TextView
-                    android:id="@+id/tv_item_stoneweight"
-                    android:layout_width="match_parent"
-                    android:layout_height="22dp"
-
-                    android:layout_below="@id/tv_itemweight"
-                    android:layout_toLeftOf="@id/layout_details"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:gravity="center_horizontal"
-                    android:letterSpacing="0.01"
-                    android:text="18K - Weight : 6.76 g"
-                    android:textColor="#666666"
-                    android:textSize="12sp"
-                    android:textStyle="normal" />
-
-                <LinearLayout
-                    android:id="@+id/layout_details"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="35dp"
-
-                    android:layout_marginBottom="50dp"
-                    android:layout_toRightOf="@id/imvsingleitemimage"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="253dp"
-                        android:layout_height="27dp"
-                        android:layout_marginTop="15dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:gravity="center_horizontal"
-                        android:letterSpacing="0.01"
-                        android:text="Additional Details"
-                        android:textAllCaps="true"
-                        android:textColor="#c4224a"
-                        android:textSize="14.7sp"
-                        android:textStyle="normal" />
-
-                    <androidx.core.widget.NestedScrollView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="50dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F2edee"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Brand Name"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginRight="20dp"
-                                android:background="#F2edee"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_brandname"
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="ItemType Name "
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Cristal"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Description"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_description"
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Jewelry Name"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Malabar"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F2edee"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Item Code"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:background="#F2edee"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_itemcode"
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Category Code"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Ac-005896"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Gender"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_gender"
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Certified by"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Malabar"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F2edee"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Making Charge(min)"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:background="#F2edee"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:id="@+id/tvmakingchargemin"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Item Description"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Ac-005896"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Making Charge (max)"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:id="@+id/tv_makingchrgmax"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Emarlad Weight "
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F2edee"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Malabar"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Karat"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:background="#F2edee"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_karatname"
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text=""
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Gross Weight"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Jewelry Code"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Color"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:id="@+id/tv_color"
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="ItemType Name "
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Remarks"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F2edee"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Group Name"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:background="#F2edee"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="ItemType Name "
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Category Name"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="ItemType Name "
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Emarald Weight"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text=""
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Other Stone Weight"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Supplier reference No"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F2edee"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Color"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:background="#F2edee"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Shape"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Color"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Shape"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Cut"
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="ItemType Name "
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Cut"
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginRight="20dp"
+                        android:background="#F2edee"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="ItemType Name "
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="Brand name "
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="50dp"
-                                android:layout_marginRight="20dp"
-                                android:background="#F2edee"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="Brand name "
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="26dp"
-                                    android:layout_weight="1"
-                                    android:fontFamily="@font/montserratsemibold"
-                                    android:gravity="start|center"
-                                    android:letterSpacing="0.01"
-                                    android:paddingLeft="10dp"
-                                    android:text="ItemType Name "
-                                    android:textColor="#666666"
-                                    android:textSize="12sp"
-                                    android:textStyle="normal" />
-                            </LinearLayout>
-                        </LinearLayout>
-                    </androidx.core.widget.NestedScrollView>
-
-
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="26dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="start|center"
+                            android:letterSpacing="0.01"
+                            android:paddingLeft="10dp"
+                            android:text="ItemType Name "
+                            android:textColor="#666666"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
-            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>
+
         </RelativeLayout>
     </FrameLayout>
 </layout>

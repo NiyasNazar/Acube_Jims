@@ -102,7 +102,6 @@
                         android:layout_height="22dp"
                         android:layout_below="@id/imvsingleitemimage"
 
-                        android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
 
                         android:fontFamily="@font/montserratsemibold"
@@ -119,10 +118,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="22dp"
                         android:layout_below="@id/tv_item_name"
-
-                        android:layout_toLeftOf="@id/layout_details"
-                        android:fontFamily="@font/montserratsemibold"
                         android:gravity="center_horizontal"
+
+
+                        android:fontFamily="@font/montserratsemibold"
+                        android:layout_centerHorizontal="true"
                         android:letterSpacing="0.01"
                         android:text="18K - Weight : 6.76 g"
                         android:textColor="#666666"

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
 import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
 import com.acube.jims.R;
@@ -29,7 +30,7 @@ import com.google.gson.Gson;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeAdapter.FragmentTransition {
+public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTransition {
 
     private HomeViewModel mViewModel;
     HomeFragmentBinding binding;

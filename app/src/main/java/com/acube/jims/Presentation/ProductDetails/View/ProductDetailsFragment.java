@@ -27,9 +27,15 @@ import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
 public class ProductDetailsFragment extends Fragment {
 
     private ItemDetailsViewModel mViewModel;
+    String Id;
 
-    public static ProductDetailsFragment newInstance() {
-        return new ProductDetailsFragment();
+    public static ProductDetailsFragment newInstance(String Id) {
+        ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
+
+        Bundle args = new Bundle();
+        args.putString("Id", Id);
+        productDetailsFragment.setArguments(args);
+        return productDetailsFragment;
     }
 
     ProductDetailsFragmentBinding binding;
@@ -43,7 +49,12 @@ public class ProductDetailsFragment extends Fragment {
                 inflater, R.layout.product_details_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(ItemDetailsViewModel.class);
         mViewModel.init();
-        mViewModel.FetchItemDetails("");
+        if (getArguments() != null) {
+            String Id = getArguments().getString("Id");
+            mViewModel.FetchItemDetails(Id);
+        }
+
+
         binding.toolbar.tvFragname.setText("Catalogue");
         binding.toolbar.dashboardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,25 +62,31 @@ public class ProductDetailsFragment extends Fragment {
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
             }
         });
-       /* binding.btnback.setOnClickListener(new View.OnClickListener() {
+
+      /* OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                Toast.makeText(getActivity(), "OnBackPressed", Toast.LENGTH_LONG).show();
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
+
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
+        binding.btnback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                OnBackPressedCallback callback = new OnBackPressedCallback(true *//* enabled by default *//*) {
-                    @Override
-                    public void handleOnBackPressed() {
-                        // Handle the back button event
-                        Toast.makeText(getActivity(),"OnBackPressed",Toast.LENGTH_LONG).show();
-                        FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
+                callback.handleOnBackPressed();
 
-                    }
-                };
-                requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(),callback);
+
             }
         });*/
         mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseCatalogDetails>() {
             @Override
             public void onChanged(ResponseCatalogDetails responseCatalogDetails) {
                 if (responseCatalogDetails != null) {
+                    binding.tvItemName.setText(responseCatalogDetails.getItemName());
+                    binding.tvItemStoneweight.setText("Stone Weight: "+responseCatalogDetails.getStoneWeight());
 
                 }
             }

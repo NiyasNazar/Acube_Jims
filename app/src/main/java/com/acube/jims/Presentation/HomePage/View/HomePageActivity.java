@@ -61,10 +61,10 @@ public class HomePageActivity extends AppCompatActivity {
             @SuppressLint("WrongConstant")
             @Override
             public void onClick(View v) {
-                if (binding.drawerLayout.isDrawerOpen(Gravity.RIGHT)){
+                if (binding.drawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                     binding.drawerLayout.closeDrawer(Gravity.RIGHT);
 
-                }else{
+                } else {
                     binding.drawerLayout.openDrawer(Gravity.RIGHT);
 
                 }
@@ -141,7 +141,7 @@ public class HomePageActivity extends AppCompatActivity {
                         if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Logout")) {
 
                             showLogoutAlert();
-                        }else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Home")){
+                        } else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Home")) {
                             replaceFragment(new HomeFragment());
                         }
                         onBackPressed();
@@ -203,14 +203,25 @@ public class HomePageActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.content);
+        if (f instanceof HomeFragment) {
+
+
+        }
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
+        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
+            getFragmentManager().popBackStack();
+            Log.d("onBackPressed", ":onBackPressed" + getFragmentManager().getBackStackEntryCount());
+
         } else {
             super.onBackPressed();
+            Log.d("onBackPressed", ":onBackPressedsuper " + getFragmentManager().getBackStackEntryCount());
         }
     }
 
     public void replaceFragment(Fragment fragment) {
-        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment);
+        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment, "");
     }
 }

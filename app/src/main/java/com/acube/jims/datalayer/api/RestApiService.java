@@ -51,13 +51,8 @@ public interface RestApiService {
 
 
 
-    @GET("ItemCatalog/{PageNum}/{PageSize}/{CatID}/{SubCatID}/{ColorCode}/{KaratCode}")
-    Call<List<ResponseCatalogueListing>> getCatalogueItems(@Path("PageNum") int PageNum,
-                                                           @Path("PageSize") int PageSize,
-                                                           @Path("CatID") String CatID,
-                                                           @Path("SubCatID") String SubCatID,
-                                                           @Path("ColorCode") String ColorCode,
-                                                           @Path("KaratCode") String KaratCode);
+    @POST("ItemCatalog/GetAllDetails")
+    Call<List<ResponseCatalogueListing>> getCatalogueItems(@Body JsonObject jsonObject);
 
     @GET("ItemCatalog/GetItemFilter")
     Call<ResponseFetchFilters> getFilters();

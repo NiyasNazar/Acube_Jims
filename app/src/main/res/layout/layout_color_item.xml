@@ -2,39 +2,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:orientation="horizontal"
-    android:gravity="center_horizontal"
 
-    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_margin="2dp"
-        android:layout_width="20dp"
-        android:background="@android:color/black"
-        android:layout_height="20dp">
+    android:layout_height="wrap_content">
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_margin="2dp"
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/_8sdp"
+        android:paddingLeft="5dp"
 
-        android:layout_width="20dp"
-        android:background="@android:color/holo_blue_light"
-        android:layout_height="20dp">
+        android:textColor="#2d2d2d"
+        android:textSize="@dimen/_10ssp"
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_margin="2dp"
+        android:theme="@style/Checkboxstyle"
 
-        android:layout_width="20dp"
-        android:background="@android:color/holo_red_dark"
-        android:layout_height="20dp">
+        >
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_margin="2dp"
+    </CheckBox>
 
-        android:layout_width="20dp"
-        android:background="@android:color/holo_orange_dark"
-        android:layout_height="20dp">
 
-    </LinearLayout>
+
 </LinearLayout>

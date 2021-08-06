@@ -92,7 +92,7 @@
                         android:layout_margin="5dp"
                         android:background="@drawable/item_border_image"
                         android:padding="10dp"
-                        android:src="@drawable/dummy_item_image">
+                       >
 
                     </ImageView>
 

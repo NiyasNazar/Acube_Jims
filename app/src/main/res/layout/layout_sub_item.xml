@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="1dp"
+    android:layout_margin="5dp"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -10,21 +10,32 @@
         android:layout_height="wrap_content">
 
 
-        <CheckBox
-            android:id="@+id/checkbox"
+        <TextView
+            android:id="@+id/tv_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/karla_bold"
+            android:paddingLeft="@dimen/_10sdp"
+            android:text="Category"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="@dimen/_10ssp">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/arrow"
+            android:tint="#000"
+            android:layout_width="wrap_content"
+            android:src="@drawable/ic_baseline_chevron_right_24"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/_8sdp"
-            android:paddingLeft="5dp"
-            android:text="ajdjahdjasjdh"
-            android:textColor="#2d2d2d"
-            android:textSize="@dimen/_10ssp"
 
-            android:theme="@style/Checkboxstyle"
+           >
 
-            >
-
-        </CheckBox>
+        </ImageView>
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

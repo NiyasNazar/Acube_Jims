@@ -27,7 +27,16 @@ public class CatalogueRepository {
 
     public void FetchCatalogueItems(int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode) {
         RestApiService restApiService = RetrofitInstance.getApiService();
-        Call<List<ResponseCatalogueListing>> call = restApiService.getCatalogueItems(PageNum, PageSize, CatID, SubCatID,ColorCode,KaratCode);
+        JsonObject jsonObject=new JsonObject();
+
+        jsonObject.addProperty("pageNo",PageNum);
+        jsonObject.addProperty("pageSize",PageSize);
+        jsonObject.addProperty("categoryCode",CatID);
+        jsonObject.addProperty("subCategoryCode",SubCatID);
+        jsonObject.addProperty("karatCode",KaratCode);
+        jsonObject.addProperty("colorCode",ColorCode);
+
+        Call<List<ResponseCatalogueListing>> call = restApiService.getCatalogueItems(jsonObject);
         call.enqueue(new Callback<List<ResponseCatalogueListing>>() {
             @Override
             public void onResponse(Call<List<ResponseCatalogueListing>> call, Response<List<ResponseCatalogueListing>> response) {

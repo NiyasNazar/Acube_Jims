@@ -11,6 +11,7 @@ import java.util.Set;
 public class LocalPreferences {
     private static final boolean DEFAULT_BOOLEAN = false;
     private static final String DEFAULT_STRING = "";
+    private static final Integer DEFAULT_INTEGER =0;
 
 
     //store string preference
@@ -19,7 +20,12 @@ public class LocalPreferences {
         editor.putString(key, value);
         editor.apply();
     }
-
+    //store int preference
+    public static void storeIntegerPreference(Context context, String key, Integer value) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
     //return string preferences
     public static String retrieveStringPreferences(Context context, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -38,7 +44,12 @@ public class LocalPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(key, DEFAULT_BOOLEAN);
     }
+    //return integrer preference
+    public static Integer retrieveIntegerPreferences(Context context, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getInt(key, DEFAULT_INTEGER);
 
+    }
 
     //Removing all local preferences
     public static void clearPreferences(Context context) {

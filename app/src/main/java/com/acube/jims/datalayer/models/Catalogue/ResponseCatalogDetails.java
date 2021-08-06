@@ -14,7 +14,7 @@ public class ResponseCatalogDetails {
     private String itemName;
     @SerializedName("itemDesc")
     @Expose
-    private Object itemDesc;
+    private String itemDesc;
     @SerializedName("itemCode")
     @Expose
     private String itemCode;
@@ -26,13 +26,13 @@ public class ResponseCatalogDetails {
     private Double mrp;
     @SerializedName("makingChargeMin")
     @Expose
-    private Object makingChargeMin;
+    private Double makingChargeMin;
     @SerializedName("gender")
     @Expose
     private String gender;
     @SerializedName("makingChargeMax")
     @Expose
-    private Object makingChargeMax;
+    private Double makingChargeMax;
     @SerializedName("categoryID")
     @Expose
     private Integer categoryID;
@@ -47,22 +47,25 @@ public class ResponseCatalogDetails {
     private String subCategoryName;
     @SerializedName("karatID")
     @Expose
-    private Object karatID;
+    private Integer karatID;
     @SerializedName("karatName")
     @Expose
-    private Object karatName;
+    private String karatName;
     @SerializedName("colorID")
     @Expose
-    private Object colorID;
+    private Integer colorID;
     @SerializedName("colorName")
     @Expose
-    private Object colorName;
+    private String colorName;
+    @SerializedName("colorCode")
+    @Expose
+    private String colorCode;
     @SerializedName("uomid")
     @Expose
-    private Object uomid;
+    private Integer uomid;
     @SerializedName("uomName")
     @Expose
-    private Object uomName;
+    private String uomName;
     @SerializedName("expiryValue")
     @Expose
     private Object expiryValue;
@@ -89,28 +92,28 @@ public class ResponseCatalogDetails {
     private List<ItemSub> itemSubList = null;
     @SerializedName("itemCollectionID")
     @Expose
-    private Object itemCollectionID;
+    private Integer itemCollectionID;
     @SerializedName("itemCollectionName")
     @Expose
-    private Object itemCollectionName;
+    private String itemCollectionName;
     @SerializedName("itemFamilyID")
     @Expose
-    private Object itemFamilyID;
+    private Integer itemFamilyID;
     @SerializedName("itemFamilyName")
     @Expose
-    private Object itemFamilyName;
+    private String itemFamilyName;
     @SerializedName("itemGroupID")
     @Expose
-    private Object itemGroupID;
+    private Integer itemGroupID;
     @SerializedName("itemGroupName")
     @Expose
-    private Object itemGroupName;
+    private String itemGroupName;
     @SerializedName("itemBrandID")
     @Expose
-    private Object itemBrandID;
+    private Integer itemBrandID;
     @SerializedName("itemBrandName")
     @Expose
-    private Object itemBrandName;
+    private String itemBrandName;
     @SerializedName("totalCount")
     @Expose
     private Object totalCount;
@@ -131,11 +134,11 @@ public class ResponseCatalogDetails {
         this.itemName = itemName;
     }
 
-    public Object getItemDesc() {
+    public String getItemDesc() {
         return itemDesc;
     }
 
-    public void setItemDesc(Object itemDesc) {
+    public void setItemDesc(String itemDesc) {
         this.itemDesc = itemDesc;
     }
 
@@ -163,11 +166,11 @@ public class ResponseCatalogDetails {
         this.mrp = mrp;
     }
 
-    public Object getMakingChargeMin() {
+    public Double getMakingChargeMin() {
         return makingChargeMin;
     }
 
-    public void setMakingChargeMin(Object makingChargeMin) {
+    public void setMakingChargeMin(Double makingChargeMin) {
         this.makingChargeMin = makingChargeMin;
     }
 
@@ -179,11 +182,11 @@ public class ResponseCatalogDetails {
         this.gender = gender;
     }
 
-    public Object getMakingChargeMax() {
+    public Double getMakingChargeMax() {
         return makingChargeMax;
     }
 
-    public void setMakingChargeMax(Object makingChargeMax) {
+    public void setMakingChargeMax(Double makingChargeMax) {
         this.makingChargeMax = makingChargeMax;
     }
 
@@ -219,51 +222,59 @@ public class ResponseCatalogDetails {
         this.subCategoryName = subCategoryName;
     }
 
-    public Object getKaratID() {
+    public Integer getKaratID() {
         return karatID;
     }
 
-    public void setKaratID(Object karatID) {
+    public void setKaratID(Integer karatID) {
         this.karatID = karatID;
     }
 
-    public Object getKaratName() {
+    public String getKaratName() {
         return karatName;
     }
 
-    public void setKaratName(Object karatName) {
+    public void setKaratName(String karatName) {
         this.karatName = karatName;
     }
 
-    public Object getColorID() {
+    public Integer getColorID() {
         return colorID;
     }
 
-    public void setColorID(Object colorID) {
+    public void setColorID(Integer colorID) {
         this.colorID = colorID;
     }
 
-    public Object getColorName() {
+    public String getColorName() {
         return colorName;
     }
 
-    public void setColorName(Object colorName) {
+    public void setColorName(String colorName) {
         this.colorName = colorName;
     }
 
-    public Object getUomid() {
+    public String getColorCode() {
+        return colorCode;
+    }
+
+    public void setColorCode(String colorCode) {
+        this.colorCode = colorCode;
+    }
+
+    public Integer getUomid() {
         return uomid;
     }
 
-    public void setUomid(Object uomid) {
+    public void setUomid(Integer uomid) {
         this.uomid = uomid;
     }
 
-    public Object getUomName() {
+    public String getUomName() {
         return uomName;
     }
 
-    public void setUomName(Object uomName) {
+    public void setUomName(String uomName) {
         this.uomName = uomName;
     }
 
@@ -331,67 +342,67 @@ public class ResponseCatalogDetails {
         this.itemSubList = itemSubList;
     }
 
-    public Object getItemCollectionID() {
+    public Integer getItemCollectionID() {
         return itemCollectionID;
     }
 
-    public void setItemCollectionID(Object itemCollectionID) {
+    public void setItemCollectionID(Integer itemCollectionID) {
         this.itemCollectionID = itemCollectionID;
     }
 
-    public Object getItemCollectionName() {
+    public String getItemCollectionName() {
         return itemCollectionName;
     }
 
-    public void setItemCollectionName(Object itemCollectionName) {
+    public void setItemCollectionName(String itemCollectionName) {
         this.itemCollectionName = itemCollectionName;
     }
 
-    public Object getItemFamilyID() {
+    public Integer getItemFamilyID() {
         return itemFamilyID;
     }
 
-    public void setItemFamilyID(Object itemFamilyID) {
+    public void setItemFamilyID(Integer itemFamilyID) {
         this.itemFamilyID = itemFamilyID;
     }
 
-    public Object getItemFamilyName() {
+    public String getItemFamilyName() {
         return itemFamilyName;
     }
 
-    public void setItemFamilyName(Object itemFamilyName) {
+    public void setItemFamilyName(String itemFamilyName) {
         this.itemFamilyName = itemFamilyName;
     }
 
-    public Object getItemGroupID() {
+    public Integer getItemGroupID() {
         return itemGroupID;
     }
 
-    public void setItemGroupID(Object itemGroupID) {
+    public void setItemGroupID(Integer itemGroupID) {
         this.itemGroupID = itemGroupID;
     }
 
-    public Object getItemGroupName() {
+    public String getItemGroupName() {
         return itemGroupName;
     }
 
-    public void setItemGroupName(Object itemGroupName) {
+    public void setItemGroupName(String itemGroupName) {
         this.itemGroupName = itemGroupName;
     }
 
-    public Object getItemBrandID() {
+    public Integer getItemBrandID() {
         return itemBrandID;
     }
 
-    public void setItemBrandID(Object itemBrandID) {
+    public void setItemBrandID(Integer itemBrandID) {
         this.itemBrandID = itemBrandID;
     }
 
-    public Object getItemBrandName() {
+    public String getItemBrandName() {
         return itemBrandName;
     }
 
-    public void setItemBrandName(Object itemBrandName) {
+    public void setItemBrandName(String itemBrandName) {
         this.itemBrandName = itemBrandName;
     }
 
@@ -402,5 +413,4 @@ public class ResponseCatalogDetails {
     public void setTotalCount(Object totalCount) {
         this.totalCount = totalCount;
     }
-
 }

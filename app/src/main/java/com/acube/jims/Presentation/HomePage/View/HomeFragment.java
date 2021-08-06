@@ -67,6 +67,8 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
     @Override
     public void replaceFragment() {
         FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
+        LocalPreferences.storeStringPreference(getActivity(), "subcatid", "");
+        LocalPreferences.storeStringPreference(getContext(), "colorid", "");
     }
 
     public List<HomeData> getList() {

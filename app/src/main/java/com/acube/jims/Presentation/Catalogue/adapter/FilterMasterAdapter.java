@@ -1,56 +1,45 @@
 package com.acube.jims.Presentation.Catalogue.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
-import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.Filter.Catresult;
-import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapter.ProductViewHolder> implements FilterChildAdapter.Passfilter {
+public class FilterMasterAdapter extends RecyclerView.Adapter<FilterMasterAdapter.ProductViewHolder> {
 
 
     private Context mCtx;
+    int selectedPosition = 0;
+    ReplaceFregment replaceFregment;
 
-    private List<Catresult> dataset;
+    private List<String> dataset;
     List<SubCategory> sublist;
-    List<String> catlist;
 
 
-    public FilterParentAdapter(Context mCtx, List<Catresult> dataset) {
+    public FilterMasterAdapter(Context mCtx, List<String> dataset,ReplaceFregment replaceFregment) {
         this.mCtx = mCtx;
         this.dataset = dataset;
+        this.replaceFregment=replaceFregment;
         sublist = new ArrayList<>();
-        catlist = new ArrayList<>();
-
 
     }
 
-    public FilterParentAdapter(Context mCtx) {
+    public FilterMasterAdapter(Context mCtx) {
         this.mCtx = mCtx;
         sublist = new ArrayList<>();
     }
@@ -67,8 +56,16 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
-        holder.textViewItemName.setText(dataset.get(position).getCategoryName());
+        holder.textViewItemName.setText(dataset.get(position));
         // holder.imageView.setImageResource(homeData.getImage());
+        if (selectedPosition == position) {
+            holder.itemView.setBackgroundColor(Color.parseColor("#F8FAFF"));
+            holder.textViewItemName.setTextColor(Color.parseColor("#000000"));
+        } else {
+            holder.itemView.setBackgroundColor(0x00000000);
+            holder.textViewItemName.setTextColor(Color.parseColor("#666666"));
+
+        }
 
 
     }
@@ -77,20 +74,6 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
     @Override
     public int getItemCount() {
         return dataset.size();
-    }
-
-    @Override
-    public void PassId(Boolean flag, String id) {
-        if (flag) {
-            catlist.add(id);
-            setList("subcategoryfilter",catlist);
-
-        } else {
-            catlist.remove(id);
-            setList("subcategoryfilter",catlist);
-        }
-
-        Log.d("PassId", "PassId: " + catlist.toString()+flag);
     }
 
 
@@ -112,8 +95,8 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
-                    sublist = dataset.get(pos).getSubCategories();
-                    recyclerView.setAdapter(new FilterChildAdapter(mCtx, sublist, FilterParentAdapter.this::PassId));
+                 /*   sublist = dataset.get(pos).getSubCategories();
+                    recyclerView.setAdapter(new FilterChildAdapter(mCtx, sublist));
                     if (recyclerView.getVisibility() == View.VISIBLE) {
 
                         // The transition of the hiddenView is carried out
@@ -130,16 +113,18 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
                         recyclerView.setVisibility(View.VISIBLE);
 
                     }
-
+*/
+                    notifyDataSetChanged();
+                    selectedPosition = pos;
+                    replaceFregment.replace(pos);
 
                 }
             });
 
         }
     }
-    public <T> void setList(String key, List<T> list) {
-        Gson gson = new Gson();
-        String json = gson.toJson(list);
-        LocalPreferences.storeStringPreference(mCtx, key, json);
+
+    public  interface ReplaceFregment{
+        void replace(int Id);
     }
 }

@@ -51,25 +51,29 @@ import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
 import com.acube.jims.Utils.ExpandableListDataPump;
 import com.acube.jims.Utils.FragmentHelper;
+import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.Utils.PaginationScrollListener;
+import com.acube.jims.databinding.BottomSheetFilterBinding;
 import com.acube.jims.databinding.FragmentCatalogueBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.Filter.Catresult;
+import com.acube.jims.datalayer.models.Filter.Colorresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
-public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapter.replaceFregment{
+public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapter.replaceFregment, FilterBottomSheetFragment.ApplyFilter {
 
 
     CatalogItemsAdapter adapter;
     GridLayoutManager gridLayoutManager;
-    String vaSubCatID = "0", vaCatID = "0", vaKaratID = "0";
+    String vaSubCatID, vaCatID = "", vaKaratID = "", vaColorID = "";
 
 
     public CatalogueFragment() {
@@ -81,6 +85,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     List<String> expandableListTitle;
     List<Catresult> catresult;
     List<Karatresult> karatresults;
+    List<Colorresult> colorresults;
     HashMap<String, List<String>> expandableListDetail;
     private static final int PAGE_START = 1;
     private boolean isLoading = false;
@@ -130,9 +135,13 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         binding.imvfilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mypopupWindow.showAsDropDown(v, -153, 0);
-                binding.parent.getForeground().setAlpha(100);
+                //  mypopupWindow.showAsDropDown(v, -153, 0);
+                //  binding.parent.getForeground().setAlpha(100);
 
+                FilterBottomSheetFragment bottomSheet = new FilterBottomSheetFragment(CatalogueFragment.this::applyfilter);
+
+                bottomSheet.show(getActivity().getSupportFragmentManager(),
+                        "ModalBottomSheet");
 
             }
         });
@@ -172,12 +181,12 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
                 hideProgressDialog();
-                if (responseCatalogueListings != null) {
+                if (responseCatalogueListings != null&&responseCatalogueListings.size()!=0) {
                     /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     TOTAL_PAGES = getTotalPagesFromTotalResult(responseCatalogueListings.get(0).getTotalCount(), AppConstants.Pagesize);
                     Log.d("onChanged", "onChanged: " + TOTAL_PAGES);
                     adapter.addAll(responseCatalogueListings);
-                    if (currentPage <= TOTAL_PAGES) adapter.addLoadingFooter();
+                    if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
                     else isLastPage = true;
 
                 }
@@ -187,7 +196,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         catalogViewModelNextPage.getLiveData().observe(getActivity(), new Observer<List<ResponseCatalogueListing>>() {
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
-                if (responseCatalogueListings != null) {
+                if (responseCatalogueListings != null&&responseCatalogueListings.size()!=0) {
                     /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     adapter.removeLoadingFooter();
                     isLoading = false;
@@ -206,17 +215,23 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
                 if (responseFetchFilters != null) {
                     catresult = new ArrayList<>();
                     karatresults = new ArrayList<>();
+                    colorresults = new ArrayList<>();
                     catresult = responseFetchFilters.getCatresult();
                     karatresults = responseFetchFilters.getKaratresult();
-                    expandableListView.setAdapter(new FilterParentAdapter(getActivity(), catresult));
-                    recyclerViewKarat.setAdapter(new FilterKaratAdapter(getActivity(), karatresults));
+                    colorresults = responseFetchFilters.getColorresult();
 
+                    setList("catresult", catresult);
+                    setList("karatresults", karatresults);
+                    setList("colorresults", colorresults);
+                    //  expandableListView.setAdapter(new FilterParentAdapter(getActivity(), catresult));
+                    //  recyclerViewKarat.setAdapter(new FilterKaratAdapter(getActivity(), karatresults));
+                    //   recyclerViewColor.setAdapter(new FilterColorAdapter(getActivity(), colorresults));
 
                 }
             }
         });
         filterViewModel.FetchFilters();
-        setPopUpWindow();
+        //setPopUpWindow();
         return binding.getRoot();
 
 
@@ -224,8 +239,13 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     private void LoadFirstPage() {
         showProgressDialog();
+        adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this);
+        binding.recyvcatalog.setAdapter(adapter);
+        vaSubCatID = String.valueOf(LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid"));
+        vaColorID = LocalPreferences.retrieveStringPreferences(getContext(), "colorid");
+        Log.d(TAG, "LoadFirstPage: " + vaSubCatID);
 
-        viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, "0", vaKaratID);
+        viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
 
     }
 
@@ -236,14 +256,15 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     private void loadNextPage() {
 
+        vaSubCatID = String.valueOf(LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid"));
+        vaColorID = LocalPreferences.retrieveStringPreferences(getContext(), "colorid");
 
-        catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, "0", vaKaratID);
+        catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
 
     }
 
     private void init() {
-        adapter = new CatalogItemsAdapter(getActivity(),CatalogueFragment.this);
-        binding.recyvcatalog.setAdapter(adapter);
+
 
         viewModel = new ViewModelProvider(this).get(CatalogViewModel.class);
         catalogViewModelNextPage = new ViewModelProvider(this).get(CatalogViewModelNextPage.class);
@@ -281,29 +302,29 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         expandableListView = (RecyclerView) view.findViewById(R.id.recyvcategory);
         recyclerViewKarat = (RecyclerView) view.findViewById(R.id.recyvKarat);
         recyclerViewColor = (RecyclerView) view.findViewById(R.id.recycolor);
-        recyclerViewColor.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerViewColor.setAdapter(new FilterColorAdapter(getActivity()));
+        recyclerViewColor.setLayoutManager(new GridLayoutManager(getContext(), 5));
+
 
         expandableListView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerViewKarat.setLayoutManager(new LinearLayoutManager(getActivity()));
         morecolor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expandView(recyclerViewColor);
+                expandView(recyclerViewColor, morecolor);
             }
         });
 
         morekarat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expandView(recyclerViewKarat);
+                expandView(recyclerViewKarat, morekarat);
 
             }
         });
         morecat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                expandView(expandableListView);
+                expandView(expandableListView, morecat);
 
             }
         });
@@ -334,9 +355,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
             @Override
             public void onClick(View v) {
                 binding.parent.getForeground().setAlpha(0);
-                LoadFirstPage();
-
-
+                // LoadFirstPage();
                 mypopupWindow.dismiss();
             }
         });
@@ -344,7 +363,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     }
 
-    private void expandView(RecyclerView hiddenView) {
+    private void expandView(RecyclerView hiddenView, ImageView arrow) {
         if (hiddenView.getVisibility() == View.VISIBLE) {
 
             // The transition of the hiddenView is carried out
@@ -354,7 +373,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
             TransitionManager.beginDelayedTransition(hiddenView,
                     new AutoTransition());
             hiddenView.setVisibility(View.GONE);
-            //arrow.setImageResource(R.drawable.ic_baseline_expand_more_24);
+            arrow.setImageResource(R.drawable.ic_baseline_expand_more_24);
         }
 
         // If the CardView is not expanded, set its visibility
@@ -364,7 +383,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
             TransitionManager.beginDelayedTransition(hiddenView,
                     new AutoTransition());
             hiddenView.setVisibility(View.VISIBLE);
-            // arrow.setImageResource(R.drawable.ic_baseline_expand_less_24);
+            arrow.setImageResource(R.drawable.ic_baseline_expand_less_24);
         }
 
 
@@ -372,10 +391,22 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     @Override
     public void replace(String Id) {
-        Log.d(TAG, "replace: "+this.getClass().getSimpleName());
+        Log.d(TAG, "replace: " + this.getClass().getSimpleName());
         FragmentHelper.replaceFragment(getActivity(), R.id.content, ProductDetailsFragment.newInstance(Id));
 
 
+    }
+
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        LocalPreferences.storeStringPreference(getActivity(), key, json);
+    }
+
+    @Override
+    public void applyfilter() {
+        Toast.makeText(getActivity(), "FilterApplied", Toast.LENGTH_SHORT).show();
+        LoadFirstPage();
 
     }
 }

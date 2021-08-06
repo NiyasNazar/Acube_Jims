@@ -146,7 +146,9 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
                     /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     TOTAL_PAGES = getTotalPagesFromTotalResult(responseCatalogueListings.get(0).getTotalCount(), AppConstants.Pagesize);
                     Log.d("onChanged", "onChanged: " + TOTAL_PAGES);
+                    adapter.clear();
                     adapter.addAll(responseCatalogueListings);
+
                     if (currentPage <= TOTAL_PAGES) adapter.addLoadingFooter();
                     else isLastPage = true;
 

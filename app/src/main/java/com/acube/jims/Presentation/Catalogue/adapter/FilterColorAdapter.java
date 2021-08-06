@@ -1,18 +1,25 @@
 package com.acube.jims.Presentation.Catalogue.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
+import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.datalayer.models.Filter.Colorresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +30,16 @@ public class FilterColorAdapter extends RecyclerView.Adapter<FilterColorAdapter.
     private Context mCtx;
 
 
-    private List<Karatresult> dataset;
+    private List<Colorresult> dataset;
     List<SubCategory> sublist;
+    List<String>colorlist;
 
 
-    public FilterColorAdapter(Context mCtx, List<Karatresult> dataset) {
+    public FilterColorAdapter(Context mCtx, List<Colorresult> dataset) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         sublist = new ArrayList<>();
+        colorlist=new ArrayList<>();
 
     }
 
@@ -50,8 +59,9 @@ public class FilterColorAdapter extends RecyclerView.Adapter<FilterColorAdapter.
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
+        holder.mcolor.setText(dataset.get(position).getColorName());
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
-     //   holder.textViewItemName.setText(dataset.get(position).getKaratName());
+        //   holder.textViewItemName.setText(dataset.get(position).getKaratName());
         // holder.imageView.setImageResource(homeData.getImage());
 
 
@@ -60,7 +70,7 @@ public class FilterColorAdapter extends RecyclerView.Adapter<FilterColorAdapter.
 
     @Override
     public int getItemCount() {
-        return 2;
+        return dataset.size();
     }
 
 
@@ -69,40 +79,32 @@ public class FilterColorAdapter extends RecyclerView.Adapter<FilterColorAdapter.
         TextView textViewItemName;
         ImageView imageView;
         RecyclerView recyclerView;
+        CheckBox mcolor;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-
-           /* textViewItemName = itemView.findViewById(R.id.tv_item_name);
-            //imageView = itemView.findViewById(R.id.imageView);
-            recyclerView = itemView.findViewById(R.id.sublist);
-            recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
-            itemView.setOnClickListener(new View.OnClickListener() {
+            mcolor = itemView.findViewById(R.id.checkbox);
+            mcolor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View v) {
-                  *//*  int pos = getAdapterPosition();
-                    sublist = dataset.get(pos).getSubCategories();
-                    recyclerView.setAdapter(new FilterChildAdapter(mCtx, sublist));
-                    if (recyclerView.getVisibility() == View.VISIBLE) {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked){
+                        colorlist.add(String.valueOf(dataset.get(getAdapterPosition()).getId()));
+                        setList("colorcategoryfilter",colorlist);
 
-                        // The transition of the hiddenView is carried out
-                        //  by the TransitionManager class.
-                        // Here we use an object of the AutoTransition
-                        // Class to create a default transition.
-                        TransitionManager.beginDelayedTransition(recyclerView,
-                                new AutoTransition());
-                        recyclerView.setVisibility(View.GONE);
-                        // arrow.setImageResource(R.drawable.ic_baseline_expand_more_24);
-                    } else {
-
-                        recyclerView.setVisibility(View.VISIBLE);
-
+                    }else if (!isChecked){
+                        colorlist.remove(String.valueOf(dataset.get(getAdapterPosition()).getId()));
+                        setList("colorcategoryfilter",colorlist);
                     }
-*//*
-
                 }
-            });*/
+            });
+
+
 
         }
+    }
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        LocalPreferences.storeStringPreference(mCtx, key, json);
     }
 }

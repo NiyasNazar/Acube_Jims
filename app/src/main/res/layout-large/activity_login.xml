@@ -102,8 +102,8 @@
                     android:layout_width="139dp"
                     android:layout_height="50dp"
                     android:layout_below="@id/ed_password"
-                    android:layout_marginTop="20dp"
                     android:layout_marginLeft="57dp"
+                    android:layout_marginTop="20dp"
 
 
                     android:layout_marginBottom="36dp"

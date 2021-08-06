@@ -84,7 +84,20 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
 
                 catalogVH.textViewItemName.setText(responseCatalogueListing.getItemName());
+                if (responseCatalogueListing.getGrossWeight()!=null){
+                    catalogVH.textViewGrossWeight.setText(responseCatalogueListing.getKaratName()+"- Weight: "+responseCatalogueListing.getGrossWeight()+" g");
 
+                }else {
+                    catalogVH.textViewGrossWeight.setText(responseCatalogueListing.getKaratName()+"- Weight:  N/A");
+
+                }
+                if (responseCatalogueListing.getStoneWeight()!=null){
+                    catalogVH.textViewStoneWeight.setText(responseCatalogueListing.getStoneWeight()+" g");
+
+                }else{
+                    catalogVH.textViewStoneWeight.setText("N/A");
+
+                }
                 // holder.imageView.setImageResource(homeData.getImage());
               if (responseCatalogueListing.getItemSubList().size() > 0) {
                     Glide.with(context)
@@ -195,12 +208,15 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * Main list's content ViewHolder
      */
     protected class CatalogVH extends RecyclerView.ViewHolder {
-        TextView textViewItemName;
+        TextView textViewItemName,textViewStoneWeight,textViewGrossWeight;
         ImageView imageView;
 
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
+            textViewStoneWeight = itemView.findViewById(R.id.tvstoneweight);
+            textViewGrossWeight = itemView.findViewById(R.id.tvgrossweight);
+
             imageView = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

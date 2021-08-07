@@ -1,4 +1,4 @@
-package com.acube.jims.Presentation.HomePage.View;
+package com.acube.jims.Presentation.HomePage.ViewModel;
 
 import android.app.Application;
 

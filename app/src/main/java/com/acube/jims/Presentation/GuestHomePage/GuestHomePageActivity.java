@@ -21,11 +21,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
 import com.acube.jims.Presentation.Catalogue.View.GuestCatalogueFragment;
 import com.acube.jims.Presentation.DeviceRegistration.View.DeviceRegistrationFragment;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
-import com.acube.jims.Presentation.HomePage.View.HomeViewModel;
+import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.Presentation.HomePage.adapter.ExpandableListAdapter;
 import com.acube.jims.Presentation.Login.View.LoginActivity;
 import com.acube.jims.R;

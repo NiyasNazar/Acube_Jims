@@ -5,6 +5,7 @@ import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
+import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceUpdation;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseGetRegistered;
@@ -50,7 +51,6 @@ public interface RestApiService {
     Call<List<HomeData>> getHomeMenu(@Header("Authorization") String Auth, @Path("appname") String appname, @Path("rolename") String rolename);
 
 
-
     @POST("ItemCatalog/GetAllDetails")
     Call<List<ResponseCatalogueListing>> getCatalogueItems(@Body JsonObject jsonObject);
 
@@ -60,5 +60,6 @@ public interface RestApiService {
     @GET("ItemCatalog/GetSingle/{id}")
     Call<ResponseCatalogDetails> getItemDetails(@Path("id") String id);
 
-
+    @GET("CustomerRegistration/GetCustomerList/{FilterText}")
+    Call<List<ResponseCustomerListing>> getCustomer(@Header("Authorization") String Auth,@Path("FilterText") String FilterText);
 }

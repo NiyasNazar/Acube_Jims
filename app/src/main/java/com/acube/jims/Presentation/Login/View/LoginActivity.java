@@ -9,15 +9,13 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.method.PasswordTransformationMethod;
-import android.text.method.SingleLineTransformationMethod;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.Presentation.HomePage.View.HomePageActivity;
-import com.acube.jims.Presentation.HomePage.View.HomeViewModel;
+import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.Presentation.Login.ViewModel.LoginViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
@@ -26,8 +24,6 @@ import com.acube.jims.databinding.ActivityLoginBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
-import com.acube.jims.datalayer.remote.db.DatabaseClient;
-import com.acube.jims.datalayer.remote.dbmodel.HomeMenu;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 

@@ -181,7 +181,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
                 hideProgressDialog();
-                if (responseCatalogueListings != null&&responseCatalogueListings.size()!=0) {
+                if (responseCatalogueListings != null && responseCatalogueListings.size() != 0) {
                     /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     TOTAL_PAGES = getTotalPagesFromTotalResult(responseCatalogueListings.get(0).getTotalCount(), AppConstants.Pagesize);
                     Log.d("onChanged", "onChanged: " + TOTAL_PAGES);
@@ -196,7 +196,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         catalogViewModelNextPage.getLiveData().observe(getActivity(), new Observer<List<ResponseCatalogueListing>>() {
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
-                if (responseCatalogueListings != null&&responseCatalogueListings.size()!=0) {
+                if (responseCatalogueListings != null && responseCatalogueListings.size() != 0) {
                     /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     adapter.removeLoadingFooter();
                     isLoading = false;
@@ -241,8 +241,9 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         showProgressDialog();
         adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this);
         binding.recyvcatalog.setAdapter(adapter);
-        vaSubCatID = String.valueOf(LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid"));
+        vaSubCatID =LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid");
         vaColorID = LocalPreferences.retrieveStringPreferences(getContext(), "colorid");
+        vaKaratID = LocalPreferences.retrieveStringPreferences(getContext(), "karatid");
         Log.d(TAG, "LoadFirstPage: " + vaSubCatID);
 
         viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
@@ -256,8 +257,10 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     private void loadNextPage() {
 
-        vaSubCatID = String.valueOf(LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid"));
+        vaSubCatID = LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid");
         vaColorID = LocalPreferences.retrieveStringPreferences(getContext(), "colorid");
+        vaKaratID = LocalPreferences.retrieveStringPreferences(getContext(), "karatid");
+
 
         catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
 

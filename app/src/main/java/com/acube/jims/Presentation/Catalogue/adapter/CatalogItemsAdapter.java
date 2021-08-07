@@ -92,7 +92,7 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
                 }
                 if (responseCatalogueListing.getStoneWeight()!=null){
-                    catalogVH.textViewStoneWeight.setText(responseCatalogueListing.getStoneWeight()+" g");
+                    catalogVH.textViewStoneWeight.setText("Stone weight: "+responseCatalogueListing.getStoneWeight()+" g");
 
                 }else{
                     catalogVH.textViewStoneWeight.setText("N/A");

@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -35,6 +36,7 @@ public class ProductDetailsFragment extends Fragment {
 
     private ItemDetailsViewModel mViewModel;
     String Id;
+    BackHandler backHandler;
 
     public static ProductDetailsFragment newInstance(String Id) {
         ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
@@ -46,6 +48,16 @@ public class ProductDetailsFragment extends Fragment {
     }
 
     ProductDetailsFragmentBinding binding;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            backHandler = (BackHandler) context;
+        } catch (ClassCastException castException) {
+            /** The activity does not implement the listener. */
+        }
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -62,11 +74,17 @@ public class ProductDetailsFragment extends Fragment {
         }
 
 
-        binding.toolbar.tvFragname.setText("Catalogue");
+        binding.toolbar.tvFragname.setText("View Details-Single item");
         binding.toolbar.dashboardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
+            }
+        });
+        binding.btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backHandler.backpress();
             }
         });
 
@@ -114,7 +132,7 @@ public class ProductDetailsFragment extends Fragment {
                     }
 
 
-                    binding.tvMrp.setText(  responseCatalogDetails.getMrp()+" SAR ");
+                    binding.tvMrp.setText(responseCatalogDetails.getMrp() + " SAR ");
                     binding.tvItemName.setText(responseCatalogDetails.getItemName());
                     binding.tvbrandname.setText(responseCatalogDetails.getItemBrandName());
                     binding.tvDescription.setText(responseCatalogDetails.getItemDesc());
@@ -148,6 +166,10 @@ public class ProductDetailsFragment extends Fragment {
 
         return binding.getRoot();
 
+    }
+
+    public interface BackHandler {
+        void backpress();
     }
 
 

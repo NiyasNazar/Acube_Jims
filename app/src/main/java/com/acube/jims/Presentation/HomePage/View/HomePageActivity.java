@@ -6,8 +6,6 @@ import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,15 +18,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.acube.jims.Presentation.DeviceRegistration.View.DeviceRegistrationFragment;
+import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.Presentation.HomePage.adapter.ExpandableListAdapter;
-import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
 import com.acube.jims.Presentation.Login.View.LoginActivity;
+import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.databinding.ActivityHomePageBinding;
@@ -39,7 +37,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity implements ProductDetailsFragment.BackHandler {
     ActivityHomePageBinding binding;
     List<HomeData> dataset;
     HomeData homeData;
@@ -223,5 +221,11 @@ public class HomePageActivity extends AppCompatActivity {
 
     public void replaceFragment(Fragment fragment) {
         FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment, "");
+    }
+
+    @Override
+    public void backpress() {
+        Toast.makeText(getApplicationContext(), "backpress", Toast.LENGTH_SHORT).show();
+        onBackPressed();
     }
 }

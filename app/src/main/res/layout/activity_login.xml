@@ -72,14 +72,14 @@
                     android:layout_below="@+id/tvsubtitle"
                     android:layout_centerHorizontal="true"
 
-                    android:paddingRight="10dp"
                     android:layout_marginTop="13dp"
-
                     android:background="@drawable/ed_border"
 
                     android:hint="@string/hint_email_id"
+
                     android:inputType="textEmailAddress"
                     android:paddingLeft="24dp"
+                    android:paddingRight="10dp"
                     android:textSize="14sp">
 
                 </EditText>

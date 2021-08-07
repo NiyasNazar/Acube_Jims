@@ -5,13 +5,14 @@
 
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/_5sdp">
+        >
 
         <LinearLayout
+            android:layout_toLeftOf="@id/dashboard_layout"
             android:id="@+id/currentfrag_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,26 +25,27 @@
                 android:fontFamily="@font/montserratsemibold"
                 android:gravity="center_vertical"
                 android:letterSpacing="0.01"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:text=" VIEW DETAILS – SINGLE ITEM"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_7ssp"
                 android:textStyle="normal" />
 
             <ImageView
                 android:layout_width="@dimen/_17sdp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:src="@drawable/icon_back">
 
             </ImageView>
         </LinearLayout>
 
         <LinearLayout
+            android:layout_alignParentRight="true"
             android:id="@+id/dashboard_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,12 +60,12 @@
                 android:fontFamily="@font/montserratsemibold"
                 android:gravity="center_vertical"
                 android:letterSpacing="0.01"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:text=" Dashboard"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_7ssp"
                 android:textStyle="normal" />
 
 
@@ -71,11 +73,11 @@
                 android:layout_width="@dimen/_17sdp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:src="@drawable/icon_back">
 
             </ImageView>
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

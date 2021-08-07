@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -23,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterMasterAdapter;
 import com.acube.jims.Presentation.Filters.View.CategoryFilterFragment;
 import com.acube.jims.Presentation.Filters.View.ColorFilterFragment;
+import com.acube.jims.Presentation.Filters.View.KaratFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
@@ -61,10 +63,33 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
         dataset.add("Karat");
         binding.rcylrfiltritems.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rcylrfiltritems.setAdapter(new FilterMasterAdapter(getActivity(), dataset, FilterBottomSheetFragment.this));
+        binding.closelayt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        binding.backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocalPreferences.storeStringPreference(getContext(), "subcatid", "");
+                LocalPreferences.storeStringPreference(getContext(), "colorid", "");
+                LocalPreferences.storeStringPreference(getContext(), "karatid", "");
+
+
+                dismiss();
+            }
+        });
         binding.clrfilterlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LocalPreferences.storeStringPreference(getContext(), "subcatid", "");
+                LocalPreferences.storeStringPreference(getContext(), "colorid", "");
+                LocalPreferences.storeStringPreference(getContext(), "karatid", "");
+                LocalPreferences.removePreferences(getActivity(), "subcategoryfilter");
+                LocalPreferences.removePreferences(getActivity(), "colorcategoryfilter");
+                LocalPreferences.removePreferences(getActivity(), "karatfilter");
+                Toast.makeText(getActivity(), "Filter Cleared", Toast.LENGTH_SHORT).show();
             }
         });
         CategoryFilterFragment categoryFilterFragment = new CategoryFilterFragment();
@@ -75,8 +100,10 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
 
                 List<String> datasetsubcategory = new ArrayList<>();
                 List<String> datasetcolor = new ArrayList<>();
-                datasetsubcategory=getList("subcategoryfilter");
-                datasetcolor=getList("colorcategoryfilter");
+                List<String> datasetkarat = new ArrayList<>();
+                datasetsubcategory = getList("subcategoryfilter");
+                datasetcolor = getList("colorcategoryfilter");
+                datasetkarat = getList("karatfilter");
                 if (datasetsubcategory != null && datasetsubcategory.size() != 0) {
                     StringBuilder str = new StringBuilder("");
                     for (String eachstring : datasetsubcategory) {
@@ -104,9 +131,19 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                     Log.d("datasetcolor", "onClick: " + commaseparatedlist);
                     LocalPreferences.storeStringPreference(getContext(), "colorid", commaseparatedlist);
                 }
-
-
-
+                if (datasetkarat != null && datasetkarat.size() != 0) {
+                    StringBuilder str = new StringBuilder("");
+                    for (String eachstring : datasetkarat) {
+                        str.append(eachstring).append(",");
+                    }
+                    String commaseparatedlist = str.toString();
+                    if (commaseparatedlist.length() > 0)
+                        commaseparatedlist
+                                = commaseparatedlist.substring(
+                                0, commaseparatedlist.length() - 1);
+                    Log.d("datasetkarat", "onClick: " + commaseparatedlist);
+                    LocalPreferences.storeStringPreference(getContext(), "karatid", commaseparatedlist);
+                }
 
                 applyFilter.applyfilter();
                 dismiss();
@@ -143,8 +180,11 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
             CategoryFilterFragment categoryFilterFragment = new CategoryFilterFragment();
             ReplaceFragment(categoryFilterFragment);
 
-        }else if (pos==1){
+        } else if (pos == 1) {
             ColorFilterFragment colorFilterFragment = new ColorFilterFragment();
+            ReplaceFragment(colorFilterFragment);
+        } else if (pos == 2) {
+            KaratFragment colorFilterFragment = new KaratFragment();
             ReplaceFragment(colorFilterFragment);
         }
 

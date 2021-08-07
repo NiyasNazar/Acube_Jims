@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,9 +15,11 @@ import androidx.transition.AutoTransition;
 import androidx.transition.TransitionManager;
 
 import com.acube.jims.R;
+import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +32,16 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
 
     private List<Karatresult> dataset;
     List<SubCategory> sublist;
-
+    List<String> karatlist;
 
     public FilterKaratAdapter(Context mCtx, List<Karatresult> dataset) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         sublist = new ArrayList<>();
+        karatlist=new ArrayList<>();
 
     }
-   
+
     public FilterKaratAdapter(Context mCtx) {
         this.mCtx = mCtx;
         sublist = new ArrayList<>();
@@ -54,7 +59,7 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
-        holder.textViewItemName.setText(dataset.get(position).getKaratName());
+        holder.textViewkaratcheckbox.setText(dataset.get(position).getKaratName());
         // holder.imageView.setImageResource(homeData.getImage());
 
 
@@ -69,43 +74,36 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName;
+        CheckBox textViewkaratcheckbox;
         ImageView imageView;
         RecyclerView recyclerView;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
-            textViewItemName = itemView.findViewById(R.id.tv_item_name);
+            textViewkaratcheckbox = itemView.findViewById(R.id.checkbox);
             //imageView = itemView.findViewById(R.id.imageView);
-            recyclerView = itemView.findViewById(R.id.sublist);
-            recyclerView.setLayoutManager(new LinearLayoutManager(mCtx));
-            itemView.setOnClickListener(new View.OnClickListener() {
+
+
+            textViewkaratcheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View v) {
-                  /*  int pos = getAdapterPosition();
-                    sublist = dataset.get(pos).getSubCategories();
-                    recyclerView.setAdapter(new FilterChildAdapter(mCtx, sublist));
-                    if (recyclerView.getVisibility() == View.VISIBLE) {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        karatlist.add(String.valueOf(dataset.get(getAdapterPosition()).getId()));
+                        setList("karatfilter", karatlist);
 
-                        // The transition of the hiddenView is carried out
-                        //  by the TransitionManager class.
-                        // Here we use an object of the AutoTransition
-                        // Class to create a default transition.
-                        TransitionManager.beginDelayedTransition(recyclerView,
-                                new AutoTransition());
-                        recyclerView.setVisibility(View.GONE);
-                        // arrow.setImageResource(R.drawable.ic_baseline_expand_more_24);
-                    } else {
-
-                        recyclerView.setVisibility(View.VISIBLE);
-
+                    } else if (!isChecked) {
+                        karatlist.remove(String.valueOf(dataset.get(getAdapterPosition()).getId()));
+                        setList("karatfilter", karatlist);
                     }
-*/
-
                 }
             });
 
         }
+    }
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        LocalPreferences.storeStringPreference(mCtx, key, json);
     }
 }

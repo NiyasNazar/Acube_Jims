@@ -57,6 +57,12 @@ public class LocalPreferences {
         editor.clear();
         editor.apply();
     }
+    //Removing all local preferences
+    public static void removePreferences(Context context,String key) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.remove(key);
+        editor.apply();
+    }
 
     //Storing arraylist<string> to the local preference
     public static void storeSetPreference(Context context, String key, ArrayList<String> value) {

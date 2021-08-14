@@ -9,38 +9,72 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResponseFetchFilters {
 
-    @SerializedName("catresult")
+    @SerializedName("id")
     @Expose
-    private List<Catresult> catresult = null;
-    @SerializedName("colorresult")
+    private Integer id;
+    @SerializedName("categoryCode")
     @Expose
-    private List<Colorresult> colorresult = null;
-    @SerializedName("karatresult")
+    private String categoryCode;
+    @SerializedName("categoryName")
     @Expose
-    private List<Karatresult> karatresult = null;
+    private String categoryName;
+    @SerializedName("subCategories")
+    @Expose
+    private List<SubCategory> subCategories = null;
+    @SerializedName("karats")
+    @Expose
+    private List<Karatresult> karats = null;
+    @SerializedName("colors")
+    @Expose
+    private List<Colorresult> colors = null;
 
-    public List<Catresult> getCatresult() {
-        return catresult;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCatresult(List<Catresult> catresult) {
-        this.catresult = catresult;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public List<Colorresult> getColorresult() {
-        return colorresult;
+    public String getCategoryCode() {
+        return categoryCode;
     }
 
-    public void setColorresult(List<Colorresult> colorresult) {
-        this.colorresult = colorresult;
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
     }
 
-    public List<Karatresult> getKaratresult() {
-        return karatresult;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setKaratresult(List<Karatresult> karatresult) {
-        this.karatresult = karatresult;
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
+
+    public List<SubCategory> getSubCategories() {
+        return subCategories;
+    }
+
+    public void setSubCategories(List<SubCategory> subCategories) {
+        this.subCategories = subCategories;
+    }
+
+    public List<Karatresult> getKarats() {
+        return karats;
+    }
+
+    public void setKarats(List<Karatresult> karats) {
+        this.karats = karats;
+    }
+
+    public List<Colorresult> getColors() {
+        return colors;
+    }
+
+    public void setColors(List<Colorresult> colors) {
+        this.colors = colors;
+    }
+
 
 }

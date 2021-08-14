@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="182dp"
+
+            android:layout_weight=".6"
+            android:background="@drawable/table_item_border">
+
+            <ImageView
+                android:id="@+id/imvdelete"
+
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_delete"></ImageView>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+
+            android:layout_height="182dp"
+            android:layout_weight="2"
+            android:background="@drawable/table_item_border">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cdv_image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dp"
+                app:cardCornerRadius="6.7dp">
+
+                <ImageView
+                    android:id="@+id/item_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/dummy_item_image"></ImageView>
+
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_itemname"
+                android:layout_width="311dp"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/tv_weight"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/cdv_image"
+                android:fontFamily="@font/montserratsemibold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:maxLines="2"
+                android:text="Latin Solitare Ring - LSR0002350"
+                android:textColor="#666666"
+                android:textSize="10sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tv_weight"
+                android:layout_width="311dp"
+                android:layout_height="22dp"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/cdv_image"
+                android:fontFamily="@font/montserratsemibold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:text="18K - Weight : 6.76 g"
+                android:textColor="#666666"
+                android:textSize="10sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tv_stoneweight"
+                android:layout_width="311dp"
+                android:layout_height="22dp"
+                android:layout_below="@id/tv_weight"
+                android:layout_centerVertical="true"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/cdv_image"
+                android:fontFamily="@font/montserratsemibold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:text="18K - Weight : 6.76 g"
+                android:textColor="#666666"
+                android:textSize="10sp"
+                android:textStyle="normal" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+
+            android:layout_height="182dp"
+            android:layout_weight=".8"
+            android:background="@drawable/table_item_border">
+            <LinearLayout
+                android:layout_marginRight="2dp"
+                android:layout_marginLeft="2dp"
+                android:gravity="center_vertical"
+                android:layout_centerInParent="true"
+                android:background="@drawable/quantity_updation_bg"
+                android:orientation="horizontal"
+                android:layout_width="80dp"
+                android:layout_height="30dp">
+                <ImageView
+                    android:id="@+id/imvremove"
+                    android:layout_weight="1"
+                    android:paddingLeft="1dp"
+                    android:src="@drawable/remove_circle"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"></ImageView>
+                <TextView
+                    android:gravity="center"
+                    android:layout_width="0dp"
+                    android:text="1"
+                    android:id="@+id/tv_quantity"
+                    android:textColor="#666666"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <ImageView
+                    android:id="@+id/imvadd"
+                    android:paddingRight="1dp"
+                    android:layout_weight="1"
+                    android:src="@drawable/add_circle"
+                    android:layout_width="0dp"
+                    android:layout_height="24dp"></ImageView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+
+            android:layout_height="182dp"
+            android:layout_weight="1"
+            android:background="@drawable/table_item_border">
+            <TextView
+                android:layout_width="311dp"
+                android:layout_height="22dp"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/montserratsemibold"
+                android:gravity="center_horizontal"
+                android:letterSpacing="0.01"
+                android:text="10000 SAR"
+                android:textColor="#666666"
+                android:textSize="12sp"
+                android:textStyle="normal" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

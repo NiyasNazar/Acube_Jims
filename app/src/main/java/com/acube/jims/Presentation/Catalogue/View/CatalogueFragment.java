@@ -75,6 +75,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     GridLayoutManager gridLayoutManager;
     String vaSubCatID, vaCatID = "", vaKaratID = "", vaColorID = "";
 
+    String AuthToken;
 
     public CatalogueFragment() {
         // Required empty public constructor
@@ -117,7 +118,10 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
             }
         });
         init();
-
+        String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerName");
+        String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerCode");
+        binding.tvCustomername.setText("Customer Name : " + Customername);
+        binding.tvCustomercode.setText("Customer Code : " + CustomerCode);
         // This callback will only be called when MyFragment is at least Started.
       /* OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
             @Override
@@ -132,16 +136,16 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         requireActivity().getOnBackPressedDispatcher().addCallback(getActivity(),callback);*/
 
         //requireActivity().getOnBackPressedDispatcher().addCallback(this,callback);
-        binding.imvfilter.setOnClickListener(new View.OnClickListener() {
+        binding.laytfilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //  mypopupWindow.showAsDropDown(v, -153, 0);
                 //  binding.parent.getForeground().setAlpha(100);
 
-                FilterBottomSheetFragment bottomSheet = new FilterBottomSheetFragment(CatalogueFragment.this::applyfilter);
+                //FilterBottomSheetFragment bottomSheet = new FilterBottomSheetFragment(CatalogueFragment.this::applyfilter);
 
-                bottomSheet.show(getActivity().getSupportFragmentManager(),
-                        "ModalBottomSheet");
+               // bottomSheet.show(getActivity().getSupportFragmentManager(),
+                       // "ModalBottomSheet");
 
             }
         });
@@ -175,7 +179,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
                 return isLoading;
             }
         });
-
+        AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         LoadFirstPage();
         viewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseCatalogueListing>>() {
             @Override
@@ -209,7 +213,13 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
             }
         });
-        filterViewModel.getLiveData().observe(getActivity(), new Observer<ResponseFetchFilters>() {
+        filterViewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseFetchFilters>>() {
+            @Override
+            public void onChanged(List<ResponseFetchFilters> responseFetchFilters) {
+                setList("catresult", responseFetchFilters);
+            }
+        });
+        /*filterViewModel.getLiveData().observe(getActivity(), new Observer<ResponseFetchFilters>() {
             @Override
             public void onChanged(ResponseFetchFilters responseFetchFilters) {
                 if (responseFetchFilters != null) {
@@ -229,8 +239,8 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
                 }
             }
-        });
-        filterViewModel.FetchFilters();
+        });*/
+        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
         //setPopUpWindow();
         return binding.getRoot();
 
@@ -241,12 +251,12 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         showProgressDialog();
         adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this);
         binding.recyvcatalog.setAdapter(adapter);
-        vaSubCatID =LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid");
+        vaSubCatID = LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid");
         vaColorID = LocalPreferences.retrieveStringPreferences(getContext(), "colorid");
         vaKaratID = LocalPreferences.retrieveStringPreferences(getContext(), "karatid");
         Log.d(TAG, "LoadFirstPage: " + vaSubCatID);
 
-        viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
+        viewModel.FetchCatalog(AppConstants.Authorization + AuthToken,PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
 
     }
 
@@ -262,7 +272,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         vaKaratID = LocalPreferences.retrieveStringPreferences(getContext(), "karatid");
 
 
-        catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
+        catalogViewModelNextPage.FetchCatalog(AppConstants.Authorization + AuthToken,currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
 
     }
 

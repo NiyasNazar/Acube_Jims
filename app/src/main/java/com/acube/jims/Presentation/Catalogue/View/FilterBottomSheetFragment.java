@@ -59,8 +59,9 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                 inflater, R.layout.bottom_sheet_filter, container, false);
         List<String> dataset = new ArrayList<>();
         dataset.add("Category");
-        dataset.add("Color");
+        dataset.add("Sub Category");
         dataset.add("Karat");
+        dataset.add("Color");
         binding.rcylrfiltritems.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rcylrfiltritems.setAdapter(new FilterMasterAdapter(getActivity(), dataset, FilterBottomSheetFragment.this));
         binding.closelayt.setOnClickListener(new View.OnClickListener() {
@@ -193,7 +194,6 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
     public void ReplaceFragment(Fragment fragment) {
 
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-
         fragmentTransaction.replace(R.id.fragment2, fragment);
         fragmentTransaction.commit();
     }

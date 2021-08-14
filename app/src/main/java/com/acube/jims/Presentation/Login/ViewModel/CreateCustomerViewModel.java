@@ -21,8 +21,8 @@ public class CreateCustomerViewModel extends AndroidViewModel {
 
     }
 
-    public void CreateCustomer(JsonObject jsonObject) {
-        repository.CreateCustomer(jsonObject);
+    public void CreateCustomer(String Auth,JsonObject jsonObject) {
+        repository.CreateCustomer(Auth,jsonObject);
     }
 
     public void init() {

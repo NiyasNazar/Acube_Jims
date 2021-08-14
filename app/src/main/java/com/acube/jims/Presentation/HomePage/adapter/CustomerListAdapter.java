@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
+import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.bumptech.glide.Glide;
@@ -28,13 +30,14 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     private Context mCtx;
 
-
+    ReplaceFragment replaceFragment;
     private final List<ResponseCustomerListing> customerListings;
 
 
-    public CustomerListAdapter(Context mCtx, List<ResponseCustomerListing> customerListings) {
+    public CustomerListAdapter(Context mCtx, List<ResponseCustomerListing> customerListings, ReplaceFragment replaceFragment) {
         this.mCtx = mCtx;
         this.customerListings = customerListings;
+        this.replaceFragment = replaceFragment;
     }
 
     @Override
@@ -49,9 +52,9 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         ResponseCustomerListing responseCustomerListing = customerListings.get(position);
-        holder.textViewContact.setText(responseCustomerListing.getCustomerName());
+        holder.textViewCustomername.setText(responseCustomerListing.getCustomerName());
         holder.textViewEmail.setText(responseCustomerListing.getEmailID());
-        holder.textViewEmail.setText(responseCustomerListing.getContactNumber());
+        holder.textViewContact.setText(responseCustomerListing.getContactNumber());
 
 
     }
@@ -65,7 +68,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewCustomername,textViewEmail,textViewContact;
+        TextView textViewCustomername, textViewEmail, textViewContact;
         ImageView imageView;
 
         public ProductViewHolder(View itemView) {
@@ -75,10 +78,26 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
             textViewEmail = itemView.findViewById(R.id.tv_email);
 
             textViewContact = itemView.findViewById(R.id.textViewContact);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+                    LocalPreferences.storeStringPreference(mCtx, "GuestCustomerName", customerListings.get(pos).getCustomerName());
+                    LocalPreferences.storeStringPreference(mCtx, "GuestCustomerCode", customerListings.get(pos).getCustomerCode());
+                    LocalPreferences.storeStringPreference(mCtx, "GuestCustomerID", String.valueOf(customerListings.get(pos).getId()));
+                    LocalPreferences.storeStringPreference(mCtx, AppConstants.CartID,"");
 
+
+                    replaceFragment.replacefragments();
+                }
+            });
 
 
         }
+    }
+
+    public interface ReplaceFragment {
+        void replacefragments();
     }
 
 

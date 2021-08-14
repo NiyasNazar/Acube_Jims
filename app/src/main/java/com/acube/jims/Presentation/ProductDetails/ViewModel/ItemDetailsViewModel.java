@@ -23,8 +23,8 @@ public class ItemDetailsViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void FetchItemDetails(String ID) {
-        repository.FetchItemDetails(ID);
+    public void FetchItemDetails(String Auth,String ID) {
+        repository.FetchItemDetails(Auth,ID);
     }
 
     public void init() {

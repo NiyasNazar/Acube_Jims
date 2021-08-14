@@ -17,14 +17,14 @@ import java.util.List;
 
 public class FilterViewModel extends AndroidViewModel {
     public FilterRepository repository;
-    private LiveData<ResponseFetchFilters> liveData;
+    private LiveData<List<ResponseFetchFilters> >liveData;
 
     public FilterViewModel(@NonNull @NotNull Application application) {
         super(application);
     }
 
-    public void FetchFilters() {
-        repository.FetchFilterItems();
+    public void FetchFilters( String Auth) {
+        repository.FetchFilterItems(Auth);
     }
 
     public void init() {
@@ -33,7 +33,7 @@ public class FilterViewModel extends AndroidViewModel {
     }
 
 
-    public LiveData<ResponseFetchFilters> getLiveData() {
+    public LiveData<List<ResponseFetchFilters> >getLiveData() {
         return liveData;
     }
 }

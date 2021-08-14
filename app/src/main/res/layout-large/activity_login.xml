@@ -98,6 +98,7 @@
                 </EditText>
 
                 <LinearLayout
+                    android:layout_centerHorizontal="true"
                     android:id="@+id/btn_signin"
                     android:layout_width="139dp"
                     android:layout_height="50dp"
@@ -128,6 +129,7 @@
                     android:layout_below="@id/ed_password"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
+                    android:visibility="gone"
                     android:layout_marginTop="29dp"
                     android:layout_toRightOf="@id/btn_signin"
                     android:fontFamily="@font/karla_normal"

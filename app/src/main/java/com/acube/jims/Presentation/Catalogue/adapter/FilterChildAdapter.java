@@ -85,7 +85,7 @@ public class FilterChildAdapter extends RecyclerView.Adapter<FilterChildAdapter.
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked){
-                        Toast.makeText(mCtx, "gt" + dataset.get(getAdapterPosition()).getId(), Toast.LENGTH_SHORT).show();
+
 
                         passfilter.PassId(true,String.valueOf(dataset.get(getAdapterPosition()).getId()));
                         Log.e("onClickk", "onClick: " + catlist.toString());

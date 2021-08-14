@@ -24,9 +24,9 @@ public class ItemDetailsRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void FetchItemDetails( String ID) {
+    public void FetchItemDetails(String Auth, String ID) {
         RestApiService restApiService = RetrofitInstance.getApiService();
-        Call<ResponseCatalogDetails> call = restApiService.getItemDetails(ID);
+        Call<ResponseCatalogDetails> call = restApiService.getItemDetails(Auth,ID);
         call.enqueue(new Callback<ResponseCatalogDetails>() {
             @Override
             public void onResponse(Call<ResponseCatalogDetails> call, Response<ResponseCatalogDetails> response) {

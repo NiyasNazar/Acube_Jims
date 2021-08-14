@@ -22,7 +22,10 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.acube.jims.Presentation.CartManagment.View.CartViewFragment;
+import com.acube.jims.Presentation.CustomerManagment.View.CustomerSearch;
 import com.acube.jims.Presentation.DeviceRegistration.View.DeviceRegistrationFragment;
+import com.acube.jims.Presentation.Favorites.View.FavoritesFragment;
 import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.Presentation.HomePage.adapter.ExpandableListAdapter;
 import com.acube.jims.Presentation.Login.View.LoginActivity;
@@ -30,6 +33,7 @@ import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.databinding.ActivityHomePageBinding;
+import com.acube.jims.datalayer.constants.BackHandler;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.models.HomePage.NavMenuModel;
 
@@ -37,7 +41,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity implements ProductDetailsFragment.BackHandler {
+public class HomePageActivity extends AppCompatActivity implements ProductDetailsFragment.BackHandler, BackHandler, CustomerSearch.ReplacefromCustomerLogin {
     ActivityHomePageBinding binding;
     List<HomeData> dataset;
     HomeData homeData;
@@ -55,6 +59,12 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
         prepareMenuData();
         populateExpandableList();
         replaceFragment(new HomeFragment());
+        binding.toolbar.imvcart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new CartViewFragment());
+            }
+        });
         binding.toolbar.optionMenu.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("WrongConstant")
             @Override
@@ -88,11 +98,17 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
             Log.d("API123", "here");
             childList.put(menuModel, childModelsList);
         }
+        menuModel = new NavMenuModel("Favorites", true, false, R.drawable.ic_baseline_favorite_24); //Menu of Android Tutorial. No sub menus
+        headerList.add(menuModel);
+        if (!menuModel.hasChildren) {
+            childList.put(menuModel, null);
+        }
         menuModel = new NavMenuModel("About", true, false, R.drawable.ic_user); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
             childList.put(menuModel, null);
         }
+
         menuModel = new NavMenuModel("Logout", true, false, R.drawable.ic_sign_out); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);
         if (!menuModel.hasChildren) {
@@ -141,6 +157,8 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
                             showLogoutAlert();
                         } else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Home")) {
                             replaceFragment(new HomeFragment());
+                        } else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Favorites")) {
+                            replaceFragment(new FavoritesFragment());
                         }
                         onBackPressed();
                     }
@@ -209,8 +227,8 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
         }
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
-        } else if (getFragmentManager().getBackStackEntryCount() > 0) {
-            getFragmentManager().popBackStack();
+        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
             Log.d("onBackPressed", ":onBackPressed" + getFragmentManager().getBackStackEntryCount());
 
         } else {
@@ -225,7 +243,11 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
 
     @Override
     public void backpress() {
-        Toast.makeText(getApplicationContext(), "backpress", Toast.LENGTH_SHORT).show();
         onBackPressed();
+    }
+
+    @Override
+    public void replacecatalogfragment() {
+
     }
 }

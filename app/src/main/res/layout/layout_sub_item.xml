@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
 
-        <TextView
+        <RadioButton
             android:id="@+id/tv_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,9 +21,10 @@
             android:textColor="#000000"
             android:textSize="@dimen/_10ssp">
 
-        </TextView>
+        </RadioButton>
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/arrow"
             android:tint="#000"
             android:layout_width="wrap_content"

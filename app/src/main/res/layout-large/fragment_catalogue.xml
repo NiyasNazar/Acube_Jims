@@ -10,8 +10,8 @@
     <FrameLayout
         android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:background="@drawable/homepagebg"
         android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
 
         tools:context=".Presentation.Catalogue.View.CatalogueFragment">
 
@@ -20,39 +20,77 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+
+                android:id="@+id/tv_customername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:textSize="@dimen/_7ssp"
+                android:textColor="#c4224a">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_customercode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_customername"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:textSize="@dimen/_7ssp"
+                android:textColor="#c4224a">
+
+            </TextView>
+
             <RelativeLayout
                 android:id="@+id/header"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tv_customercode"
                 android:layout_marginTop="10dp">
 
 
-                <TextView
-                    android:id="@+id/tvfilter"
+                <LinearLayout
+                    android:id="@+id/laytfilter"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:orientation="horizontal">
 
-                    android:layout_marginLeft="@dimen/_12sdp"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:gravity="center_horizontal"
-                    android:letterSpacing="0.01"
-                    android:text="@string/filter"
-                    android:textColor="#c4224a"
-                    android:textSize="@dimen/_7ssp"
+                    <TextView
+                        android:id="@+id/tvfilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
 
-                    android:textStyle="normal" />
+                        android:layout_marginLeft="@dimen/_12sdp"
+                        android:fontFamily="@font/montserratsemibold"
+                        android:gravity="center_horizontal"
+                        android:letterSpacing="0.01"
+                        android:text="@string/filter"
+                        android:textColor="#c4224a"
+                        android:textSize="@dimen/_7ssp"
 
-                <ImageView
-                    android:id="@+id/imvfilter"
-                    android:layout_width="@dimen/_8sdp"
+                        android:textStyle="normal" />
 
-                    android:layout_height="@dimen/_8sdp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="8dp"
+                    <ImageView
+                        android:id="@+id/imvfilter"
+                        android:layout_width="@dimen/_8sdp"
+                        android:layout_height="@dimen/_8sdp"
 
-                    android:layout_toRightOf="@id/tvfilter"
-                    android:src="@drawable/ic_filter"></ImageView>
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="8dp"
+
+                        android:layout_toRightOf="@id/tvfilter"
+                        android:src="@drawable/ic_filter"></ImageView>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tvsortby"
@@ -60,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/_12sdp"
-                    android:layout_toRightOf="@id/imvfilter"
+                    android:layout_toRightOf="@id/laytfilter"
                     android:fontFamily="@font/montserratsemibold"
                     android:gravity="center_horizontal"
                     android:letterSpacing="0.01"
@@ -72,11 +110,11 @@
                     android:textStyle="normal" />
 
                 <androidx.appcompat.widget.AppCompatSpinner
-                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_toRightOf="@id/tvsortby">
+                    android:layout_toRightOf="@id/tvsortby"
+                    android:visibility="gone">
 
                 </androidx.appcompat.widget.AppCompatSpinner>
 

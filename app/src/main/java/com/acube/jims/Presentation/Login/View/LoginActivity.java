@@ -98,6 +98,7 @@ public class LoginActivity extends BaseActivity {
                 if (responseLogin != null) {
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.Token, responseLogin.getToken());
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserRole, responseLogin.getRoleName());
+                    LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserID, String.valueOf(responseLogin.getEmployeeID()));
                     mViewModel.getHomeMenu(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token), AppConstants.HomeMenuAppName, responseLogin.getRoleName());
 
 

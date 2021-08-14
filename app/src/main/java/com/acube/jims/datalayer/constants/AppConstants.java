@@ -9,6 +9,9 @@ public interface AppConstants {
     public static String HomeMenuAppName = "JMSANDROIDUI";
     public static String Token = "Token";
     public static String UserRole = "Role";
+    public static String UserID = "UserID";
+    public static String CartID = "CartID";
+
     public static Integer Pagesize = 10;
     public static String Menu_DB = "db_homemenu";
 

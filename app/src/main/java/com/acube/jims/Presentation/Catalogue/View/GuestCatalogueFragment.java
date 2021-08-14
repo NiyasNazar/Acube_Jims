@@ -172,7 +172,7 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
 
             }
         });
-        filterViewModel.getLiveData().observe(getActivity(), new Observer<ResponseFetchFilters>() {
+       /* filterViewModel.getLiveData().observe(getActivity(), new Observer<ResponseFetchFilters>() {
             @Override
             public void onChanged(ResponseFetchFilters responseFetchFilters) {
                 if (responseFetchFilters != null) {
@@ -186,8 +186,8 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
 
                 }
             }
-        });
-        filterViewModel.FetchFilters();
+        });*/
+       /// filterViewModel.FetchFilters();
         setPopUpWindow();
         return binding.getRoot();
 
@@ -197,7 +197,7 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
     private void LoadFirstPage() {
         showProgressDialog();
 
-        viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, "0", vaKaratID);
+      //  viewModel.FetchCatalog(PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, "0", vaKaratID);
 
     }
 
@@ -209,7 +209,7 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
     private void loadNextPage() {
 
 
-        catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, "0", vaKaratID);
+       // catalogViewModelNextPage.FetchCatalog(currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, "0", vaKaratID);
 
     }
 

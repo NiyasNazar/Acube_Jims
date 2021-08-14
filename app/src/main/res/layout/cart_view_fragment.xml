@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp">
+
+            </include>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar"
+                android:layout_marginTop="2dp">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:layout_marginLeft="14dp"
+
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/item_border_detailspage">
+
+                    <TextView
+                        android:id="@+id/tvcarttext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/montserratsemibold"
+                        android:gravity="center_horizontal"
+                        android:letterSpacing="0.01"
+                        android:text="CART PAGE"
+                        android:textColor="#666666"
+                        android:textSize="26.7sp"
+                        android:textStyle="normal" />
+
+                    <LinearLayout
+                        android:id="@+id/header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvcarttext"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="15dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight=".6"
+                            android:background="@drawable/table_border"></View>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/table_border"
+
+
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="ITEMNAME"
+                            android:textAllCaps="true"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="quantity"
+                            android:textAllCaps="true"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="price"
+                            android:textAllCaps="true"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycartitems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/header"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="15dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/recycartitems"
+                        android:layout_alignParentRight="true"
+
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginRight="32dp"
+
+                        android:gravity="center_horizontal">
+
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btnback"
+                            style="@style/Widget.AppCompat.Button.Borderless"
+
+
+                            android:layout_width="90dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/rec_button"
+                            android:text="Go Back"
+                            android:textColor="@color/white">
+
+                        </androidx.appcompat.widget.AppCompatButton>
+
+                        <androidx.appcompat.widget.AppCompatButton
+
+                            style="@style/Widget.AppCompat.Button.Borderless"
+
+                            android:layout_width="180dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="@drawable/rec_button"
+                            android:backgroundTint="#3699ff"
+                            android:text="Next"
+                            android:textColor="@color/white">
+
+                        </androidx.appcompat.widget.AppCompatButton>
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

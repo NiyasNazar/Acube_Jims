@@ -67,7 +67,22 @@
 
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/option_menu"
-            android:src="@drawable/ic_profile">
+            android:src="@drawable/ic_my_profile">
+
+        </ImageView>
+
+        <ImageView
+
+            android:id="@+id/imvcart"
+            android:layout_width="@dimen/_18sdp"
+
+            android:layout_height="@dimen/_18sdp"
+            android:layout_centerVertical="true"
+
+
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/imvprofile"
+            android:src="@drawable/ic_cart">
 
         </ImageView>
     </RelativeLayout>

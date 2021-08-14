@@ -18,9 +18,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/imvhomeicon"
         android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/karla_bold"
-        android:text="asdsad"
+
         android:textAllCaps="true"
         android:textColor="#ab7e2f">
 

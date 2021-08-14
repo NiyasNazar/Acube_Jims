@@ -18,18 +18,18 @@ import retrofit2.Response;
 
 public class FilterRepository {
     private Application application;
-    private final MutableLiveData<ResponseFetchFilters> dataset;
+    private final MutableLiveData<List<ResponseFetchFilters> > dataset;
 
     public FilterRepository() {
         dataset = new MutableLiveData<>();
     }
 
-    public void FetchFilterItems() {
+    public void FetchFilterItems(  String Auth) {
         RestApiService restApiService = RetrofitInstance.getApiService();
-        Call<ResponseFetchFilters> call = restApiService.getFilters();
-        call.enqueue(new Callback<ResponseFetchFilters>() {
+        Call<List<ResponseFetchFilters> > call = restApiService.getFilters(Auth);
+        call.enqueue(new Callback<List<ResponseFetchFilters> >() {
             @Override
-            public void onResponse(Call<ResponseFetchFilters> call, Response<ResponseFetchFilters> response) {
+            public void onResponse(Call<List<ResponseFetchFilters> > call, Response<List<ResponseFetchFilters> > response) {
                 if (response.body() != null && response.code() == 200 || response.code() == 201) {
                     dataset.setValue(response.body());
                 } else {
@@ -40,14 +40,14 @@ public class FilterRepository {
             }
 
             @Override
-            public void onFailure(Call<ResponseFetchFilters> call, Throwable t) {
+            public void onFailure(Call<List<ResponseFetchFilters> > call, Throwable t) {
 
             }
         });
 
     }
 
-    public LiveData<ResponseFetchFilters> getResponseLiveData() {
+    public LiveData<List<ResponseFetchFilters> > getResponseLiveData() {
         return dataset;
     }
 }

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import com.acube.jims.Presentation.Catalogue.adapter.FilterParentAdapter;
 import com.acube.jims.R;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.datalayer.models.Filter.Catresult;
+import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
@@ -74,16 +76,17 @@ public class CategoryFilterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category_filter, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recysubcategory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new FilterParentAdapter(getActivity(), getList()));
+        //  recyclerView.setAdapter(new FilterParentAdapter(getActivity(), getList()));
+        Log.d("onCreateView", "onCreateView: " + getList().size());
         return view;
     }
 
-    public List<Catresult> getList() {
-        List<Catresult> mMainCategory = null;
+    public List<ResponseFetchFilters> getList() {
+        List<ResponseFetchFilters> mMainCategory = null;
         String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), "catresult");
         if (serializedObject != null) {
             Gson gson = new Gson();
-            Type type = new TypeToken<List<Catresult>>() {
+            Type type = new TypeToken<List<ResponseFetchFilters>>() {
             }.getType();
             mMainCategory = gson.fromJson(serializedObject, type);
         }

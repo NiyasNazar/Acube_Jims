@@ -25,9 +25,9 @@ public class CreateCustomerRepository  {
         dataset = new MutableLiveData<>();
     }
 
-    public void CreateCustomer(JsonObject jsonObject) {
+    public void CreateCustomer(String Auth,JsonObject jsonObject) {
         RestApiService restApiService = RetrofitInstance.getApiService();
-        Call<ResponseCreateCustomer> call = restApiService.createUser(jsonObject);
+        Call<ResponseCreateCustomer> call = restApiService.createUser(Auth,jsonObject);
         call.enqueue(new Callback<ResponseCreateCustomer>() {
             @Override
             public void onResponse(Call<ResponseCreateCustomer> call, Response<ResponseCreateCustomer> response) {

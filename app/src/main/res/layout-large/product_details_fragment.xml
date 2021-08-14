@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -69,6 +70,7 @@
                         </androidx.appcompat.widget.AppCompatButton>
 
                         <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/btn_add_tocart"
 
                             style="@style/Widget.AppCompat.Button.Borderless"
 
@@ -83,23 +85,42 @@
                         </androidx.appcompat.widget.AppCompatButton>
                     </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/imvsingleitemimage"
+                    <RelativeLayout
+                        android:id="@+id/laytimage"
                         android:layout_width="400dp"
                         android:layout_height="360dp"
                         android:layout_marginLeft="26dp"
                         android:layout_marginTop="48dp"
-                        android:background="@drawable/item_border_image"
-                        android:padding="10dp"
-                        android:src="@drawable/dummy_item_image">
+                        android:background="@drawable/item_border_image">
 
-                    </ImageView>
+                        <ImageView
+                            android:id="@+id/imvsingleitemimage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:padding="10dp"
+                            android:src="@drawable/dummy_item_image">
+
+                        </ImageView>
+
+                        <com.like.LikeButton
+                            android:id="@+id/fav_button"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+
+                            app:icon_size="25dp"
+                            app:icon_type="heart" />
+                    </RelativeLayout>
+
 
                     <TextView
                         android:id="@+id/tv_item_name"
                         android:layout_width="match_parent"
                         android:layout_height="22dp"
-                        android:layout_below="@id/imvsingleitemimage"
+                        android:layout_below="@id/laytimage"
 
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="15dp"
@@ -159,14 +180,14 @@
                         android:textStyle="normal" />
 
                     <LinearLayout
-                        android:layout_marginTop="5dp"
                         android:id="@+id/layout_details"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="35dp"
+                        android:layout_marginTop="5dp"
 
                         android:layout_marginBottom="50dp"
-                        android:layout_toRightOf="@id/imvsingleitemimage"
+                        android:layout_toRightOf="@id/laytimage"
                         android:orientation="vertical">
 
                         <TextView

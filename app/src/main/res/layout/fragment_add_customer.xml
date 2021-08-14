@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        android:background="@drawable/homepagebg"
+        android:orientation="vertical"
+        tools:context=".Presentation.CustomerManagment.View.AddCustomerFragment">
+
+        <ImageView
+            android:id="@+id/imvback"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/icon_back"
+
+            android:visibility="invisible">
+
+        </ImageView>
+
+
+        <androidx.cardview.widget.CardView
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/_20sdp"
+
+
+            android:layout_marginRight="@dimen/_20sdp"
+            android:elevation="5dp"
+            app:cardCornerRadius="25dp">
+
+            <LinearLayout
+                android:background="#F5F5F5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="25dp"
+
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Add Customer"
+                    android:textColor="#666666"
+                    android:textSize="@dimen/_13ssp"></TextView>
+
+                <EditText
+
+                    android:id="@+id/ed_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/tvsubtitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginRight="20dp"
+
+                    android:background="@drawable/ed_border"
+                    android:hint="@string/hint_mobile"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textSize="14sp">
+
+                </EditText>
+
+                <EditText
+
+                    android:id="@+id/ed_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/ed_mobile"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ed_border"
+                    android:hint="@string/hint_email_id"
+                    android:imeOptions="actionNext"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:textSize="14sp">
+
+                </EditText>
+
+                <EditText
+                    android:id="@+id/ed_guestname"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/ed_email"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ed_border"
+                    android:hint="Guest Name"
+                    android:imeOptions="actionDone"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+
+
+                    android:textSize="14sp">
+
+                </EditText>
+
+                <LinearLayout
+
+                    android:id="@+id/bottomlayt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="20dp"
+
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_cancel"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rec_button"
+
+                        android:backgroundTint="#3699ff"
+                        android:text="cancel"
+                        android:textColor="@color/white"
+                        android:textSize="12sp">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_Save"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rec_button"
+                        android:backgroundTint="#3699ff"
+                        android:text="Save"
+                        android:textColor="@color/white"
+
+                        android:textSize="12sp"></androidx.appcompat.widget.AppCompatButton>
+
+
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+</layout>

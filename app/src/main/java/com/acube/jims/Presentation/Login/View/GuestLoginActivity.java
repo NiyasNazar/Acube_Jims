@@ -20,6 +20,7 @@ import com.acube.jims.Presentation.Login.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.Presentation.Login.ViewModel.UpdateCustomerViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
+import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityGuestLoginBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCheckCustomer;
@@ -157,7 +158,7 @@ public class GuestLoginActivity extends BaseActivity {
         jsonObject.addProperty("emailID", vaemail);
         jsonObject.addProperty("contactNumber", vamobile);
         jsonObject.addProperty("companyID", AppConstants.applicationID);
-        createCustomerViewModel.CreateCustomer(jsonObject);
+        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token),jsonObject);
 
     }
 

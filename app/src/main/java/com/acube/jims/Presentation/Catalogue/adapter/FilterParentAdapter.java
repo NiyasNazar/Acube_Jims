@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -20,6 +21,7 @@ import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
+import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -36,12 +38,12 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
 
     private Context mCtx;
 
-    private List<Catresult> dataset;
+    private List<ResponseFetchFilters> dataset;
     List<SubCategory> sublist;
     List<String> catlist;
 
 
-    public FilterParentAdapter(Context mCtx, List<Catresult> dataset) {
+    public FilterParentAdapter(Context mCtx, List<ResponseFetchFilters> dataset) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         sublist = new ArrayList<>();
@@ -96,7 +98,7 @@ public class FilterParentAdapter extends RecyclerView.Adapter<FilterParentAdapte
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName;
+        RadioButton textViewItemName;
         ImageView arrow;
         RecyclerView recyclerView;
 

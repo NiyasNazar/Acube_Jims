@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/imvhomeicon"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="@dimen/_100sdp"
         android:src="@drawable/ic_dashboard">
 
     </ImageView>
@@ -22,7 +22,8 @@
         android:fontFamily="@font/karla_bold"
         android:text="asdsad"
         android:textAllCaps="true"
-        android:textColor="#ab7e2f">
+        android:textColor="#ab7e2f"
+        android:textSize="@dimen/_15ssp">
 
     </TextView>
 

@@ -10,10 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.acube.jims.Presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterColorAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterKaratAdapter;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.Utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.Colorresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.google.common.reflect.TypeToken;
@@ -27,7 +30,7 @@ import java.util.List;
  * Use the {@link KaratFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class KaratFragment extends Fragment {
+public class KaratFragment extends Fragment implements RefreshSelection {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,15 +76,16 @@ public class KaratFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_karat, container, false);
+        View view = inflater.inflate(R.layout.fragment_karat, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recysubcategory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new FilterKaratAdapter(getActivity(), getList()));
+        recyclerView.setAdapter(new FilterKaratAdapter(getActivity(), getList(), KaratFragment.this));
         return view;
     }
+
     public List<Karatresult> getList() {
         List<Karatresult> mMainCategory = null;
-        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), "karatresults");
+        String serializedObject = FilterPreference.retrieveStringPreferences(getActivity(), "karatresults");
         if (serializedObject != null) {
             Gson gson = new Gson();
             Type type = new TypeToken<List<Karatresult>>() {
@@ -89,5 +93,11 @@ public class KaratFragment extends Fragment {
             mMainCategory = gson.fromJson(serializedObject, type);
         }
         return mMainCategory;
+    }
+
+    @Override
+    public void refresh() {
+        FilterBottomSheetFragment parentFrag = ((FilterBottomSheetFragment) KaratFragment.this.getParentFragment());
+        parentFrag.Refresh();
     }
 }

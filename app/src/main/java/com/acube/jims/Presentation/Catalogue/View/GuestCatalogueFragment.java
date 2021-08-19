@@ -11,9 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -29,10 +27,7 @@ import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.Presentation.Catalogue.ViewModel.FilterViewModel;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemsAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterColorAdapter;
-import com.acube.jims.Presentation.Catalogue.adapter.FilterKaratAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterListAdapter;
-import com.acube.jims.Presentation.Catalogue.adapter.FilterParentAdapter;
-import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
@@ -43,9 +38,7 @@ import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
-import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

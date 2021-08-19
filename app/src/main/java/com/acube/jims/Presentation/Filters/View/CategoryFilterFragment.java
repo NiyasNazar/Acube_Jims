@@ -11,10 +11,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.acube.jims.Presentation.Catalogue.adapter.FilterParentAdapter;
+import com.acube.jims.Presentation.Catalogue.View.FilterBottomSheetFragment;
+import com.acube.jims.Presentation.Catalogue.adapter.CategoryAdapter;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.LocalPreferences;
-import com.acube.jims.datalayer.models.Filter.Catresult;
+import com.acube.jims.Utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -27,7 +29,7 @@ import java.util.List;
  * Use the {@link CategoryFilterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoryFilterFragment extends Fragment {
+public class CategoryFilterFragment extends Fragment implements RefreshSelection {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,8 +78,8 @@ public class CategoryFilterFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category_filter, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recysubcategory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //  recyclerView.setAdapter(new FilterParentAdapter(getActivity(), getList()));
-        Log.d("onCreateView", "onCreateView: " + getList().size());
+        recyclerView.setAdapter(new CategoryAdapter(getActivity(), getList(),CategoryFilterFragment.this));
+
         return view;
     }
 
@@ -91,5 +93,11 @@ public class CategoryFilterFragment extends Fragment {
             mMainCategory = gson.fromJson(serializedObject, type);
         }
         return mMainCategory;
+    }
+
+    @Override
+    public void refresh() {
+        FilterBottomSheetFragment parentFrag = ((FilterBottomSheetFragment) CategoryFilterFragment.this.getParentFragment());
+        parentFrag.Refresh();
     }
 }

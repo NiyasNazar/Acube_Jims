@@ -34,9 +34,9 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     replaceFregment replaceFregment;
     private boolean isLoadingAdded = false;
 
-    public CatalogItemsAdapter(Context context,replaceFregment replaceFregment) {
+    public CatalogItemsAdapter(Context context, replaceFregment replaceFregment) {
         this.context = context;
-        this.replaceFregment=replaceFregment;
+        this.replaceFregment = replaceFregment;
         dataset = new ArrayList<>();
     }
 
@@ -83,23 +83,29 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 final CatalogVH catalogVH = (CatalogVH) holder;
                 ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
 
-                catalogVH.textViewItemName.setText(responseCatalogueListing.getItemName());
-                if (responseCatalogueListing.getGrossWeight()!=null){
-                    catalogVH.textViewGrossWeight.setText(responseCatalogueListing.getKaratName()+"- Weight: "+responseCatalogueListing.getGrossWeight()+" g");
+                catalogVH.textViewItemName.setText("Name : " + responseCatalogueListing.getItemName());
+                catalogVH.textViewSerialnumber.setText("Serial No. : " + responseCatalogueListing.getSerialNumber());
+                catalogVH.textViewKarat.setText("Karat : " + responseCatalogueListing.getKaratName());
+                catalogVH.textViewStock.setText("Availability : "+responseCatalogueListing.getInventoryStatus());
 
-                }else {
-                    catalogVH.textViewGrossWeight.setText(responseCatalogueListing.getKaratName()+"- Weight:  N/A");
+                if (responseCatalogueListing.getGrossWeight() != null) {
+                    catalogVH.textViewGrossWeight.setText("Weight: " + responseCatalogueListing.getGrossWeight() + " g");
+
+                } else {
+                    catalogVH.textViewGrossWeight.setText(responseCatalogueListing.getKaratName() + "- Weight:  N/A");
 
                 }
-                if (responseCatalogueListing.getStoneWeight()!=null){
-                    catalogVH.textViewStoneWeight.setText("Stone weight: "+responseCatalogueListing.getStoneWeight()+" g");
+                if (responseCatalogueListing.getStoneWeight() != null) {
+                    catalogVH.textViewStoneWeight.setText("Stone weight: " + responseCatalogueListing.getStoneWeight() + " g");
 
-                }else{
+                } else {
                     catalogVH.textViewStoneWeight.setText("N/A");
 
                 }
+                ((CatalogVH) holder).textViewPrice.setText("Price : SAR " + responseCatalogueListing.getMrp());
+
                 // holder.imageView.setImageResource(homeData.getImage());
-              if (responseCatalogueListing.getItemSubList().size() > 0) {
+                if (responseCatalogueListing.getItemSubList().size() > 0) {
                     Glide.with(context)
                             .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
                             //  .placeholder(R.drawable.placeholder)
@@ -208,21 +214,30 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * Main list's content ViewHolder
      */
     protected class CatalogVH extends RecyclerView.ViewHolder {
-        TextView textViewItemName,textViewStoneWeight,textViewGrossWeight;
+        TextView textViewItemName, textViewStoneWeight,
+                textViewGrossWeight, textViewSerialnumber, textViewPrice,
+                textViewKarat,textViewStock;
         ImageView imageView;
 
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
+            textViewStock=itemView.findViewById(R.id.tvstock);
+
+            textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);
             textViewStoneWeight = itemView.findViewById(R.id.tvstoneweight);
             textViewGrossWeight = itemView.findViewById(R.id.tvgrossweight);
+            textViewPrice = itemView.findViewById(R.id.tvprice);
+
+            textViewKarat = itemView.findViewById(R.id.tvkarat);
+
 
             imageView = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int pos=getAdapterPosition();
-                    String ID= String.valueOf(dataset.get(pos).getId());
+                    int pos = getAdapterPosition();
+                    String ID = String.valueOf(dataset.get(pos).getSerialNumber());
                     replaceFregment.replace(ID);
                 }
             });
@@ -236,7 +251,8 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             super(itemView);
         }
     }
-    public  interface replaceFregment{
+
+    public interface replaceFregment {
         void replace(String Id);
     }
 

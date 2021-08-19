@@ -17,7 +17,9 @@
         <activity
             android:name=".Presentation.CustomerManagment.View.CustomerSearch"
             android:exported="true" />
-        <activity android:name=".Presentation.Catalogue.View.CatalogueActivity" />
+        <activity android:name=".Presentation.Catalogue.View.CatalogueActivity" >
+
+        </activity>
         <activity android:name=".Presentation.HomePage.View.HomePageActivity" />
         <activity android:name=".Presentation.Login.View.GuestLoginActivity" />
         <activity android:name=".Presentation.GuestHomePage.GuestHomePageActivity" />

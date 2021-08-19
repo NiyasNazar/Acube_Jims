@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <RadioGroup
+            android:id="@+id/rdgroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:id="@+id/checkboxmen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:paddingLeft="5dp"
+                android:text="Men"
+
+                android:textColor="#2d2d2d"
+                android:textSize="@dimen/_10ssp"
+
+                android:theme="@style/Checkboxstyle"
+
+                >
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/checkboxwomen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:paddingLeft="5dp"
+                android:text="Women"
+
+                android:textColor="#2d2d2d"
+                android:textSize="@dimen/_10ssp"
+
+                android:theme="@style/Checkboxstyle"
+
+                >
+
+            </RadioButton>
+            <RadioButton
+                android:id="@+id/checkboxunisex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/_8sdp"
+                android:paddingLeft="5dp"
+                android:text="Unisex"
+
+                android:textColor="#2d2d2d"
+                android:textSize="@dimen/_10ssp"
+
+                android:theme="@style/Checkboxstyle"
+
+                >
+
+            </RadioButton>
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+</FrameLayout>

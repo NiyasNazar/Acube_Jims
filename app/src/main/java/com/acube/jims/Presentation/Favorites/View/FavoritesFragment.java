@@ -1,5 +1,6 @@
 package com.acube.jims.Presentation.Favorites.View;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
@@ -18,6 +19,7 @@ import com.acube.jims.Presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
 import com.acube.jims.Presentation.Favorites.ViewModel.FavoritesViewModel;
 import com.acube.jims.Presentation.Favorites.adapter.FavoritesItemAdapter;
 import com.acube.jims.Presentation.Login.ViewModel.LoginViewModel;
+import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentFavoritesBinding;
@@ -42,6 +44,7 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    BackHandler backHandler;
 
     public FavoritesFragment() {
         // Required empty public constructor
@@ -80,6 +83,16 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
     String AuthToken;
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            backHandler = (BackHandler) context;
+        } catch (ClassCastException castException) {
+            /** The activity does not implement the listener. */
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -89,6 +102,12 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
 
         binding.recycartitems.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.toolbar.tvFragname.setText("Favorites");
+        binding.btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backHandler.backpress();
+            }
+        });
 
         favoritesViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         addtoFavoritesViewModel = new ViewModelProvider(this).get(AddtoFavoritesViewModel.class);
@@ -128,4 +147,9 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
         addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, customerId, UserId, String.valueOf(itemid), "delete", "");
 
     }
+
+    public interface BackHandler {
+        void backpress();
+    }
+
 }

@@ -30,6 +30,10 @@ public class ResponseCatalogDetails {
     @SerializedName("gender")
     @Expose
     private String gender;
+
+    @SerializedName("serialNumber")
+    @Expose
+    private String serialNumber;
     @SerializedName("makingChargeMax")
     @Expose
     private Double makingChargeMax;
@@ -412,5 +416,13 @@ public class ResponseCatalogDetails {
 
     public void setTotalCount(Object totalCount) {
         this.totalCount = totalCount;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
 }

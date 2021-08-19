@@ -1,11 +1,20 @@
 package com.acube.jims.Presentation.HomePage.View;
 
+import static android.app.Activity.RESULT_OK;
+
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +48,7 @@ import com.acube.jims.Presentation.HomePage.adapter.CustomerListAdapter;
 import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
 import com.acube.jims.Presentation.Login.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.HomeFragmentBinding;
@@ -98,16 +109,21 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
 
     @Override
-    public void replaceFragment() {
-        //  FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
-        LocalPreferences.storeStringPreference(getActivity(), "subcatid", "");
-        LocalPreferences.storeStringPreference(getContext(), "colorid", "");
-       // showcustomerselectionDialog();
-        FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerBottomSheetFragment());
-      //  startActivity(new Intent(getActivity(), CustomerSearch.class));
-      //  getActivity().overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+    public void replaceFragment(int pos) {
+
+
+        if (pos == 3) {
+            FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
+            FilterPreference.clearPreferences(getActivity());
+
+        } else if (pos == 8) {
+            FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerBottomSheetFragment());
+
+        }
+
 
     }
+
 
     private void showcustomerselectionDialog() {
         LayoutInflater inflater = getLayoutInflater();

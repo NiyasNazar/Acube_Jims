@@ -30,6 +30,13 @@ public class ResponseCatalogueListing {
     @SerializedName("makingChargeMax")
     @Expose
     private Object makingChargeMax;
+    @SerializedName("serialNumber")
+    @Expose
+    private String serialNumber;
+    @SerializedName("inventoryStatus")
+    @Expose
+    private String  inventoryStatus;
+
     @SerializedName("categoryID")
     @Expose
     private Integer categoryID;
@@ -393,5 +400,21 @@ public class ResponseCatalogueListing {
 
     public void setTotalCount(Integer totalCount) {
         this.totalCount = totalCount;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public String getInventoryStatus() {
+        return inventoryStatus;
+    }
+
+    public void setInventoryStatus(String inventoryStatus) {
+        this.inventoryStatus = inventoryStatus;
     }
 }

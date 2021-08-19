@@ -9,13 +9,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
+import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.Utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.Colorresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
@@ -29,17 +32,21 @@ public class FilterColorAdapter extends RecyclerView.Adapter<FilterColorAdapter.
 
     private Context mCtx;
 
+    private int lastSelectedPosition = -1;
 
     private List<Colorresult> dataset;
     List<SubCategory> sublist;
-    List<String>colorlist;
+    List<String> colorlist;
+    List<String> colornames;
+    RefreshSelection refreshSelection;
 
-
-    public FilterColorAdapter(Context mCtx, List<Colorresult> dataset) {
+    public FilterColorAdapter(Context mCtx, List<Colorresult> dataset, RefreshSelection refreshSelection) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         sublist = new ArrayList<>();
-        colorlist=new ArrayList<>();
+        colorlist = new ArrayList<>();
+        this.refreshSelection = refreshSelection;
+        colornames=new ArrayList<>();
 
     }
 
@@ -63,6 +70,12 @@ public class FilterColorAdapter extends RecyclerView.Adapter<FilterColorAdapter.
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
         //   holder.textViewItemName.setText(dataset.get(position).getKaratName());
         // holder.imageView.setImageResource(homeData.getImage());
+        boolean ischecked = FilterPreference.retrieveBooleanPreferences(mCtx, "color" + position);
+        if (ischecked) {
+            holder.mcolor.setChecked(true);
+        } else {
+            holder.mcolor.setChecked(false);
+        }
 
 
     }
@@ -70,13 +83,13 @@ public class FilterColorAdapter extends RecyclerView.Adapter<FilterColorAdapter.
 
     @Override
     public int getItemCount() {
-        return dataset.size();
+        return dataset==null ? 0 :dataset.size();
     }
 
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName;
+        CheckBox textViewItemName;
         ImageView imageView;
         RecyclerView recyclerView;
         CheckBox mcolor;
@@ -84,27 +97,36 @@ public class FilterColorAdapter extends RecyclerView.Adapter<FilterColorAdapter.
         public ProductViewHolder(View itemView) {
             super(itemView);
             mcolor = itemView.findViewById(R.id.checkbox);
+
             mcolor.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked){
+                    if (isChecked) {
+                        FilterPreference.storeBooleanPreference(mCtx, "color" + getAdapterPosition(), true);
                         colorlist.add(String.valueOf(dataset.get(getAdapterPosition()).getId()));
-                        setList("colorcategoryfilter",colorlist);
+                        colornames.add(dataset.get(getAdapterPosition()).getColorName());
+                        setList("colorcategoryfilter", colorlist);
+                        setList("colornames", colornames);
+                        refreshSelection.refresh();
 
-                    }else if (!isChecked){
+                    } else if (!isChecked) {
+                        FilterPreference.storeBooleanPreference(mCtx, "color" + getAdapterPosition(), false);
                         colorlist.remove(String.valueOf(dataset.get(getAdapterPosition()).getId()));
-                        setList("colorcategoryfilter",colorlist);
+                        colornames.remove(dataset.get(getAdapterPosition()).getColorName());
+                        setList("colorcategoryfilter", colorlist);
+                        setList("colornames", colornames);
+                        refreshSelection.refresh();
                     }
                 }
             });
 
 
-
         }
     }
+
     public <T> void setList(String key, List<T> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
-        LocalPreferences.storeStringPreference(mCtx, key, json);
+        FilterPreference.storeStringPreference(mCtx, key, json);
     }
 }

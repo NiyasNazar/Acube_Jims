@@ -1,7 +1,6 @@
 package com.acube.jims.Presentation.Catalogue.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,51 +8,46 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.transition.AutoTransition;
-import androidx.transition.TransitionManager;
 
 import com.acube.jims.R;
 import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.Utils.RefreshSelection;
-import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
+import com.acube.jims.datalayer.models.Filter.Weight;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.ProductViewHolder> {
+public class FilterWeightAdapter extends RecyclerView.Adapter<FilterWeightAdapter.ProductViewHolder> {
 
-
+    RefreshSelection refreshSelection;
     private Context mCtx;
     private int lastSelectedPosition = -1;
 
 
-    private List<Karatresult> dataset;
-    List<SubCategory> sublist;
-    List<String> karatlist;
-    RefreshSelection refreshSelection;
-    List<String>karatnames;
+    private List<Weight> dataset;
 
-    public FilterKaratAdapter(Context mCtx, List<Karatresult> dataset, RefreshSelection refreshSelection) {
+    List<String> weightlist;
+    List<String>weightnames;
+
+    public FilterWeightAdapter(Context mCtx, List<Weight> dataset, RefreshSelection refreshSelection) {
         this.mCtx = mCtx;
         this.dataset = dataset;
-        sublist = new ArrayList<>();
-        karatlist = new ArrayList<>();
+
+        weightlist = new ArrayList<>();
         this.refreshSelection = refreshSelection;
-        karatnames=new ArrayList<>();
+        weightnames=new ArrayList<>();
 
     }
 
-    public FilterKaratAdapter(Context mCtx) {
+    public FilterWeightAdapter(Context mCtx) {
         this.mCtx = mCtx;
-        sublist = new ArrayList<>();
+
     }
 
     @Override
@@ -68,9 +62,9 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
-        holder.textViewkaratcheckbox.setText(dataset.get(position).getKaratName());
+        holder.textViewkaratcheckbox.setText("" + dataset.get(position).getGoldWeight()+" g");
         // holder.imageView.setImageResource(homeData.getImage());
-        boolean ischecked = FilterPreference.retrieveBooleanPreferences(mCtx, "karat" + position);
+        boolean ischecked = FilterPreference.retrieveBooleanPreferences(mCtx, "weight" + position);
         if (ischecked) {
             holder.textViewkaratcheckbox.setChecked(true);
         } else {
@@ -104,22 +98,19 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
-                        FilterPreference.storeBooleanPreference(mCtx, "karat" + getAdapterPosition(), true);
-                        karatlist.add(String.valueOf(dataset.get(getAdapterPosition()).getId()));
-                        karatnames.add(dataset.get(getAdapterPosition()).getKaratName());
-                        setList("karatfilter", karatlist);
-                        Log.d("TAG", "onCheckedChanged: "+karatlist.toString());
-
-                        setList("karatnames", karatnames);
+                        FilterPreference.storeBooleanPreference(mCtx, "weight" + getAdapterPosition(), true);
+                        weightlist.add(String.valueOf(dataset.get(getAdapterPosition()).getGoldWeight()));
+                        weightnames.add(dataset.get(getAdapterPosition()).getGoldWeight()+"g");
+                        setList("weightnames", weightnames);
+                        setList("weightfilter", weightlist);
                         refreshSelection.refresh();
 
                     } else if (!isChecked) {
-                        FilterPreference.storeBooleanPreference(mCtx, "karat" + getAdapterPosition(), false);
-                        karatlist.remove(String.valueOf(dataset.get(getAdapterPosition()).getId()));
-                        karatnames.remove(dataset.get(getAdapterPosition()).getKaratName());
-                        setList("karatnames", karatnames);
-                        Log.d("TAG", "onCheckedChanged: "+karatlist.toString());
-                        setList("karatfilter", karatlist);
+                        FilterPreference.storeBooleanPreference(mCtx, "weight" + getAdapterPosition(), false);
+                        weightlist.remove(String.valueOf(dataset.get(getAdapterPosition()).getGoldWeight()));
+                        weightnames.remove(dataset.get(getAdapterPosition()).getGoldWeight()+"g");
+                        setList("weightfilter", weightlist);
+                        setList("weightnames", weightnames);
                         refreshSelection.refresh();
                     }
                 }

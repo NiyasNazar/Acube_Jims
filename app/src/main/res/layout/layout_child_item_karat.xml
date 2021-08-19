@@ -12,9 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/_8sdp"
         android:paddingLeft="5dp"
+        android:fontFamily="@font/poppins_regular"
 
         android:textColor="#2d2d2d"
-        android:textSize="@dimen/_10ssp"
+        android:textSize="@dimen/_8ssp"
 
         android:theme="@style/Checkboxstyle"
 

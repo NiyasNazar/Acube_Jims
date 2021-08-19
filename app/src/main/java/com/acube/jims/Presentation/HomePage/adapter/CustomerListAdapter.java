@@ -85,8 +85,6 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerName", customerListings.get(pos).getCustomerName());
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerCode", customerListings.get(pos).getCustomerCode());
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerID", String.valueOf(customerListings.get(pos).getId()));
-                    LocalPreferences.storeStringPreference(mCtx, AppConstants.CartID,"");
-
 
                     replaceFragment.replacefragments();
                 }

@@ -4,6 +4,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.acube.jims.Presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.Presentation.CartManagment.ViewModel.CartViewModel;
 import com.acube.jims.Presentation.CartManagment.adapter.CartItemAdapter;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
+import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
@@ -42,11 +44,21 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
     String EmployeeID;
     String CartId;
     String CustomerID;
+    BackHandler backHandler;
 
     public static CartViewFragment newInstance() {
         return new CartViewFragment();
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            backHandler = (BackHandler) context;
+        } catch (ClassCastException castException) {
+            /** The activity does not implement the listener. */
+        }
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -64,6 +76,12 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
         });
         mViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         mViewModel.init();
+        binding.btnback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backHandler.backpress();
+            }
+        });
 
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         String customerId = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
@@ -93,7 +111,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
                     Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();
                     mViewModel.ViewCart(AppConstants.Authorization + AuthToken, customerId);
                     // LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID,responseAddtoCart.getCartListNo());
-                }else{
+                } else {
                     Log.d(TAG, "onChangedsiz: ");
                 }
             }
@@ -115,5 +133,10 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
         showProgressDialog();
         addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, CustomerID, EmployeeID, itemid, "delete", quantity);
 
+    }
+
+
+    public interface BackHandler {
+        void backpress();
     }
 }

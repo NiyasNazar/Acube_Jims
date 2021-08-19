@@ -27,6 +27,9 @@ public class ResponseFetchFilters {
     @SerializedName("colors")
     @Expose
     private List<Colorresult> colors = null;
+    @SerializedName("weights")
+    @Expose
+    private List<Weight> weights = null;
 
     public Integer getId() {
         return id;
@@ -76,5 +79,12 @@ public class ResponseFetchFilters {
         this.colors = colors;
     }
 
+    public List<Weight> getWeights() {
+        return weights;
+    }
+
+    public void setWeights(List<Weight> weights) {
+        this.weights = weights;
+    }
 
 }

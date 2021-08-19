@@ -91,12 +91,12 @@
 
                         <LinearLayout
                             android:id="@+id/tableheader"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
                             android:layout_width="match_parent"
                             android:layout_height="55dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
                             android:background="@drawable/rec_button"
-                            android:backgroundTint="#3699ff"
+                            android:backgroundTint="#BF8F3A"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
 
@@ -112,7 +112,7 @@
                                 android:gravity="center"
                                 android:text="Customer Name"
                                 android:textColor="#FFFFFF"
-                                android:textSize="@dimen/_10ssp">
+                                android:textSize="@dimen/_8ssp">
 
                             </TextView>
 
@@ -127,7 +127,7 @@
                                 android:gravity="center"
                                 android:text="Contact Number"
                                 android:textColor="#FFFFFF"
-                                android:textSize="@dimen/_10ssp">
+                                android:textSize="@dimen/_8ssp">
 
                             </TextView>
 
@@ -140,7 +140,7 @@
                                 android:gravity="center"
                                 android:text="Email"
                                 android:textColor="#FFFFFF"
-                                android:textSize="@dimen/_10ssp">
+                                android:textSize="@dimen/_8ssp">
 
                             </TextView>
 
@@ -199,8 +199,8 @@
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/rec_button"
-                                android:backgroundTint="#3699ff"
-                                android:text="Skip"
+                                android:backgroundTint="#BF8F3A"
+                                android:text="Salesman"
                                 android:textColor="@color/white"
 
                                 android:textSize="12sp"></androidx.appcompat.widget.AppCompatButton>
@@ -214,7 +214,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/rec_button"
 
-                                android:backgroundTint="#3699ff"
+                                android:backgroundTint="#BF8F3A"
                                 android:text="ADD customer"
                                 android:textColor="@color/white"
                                 android:textSize="12sp">
@@ -230,7 +230,7 @@
                                 android:layout_weight="1"
                                 android:background="@drawable/rec_button"
 
-                                android:backgroundTint="#3699ff"
+                                android:backgroundTint="#BF8F3A"
                                 android:text="continue as guest"
                                 android:textColor="@color/white"
                                 android:textSize="12sp">

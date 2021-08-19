@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/imvhomeicon"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_100sdp"
+        android:layout_height="@dimen/_80sdp"
         android:src="@drawable/ic_dashboard">
 
     </ImageView>
@@ -23,7 +23,7 @@
         android:text="asdsad"
         android:textAllCaps="true"
         android:textColor="#ab7e2f"
-        android:textSize="@dimen/_15ssp">
+        android:textSize="@dimen/_13ssp">
 
     </TextView>
 

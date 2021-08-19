@@ -25,7 +25,7 @@ public class CatalogueRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void FetchCatalogueItems(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode) {
+    public void FetchCatalogueItems(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode,String goldWeight,String priceMin,String priceMax,String gender) {
         RestApiService restApiService = RetrofitInstance.getApiService();
         JsonObject jsonObject=new JsonObject();
 
@@ -35,6 +35,11 @@ public class CatalogueRepository {
         jsonObject.addProperty("subCategoryCode",SubCatID);
         jsonObject.addProperty("karatCode",KaratCode);
         jsonObject.addProperty("colorCode",ColorCode);
+        jsonObject.addProperty("goldWeight",goldWeight);
+        jsonObject.addProperty("minPrice",priceMin);
+        jsonObject.addProperty("maxPrice",priceMax);
+        jsonObject.addProperty("gender",gender);
+
 
         Call<List<ResponseCatalogueListing>> call = restApiService.getCatalogueItems(Auth,jsonObject);
         call.enqueue(new Callback<List<ResponseCatalogueListing>>() {
@@ -51,7 +56,7 @@ public class CatalogueRepository {
 
             @Override
             public void onFailure(Call<List<ResponseCatalogueListing>> call, Throwable t) {
-
+                dataset.setValue(null);
             }
         });
 

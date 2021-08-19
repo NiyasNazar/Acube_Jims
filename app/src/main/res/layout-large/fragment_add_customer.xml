@@ -145,7 +145,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/rec_button"
 
-                        android:backgroundTint="#3699ff"
+                        android:backgroundTint="#BF8F3A"
                         android:text="cancel"
                         android:textColor="@color/white"
                         android:textSize="12sp">
@@ -160,7 +160,7 @@
                         android:layout_margin="5dp"
                         android:layout_weight="1"
                         android:background="@drawable/rec_button"
-                        android:backgroundTint="#3699ff"
+                        android:backgroundTint="#BF8F3A"
                         android:text="Save"
                         android:textColor="@color/white"
 

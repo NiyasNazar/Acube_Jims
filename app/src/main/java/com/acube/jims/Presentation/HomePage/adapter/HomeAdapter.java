@@ -93,7 +93,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fragmenttransition.replaceFragment();
+                    fragmenttransition.replaceFragment(getAdapterPosition());
 
                 }
             });
@@ -101,7 +101,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
     }
 
     public interface FragmentTransition {
-        void replaceFragment();
+        void replaceFragment(int pos);
 
     }
 }

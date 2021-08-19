@@ -23,6 +23,7 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 import com.acube.jims.Presentation.CartManagment.View.CartViewFragment;
+import com.acube.jims.Presentation.CustomerManagment.View.CustomerBottomSheetFragment;
 import com.acube.jims.Presentation.CustomerManagment.View.CustomerSearch;
 import com.acube.jims.Presentation.DeviceRegistration.View.DeviceRegistrationFragment;
 import com.acube.jims.Presentation.Favorites.View.FavoritesFragment;
@@ -41,7 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity implements ProductDetailsFragment.BackHandler, BackHandler, CustomerSearch.ReplacefromCustomerLogin {
+public class HomePageActivity extends AppCompatActivity implements ProductDetailsFragment.BackHandler, BackHandler, CustomerSearch.ReplacefromCustomerLogin,CartViewFragment.BackHandler,FavoritesFragment.BackHandler {
     ActivityHomePageBinding binding;
     List<HomeData> dataset;
     HomeData homeData;
@@ -58,11 +59,12 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
         init();
         prepareMenuData();
         populateExpandableList();
-        replaceFragment(new HomeFragment());
+        replaceFragment(new CustomerBottomSheetFragment());
         binding.toolbar.imvcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replaceFragment(new CartViewFragment());
+
+                FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, new CartViewFragment());
             }
         });
         binding.toolbar.optionMenu.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +160,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
                         } else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Home")) {
                             replaceFragment(new HomeFragment());
                         } else if (headerList.get(groupPosition).menuName.equalsIgnoreCase("Favorites")) {
-                            replaceFragment(new FavoritesFragment());
+                            FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, new FavoritesFragment());
                         }
                         onBackPressed();
                     }

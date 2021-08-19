@@ -22,12 +22,17 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.Presentation.Catalogue.adapter.FilterMasterAdapter;
+import com.acube.jims.Presentation.Filters.View.AppliedFilterFragment;
 import com.acube.jims.Presentation.Filters.View.CategoryFilterFragment;
 import com.acube.jims.Presentation.Filters.View.ColorFilterFragment;
+import com.acube.jims.Presentation.Filters.View.GenderFragment;
 import com.acube.jims.Presentation.Filters.View.KaratFragment;
+import com.acube.jims.Presentation.Filters.View.PriceFragment;
+import com.acube.jims.Presentation.Filters.View.SubCatFilterFragment;
+import com.acube.jims.Presentation.Filters.View.WeightFragment;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.BottomSheetFilterBinding;
 import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
@@ -62,6 +67,9 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
         dataset.add("Sub Category");
         dataset.add("Karat");
         dataset.add("Color");
+        dataset.add("Weight");
+        dataset.add("Price");
+        dataset.add("Gender");
         binding.rcylrfiltritems.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.rcylrfiltritems.setAdapter(new FilterMasterAdapter(getActivity(), dataset, FilterBottomSheetFragment.this));
         binding.closelayt.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +81,9 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
         binding.backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocalPreferences.storeStringPreference(getContext(), "subcatid", "");
-                LocalPreferences.storeStringPreference(getContext(), "colorid", "");
-                LocalPreferences.storeStringPreference(getContext(), "karatid", "");
+                FilterPreference.storeStringPreference(getContext(), "subcatid", "");
+                FilterPreference.storeStringPreference(getContext(), "colorid", "");
+                FilterPreference.storeStringPreference(getContext(), "karatid", "");
 
 
                 dismiss();
@@ -84,12 +92,10 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
         binding.clrfilterlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LocalPreferences.storeStringPreference(getContext(), "subcatid", "");
-                LocalPreferences.storeStringPreference(getContext(), "colorid", "");
-                LocalPreferences.storeStringPreference(getContext(), "karatid", "");
-                LocalPreferences.removePreferences(getActivity(), "subcategoryfilter");
-                LocalPreferences.removePreferences(getActivity(), "colorcategoryfilter");
-                LocalPreferences.removePreferences(getActivity(), "karatfilter");
+                CategoryFilterFragment categoryFilterFragment = new CategoryFilterFragment();
+
+                FilterPreference.clearPreferences(getActivity());
+                ReplaceFragment(categoryFilterFragment);
                 Toast.makeText(getActivity(), "Filter Cleared", Toast.LENGTH_SHORT).show();
             }
         });
@@ -102,10 +108,15 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                 List<String> datasetsubcategory = new ArrayList<>();
                 List<String> datasetcolor = new ArrayList<>();
                 List<String> datasetkarat = new ArrayList<>();
+                List<String> datasetCategory = new ArrayList<>();
+                List<String> datasetweight = new ArrayList<>();
+
+
                 datasetsubcategory = getList("subcategoryfilter");
                 datasetcolor = getList("colorcategoryfilter");
                 datasetkarat = getList("karatfilter");
-                if (datasetsubcategory != null && datasetsubcategory.size() != 0) {
+                datasetweight = getList("weightfilter");
+                if (datasetsubcategory != null ) {
                     StringBuilder str = new StringBuilder("");
                     for (String eachstring : datasetsubcategory) {
                         str.append(eachstring).append(",");
@@ -116,10 +127,10 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                                 = commaseparatedlist.substring(
                                 0, commaseparatedlist.length() - 1);
                     Log.d("mycategoryfilter", "onClick: " + commaseparatedlist);
-                    LocalPreferences.storeStringPreference(getContext(), "subcatid", commaseparatedlist);
+                    FilterPreference.storeStringPreference(getContext(), "subcatid", commaseparatedlist);
                 }
 
-                if (datasetcolor != null && datasetcolor.size() != 0) {
+                if (datasetcolor != null ) {
                     StringBuilder str = new StringBuilder("");
                     for (String eachstring : datasetcolor) {
                         str.append(eachstring).append(",");
@@ -130,9 +141,9 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                                 = commaseparatedlist.substring(
                                 0, commaseparatedlist.length() - 1);
                     Log.d("datasetcolor", "onClick: " + commaseparatedlist);
-                    LocalPreferences.storeStringPreference(getContext(), "colorid", commaseparatedlist);
+                    FilterPreference.storeStringPreference(getContext(), "colorid", commaseparatedlist);
                 }
-                if (datasetkarat != null && datasetkarat.size() != 0) {
+                if (datasetkarat != null ) {
                     StringBuilder str = new StringBuilder("");
                     for (String eachstring : datasetkarat) {
                         str.append(eachstring).append(",");
@@ -143,9 +154,21 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                                 = commaseparatedlist.substring(
                                 0, commaseparatedlist.length() - 1);
                     Log.d("datasetkarat", "onClick: " + commaseparatedlist);
-                    LocalPreferences.storeStringPreference(getContext(), "karatid", commaseparatedlist);
+                    FilterPreference.storeStringPreference(getContext(), "karatid", commaseparatedlist);
                 }
-
+                if (datasetweight != null ) {
+                    StringBuilder str = new StringBuilder("");
+                    for (String eachstring : datasetweight) {
+                        str.append(eachstring).append(",");
+                    }
+                    String commaseparatedlist = str.toString();
+                    if (commaseparatedlist.length() > 0)
+                        commaseparatedlist
+                                = commaseparatedlist.substring(
+                                0, commaseparatedlist.length() - 1);
+                    Log.d("datasetweight", "onClick: " + commaseparatedlist);
+                    FilterPreference.storeStringPreference(getContext(), "weightid", commaseparatedlist);
+                }
                 applyFilter.applyfilter();
                 dismiss();
             }
@@ -182,11 +205,33 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
             ReplaceFragment(categoryFilterFragment);
 
         } else if (pos == 1) {
-            ColorFilterFragment colorFilterFragment = new ColorFilterFragment();
-            ReplaceFragment(colorFilterFragment);
+            SubCatFilterFragment subCatFilterFragment = new SubCatFilterFragment();
+            ReplaceFragment(subCatFilterFragment);
+
+
         } else if (pos == 2) {
             KaratFragment colorFilterFragment = new KaratFragment();
             ReplaceFragment(colorFilterFragment);
+        } else if (pos == 3) {
+
+            ColorFilterFragment colorFilterFragment = new ColorFilterFragment();
+            ReplaceFragment(colorFilterFragment);
+
+        } else if (pos == 4) {
+
+            WeightFragment weightFragment = new WeightFragment();
+            ReplaceFragment(weightFragment);
+
+        } else if (pos == 5) {
+
+            PriceFragment priceFragment = new PriceFragment();
+            ReplaceFragment(priceFragment);
+
+        } else if (pos == 6) {
+
+            GenderFragment genderFragment = new GenderFragment();
+            ReplaceFragment(genderFragment);
+
         }
 
     }
@@ -196,11 +241,20 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
         FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.fragment2, fragment);
         fragmentTransaction.commit();
+        FragmentTransaction fragmentTransaction2 = getChildFragmentManager().beginTransaction();
+        fragmentTransaction2.replace(R.id.fragment3, new AppliedFilterFragment());
+        fragmentTransaction2.commit();
+    }
+
+    public void Refresh() {
+        FragmentTransaction fragmentTransaction2 = getChildFragmentManager().beginTransaction();
+        fragmentTransaction2.replace(R.id.fragment3, new AppliedFilterFragment());
+        fragmentTransaction2.commit();
     }
 
     public List<String> getList(String name) {
         List<String> mMainCategory = null;
-        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), name);
+        String serializedObject = FilterPreference.retrieveStringPreferences(getActivity(), name);
         if (serializedObject != null) {
             Gson gson = new Gson();
             Type type = new TypeToken<List<String>>() {

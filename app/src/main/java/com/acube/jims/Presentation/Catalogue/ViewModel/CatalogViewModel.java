@@ -24,8 +24,8 @@ public class CatalogViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void FetchCatalog(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode) {
-        repository.FetchCatalogueItems(Auth,PageNum, PageSize, CatID, SubCatID,ColorCode,KaratCode);
+    public void FetchCatalog(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode,String goldWeight,String priceMin,String priceMax,String gender) {
+        repository.FetchCatalogueItems(Auth,PageNum, PageSize, CatID, SubCatID,ColorCode,KaratCode,goldWeight,priceMin,priceMax,gender);
     }
 
     public void init() {

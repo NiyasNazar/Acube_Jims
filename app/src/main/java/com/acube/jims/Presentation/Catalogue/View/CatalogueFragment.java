@@ -1,15 +1,9 @@
 package com.acube.jims.Presentation.Catalogue.View;
 
 import android.content.Context;
-import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,15 +14,11 @@ import androidx.transition.TransitionManager;
 
 import android.os.Handler;
 
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -38,22 +28,16 @@ import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModel;
 import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.Presentation.Catalogue.ViewModel.FilterViewModel;
-import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemsAdapter;
-import com.acube.jims.Presentation.Catalogue.adapter.FilterColorAdapter;
-import com.acube.jims.Presentation.Catalogue.adapter.FilterKaratAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterListAdapter;
-import com.acube.jims.Presentation.Catalogue.adapter.FilterParentAdapter;
-import com.acube.jims.Presentation.DeviceRegistration.ViewModel.DeviceRegistrationViewModel;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.ExpandableListDataPump;
+import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.Utils.PaginationScrollListener;
-import com.acube.jims.databinding.BottomSheetFilterBinding;
 import com.acube.jims.databinding.FragmentCatalogueBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
@@ -63,7 +47,6 @@ import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -73,7 +56,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     CatalogItemsAdapter adapter;
     GridLayoutManager gridLayoutManager;
-    String vaSubCatID, vaCatID = "", vaKaratID = "", vaColorID = "";
+    String vaSubCatID, vaCatID = "", vaKaratID = "", vaColorID = "", vaWeight = "", vapriceMax = "", vaPriceMin = "", vagender = "";
 
     String AuthToken;
 
@@ -142,10 +125,10 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
                 //  mypopupWindow.showAsDropDown(v, -153, 0);
                 //  binding.parent.getForeground().setAlpha(100);
 
-                //FilterBottomSheetFragment bottomSheet = new FilterBottomSheetFragment(CatalogueFragment.this::applyfilter);
+                FilterBottomSheetFragment bottomSheet = new FilterBottomSheetFragment(CatalogueFragment.this::applyfilter);
 
-               // bottomSheet.show(getActivity().getSupportFragmentManager(),
-                       // "ModalBottomSheet");
+                bottomSheet.show(getActivity().getSupportFragmentManager(),
+                        "ModalBottomSheet");
 
             }
         });
@@ -200,6 +183,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         catalogViewModelNextPage.getLiveData().observe(getActivity(), new Observer<List<ResponseCatalogueListing>>() {
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
+                hideProgressDialog();
                 if (responseCatalogueListings != null && responseCatalogueListings.size() != 0) {
                     /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     adapter.removeLoadingFooter();
@@ -251,12 +235,16 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         showProgressDialog();
         adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this);
         binding.recyvcatalog.setAdapter(adapter);
-        vaSubCatID = LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid");
-        vaColorID = LocalPreferences.retrieveStringPreferences(getContext(), "colorid");
-        vaKaratID = LocalPreferences.retrieveStringPreferences(getContext(), "karatid");
+        vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
+        vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
+        vaKaratID = FilterPreference.retrieveStringPreferences(getContext(), "karatid");
+        vaCatID = FilterPreference.retrieveStringPreferences(getActivity(), "catid");
+        vaWeight = FilterPreference.retrieveStringPreferences(getActivity(), "weightid");
+        vaPriceMin = FilterPreference.retrieveStringPreferences(getActivity(), "MinValue");
+        vapriceMax = FilterPreference.retrieveStringPreferences(getActivity(), "MaxValue");
         Log.d(TAG, "LoadFirstPage: " + vaSubCatID);
-
-        viewModel.FetchCatalog(AppConstants.Authorization + AuthToken,PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
+        vagender = FilterPreference.retrieveStringPreferences(getActivity(), "gender");
+        viewModel.FetchCatalog(AppConstants.Authorization + AuthToken, PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeight, vaPriceMin, vapriceMax, vagender);
 
     }
 
@@ -266,13 +254,16 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     }
 
     private void loadNextPage() {
+        vaCatID = FilterPreference.retrieveStringPreferences(getActivity(), "catid");
+        vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
+        vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
+        vaKaratID = FilterPreference.retrieveStringPreferences(getContext(), "karatid");
+        vaWeight = FilterPreference.retrieveStringPreferences(getActivity(), "weightid");
+        vaPriceMin = FilterPreference.retrieveStringPreferences(getActivity(), "MinValue");
+        vapriceMax = FilterPreference.retrieveStringPreferences(getActivity(), "MaxValue");
+        vagender = FilterPreference.retrieveStringPreferences(getActivity(), "gender");
 
-        vaSubCatID = LocalPreferences.retrieveStringPreferences(getActivity(), "subcatid");
-        vaColorID = LocalPreferences.retrieveStringPreferences(getContext(), "colorid");
-        vaKaratID = LocalPreferences.retrieveStringPreferences(getContext(), "karatid");
-
-
-        catalogViewModelNextPage.FetchCatalog(AppConstants.Authorization + AuthToken,currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID);
+        catalogViewModelNextPage.FetchCatalog(AppConstants.Authorization + AuthToken, currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeight, vaPriceMin, vapriceMax, vagender);
 
     }
 
@@ -419,6 +410,8 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     @Override
     public void applyfilter() {
         Toast.makeText(getActivity(), "FilterApplied", Toast.LENGTH_SHORT).show();
+        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
+
         LoadFirstPage();
 
     }

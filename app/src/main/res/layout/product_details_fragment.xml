@@ -306,7 +306,7 @@
                                         android:gravity="start|center"
                                         android:letterSpacing="0.01"
                                         android:paddingLeft="10dp"
-                                        android:text="Item Code"
+                                        android:text="Serial Number"
                                         android:textColor="#666666"
                                         android:textSize="12sp"
                                         android:textStyle="normal" />

@@ -10,18 +10,18 @@
         android:layout_height="wrap_content">
 
 
-        <RadioButton
+        <TextView
             android:id="@+id/tv_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/karla_bold"
+            android:fontFamily="@font/poppins_semibold"
             android:paddingLeft="@dimen/_10sdp"
             android:text="Category"
             android:textAllCaps="false"
             android:textColor="#000000"
-            android:textSize="@dimen/_10ssp">
+            android:textSize="@dimen/_8ssp">
 
-        </RadioButton>
+        </TextView>
 
         <ImageView
             android:visibility="gone"

@@ -202,7 +202,7 @@ public class ProductDetailsFragment extends BaseFragment {
                     binding.tvItemName.setText(responseCatalogDetails.getItemName());
                     binding.tvbrandname.setText(responseCatalogDetails.getItemBrandName());
                     binding.tvDescription.setText(responseCatalogDetails.getItemDesc());
-                    binding.tvItemcode.setText(responseCatalogDetails.getItemCode());
+                    binding.tvItemcode.setText(responseCatalogDetails.getSerialNumber());
                     binding.tvGender.setText(responseCatalogDetails.getGender());
                     binding.tvmakingchargemin.setText("" + responseCatalogDetails.getMakingChargeMin());
                     binding.tvMakingchrgmax.setText("" + responseCatalogDetails.getMakingChargeMax());

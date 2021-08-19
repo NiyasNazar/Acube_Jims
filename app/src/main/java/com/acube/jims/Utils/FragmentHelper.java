@@ -17,10 +17,12 @@ public class FragmentHelper {
     public static void replaceFragment(final FragmentActivity activity, final int containerId,
                                        final Fragment fragment, String Tag) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+        activity.getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         transaction.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         transaction.replace(containerId, fragment);
         transaction.commitAllowingStateLoss();
     }
+
     public static void replaceFragment(final FragmentActivity activity, final int containerId,
                                        final Fragment fragment) {
         FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();

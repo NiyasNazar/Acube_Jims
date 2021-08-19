@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.BaseFragment;
+import com.acube.jims.Presentation.CartManagment.ViewModel.CartViewModel;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterMasterAdapter;
 import com.acube.jims.Presentation.Filters.View.CategoryFilterFragment;
@@ -41,6 +42,7 @@ import com.acube.jims.databinding.BottomSheetCustomerBinding;
 import com.acube.jims.databinding.BottomSheetFilterBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
+import com.acube.jims.datalayer.models.Cart.ResponseCart;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -62,6 +64,7 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
     LinearLayoutManager linearLayoutManager;
     CustomerListAdapter adapter;
     List<ResponseCustomerListing> dataset;
+    private CartViewModel mViewModel;
 
     @Override
 
@@ -79,7 +82,8 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
         createCustomerViewModel.init();
         linearLayoutManager = new LinearLayoutManager(getActivity());
         binding.recyvcustomerlist.setLayoutManager(linearLayoutManager);
-
+        mViewModel = new ViewModelProvider(this).get(CartViewModel.class);
+        mViewModel.init();
         binding.btnAddcustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +102,7 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
                     LocalPreferences.storeStringPreference(getContext(), "GuestCustomerName", responseCreateCustomer.getCustomerName());
                     LocalPreferences.storeStringPreference(getContext(), "GuestCustomerCode", responseCreateCustomer.getCustomerCode());
                     LocalPreferences.storeStringPreference(getContext(), "GuestCustomerID", String.valueOf(responseCreateCustomer.getId()));
-                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
 
                 } else {
 
@@ -111,9 +115,9 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
             public void onClick(View v) {
                 LocalPreferences.storeStringPreference(getContext(), "GuestCustomerName", "");
                 LocalPreferences.storeStringPreference(getContext(), "GuestCustomerCode", "");
-                LocalPreferences.storeStringPreference(getContext(), "GuestCustomerID","");
+                LocalPreferences.storeStringPreference(getContext(), "GuestCustomerID", "");
 
-                replacefragments();
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
 
             }
         });
@@ -153,11 +157,23 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
 
             }
         });
+        mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseCart>() {
+            @Override
+            public void onChanged(ResponseCart responseCart) {
+                if (responseCart != null) {
+                    LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID, responseCart.getCartListNo());
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(),"");
+                }else{
+                    LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID,"");
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(),"");
+                }
+            }
+        });
         customerViewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseCustomerListing>>() {
             @Override
             public void onChanged(List<ResponseCustomerListing> responseCustomerListings) {
                 dataset = new ArrayList<>();
-                dataset=responseCustomerListings;
+                dataset = responseCustomerListings;
                 if (dataset != null && dataset.size() != 0) {
                     binding.recyvcustomerlist.setVisibility(View.VISIBLE);
                     binding.tvNodatafound.setVisibility(View.GONE);
@@ -207,7 +223,11 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
 
     @Override
     public void replacefragments() {
-        FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
+        mViewModel.ViewCart(AppConstants.Authorization + AuthToken, LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID"));
+
+        //LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
+
+
     }
 
 

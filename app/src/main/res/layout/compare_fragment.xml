@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+
+        tools:context=".Presentation.Compare.CompareFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp">
+
+            </include>
+            <RelativeLayout
+                android:layout_below="@id/toolbar"
+
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/left_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignTop="@+id/view_pager"
+                    android:rotation="360"
+                    android:padding="8dp"
+                    android:layout_alignBottom="@id/view_pager"
+                    android:src="@drawable/checvronleft"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@id/right_arrow"
+                    android:layout_toRightOf="@id/left_arrow"
+                    android:background="@drawable/item_border_detailspage" />
+
+
+                <ImageView
+                    android:id="@+id/right_arrow"
+                    android:padding="8dp"
+                    android:layout_alignTop="@+id/view_pager"
+                    android:layout_alignBottom="@id/view_pager"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/chevronright"/>
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

@@ -207,7 +207,7 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
     }
 
     private void init() {
-        adapter = new CatalogItemsAdapter(getActivity(),GuestCatalogueFragment.this);
+//        adapter = new CatalogItemsAdapter(getActivity(),GuestCatalogueFragment.this);
 
         binding.recyvcatalog.setAdapter(adapter);
 

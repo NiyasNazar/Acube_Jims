@@ -45,7 +45,7 @@ public class CartDetail {
     private Object netAmount;
     @SerializedName("finalAmount")
     @Expose
-    private Object finalAmount;
+    private String finalAmount;
     @SerializedName("grossWeight")
     @Expose
     private Double grossWeight;
@@ -55,6 +55,11 @@ public class CartDetail {
     @SerializedName("cartSerialDTOs")
     @Expose
     private Object cartSerialDTOs;
+    @SerializedName("serialNumber")
+    @Expose
+    private String serialNumber;
+
+
 
     public String getCartListNo() {
         return cartListNo;
@@ -164,7 +169,7 @@ public class CartDetail {
         return finalAmount;
     }
 
-    public void setFinalAmount(Object finalAmount) {
+    public void setFinalAmount(String finalAmount) {
         this.finalAmount = finalAmount;
     }
 
@@ -192,4 +197,11 @@ public class CartDetail {
         this.cartSerialDTOs = cartSerialDTOs;
     }
 
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 }

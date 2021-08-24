@@ -22,7 +22,7 @@ public class AddtoFavoritesRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void AddtoFavorites(String Auth, String CustomerID, String EmployeeId, String itemID, String viewedOn, String type) {
+    public void AddtoFavorites(String Auth, String CustomerID, String EmployeeId, String itemID, String viewedOn, String type,String serialno) {
         RestApiService restApiService = RetrofitInstance.getApiService();
         JsonObject jsonObject = new JsonObject();
 
@@ -30,6 +30,7 @@ public class AddtoFavoritesRepository {
         jsonObject.addProperty("customerID", CustomerID);
         jsonObject.addProperty("employeeID", EmployeeId);
         jsonObject.addProperty("viewedOn", "");
+        jsonObject.addProperty("serialNumber", serialno);
         jsonObject.addProperty("itemID", itemID);
 
 

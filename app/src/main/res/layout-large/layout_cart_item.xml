@@ -34,7 +34,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cdv_image"
                 android:layout_width="142dp"
-                android:layout_height="94dp"
+                android:layout_height="100dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="15dp"
                 app:cardCornerRadius="6.7dp">
@@ -49,6 +49,7 @@
             </androidx.cardview.widget.CardView>
 
             <TextView
+                android:id="@+id/tv_itemname"
                 android:layout_width="311dp"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/tv_weight"
@@ -58,10 +59,9 @@
                 android:gravity="center_horizontal"
                 android:letterSpacing="0.01"
                 android:maxLines="2"
-                android:id="@+id/tv_itemname"
                 android:text="Latin Solitare Ring - LSR0002350"
                 android:textColor="#666666"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -76,7 +76,7 @@
                 android:letterSpacing="0.01"
                 android:text="18K - Weight : 6.76 g"
                 android:textColor="#666666"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
             <TextView
@@ -92,7 +92,7 @@
                 android:letterSpacing="0.01"
                 android:text="18K - Weight : 6.76 g"
                 android:textColor="#666666"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:textStyle="normal" />
 
         </RelativeLayout>
@@ -103,7 +103,15 @@
             android:layout_height="182dp"
             android:layout_weight="1"
             android:background="@drawable/table_item_border">
+            <TextView
+                android:fontFamily="@font/montserratsemibold"
+                android:layout_centerInParent="true"
+                android:id="@+id/tv_serialnumber"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"></TextView>
             <LinearLayout
+                android:visibility="invisible"
                 android:gravity="center_vertical"
                 android:layout_centerInParent="true"
                 android:background="@drawable/quantity_updation_bg"
@@ -145,7 +153,9 @@
             android:layout_height="182dp"
             android:layout_weight="1"
             android:background="@drawable/table_item_border">
+
             <TextView
+                android:id="@+id/tvprice"
                 android:layout_width="311dp"
                 android:layout_height="22dp"
                 android:layout_centerVertical="true"

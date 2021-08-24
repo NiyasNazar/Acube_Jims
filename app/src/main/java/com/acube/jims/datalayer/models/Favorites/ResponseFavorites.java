@@ -1,7 +1,12 @@
 package com.acube.jims.datalayer.models.Favorites;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Index;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
 
 public class ResponseFavorites {
     @SerializedName("itemID")
@@ -9,46 +14,66 @@ public class ResponseFavorites {
     private Integer itemID;
     @SerializedName("itemName")
     @Expose
+
     private String itemName;
     @SerializedName("imagePath")
     @Expose
+
     private String imagePath;
     @SerializedName("qty")
     @Expose
+
     private Object qty;
     @SerializedName("uomid")
     @Expose
+
     private Object uomid;
     @SerializedName("grossWeight")
     @Expose
-    private Object grossWeight;
+
+    private Double  grossWeight;
     @SerializedName("stoneWeight")
     @Expose
-    private Object stoneWeight;
+
+    private Double  stoneWeight;
     @SerializedName("karatCode")
     @Expose
-    private Object karatCode;
+
+    private Double  karatCode;
     @SerializedName("karatName")
     @Expose
-    private Object karatName;
+
+    private String karatName;
     @SerializedName("customerID")
     @Expose
+
     private Integer customerID;
     @SerializedName("customerCode")
     @Expose
+
     private String customerCode;
     @SerializedName("customerName")
     @Expose
+
     private String customerName;
     @SerializedName("employeeID")
     @Expose
+
     private Integer employeeID;
     @SerializedName("employeeCode")
     @Expose
+
     private String employeeCode;
     @SerializedName("employeeName")
     @Expose
+
     private String employeeName;
+
+    @SerializedName("serialNumber")
+    @Expose
+
+    private String serialNumber;
+
 
     public Integer getItemID() {
         return itemID;
@@ -90,35 +115,35 @@ public class ResponseFavorites {
         this.uomid = uomid;
     }
 
-    public Object getGrossWeight() {
+    public Double  getGrossWeight() {
         return grossWeight;
     }
 
-    public void setGrossWeight(Object grossWeight) {
+    public void setGrossWeight(Double  grossWeight) {
         this.grossWeight = grossWeight;
     }
 
-    public Object getStoneWeight() {
+    public Double  getStoneWeight() {
         return stoneWeight;
     }
 
-    public void setStoneWeight(Object stoneWeight) {
+    public void setStoneWeight(Double  stoneWeight) {
         this.stoneWeight = stoneWeight;
     }
 
-    public Object getKaratCode() {
+    public Double  getKaratCode() {
         return karatCode;
     }
 
-    public void setKaratCode(Object karatCode) {
+    public void setKaratCode(Double  karatCode) {
         this.karatCode = karatCode;
     }
 
-    public Object getKaratName() {
+    public String getKaratName() {
         return karatName;
     }
 
-    public void setKaratName(Object karatName) {
+    public void setKaratName(String karatName) {
         this.karatName = karatName;
     }
 
@@ -170,4 +195,11 @@ public class ResponseFavorites {
         this.employeeName = employeeName;
     }
 
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 }

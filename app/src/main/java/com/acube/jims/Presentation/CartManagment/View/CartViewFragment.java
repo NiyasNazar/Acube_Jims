@@ -33,6 +33,7 @@ import com.acube.jims.datalayer.models.Cart.CartDetail;
 import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;
 import com.acube.jims.datalayer.models.Cart.ResponseCart;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class CartViewFragment extends BaseFragment implements CartItemAdapter.UpdateQuantity, CartItemAdapter.DeleteProduct {
@@ -59,6 +60,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
             /** The activity does not implement the listener. */
         }
     }
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -93,12 +95,23 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
             @Override
             public void onChanged(ResponseCart responseCart) {
                 if (responseCart != null) {
+
                     CustomerID = String.valueOf(responseCart.getCustomerID());
                     EmployeeID = String.valueOf(responseCart.getEmployeeID());
                     CartId = responseCart.getCartListNo();
                     List<CartDetail> dataset = responseCart.getCartDetails();
                     Log.d("onChangedss", "onChanged: " + dataset.size());
                     binding.recycartitems.setAdapter(new CartItemAdapter(getActivity(), dataset, CartViewFragment.this, CartViewFragment.this));
+                    if (dataset != null && dataset.isEmpty()) {
+                        binding.emptycart.setVisibility(View.VISIBLE);
+                        binding.nestedscrollview.setVisibility(View.GONE);
+                        binding.bottomlayt.setVisibility(View.GONE);
+                    } else {
+                        binding.emptycart.setVisibility(View.GONE);
+                        binding.nestedscrollview.setVisibility(View.VISIBLE);
+                        binding.bottomlayt.setVisibility(View.VISIBLE);
+                    }
+
                 }
             }
         });
@@ -123,15 +136,15 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
     @Override
     public void updatevalue(String itemid, String quantity) {
         showProgressDialog();
-        addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, CustomerID, EmployeeID, itemid, "edit", quantity);
+        // addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, CustomerID, EmployeeID, itemid, "edit", quantity);
 
 
     }
 
     @Override
-    public void removefromcart(String itemid, String quantity) {
+    public void removefromcart(String itemid, String quantity, String serialno) {
         showProgressDialog();
-        addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, CustomerID, EmployeeID, itemid, "delete", quantity);
+        addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, CustomerID, EmployeeID, itemid, "delete", quantity, serialno);
 
     }
 

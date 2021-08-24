@@ -45,7 +45,7 @@ public class ProductDetailsFragment extends BaseFragment {
     BackHandler backHandler;
     AddtoCartViewModel addtoCartViewModel;
     String AuthToken;
-    int ItemId;
+    String mSerialno;
     String CartId;
     AddtoFavoritesViewModel addtoFavoritesViewModel;
     String GuestCustomerID, UserId;
@@ -92,7 +92,7 @@ public class ProductDetailsFragment extends BaseFragment {
         binding.favButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, String.valueOf(ItemId), "add", "");
+                addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, Id, "add", "",mSerialno);
 
             }
 
@@ -139,7 +139,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 showProgressDialog();
 
 
-                addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, String.valueOf(ItemId), "add", "1");
+                addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, Id, "add", "0", mSerialno);
 
             }
         });
@@ -197,7 +197,8 @@ public class ProductDetailsFragment extends BaseFragment {
                                 .into(binding.imvsingleitemimage);
                     }
 
-                    ItemId = responseCatalogDetails.getId();
+                    mSerialno = responseCatalogDetails.getSerialNumber();
+                    Id = String.valueOf(responseCatalogDetails.getId());
                     binding.tvMrp.setText(responseCatalogDetails.getMrp() + " SAR ");
                     binding.tvItemName.setText(responseCatalogDetails.getItemName());
                     binding.tvbrandname.setText(responseCatalogDetails.getItemBrandName());

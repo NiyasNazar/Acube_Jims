@@ -19,8 +19,8 @@ public class AddtoFavoritesViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void AddtoFavorites(String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String viewedOn) {
-        repository.AddtoFavorites(Auth, CustomerID, EmployeeId, ItemId, viewedOn, type);
+    public void AddtoFavorites(String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String viewedOn,String serialno) {
+        repository.AddtoFavorites(Auth, CustomerID, EmployeeId, ItemId, viewedOn, type,serialno);
     }
 
     public void init() {

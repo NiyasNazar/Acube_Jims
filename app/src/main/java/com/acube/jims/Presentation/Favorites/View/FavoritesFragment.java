@@ -15,18 +15,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.acube.jims.BaseFragment;
+import com.acube.jims.Presentation.Compare.CompareFragment;
 import com.acube.jims.Presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
 import com.acube.jims.Presentation.Favorites.ViewModel.FavoritesViewModel;
 import com.acube.jims.Presentation.Favorites.adapter.FavoritesItemAdapter;
+import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.Login.ViewModel.LoginViewModel;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FilterPreference;
+import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentFavoritesBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,7 +42,7 @@ import java.util.List;
  * Use the {@link FavoritesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavoritesFragment extends BaseFragment implements FavoritesItemAdapter.DeleteProduct {
+public class FavoritesFragment extends BaseFragment implements FavoritesItemAdapter.DeleteProduct, FavoritesItemAdapter.Comaparelist {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -81,6 +89,7 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
     FavoritesViewModel favoritesViewModel;
     AddtoFavoritesViewModel addtoFavoritesViewModel;
     String AuthToken;
+    List<String> compareitemlist;
 
     @Override
     public void onAttach(Context context) {
@@ -121,7 +130,22 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
             @Override
             public void onChanged(List<ResponseFavorites> responseFavorites) {
                 hideProgressDialog();
-                binding.recycartitems.setAdapter(new FavoritesItemAdapter(getActivity(), responseFavorites, FavoritesFragment.this));
+                binding.recycartitems.setAdapter(new FavoritesItemAdapter(getActivity(), responseFavorites, FavoritesFragment.this, FavoritesFragment.this::compareitems));
+
+            }
+        });
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (compareitemlist.size() < 2) {
+                    customSnackBar(binding.parent, "Please add one more item to compare");
+
+                } else {
+                    setList("compare", compareitemlist);
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new CompareFragment());
+
+
+                }
 
             }
         });
@@ -139,12 +163,23 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
     }
 
     @Override
-    public void removefromcart(String itemid) {
+    public void removefromcart(String itemid, String serialno) {
         showProgressDialog();
-
         String UserId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
         String customerId = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
-        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, customerId, UserId, String.valueOf(itemid), "delete", "");
+        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, customerId, UserId, String.valueOf(itemid), "delete", "", serialno);
+
+    }
+
+    @Override
+    public void compareitems(List<String> comparelist) {
+        compareitemlist = new ArrayList<>();
+        if (comparelist.size() > 1) {
+            binding.bottomlayt.setVisibility(View.VISIBLE);
+        } else {
+            binding.bottomlayt.setVisibility(View.GONE);
+        }
+        compareitemlist = comparelist;
 
     }
 
@@ -152,4 +187,21 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
         void backpress();
     }
 
+    public List<String> getList(String name) {
+        List<String> mMainCategory = null;
+        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), name);
+        if (serializedObject != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<String>>() {
+            }.getType();
+            mMainCategory = gson.fromJson(serializedObject, type);
+        }
+        return mMainCategory;
+    }
+
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        LocalPreferences.storeStringPreference(getActivity(), key, json);
+    }
 }

@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.Presentation.CartManagment.adapter.CartItemAdapter;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FilterPreference;
+import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.datalayer.models.Cart.CartDetail;
 import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
 import com.bumptech.glide.Glide;
@@ -21,7 +25,9 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdapter.ProductViewHolder> {
@@ -31,11 +37,14 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
     int itemquantity = 1;
     List<ResponseFavorites> dataset;
     DeleteProduct deleteProduct;
-
-    public FavoritesItemAdapter(Context mCtx, List<ResponseFavorites> dataset, DeleteProduct deleteProduct) {
+    List<String> comparelist;
+    Comaparelist comaparelist;
+    public FavoritesItemAdapter(Context mCtx, List<ResponseFavorites> dataset, DeleteProduct deleteProduct,Comaparelist comaparelist) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         this.deleteProduct = deleteProduct;
+        comparelist = new ArrayList<>();
+        this.comaparelist=comaparelist;
     }
 
     public FavoritesItemAdapter(Context mCtx) {
@@ -101,7 +110,8 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewQuantity, textViewitemName, textViewWeight, textViewStoneweight;
-        ImageView imageViewadd, imageViewremove, ItemImage,imageviewdelete;
+        ImageView imageViewadd, imageViewremove, ItemImage, imageviewdelete;
+        CheckBox comparecheckbox;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -111,12 +121,29 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
             textViewQuantity = itemView.findViewById(R.id.tv_quantity);
             imageviewdelete = itemView.findViewById(R.id.imvdelete);
             ItemImage = itemView.findViewById(R.id.item_image);
+            comparecheckbox = itemView.findViewById(R.id.comparecheckbox);
             imageviewdelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
-                    deleteProduct.removefromcart(String.valueOf(dataset.get(pos).getItemID()));
+                    deleteProduct.removefromcart(String.valueOf(dataset.get(pos).getItemID()), dataset.get(pos).getSerialNumber());
 
+                }
+            });
+            comparecheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        comparelist.add(String.valueOf(dataset.get(getAdapterPosition()).getSerialNumber()));
+
+                        comaparelist.compareitems(comparelist);
+
+
+                    } else if (!isChecked) {
+                        comparelist.remove(String.valueOf(dataset.get(getAdapterPosition()).getSerialNumber()));
+
+                        comaparelist.compareitems(comparelist);
+                    }
                 }
             });
 
@@ -125,7 +152,17 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
     }
 
     public interface DeleteProduct {
-        void removefromcart(String itemid);
+        void removefromcart(String itemid, String serialno);
 
+    }
+
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        LocalPreferences.storeStringPreference(mCtx, key, json);
+    }
+
+    public interface Comaparelist {
+        void compareitems(List<String> comparelist);
     }
 }

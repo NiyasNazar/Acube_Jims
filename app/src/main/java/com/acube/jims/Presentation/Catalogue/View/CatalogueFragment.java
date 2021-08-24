@@ -30,6 +30,8 @@ import com.acube.jims.Presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.Presentation.Catalogue.ViewModel.FilterViewModel;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemsAdapter;
 import com.acube.jims.Presentation.Catalogue.adapter.FilterListAdapter;
+import com.acube.jims.Presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
+import com.acube.jims.Presentation.Filters.View.CategoryFilterFragment;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
@@ -51,7 +53,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapter.replaceFregment, FilterBottomSheetFragment.ApplyFilter {
+public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapter.replaceFregment, FilterBottomSheetFragment.ApplyFilter, CatalogItemsAdapter.AddtoFavorites {
 
 
     CatalogItemsAdapter adapter;
@@ -76,6 +78,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     private boolean isLastPage = false;
     private int TOTAL_PAGES = 5;
     private int currentPage = PAGE_START;
+    AddtoFavoritesViewModel addtoFavoritesViewModel;
 
 
     FragmentCatalogueBinding binding;
@@ -83,6 +86,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     CatalogViewModelNextPage catalogViewModelNextPage;
     FilterViewModel filterViewModel;
     PopupWindow mypopupWindow;
+    String GuestCustomerID,UserId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -105,6 +109,11 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerCode");
         binding.tvCustomername.setText("Customer Name : " + Customername);
         binding.tvCustomercode.setText("Customer Code : " + CustomerCode);
+        addtoFavoritesViewModel = new ViewModelProvider(this).get(AddtoFavoritesViewModel.class);
+        GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
+        UserId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
+        addtoFavoritesViewModel.init();
+
         // This callback will only be called when MyFragment is at least Started.
       /* OnBackPressedCallback callback = new OnBackPressedCallback(true ) {
             @Override
@@ -233,7 +242,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     private void LoadFirstPage() {
         showProgressDialog();
-        adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this);
+        adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this,CatalogueFragment.this);
         binding.recyvcatalog.setAdapter(adapter);
         vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
         vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
@@ -413,6 +422,12 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
 
         LoadFirstPage();
+
+    }
+
+    @Override
+    public void addtofav(String id,String serialno) {
+        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, id, "add", "",serialno);
 
     }
 }

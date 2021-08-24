@@ -23,8 +23,8 @@ public class AddtoCartViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void AddtoCart(String cartID,String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String qty) {
-        repository.AddtoCart(cartID,Auth, CustomerID, EmployeeId, ItemId, type,qty);
+    public void AddtoCart(String cartID,String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String qty,String serialno) {
+        repository.AddtoCart(cartID,Auth, CustomerID, EmployeeId, ItemId, type,qty,serialno);
     }
 
     public void init() {

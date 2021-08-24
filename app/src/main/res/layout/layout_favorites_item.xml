@@ -113,6 +113,8 @@
                 android:orientation="horizontal">
 
                 <CheckBox
+                    android:id="@+id/comparecheckbox"
+                    style="@style/Checkboxstyle"
                     android:layout_width="50dp"
                     android:layout_height="50dp"></CheckBox>
             </LinearLayout>

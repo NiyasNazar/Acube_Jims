@@ -14,12 +14,15 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
+import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,15 +31,16 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private static final int ITEM = 0;
     private static final int LOADING = 1;
-
+    AddtoFavorites addtoFavorites;
     private List<ResponseCatalogueListing> dataset;
     private final Context context;
     replaceFregment replaceFregment;
     private boolean isLoadingAdded = false;
 
-    public CatalogItemsAdapter(Context context, replaceFregment replaceFregment) {
+    public CatalogItemsAdapter(Context context, replaceFregment replaceFregment,AddtoFavorites addtoFavorites) {
         this.context = context;
         this.replaceFregment = replaceFregment;
+        this.addtoFavorites=addtoFavorites;
         dataset = new ArrayList<>();
     }
 
@@ -218,11 +222,13 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 textViewGrossWeight, textViewSerialnumber, textViewPrice,
                 textViewKarat,textViewStock;
         ImageView imageView;
+        LikeButton mlikebtn;
 
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
             textViewStock=itemView.findViewById(R.id.tvstock);
+            mlikebtn=itemView.findViewById(R.id.fav_button);
 
             textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);
             textViewStoneWeight = itemView.findViewById(R.id.tvstoneweight);
@@ -233,6 +239,18 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
 
             imageView = itemView.findViewById(R.id.imageView);
+            mlikebtn.setOnLikeListener(new OnLikeListener() {
+                @Override
+                public void liked(LikeButton likeButton) {
+                    addtoFavorites.addtofav(String.valueOf(dataset.get(getAdapterPosition()).getId()),dataset.get(getAdapterPosition()).getSerialNumber());
+
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+
+                }
+            });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -254,6 +272,9 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public interface replaceFregment {
         void replace(String Id);
+    }
+    public interface AddtoFavorites{
+        void addtofav(String id,String serialno);
     }
 
 

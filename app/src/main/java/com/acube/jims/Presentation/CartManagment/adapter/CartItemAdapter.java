@@ -60,6 +60,8 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
         int IntValue = (int) Math.round(cartDetail.getQty());
 
         holder.textViewQuantity.setText("" + IntValue);
+        holder.textViewSerialno.setText(cartDetail.getSerialNumber());
+        holder.textViewPrice.setText("SAR "+cartDetail.getFinalAmount());
 
         Glide.with(mCtx)
                 .load(cartDetail.getImagePath())
@@ -104,12 +106,15 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewQuantity, textViewitemName, textViewWeight, textViewStoneweight;
+        TextView textViewQuantity, textViewitemName, textViewWeight, textViewStoneweight, textViewSerialno,textViewPrice;
         ImageView imageViewadd, imageViewremove, ItemImage, imageviewdelete;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
             textViewitemName = itemView.findViewById(R.id.tv_itemname);
+            textViewSerialno = itemView.findViewById(R.id.tv_serialnumber);
+
+
             textViewWeight = itemView.findViewById(R.id.tv_weight);
             textViewStoneweight = itemView.findViewById(R.id.tv_stoneweight);
             textViewQuantity = itemView.findViewById(R.id.tv_quantity);
@@ -117,17 +122,19 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
             imageViewremove = itemView.findViewById(R.id.imvremove);
             ItemImage = itemView.findViewById(R.id.item_image);
             imageviewdelete = itemView.findViewById(R.id.imvdelete);
+            textViewPrice=itemView.findViewById(R.id.tvprice);
 
             imageviewdelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
-                    deleteProduct.removefromcart(String.valueOf(dataset.get(pos).getItemID()), String.valueOf(dataset.get(pos).getQty()));
+
+                    deleteProduct.removefromcart(String.valueOf(dataset.get(pos).getItemID()), String.valueOf(dataset.get(pos).getQty()), dataset.get(pos).getSerialNumber());
 
                 }
             });
 
-            imageViewadd.setOnClickListener(new View.OnClickListener() {
+            /*imageViewadd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int itemquantity = Integer.parseInt(textViewQuantity.getText().toString());
@@ -148,7 +155,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
                     }
 
                 }
-            });
+            });*/
 
 
         }
@@ -159,7 +166,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
     }
 
     public interface DeleteProduct {
-        void removefromcart(String itemid, String quantity);
+        void removefromcart(String itemid, String quantity, String serialno);
 
     }
 }

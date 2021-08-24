@@ -25,13 +25,14 @@ public class AddtoCartRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void AddtoCart(String cartID,String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String qty) {
+    public void AddtoCart(String cartID,String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String qty,String serialno) {
         RestApiService restApiService = RetrofitInstance.getApiService();
         JsonObject jsonObject = new JsonObject();
 
         jsonObject.addProperty("cartListNo", cartID);
         jsonObject.addProperty("customerID", CustomerID);
         jsonObject.addProperty("employeeID", EmployeeId);
+        jsonObject.addProperty("serialNumber", serialno);
         jsonObject.addProperty("itemID", ItemId);
         jsonObject.addProperty("qty", qty);
 

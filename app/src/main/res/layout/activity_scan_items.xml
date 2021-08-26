@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+
+        tools:context=".Presentation.Catalogue.View.CatalogueFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+
+                android:id="@+id/tv_customername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:textSize="@dimen/_7ssp"
+                android:textColor="#c4224a">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/tv_customercode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_customername"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:textSize="@dimen/_7ssp"
+                android:textColor="#c4224a">
+
+            </TextView>
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+
+            </include>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_below="@id/toolbar"
+                android:layout_above="@id/bottomlayt"
+                android:layout_marginBottom="10dp"
+
+                android:id="@+id/recyvscanned"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/_12sdp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <RelativeLayout
+                android:id="@+id/bottomlayt"
+                android:layout_alignParentBottom="true"
+                android:layout_width="match_parent"
+                android:background="#BF8F3A"
+                android:layout_height="100dp">
+
+                <LinearLayout
+                    android:id="@+id/layout_smarttool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_magic">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:text="Smart Tool"
+                        android:textColor="#FFF"
+                        android:textSize="16sp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+</layout>

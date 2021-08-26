@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.acube.jims.Presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.Presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.ViewModel.ItemDetailsViewModel;
+import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
@@ -29,14 +31,20 @@ import com.acube.jims.databinding.ProductDetailsFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.acube.jims.datalayer.remote.dbmodel.CustomerHistory;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class ProductDetailsFragment extends BaseFragment {
 
@@ -89,10 +97,13 @@ public class ProductDetailsFragment extends BaseFragment {
         GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         UserId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
 
+
+
+
         binding.favButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, Id, "add", "",mSerialno);
+                addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, Id, "add", "", mSerialno);
 
             }
 
@@ -137,9 +148,19 @@ public class ProductDetailsFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 showProgressDialog();
+                JsonObject items = new JsonObject();
+
+                items.addProperty("cartListNo", CartId);
+                items.addProperty("customerID", GuestCustomerID);
+                items.addProperty("employeeID", UserId);
+                items.addProperty("serialNumber", mSerialno);
+                items.addProperty("itemID", Id);
+                items.addProperty("qty", 0);
+                JsonArray jsonArray = new JsonArray();
+                jsonArray.add(items);
 
 
-                addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, Id, "add", "0", mSerialno);
+                addtoCartViewModel.AddtoCart(AppConstants.Authorization + AuthToken, "add", jsonArray);
 
             }
         });
@@ -199,6 +220,12 @@ public class ProductDetailsFragment extends BaseFragment {
 
                     mSerialno = responseCatalogDetails.getSerialNumber();
                     Id = String.valueOf(responseCatalogDetails.getId());
+
+                    CustomerHistory customerHistory = new CustomerHistory();
+                    customerHistory.setCustomerID(Integer.valueOf(GuestCustomerID));
+                    customerHistory.setItemID(Integer.valueOf(Id));
+                    customerHistory.setStartTime("10:10");
+                    SaveHistory(customerHistory);
                     binding.tvMrp.setText(responseCatalogDetails.getMrp() + " SAR ");
                     binding.tvItemName.setText(responseCatalogDetails.getItemName());
                     binding.tvbrandname.setText(responseCatalogDetails.getItemBrandName());
@@ -240,5 +267,28 @@ public class ProductDetailsFragment extends BaseFragment {
         void backpress();
     }
 
+    private void SaveHistory(CustomerHistory history) {
+        class SavePlan extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseClient
+                        .getInstance(getActivity())
+                        .getAppDatabase()
+                        .customerHistoryDao()
+                        .insert(history);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+            }
+        }
+
+        SavePlan st = new SavePlan();
+        st.execute();
+    }
 
 }

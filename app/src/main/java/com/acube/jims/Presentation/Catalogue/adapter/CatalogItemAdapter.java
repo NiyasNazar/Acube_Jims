@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
+import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
@@ -22,37 +25,43 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.ProductViewHolder> {
 
 
     private Context mCtx;
+    Datalist datalist;
+
+    private final List<ResponseItems> dataset;
+    List<ResponseItems> list;
 
 
-    private final List<ResponseCatalogueListing> dataset;
-
-
-    public CatalogItemAdapter(Context mCtx, List<ResponseCatalogueListing> dataset) {
+    public CatalogItemAdapter(Context mCtx, List<ResponseItems> dataset, Datalist datalist) {
         this.mCtx = mCtx;
         this.dataset = dataset;
+        this.datalist = datalist;
+        list = new ArrayList<>();
     }
 
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.layout_catalog_item, parent, false);
+        View view = inflater.inflate(R.layout.layout_scanned_item, parent, false);
         return new ProductViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
-        ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
+        ResponseItems responseCatalogueListing = dataset.get(position);
         holder.textViewItemName.setText(responseCatalogueListing.getItemName());
+        holder.textViewPrice.setText("SAR " + responseCatalogueListing.getMrp());
+        holder.textViewSerialNo.setText(responseCatalogueListing.getSerialNumber());
         // holder.imageView.setImageResource(homeData.getImage());
-        if (responseCatalogueListing.getItemSubList().size()>0) {
+ /*       if (responseCatalogueListing.getItemSubList().size()>0) {
             Glide.with(mCtx)
                     .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
                     //  .placeholder(R.drawable.placeholder)
@@ -71,7 +80,7 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
                         }
                     })
                     .into(holder.imageView);
-        }
+        }*/
 
 
     }
@@ -85,15 +94,50 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName;
+        TextView textViewItemName, textViewPrice, textViewSerialNo;
         ImageView imageView;
+        CheckBox comparecheckbox;
+        ResponseItems responseItems;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
-
+            textViewPrice = itemView.findViewById(R.id.tvprice);
+            textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
             imageView = itemView.findViewById(R.id.imageView);
+            comparecheckbox = itemView.findViewById(R.id.comparecheckbox);
+            comparecheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        responseItems = new ResponseItems();
+                        responseItems.setSerialNumber(dataset.get(getAdapterPosition()).getSerialNumber());
+                        responseItems.setItemID(dataset.get(getAdapterPosition()).getItemID());
+                        list.add(responseItems);
+                        datalist.datalist(list);
+                        Log.d("TAG", "onCheckedChanged: " + list.size());
+                    } else if (!isChecked) {
+
+                        list.remove(responseItems);
+                        Log.d("TAG", "onCheckedChanged: " + responseItems.getSerialNumber());
+                        Log.d("TAG", "onCheckedChanged: " + list.size());
+                        datalist.datalist(list);
+                        if (list.size() > 1) {
+
+
+                        } else {
+                            // list.clear();
+                        }
+
+
+                    }
+                }
+            });
         }
+    }
+
+    public interface Datalist {
+        void datalist(List<ResponseItems> comparelist);
     }
 }

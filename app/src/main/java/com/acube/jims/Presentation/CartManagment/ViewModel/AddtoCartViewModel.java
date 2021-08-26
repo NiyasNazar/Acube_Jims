@@ -11,6 +11,7 @@ import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
 import com.acube.jims.datalayer.repositories.CartManagment.AddtoCartRepository;
 import com.acube.jims.datalayer.repositories.Catalogue.ItemDetailsRepository;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,8 +24,8 @@ public class AddtoCartViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void AddtoCart(String cartID,String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String qty,String serialno) {
-        repository.AddtoCart(cartID,Auth, CustomerID, EmployeeId, ItemId, type,qty,serialno);
+    public void AddtoCart(String Auth,String type, JsonArray jsonArray) {
+        repository.AddtoCart(Auth,type,jsonArray);
     }
 
     public void init() {

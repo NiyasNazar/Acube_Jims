@@ -29,50 +29,59 @@
                 android:layout_marginTop="10dp">
 
             </include>
-            <RelativeLayout
-                android:layout_below="@id/toolbar"
 
+            <ImageView
+                android:id="@+id/left_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
 
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:padding="8dp"
+                android:rotation="360"
+                android:src="@drawable/checvronleft" />
+
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                >
+                android:layout_below="@id/toolbar"
+                android:layout_toLeftOf="@id/right_arrow"
+                android:layout_toRightOf="@id/left_arrow"
+                android:fillViewport="true">
 
-                <ImageView
-                    android:id="@+id/left_arrow"
-                    android:layout_width="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_height="match_parent"
-                    android:layout_centerVertical="true"
-                    android:layout_alignTop="@+id/view_pager"
-                    android:rotation="360"
-                    android:padding="8dp"
-                    android:layout_alignBottom="@id/view_pager"
-                    android:src="@drawable/checvronleft"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:layout_marginBottom="20dp"
-                    android:id="@+id/view_pager"
+                <RelativeLayout
+
+
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toLeftOf="@id/right_arrow"
-                    android:layout_toRightOf="@id/left_arrow"
-                    android:background="@drawable/item_border_detailspage" />
+                    android:layout_height="match_parent">
 
 
-                <ImageView
-                    android:id="@+id/right_arrow"
-                    android:padding="8dp"
-                    android:layout_alignTop="@+id/view_pager"
-                    android:layout_alignBottom="@id/view_pager"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/chevronright"/>
-            </RelativeLayout>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/view_pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
 
 
+                        android:background="@drawable/item_border_detailspage"
+                        android:nestedScrollingEnabled="false" />
 
+
+                </RelativeLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+            <ImageView
+                android:id="@+id/right_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="8dp"
+                android:src="@drawable/chevronright" />
         </RelativeLayout>
 
     </FrameLayout>

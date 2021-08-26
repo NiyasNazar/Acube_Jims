@@ -15,11 +15,12 @@
         android:theme="@style/Theme.AcubeJims"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Presentation.ScanItems.ScanItemsActivity"
+            android:exported="true" />
+        <activity
             android:name=".Presentation.CustomerManagment.View.CustomerSearch"
             android:exported="true" />
-        <activity android:name=".Presentation.Catalogue.View.CatalogueActivity" >
-
-        </activity>
+        <activity android:name=".Presentation.Catalogue.View.CatalogueActivity"></activity>
         <activity android:name=".Presentation.HomePage.View.HomePageActivity" />
         <activity android:name=".Presentation.Login.View.GuestLoginActivity" />
         <activity android:name=".Presentation.GuestHomePage.GuestHomePageActivity" />

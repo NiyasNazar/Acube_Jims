@@ -9,6 +9,7 @@ import com.acube.jims.datalayer.api.RestApiService;
 import com.acube.jims.datalayer.api.RetrofitInstance;
 import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -25,19 +26,12 @@ public class AddtoCartRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void AddtoCart(String cartID,String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String qty,String serialno) {
+    public void AddtoCart(String Auth, String type , JsonArray jsonArray) {
         RestApiService restApiService = RetrofitInstance.getApiService();
-        JsonObject jsonObject = new JsonObject();
-
-        jsonObject.addProperty("cartListNo", cartID);
-        jsonObject.addProperty("customerID", CustomerID);
-        jsonObject.addProperty("employeeID", EmployeeId);
-        jsonObject.addProperty("serialNumber", serialno);
-        jsonObject.addProperty("itemID", ItemId);
-        jsonObject.addProperty("qty", qty);
 
 
-        Call<ResponseAddtoCart> call = restApiService.AddtoCart(Auth, type, jsonObject);
+
+        Call<ResponseAddtoCart> call = restApiService.AddtoCart(Auth, type, jsonArray);
         call.enqueue(new Callback<ResponseAddtoCart>() {
             @Override
             public void onResponse(Call<ResponseAddtoCart> call, Response<ResponseAddtoCart> response) {

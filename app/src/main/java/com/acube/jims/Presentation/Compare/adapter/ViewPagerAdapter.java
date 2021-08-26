@@ -39,7 +39,7 @@ public class ViewPagerAdapter extends PagerAdapter {
         View itemView = mLayoutInflater.inflate(R.layout.pager_item, container, false);
         RecyclerView recyclerView = itemView.findViewById(R.id.recyvcompare);
         recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-        recyclerView.setAdapter(new CompareItemsAdapter(context));
+       // recyclerView.setAdapter(new CompareItemsAdapter(context));
 
         container.addView(itemView);
 

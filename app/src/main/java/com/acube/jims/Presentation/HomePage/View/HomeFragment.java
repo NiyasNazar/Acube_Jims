@@ -47,6 +47,7 @@ import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.Presentation.HomePage.adapter.CustomerListAdapter;
 import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
 import com.acube.jims.Presentation.Login.ViewModel.CreateCustomerViewModel;
+import com.acube.jims.Presentation.ScanItems.ScanItemsActivity;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.FragmentHelper;
@@ -118,6 +119,19 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
         } else if (pos == 8) {
             FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerBottomSheetFragment());
+
+        } else if (pos == 6) {
+            //  startActivity(new Intent(getActivity(),));
+
+            try {
+                Intent res = new Intent();
+                String mPackage = "com.example.acubetest";// package name
+                String mClass = ".MainActivity";//the activity name which return results
+                res.setComponent(new ComponentName(mPackage, mPackage + mClass));
+                someActivityResultLauncher.launch(res);
+            } catch (Exception e) {
+
+            }
 
         }
 
@@ -225,4 +239,21 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         }
         FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
     }
+
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Here, no request code
+                        Intent data = result.getData();
+                        if (data != null) {
+                          FragmentHelper.replaceFragment(getActivity(),R.id.content,new ScanItemsActivity());
+                        }
+                        Log.d("onActivityResult", "onActivityResult: " + data.getStringExtra("result"));
+                        //doSomeOperations();
+                    }
+                }
+            });
 }

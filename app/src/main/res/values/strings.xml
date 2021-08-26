@@ -19,7 +19,7 @@
     <string name="hint_search">Enter Name or Mobile</string>
 
     <string-array name="rangeSliderValues">
-      <item>1000</item>
+        <item>1000</item>
         <item>200000</item>
     </string-array>
 </resources>

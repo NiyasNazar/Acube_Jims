@@ -144,7 +144,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
     @Override
     public void removefromcart(String itemid, String quantity, String serialno) {
         showProgressDialog();
-        addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, CustomerID, EmployeeID, itemid, "delete", quantity, serialno);
+    //    addtoCartViewModel.AddtoCart( AppConstants.Authorization + AuthToken, );
 
     }
 

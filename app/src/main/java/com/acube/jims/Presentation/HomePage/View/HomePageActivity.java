@@ -240,7 +240,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
     }
 
     public void replaceFragment(Fragment fragment) {
-        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment, "");
+        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment);
     }
 
     @Override

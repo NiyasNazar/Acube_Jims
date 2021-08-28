@@ -38,10 +38,12 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
     List<ResponseItems> list;
 
 
+
     public CatalogItemAdapter(Context mCtx, List<ResponseItems> dataset, Datalist datalist) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         this.datalist = datalist;
+
         list = new ArrayList<>();
     }
 
@@ -60,10 +62,13 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
         holder.textViewItemName.setText(responseCatalogueListing.getItemName());
         holder.textViewPrice.setText("SAR " + responseCatalogueListing.getMrp());
         holder.textViewSerialNo.setText(responseCatalogueListing.getSerialNumber());
+        holder.textViewKarat.setText("Karat - " + responseCatalogueListing.getKaratName());
+        holder.textViewGrossweight.setText("Gross Weight - " + responseCatalogueListing.getGrossWeight() + " g");
+        holder.textViewStoneWeight.setText("Stone Weight - " + responseCatalogueListing.getStoneWeight() + " g");
         // holder.imageView.setImageResource(homeData.getImage());
- /*       if (responseCatalogueListing.getItemSubList().size()>0) {
+
             Glide.with(mCtx)
-                    .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
+                    .load(responseCatalogueListing.getImagePath())
                     //  .placeholder(R.drawable.placeholder)
                     //  .error(R.drawable.imagenotfound)
                     .listener(new RequestListener<Drawable>() {
@@ -80,10 +85,10 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
                         }
                     })
                     .into(holder.imageView);
-        }*/
+        }
 
 
-    }
+
 
 
     @Override
@@ -94,7 +99,7 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewPrice, textViewSerialNo;
+        TextView textViewItemName, textViewPrice, textViewSerialNo, textViewKarat, textViewStoneWeight, textViewGrossweight;
         ImageView imageView;
         CheckBox comparecheckbox;
         ResponseItems responseItems;
@@ -105,8 +110,18 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
             textViewPrice = itemView.findViewById(R.id.tvprice);
             textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
+            textViewKarat = itemView.findViewById(R.id.tvkarat);
+            textViewStoneWeight = itemView.findViewById(R.id.tvstoneweight);
+            textViewGrossweight = itemView.findViewById(R.id.tvgrossweight);
             imageView = itemView.findViewById(R.id.imageView);
             comparecheckbox = itemView.findViewById(R.id.comparecheckbox);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    datalist.replace(dataset.get(getAdapterPosition()).getSerialNumber());
+                }
+            });
             comparecheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -137,7 +152,9 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
         }
     }
 
+
     public interface Datalist {
         void datalist(List<ResponseItems> comparelist);
+        void replace(String Id);
     }
 }

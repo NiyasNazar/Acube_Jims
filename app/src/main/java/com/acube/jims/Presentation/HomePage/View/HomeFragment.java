@@ -1,11 +1,8 @@
 package com.acube.jims.Presentation.HomePage.View;
 
-import static android.app.Activity.RESULT_OK;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
@@ -18,6 +15,7 @@ import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,15 +36,12 @@ import android.widget.Toast;
 
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
-import com.acube.jims.Presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.Presentation.CustomerManagment.View.CustomerBottomSheetFragment;
-import com.acube.jims.Presentation.CustomerManagment.View.CustomerSearch;
-import com.acube.jims.Presentation.GuestHomePage.GuestHomePageActivity;
 import com.acube.jims.Presentation.HomePage.ViewModel.CustomerViewModel;
 import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.Presentation.HomePage.adapter.CustomerListAdapter;
 import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
-import com.acube.jims.Presentation.Login.ViewModel.CreateCustomerViewModel;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.Presentation.ScanItems.ScanItemsActivity;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FilterPreference;
@@ -57,6 +52,7 @@ import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -90,7 +86,9 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         createCustomerViewModel = ViewModelProviders.of(this).get(CreateCustomerViewModel.class);
         createCustomerViewModel.init();
 
-        binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getActivity(), 3));
+        binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        binding.recyvhomemenu.setHasFixedSize(true);
+
         binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), getList(), HomeFragment.this::replaceFragment));
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
 
@@ -122,22 +120,51 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
         } else if (pos == 6) {
             //  startActivity(new Intent(getActivity(),));
+            DeleteItems();
 
-            try {
-                Intent res = new Intent();
-                String mPackage = "com.example.acubetest";// package name
-                String mClass = ".MainActivity";//the activity name which return results
-                res.setComponent(new ComponentName(mPackage, mPackage + mClass));
-                someActivityResultLauncher.launch(res);
-            } catch (Exception e) {
 
-            }
 
         }
 
 
     }
 
+    private void DeleteItems() {
+        class SavePlan extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseClient
+                        .getInstance(getActivity())
+                        .getAppDatabase()
+                        .scannedItemsDao()
+                        .delete();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+                try {
+                    Intent res = new Intent();
+                    String mPackage = "com.acube.smarttray";// package name
+                    String mClass = ".SmartTrayReading";//the activity name which return results*/
+               //  String mPackage = "com.example.acubetest";// package name
+              // String mClass = ".MainActivity";//the activity name which return results
+                    res.putExtra("url", AppConstants.BASE_URL);
+                    res.putExtra("macAddress", "C0:7E:F0:90:EF:7A");
+                    res.putExtra("jsonSerialNo", "json");
+                    res.setComponent(new ComponentName(mPackage, mPackage + mClass));
+                    someActivityResultLauncher.launch(res);
+                } catch (Exception e) {
+                    Log.d(TAG, "replaceFragment: ");
+                }
+            }
+        }
+
+        SavePlan st = new SavePlan();
+        st.execute();
+    }
 
     private void showcustomerselectionDialog() {
         LayoutInflater inflater = getLayoutInflater();
@@ -249,9 +276,11 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                         // Here, no request code
                         Intent data = result.getData();
                         if (data != null) {
-                          FragmentHelper.replaceFragment(getActivity(),R.id.content,new ScanItemsActivity());
+                            String json = data.getStringExtra("jsonSerialNo");
+                            Toast.makeText(getActivity(), "" + json, Toast.LENGTH_LONG).show();
+                            FragmentHelper.replaceFragment(getActivity(), R.id.content, ScanItemsActivity.newInstance(json));
                         }
-                        Log.d("onActivityResult", "onActivityResult: " + data.getStringExtra("result"));
+                        Log.d("onActivityResult", "onActivityResult: " + data.getStringExtra("jsonSerialNo"));
                         //doSomeOperations();
                     }
                 }

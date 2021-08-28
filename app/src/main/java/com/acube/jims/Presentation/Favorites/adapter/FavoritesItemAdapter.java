@@ -135,7 +135,6 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         comparelist.add(String.valueOf(dataset.get(getAdapterPosition()).getSerialNumber()));
-
                         comaparelist.compareitems(comparelist);
 
 

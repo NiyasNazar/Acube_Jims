@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.remote.db;
 
-import androidx.room.Dao;import androidx.room.Delete;
+import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -15,11 +16,10 @@ import java.util.List;
 public interface ScannedItemsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-
     void insert(ResponseItems items);
 
-    @Delete
-    void delete(ResponseItems items);
+    @Query("DELETE FROM RESPONSEITEMS")
+    void delete();
 
     @Query("UPDATE `ResponseItems` SET Status=:status WHERE serialNumber = :serialnumber")
     void update(String status, String serialnumber);

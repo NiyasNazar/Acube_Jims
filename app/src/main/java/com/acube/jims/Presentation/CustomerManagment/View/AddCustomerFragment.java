@@ -1,12 +1,9 @@
 package com.acube.jims.Presentation.CustomerManagment.View;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -17,12 +14,10 @@ import androidx.lifecycle.ViewModelProviders;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
-import com.acube.jims.Presentation.Login.ViewModel.CreateCustomerViewModel;
-import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
 import com.acube.jims.Utils.FragmentHelper;
@@ -31,9 +26,6 @@ import com.acube.jims.databinding.FragmentAddCustomerBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.constants.BackHandler;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.gson.JsonObject;
 
 

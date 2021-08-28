@@ -1,28 +1,17 @@
 package com.acube.jims.Presentation.CustomerManagment.View;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
-import com.acube.jims.Presentation.GuestHomePage.GuestHomePageActivity;
 import com.acube.jims.Presentation.HomePage.ViewModel.CustomerViewModel;
-import com.acube.jims.Presentation.HomePage.adapter.CustomerListAdapter;
-import com.acube.jims.Presentation.Login.View.GuestLoginActivity;
-import com.acube.jims.Presentation.Login.ViewModel.CreateCustomerViewModel;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
 import com.acube.jims.Utils.FragmentHelper;
@@ -30,10 +19,7 @@ import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityCustomerSearchBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
-import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
 import com.google.gson.JsonObject;
-
-import java.util.List;
 
 public class CustomerSearch extends BaseActivity {
     ActivityCustomerSearchBinding binding;

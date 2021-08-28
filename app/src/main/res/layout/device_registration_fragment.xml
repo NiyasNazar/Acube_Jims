@@ -55,12 +55,13 @@
 
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="18dp"
-                        android:fontFamily="@font/karla_bold"
+                        android:fontFamily="@font/montserratsemibold"
                         android:text="Device Settings"
-                        android:textColor="#666666"
+                        android:textAllCaps="true"
+                        android:textColor="@color/headercolor"
                         android:textSize="@dimen/_10ssp"></TextView>
 
-                    <EditText
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/ed_macaddress"
                         android:layout_width="@dimen/_300sdp"
                         android:layout_height="50dp"
@@ -74,13 +75,13 @@
                         android:background="@drawable/ed_rect_border"
                         android:editable="false"
 
-                        android:hint="Mac Address"
                         android:inputType="none"
-                        android:paddingLeft="24dp"
-                        android:paddingRight="10dp"
-                        android:textSize="14sp">
 
-                    </EditText>
+                        android:paddingRight="10dp"
+                        android:textSize="14sp"
+                        app:hintText="Mac Address">
+
+                    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
 
                     <EditText
                         android:id="@+id/ed_deviceId"
@@ -106,20 +107,22 @@
 
 
                     <EditText
+
                         android:id="@+id/ed_trayname"
+
                         android:layout_width="@dimen/_300sdp"
                         android:layout_height="50dp"
                         android:layout_below="@+id/ed_deviceId"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginTop="12dp"
-
-                        android:layout_marginRight="@dimen/_20sdp"
-                        android:background="@drawable/ed_rect_border"
-
-                        android:hint="Tray name"
-                        android:inputType="text"
                         android:paddingLeft="24dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginRight="@dimen/_20sdp"
+
+                        android:background="@drawable/ed_rect_border"
+                        android:hint="Tray Name"
+
+
                         android:paddingRight="10dp"
                         android:textSize="14sp">
 

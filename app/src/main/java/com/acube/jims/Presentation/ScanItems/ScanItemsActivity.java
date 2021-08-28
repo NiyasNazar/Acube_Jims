@@ -37,11 +37,16 @@ import com.acube.jims.BaseActivity;
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemAdapter;
+import com.acube.jims.Presentation.Compare.CompareFragment;
+import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityScanItemsBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
+import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -60,6 +65,17 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
     String status, serialno, AuthToken, CartId, GuestCustomerID, UserId;
     AddtoCartViewModel addtoCartViewModel;
     List<ResponseItems> dataset;
+    List<String> comparelist;
+    String jsonSerialNo;
+
+    public static ScanItemsActivity newInstance(String json) {
+        ScanItemsActivity scanItemsActivity = new ScanItemsActivity();
+
+        Bundle args = new Bundle();
+        args.putString("jsonSerialNo", json);
+        scanItemsActivity.setArguments(args);
+        return scanItemsActivity;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -77,8 +93,34 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
         CartId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.CartID);
         GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         UserId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
+        if (getArguments() != null) {
+            jsonSerialNo = getArguments().getString("jsonSerialNo");
+            Log.d("onCreateView", "onCreateView: " + jsonSerialNo);
+
+        }
+
+
+        StringBuilder result = new StringBuilder();
+
+        try {
+            JSONArray jsonArray = new JSONArray(jsonSerialNo);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject explrObject = jsonArray.getJSONObject(i);
+                status = explrObject.getString("Status");
+                serialno = explrObject.getString("SerialNo");
+                result.append(serialno);
+                result.append(",");
+
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("serialNumber", "10001,10002,202100000008,202100000009");
+        jsonObject.addProperty("serialNumber", result.toString());
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         Log.d("onCreate", "onCreate: " + AuthToken);
         viewmodel.getcompareItems(AppConstants.Authorization + AuthToken, jsonObject);
@@ -101,10 +143,9 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
                         SaveItems(dataset);
 
                     }
-                    String resultjson = "[{\"Status\": \"1\",\"SerialNo\": \"10001\"},{\"Status\": \"1\",\"SerialNo\": \"10002\"},{\"Status\": \"1\",\"SerialNo\": \"202100000008\"},{\"Status\": \"1\",\"SerialNo\": \"202100000009\"}]";
 
                     try {
-                        JSONArray jsonArray = new JSONArray(resultjson);
+                        JSONArray jsonArray = new JSONArray(jsonSerialNo);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject explrObject = jsonArray.getJSONObject(i);
                             status = explrObject.getString("Status");
@@ -131,23 +172,15 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
         });
 
 
-  /*  JSONObject Products = null;
-    JSONArray jsonArray = new JSONArray();
+        addtoCartViewModel.getLiveData().observe(getActivity(), new Observer<ResponseAddtoCart>() {
+            @Override
+            public void onChanged(ResponseAddtoCart responseAddtoCart) {
+                if (responseAddtoCart != null) {
+                    Toast.makeText(getActivity(), "Added to Cart", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
-        for (int i = 0; i < datasetdb.size(); i++) {
-        Long tsLongid = System.currentTimeMillis() / 1000;
-        String tsid = tsLongid.toString();
-        String uniqueIDid = UUID.randomUUID().toString();
-        String offlineIDid = tsid + uniqueIDid;
-        Products = new JSONObject();
-        Products.put("offline_id", offlineIDid);
-        Products.put("products_id", datasetdb.get(i).getPid());
-        Products.put("quantity", datasetdb.get(i).getQuantity());
-        Products.put("pname", datasetdb.get(i).getPname());
-        Log.d("jsons", "Load: " + datasetdb.get(i).getPname());
-        jsonArray.put(Products);
-        ///  json += "{ \"products_id\": " + datasetdb.get(i).getPid() + " ,\"quantity\": " + datasetdb.get(i).getQuantity() + "}";
-        //  if (i != datasetdb.size() - 1) json += ",";*/
         return binding.getRoot();
     }
 
@@ -202,7 +235,7 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
             @Override
             protected void onPostExecute(List<ResponseItems> responseItems) {
                 super.onPostExecute(responseItems);
-                binding.recyvscanned.setAdapter(new CatalogItemAdapter(getActivity(), responseItems, ScanItemsActivity.this::datalist));
+                binding.recyvscanned.setAdapter(new CatalogItemAdapter(getActivity(), responseItems, ScanItemsActivity.this));
 
             }
         }
@@ -216,6 +249,8 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.pop_up_layout_smarttool, null);
         CardView addtocart = alertLayout.findViewById(R.id.cdvaddtocart);
+        CardView compare = alertLayout.findViewById(R.id.cdvcompare);
+
         addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,7 +285,19 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
         AlertDialog dialog = alert.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.show();
+        compare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                comparelist = new ArrayList<>();
+                for (int i = 0; i < dataset.size(); i++) {
+                    comparelist.add(dataset.get(i).getSerialNumber());
+                }
+                setList("compare", comparelist);
+                dialog.dismiss();
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new CompareFragment());
 
+            }
+        });
 
     }
 
@@ -287,5 +334,17 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
 
         JsonArray jsonArray = new JsonArray();
         jsonArray.add(items);*/
+    }
+
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        LocalPreferences.storeStringPreference(getActivity(), key, json);
+    }
+
+    @Override
+    public void replace(String Id) {
+
+        FragmentHelper.replaceFragment(getActivity(), R.id.content, ProductDetailsFragment.newInstance(Id));
     }
 }

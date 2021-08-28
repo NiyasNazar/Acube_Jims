@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/imvlogo"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="5sp"
             android:src="@drawable/logo"></ImageView>
@@ -31,7 +31,7 @@
             android:fontFamily="@font/karla_bold"
             android:text="@string/acube"
             android:textColor="#BF8F3A"
-            android:textSize="@dimen/_15ssp"></TextView>
+            android:textSize="30sp"></TextView>
 
         <TextView
             android:id="@+id/tvsubtitle"
@@ -40,7 +40,8 @@
             android:layout_below="@+id/tvacube"
             android:layout_marginLeft="6dp"
             android:layout_marginTop="1dp"
-            android:layout_marginBottom="5dp"
+
+            android:layout_marginBottom="10dp"
             android:layout_toRightOf="@id/imvlogo"
             android:fontFamily="@font/karla_bold"
             android:text="@string/rfidpowered"
@@ -72,7 +73,6 @@
         </ImageView>
 
         <ImageView
-
             android:id="@+id/imvcart"
             android:layout_width="@dimen/_18sdp"
 

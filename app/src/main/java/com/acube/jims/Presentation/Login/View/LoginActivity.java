@@ -6,14 +6,23 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.admin.DeviceAdminReceiver;
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Network;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.acube.jims.BaseActivity;
+import com.acube.jims.Presentation.DeviceRegistration.View.DeviceRegistrationFragment;
 import com.acube.jims.Presentation.HomePage.View.HomePageActivity;
 import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.Presentation.Login.ViewModel.LoginViewModel;
@@ -27,6 +36,8 @@ import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import java.net.NetworkInterface;
+import java.util.Collections;
 import java.util.List;
 
 public class LoginActivity extends BaseActivity {
@@ -45,6 +56,10 @@ public class LoginActivity extends BaseActivity {
 
         binding.edEmail.setText("Admin");
         binding.edPassword.setText("Admin@acube");
+
+        Log.d("onCreate", "onCreate: "+getMacAddr());
+
+
 
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         mViewModel.init();
@@ -96,10 +111,11 @@ public class LoginActivity extends BaseActivity {
             public void onChanged(ResponseLogin responseLogin) {
 
                 if (responseLogin != null) {
-                    LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.Token, responseLogin.getToken());
+                    LocalPreferences.storeAuthenticationToken(getApplicationContext(), responseLogin.getToken());
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserRole, responseLogin.getRoleName());
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserID, String.valueOf(responseLogin.getEmployeeID()));
-                    mViewModel.getHomeMenu(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token), AppConstants.HomeMenuAppName, responseLogin.getRoleName());
+                    mViewModel.getHomeMenu(LocalPreferences.getToken(getApplicationContext()), AppConstants.HomeMenuAppName, responseLogin.getRoleName())
+                    ;
 
 
                 } else {
@@ -130,5 +146,31 @@ public class LoginActivity extends BaseActivity {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         LocalPreferences.storeStringPreference(getApplicationContext(), key, json);
+    }
+    public static String getMacAddr() {
+        try {
+            List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
+            for (NetworkInterface nif : all) {
+                if (!nif.getName().equalsIgnoreCase("wlan0")) continue;
+
+                byte[] macBytes = nif.getHardwareAddress();
+                if (macBytes == null) {
+                    return "";
+                }
+
+                StringBuilder res1 = new StringBuilder();
+                for (byte b : macBytes) {
+                    res1.append(String.format("%02X:",b));
+                }
+
+                if (res1.length() > 0) {
+                    res1.deleteCharAt(res1.length() - 1);
+                }
+                return res1.toString();
+            }
+        } catch (Exception ex) {
+            Log.d("TAG", "getMacAddr: "+ex);
+        }
+        return "02:00:00:00:00:00";
     }
 }

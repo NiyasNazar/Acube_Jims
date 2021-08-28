@@ -94,10 +94,8 @@ public class ProductDetailsFragment extends BaseFragment {
         mViewModel.init();
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         CartId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.CartID);
-        GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
+       // GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         UserId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
-
-
 
 
         binding.favButton.setOnLikeListener(new OnLikeListener() {
@@ -221,11 +219,11 @@ public class ProductDetailsFragment extends BaseFragment {
                     mSerialno = responseCatalogDetails.getSerialNumber();
                     Id = String.valueOf(responseCatalogDetails.getId());
 
-                    CustomerHistory customerHistory = new CustomerHistory();
+                 /*   CustomerHistory customerHistory = new CustomerHistory();
                     customerHistory.setCustomerID(Integer.valueOf(GuestCustomerID));
                     customerHistory.setItemID(Integer.valueOf(Id));
                     customerHistory.setStartTime("10:10");
-                    SaveHistory(customerHistory);
+                    SaveHistory(customerHistory);*/
                     binding.tvMrp.setText(responseCatalogDetails.getMrp() + " SAR ");
                     binding.tvItemName.setText(responseCatalogDetails.getItemName());
                     binding.tvbrandname.setText(responseCatalogDetails.getItemBrandName());

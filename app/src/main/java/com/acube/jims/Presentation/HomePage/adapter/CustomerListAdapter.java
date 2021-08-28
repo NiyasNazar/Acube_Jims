@@ -23,6 +23,8 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapter.ProductViewHolder> {
@@ -82,9 +84,16 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
+
+
+                    Date todaysdate = new Date();
+                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    String starttime = format.format(todaysdate);
+                    System.out.println(starttime);
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerName", customerListings.get(pos).getCustomerName());
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerCode", customerListings.get(pos).getCustomerCode());
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerID", String.valueOf(customerListings.get(pos).getId()));
+                    LocalPreferences.storeStringPreference(mCtx, "CustomerSessionStartTime", starttime);
 
                     replaceFragment.replacefragments();
                 }

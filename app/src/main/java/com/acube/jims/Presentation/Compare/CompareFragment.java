@@ -56,12 +56,14 @@ public class CompareFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.compare_fragment, container, false);
+
+        binding.toolbar.tvFragname.setText("Compare");
         binding.viewPager.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 binding.viewPager.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                 binding.viewPager.getWidth();
-                Log.d("onGlobalLayout", "onGlobalLayout: "+binding.viewPager.getWidth());//height is ready
+                Log.d("onGlobalLayout", "onGlobalLayout: " + binding.viewPager.getWidth());//height is ready
             }
         });
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
@@ -88,8 +90,8 @@ public class CompareFragment extends Fragment {
         mViewModel.getcompareItems(AppConstants.Authorization + AuthToken, jsonObject);
         linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         binding.viewPager.setLayoutManager(linearLayoutManager);
-      //  DividerItemDecoration itemDecor = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
-      //  binding.viewPager.addItemDecoration(itemDecor);
+        //  DividerItemDecoration itemDecor = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
+        //  binding.viewPager.addItemDecoration(itemDecor);
         //   binding.viewPager.setLayoutManager(new SpanningGridLayoutManager(getActivity(), 2));
         binding.rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override

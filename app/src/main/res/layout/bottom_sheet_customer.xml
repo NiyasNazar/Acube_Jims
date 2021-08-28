@@ -20,6 +20,7 @@
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
+                app:cardBackgroundColor="#F5F5F5"
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,6 +37,8 @@
                 app:cardCornerRadius="25dp">
 
                 <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/parent"
                     android:layout_width="match_parent"
 
                     android:layout_height="match_parent"
@@ -52,9 +55,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/montserratsemibold"
                             android:text="Select Customer"
-                            android:textColor="#666666"
+                            android:textColor="@color/headercolor"
                             android:textSize="@dimen/_13ssp"></TextView>
 
 
@@ -149,53 +152,52 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyvcustomerlist"
                             android:layout_width="match_parent"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginRight="10dp"
                             android:layout_height="match_parent"
                             android:layout_above="@id/bottomlayt"
-
                             android:layout_below="@id/tableheader"
-                            android:layout_marginTop="5dp">
+                            android:layout_marginLeft="10dp"
+
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="10dp">
 
                         </androidx.recyclerview.widget.RecyclerView>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:textSize="15sp"
-                            android:visibility="gone"
-                            android:textColor="#666666"
-                            android:fontFamily="@font/montserratsemibold"
-                            android:id="@+id/tv_nodatafound"
-                            android:text="No Data Found"
 
-                            android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tv_nodatafound"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:text="No Data Found"
+                            android:textColor="#666666"
+                            android:textSize="15sp"
+
+                            android:visibility="gone">
 
                         </TextView>
 
                         <LinearLayout
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-
-
                             android:id="@+id/bottomlayt"
-
                             android:layout_width="match_parent"
+
+
                             android:layout_height="wrap_content"
 
                             android:layout_alignParentBottom="true"
-
-
-
+                            android:layout_marginLeft="20dp"
 
                             android:layout_marginTop="20dp"
+
+
+                            android:layout_marginRight="20dp"
 
                             android:orientation="horizontal">
 
                             <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/btn_skip"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="0dp"
                                 android:layout_height="40dp"
-                                android:id="@+id/btn_skip"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/rec_button"
@@ -238,6 +240,86 @@
                             </androidx.appcompat.widget.AppCompatButton>
                         </LinearLayout>
                     </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:gravity="center"
+                    android:layout_marginBottom="20dp"
+                    android:id="@+id/layt_customerdetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+                    android:background="#F5F5F5"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <LinearLayout
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Customer Details"
+                            android:textColor="@color/headercolor"
+                            android:textSize="@dimen/_10ssp"></TextView>
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_loggedcustomername"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/textcolor">
+
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tv_loggedcustomercode"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Customer Details"
+                        android:textColor="@color/textcolor">
+
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tv_loggedtime"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textColor="@color/textcolor">
+
+
+                    </TextView>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_marginBottom="20dp"
+                        android:id="@+id/btn_logout"
+                        android:layout_gravity="center_horizontal"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/rec_button"
+                        android:backgroundTint="#BF8F3A"
+                        android:text="Logout"
+                        android:textColor="@color/white"
+
+                        android:textSize="12sp"></androidx.appcompat.widget.AppCompatButton>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

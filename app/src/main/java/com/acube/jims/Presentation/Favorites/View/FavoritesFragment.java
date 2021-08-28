@@ -130,7 +130,10 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
             @Override
             public void onChanged(List<ResponseFavorites> responseFavorites) {
                 hideProgressDialog();
-                binding.recycartitems.setAdapter(new FavoritesItemAdapter(getActivity(), responseFavorites, FavoritesFragment.this, FavoritesFragment.this::compareitems));
+                if (responseFavorites!=null){
+                    binding.recycartitems.setAdapter(new FavoritesItemAdapter(getActivity(), responseFavorites, FavoritesFragment.this, FavoritesFragment.this::compareitems));
+
+                }
 
             }
         });

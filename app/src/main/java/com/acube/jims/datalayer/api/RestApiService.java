@@ -13,6 +13,7 @@ import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceUpdation;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseGetRegistered;
+import com.acube.jims.datalayer.models.DeviceRegistration.ResponseTrayMaster;
 import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
@@ -80,9 +81,19 @@ public interface RestApiService {
 
     @GET("FavouriteList/GetListDetails/{CustomerID}")
     Call<List<ResponseFavorites>> ViewFavorites(@Header("Authorization") String Auth, @Path("CustomerID") String CustomerID);
-    @POST("FavouriteList/GetCompareListDetails")
-    Call<List<ResponseCompare> >compareList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
     @POST("FavouriteList/GetCompareListDetails")
-    Call<List<ResponseItems> >ItemList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+    Call<List<ResponseCompare>> compareList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("FavouriteList/GetCompareListDetails")
+    Call<List<ResponseItems>> ItemList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @GET("TrayMaster")
+    Call<List<ResponseTrayMaster>> FetchTrayMaster(@Header("Authorization") String Auth);
+
+
+    @POST("CustomerRegistration/CustomerLogout")
+    Call<JsonObject> CustomerLogout(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+
 }

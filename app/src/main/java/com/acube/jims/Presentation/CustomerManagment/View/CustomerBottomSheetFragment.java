@@ -1,57 +1,40 @@
 package com.acube.jims.Presentation.CustomerManagment.View;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.CartManagment.ViewModel.CartViewModel;
-import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
-import com.acube.jims.Presentation.Catalogue.adapter.FilterMasterAdapter;
-import com.acube.jims.Presentation.Filters.View.CategoryFilterFragment;
-import com.acube.jims.Presentation.Filters.View.ColorFilterFragment;
-import com.acube.jims.Presentation.Filters.View.KaratFragment;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.HomePage.ViewModel.CustomerViewModel;
 import com.acube.jims.Presentation.HomePage.adapter.CustomerListAdapter;
-import com.acube.jims.Presentation.Login.ViewModel.CreateCustomerViewModel;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.BottomSheetCustomerBinding;
-import com.acube.jims.databinding.BottomSheetFilterBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.Cart.ResponseCart;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.shashank.sony.fancydialoglib.Animation;
+import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +67,34 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
         binding.recyvcustomerlist.setLayoutManager(linearLayoutManager);
         mViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         mViewModel.init();
+
+        String GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
+        String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerName");
+        String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerCode");
+        String Starttime = LocalPreferences.retrieveStringPreferences(getActivity(), "CustomerSessionStartTime");
+        if (GuestCustomerID.equalsIgnoreCase("")) {
+            binding.laytCustomerdetails.setVisibility(View.GONE);
+            binding.parent.setVisibility(View.VISIBLE);
+        } else {
+            binding.laytCustomerdetails.setVisibility(View.VISIBLE);
+            binding.tvLoggedcustomername.setText("Customer Name: " + Customername);
+            binding.tvLoggedcustomercode.setText("Customer Code: " + CustomerCode);
+            binding.tvLoggedtime.setText("Time & Date: " + Starttime);
+            binding.parent.setVisibility(View.GONE);
+        }
+
+        binding.btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog();
+                LocalPreferences.removePreferences(getActivity(), "GuestCustomerID");
+                LocalPreferences.removePreferences(getActivity(), "GuestCustomerName");
+                LocalPreferences.removePreferences(getActivity(), "GuestCustomerCode");
+                LocalPreferences.removePreferences(getActivity(), "CustomerSessionStartTime");
+
+
+            }
+        });
         binding.btnAddcustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,10 +173,10 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
             public void onChanged(ResponseCart responseCart) {
                 if (responseCart != null) {
                     LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID, responseCart.getCartListNo());
-                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(),"");
-                }else{
-                    LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID,"");
-                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(),"");
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(), "");
+                } else {
+                    LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID, "");
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(), "");
                 }
             }
         });
@@ -230,6 +241,27 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
 
     }
 
+    public void showDialog() {
+        FancyAlertDialog.Builder
+                .with(getActivity())
+                .setTitle("Logout Customer")
+                .setBackgroundColorRes(R.color.appmaincolor)  // for @ColorRes use setBackgroundColorRes(R.color.colorvalue)
+                .setMessage("Do you really want to Logout customer ?")
+                .setNegativeBtnText("Cancel")
+                .setPositiveBtnBackgroundRes(R.color.appmaincolor)  // for @ColorRes use setPositiveBtnBackgroundRes(R.color.colorvalue)
+                .setPositiveBtnText("Yes")
+                .setNegativeBtnBackground(Color.parseColor("#f64e60"))  // for @ColorRes use setNegativeBtnBackgroundRes(R.color.colorvalue)
+                .setAnimation(Animation.POP)
+                .isCancellable(true)
+
+                .onPositiveClicked(dialog -> LogoutExistingCustomer())
+                .onNegativeClicked(dialog -> dialog.dismiss())
+                .build()
+                .show();
+    }
+
+    private void LogoutExistingCustomer() {
+    }
 
 }
 

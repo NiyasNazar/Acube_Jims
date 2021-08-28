@@ -10,4 +10,6 @@
     <color name="secondarytextcolor">#4D32403B</color>
     <color name="nav_textcolor">#666666</color>
     <color name="appmaincolor">#BF8F3A</color>
+    <color name="textcolor">#666666</color>
+    <color name="headercolor">#C4224A</color>
 </resources>

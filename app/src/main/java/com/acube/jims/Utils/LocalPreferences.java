@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.acube.jims.datalayer.constants.AppConstants;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +13,7 @@ import java.util.Set;
 public class LocalPreferences {
     private static final boolean DEFAULT_BOOLEAN = false;
     private static final String DEFAULT_STRING = "";
-    private static final Integer DEFAULT_INTEGER =-1;
+    private static final Integer DEFAULT_INTEGER = -1;
 
 
     //store string preference
@@ -20,12 +22,25 @@ public class LocalPreferences {
         editor.putString(key, value);
         editor.apply();
     }
+
+    public static void storeAuthenticationToken(Context context, String value) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putString("Token", value);
+        editor.apply();
+    }
+
+    public static String getToken(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return AppConstants.Authorization+prefs.getString("Token", DEFAULT_STRING);
+    }
+
     //store int preference
     public static void storeIntegerPreference(Context context, String key, Integer value) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putInt(key, value);
         editor.apply();
     }
+
     //return string preferences
     public static String retrieveStringPreferences(Context context, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -44,6 +59,7 @@ public class LocalPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean(key, DEFAULT_BOOLEAN);
     }
+
     //return integrer preference
     public static Integer retrieveIntegerPreferences(Context context, String key) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -57,8 +73,9 @@ public class LocalPreferences {
         editor.clear();
         editor.apply();
     }
+
     //Removing all local preferences
-    public static void removePreferences(Context context,String key) {
+    public static void removePreferences(Context context, String key) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.remove(key);
         editor.apply();

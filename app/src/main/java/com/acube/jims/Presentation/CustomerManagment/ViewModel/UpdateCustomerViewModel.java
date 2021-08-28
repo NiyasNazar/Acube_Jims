@@ -1,4 +1,4 @@
-package com.acube.jims.Presentation.Login.ViewModel;
+package com.acube.jims.Presentation.CustomerManagment.ViewModel;
 
 import android.app.Application;
 

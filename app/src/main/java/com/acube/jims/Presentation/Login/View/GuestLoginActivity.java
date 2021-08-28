@@ -14,10 +14,9 @@ import android.widget.EditText;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.Presentation.GuestHomePage.GuestHomePageActivity;
-import com.acube.jims.Presentation.HomePage.View.HomePageActivity;
-import com.acube.jims.Presentation.Login.ViewModel.CheckCustomerViewModel;
-import com.acube.jims.Presentation.Login.ViewModel.CreateCustomerViewModel;
-import com.acube.jims.Presentation.Login.ViewModel.UpdateCustomerViewModel;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.CheckCustomerViewModel;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.UpdateCustomerViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
 import com.acube.jims.Utils.LocalPreferences;

@@ -23,6 +23,7 @@ import com.google.android.material.slider.LabelFormatter;
 import com.google.android.material.slider.RangeSlider;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar;
 
 import java.lang.reflect.Type;
 import java.text.NumberFormat;
@@ -85,7 +86,34 @@ public class PriceFragment extends Fragment {
         // RecyclerView recyclerView = view.findViewById(R.id.recysubcategory);
         tvminPrice = view.findViewById(R.id.tvpricemin);
         tvMaxprice = view.findViewById(R.id.tvpricemax);
-        RangeSlider rangeSlider = view.findViewById(R.id.sliderRange);
+        RangeSeekBar seekBar = view.findViewById(R.id.rangeSeekbar);
+        seekBar.setRangeValues(1000, 200000);
+
+        seekBar.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
+            @Override
+            public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar, Integer minValue, Integer maxValue) {
+                //Now you have the minValue and maxValue of your RangeSeekbar
+                Log.d("onValueChange", "onValueChange: " + maxValue);
+                tvminPrice.setText("Price (Min) : " + minValue);
+              /*  int MinValue = (int) Math.round(slider.getValues().get(0));
+                int MaxValue = (int) Math.round(slider.getValues().get(1));*/
+                FilterPreference.storeStringPreference(getActivity(), "MinValue", String.valueOf(minValue));
+                FilterPreference.storeStringPreference(getActivity(), "MaxValue", String.valueOf(maxValue));
+                String pricerange = minValue + " - " + maxValue;
+                FilterPreference.storeStringPreference(getActivity(), "pricenames", pricerange);
+
+                tvMaxprice.setText("Price (Max) : " + maxValue);
+                refresh();
+
+            }
+        });
+
+
+// Get noticed while dragging
+        seekBar.setNotifyWhileDragging(true);
+
+
+       /* RangeSlider rangeSlider = view.findViewById(R.id.sliderRange);
         rangeSlider.setLabelFormatter(new LabelFormatter() {
             @NonNull
             @Override
@@ -118,9 +146,8 @@ public class PriceFragment extends Fragment {
                 refresh();
             }
         });
+*/
 
-        //  recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        //  recyclerView.setAdapter(new FilterWeightAdapter(getActivity(), getList()));
         return view;
     }
 
@@ -135,7 +162,9 @@ public class PriceFragment extends Fragment {
         }
         return mMainCategory;
     }
-    public void refresh(){
+
+    public void refresh() {
         FilterBottomSheetFragment parentFrag = ((FilterBottomSheetFragment) PriceFragment.this.getParentFragment());
         parentFrag.Refresh();
-    }}
+    }
+}

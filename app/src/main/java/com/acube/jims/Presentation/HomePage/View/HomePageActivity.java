@@ -6,8 +6,12 @@ import androidx.core.view.GravityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,6 +24,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.acube.jims.Presentation.CartManagment.View.CartViewFragment;
@@ -33,6 +40,7 @@ import com.acube.jims.Presentation.Login.View.LoginActivity;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
+import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityHomePageBinding;
 import com.acube.jims.datalayer.constants.BackHandler;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
@@ -42,7 +50,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class HomePageActivity extends AppCompatActivity implements ProductDetailsFragment.BackHandler, BackHandler, CustomerSearch.ReplacefromCustomerLogin,CartViewFragment.BackHandler,FavoritesFragment.BackHandler {
+public class HomePageActivity extends AppCompatActivity implements ProductDetailsFragment.BackHandler, BackHandler, CustomerSearch.ReplacefromCustomerLogin, CartViewFragment.BackHandler, FavoritesFragment.BackHandler {
     ActivityHomePageBinding binding;
     List<HomeData> dataset;
     HomeData homeData;
@@ -50,12 +58,20 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
     HomeViewModel viewModel;
     List<NavMenuModel> headerList = new ArrayList<>();
     HashMap<NavMenuModel, List<NavMenuModel>> childList = new HashMap<>();
-
+    PopupWindow mypopupWindow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
+        binding.toolbar.imvprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replaceFragment(new CustomerBottomSheetFragment());
+            }
+        });
+
+
         init();
         prepareMenuData();
         populateExpandableList();
@@ -67,6 +83,11 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
                 FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, new CartViewFragment());
             }
         });
+
+        String Customername = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "GuestCustomerName");
+        String CustomerCode = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "GuestCustomerCode");
+
+
         binding.toolbar.optionMenu.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("WrongConstant")
             @Override
@@ -81,7 +102,53 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
             }
         });
     }
+    private void setPopUpWindow() {
+        LayoutInflater inflater = (LayoutInflater)
+               getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.filter_layout, null);
+        ImageView morecat = view.findViewById(R.id.more_cat);
+        ImageView morekarat = view.findViewById(R.id.imvkaratmore);
+        ImageView morecolor = view.findViewById(R.id.imvmorecolor);
+        Button btncancel = view.findViewById(R.id.btn_cancel);
+        Button btnapply = view.findViewById(R.id.btn_apply);
 
+
+
+
+        //  expandableListDetail = ExpandableListDataPump.getData();
+        //  expandableListTitle = new ArrayList<String>(expandableListDetail.keySet());
+        //   expandableListAdapter = new FilterListAdapter(getActivity(), expandableListTitle, expandableListDetail);
+        // expandableListView.setAdapter(expandableListAdapter);
+        // List<String> dataset = new ArrayList<>();
+        //  dataset.add("Category");
+        //  dataset.add("Color");
+        //  dataset.add("Karat");
+        //  dataset.add("Shape");
+        //  dataset.add("Certified by");
+        //  expandableListView.setAdapter(new FilterParentAdapter(getActivity(), dataset));
+
+        mypopupWindow = new PopupWindow(view, 700, RelativeLayout.LayoutParams.WRAP_CONTENT, true);
+        mypopupWindow.setTouchable(true);
+        mypopupWindow.setFocusable(false);
+        mypopupWindow.setOutsideTouchable(false);
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              /*  binding.parent.getForeground().setAlpha(0);*/
+                mypopupWindow.dismiss();
+            }
+        });
+        btnapply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            //    binding.parent.getForeground().setAlpha(0);
+                // LoadFirstPage();
+                mypopupWindow.dismiss();
+            }
+        });
+
+
+    }
     private void prepareMenuData() {
         NavMenuModel menuModel = new NavMenuModel("Home", true, true, R.drawable.ic_baseline_home_24); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);

@@ -1,30 +1,18 @@
-package com.acube.jims.Presentation.HomePage.adapter;
+package com.acube.jims.Presentation.CustomerManagment.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
 import com.acube.jims.Utils.LocalPreferences;
-import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
-import com.acube.jims.datalayer.models.HomePage.HomeData;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapter.ProductViewHolder> {
@@ -84,16 +72,8 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
-
-
-                    Date todaysdate = new Date();
-                    SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    String starttime = format.format(todaysdate);
-                    System.out.println(starttime);
-                    LocalPreferences.storeStringPreference(mCtx, "GuestCustomerName", customerListings.get(pos).getCustomerName());
-                    LocalPreferences.storeStringPreference(mCtx, "GuestCustomerCode", customerListings.get(pos).getCustomerCode());
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerID", String.valueOf(customerListings.get(pos).getId()));
-                    LocalPreferences.storeStringPreference(mCtx, "CustomerSessionStartTime", starttime);
+
 
                     replaceFragment.replacefragments();
                 }

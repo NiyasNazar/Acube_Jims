@@ -107,7 +107,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         init();
         String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerName");
         String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerCode");
-        binding.tvCustomername.setText("Customer Name : " + Customername);
+        binding.tvCustomername.setText("Customer : " + Customername+"  -  "+CustomerCode);
         binding.tvCustomercode.setText("Customer Code : " + CustomerCode);
         addtoFavoritesViewModel = new ViewModelProvider(this).get(AddtoFavoritesViewModel.class);
         GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");

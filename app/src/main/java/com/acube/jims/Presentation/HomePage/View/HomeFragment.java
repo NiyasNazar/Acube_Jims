@@ -39,7 +39,7 @@ import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
 import com.acube.jims.Presentation.CustomerManagment.View.CustomerBottomSheetFragment;
 import com.acube.jims.Presentation.HomePage.ViewModel.CustomerViewModel;
 import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
-import com.acube.jims.Presentation.HomePage.adapter.CustomerListAdapter;
+import com.acube.jims.Presentation.CustomerManagment.adapter.CustomerListAdapter;
 import com.acube.jims.Presentation.HomePage.adapter.HomeAdapter;
 import com.acube.jims.Presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.Presentation.ScanItems.ScanItemsActivity;
@@ -47,6 +47,7 @@ import com.acube.jims.R;
 import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.Utils.SpanningGridLayoutManager;
 import com.acube.jims.databinding.HomeFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
@@ -147,10 +148,10 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                 super.onPostExecute(aVoid);
                 try {
                     Intent res = new Intent();
-                    String mPackage = "com.acube.smarttray";// package name
-                    String mClass = ".SmartTrayReading";//the activity name which return results*/
-               //  String mPackage = "com.example.acubetest";// package name
-              // String mClass = ".MainActivity";//the activity name which return results
+                   // String mPackage = "com.acube.smarttray";// package name
+                   // String mClass = ".SmartTrayReading";//the activity name which return results*/
+              String mPackage = "com.example.acubetest";// package name
+              String mClass = ".MainActivity";//the activity name which return results
                     res.putExtra("url", AppConstants.BASE_URL);
                     res.putExtra("macAddress", "C0:7E:F0:90:EF:7A");
                     res.putExtra("jsonSerialNo", "json");

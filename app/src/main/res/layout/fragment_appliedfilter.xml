@@ -10,195 +10,208 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".Presentation.Filters.View.CategoryFilterFragment">
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="match_parent">
 
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Applied Category :"
-                android:textColor="#666666">
 
-            </TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:layout_margin="20dp"
-
-                android:background="@drawable/oval_btn_signin"
-                android:gravity="center">
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tvname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-
-
-                    android:textColor="#fff"
-                    android:textSize="15sp">
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Applied Filters :"
+                    android:textColor="#666666">
 
                 </TextView>
 
-            </LinearLayout>
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="90dp"
+                    android:layout_height="30dp"
+                    android:layout_margin="5dp"
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Applied Sub Category :"
-                android:textColor="#666666">
+                    android:background="@drawable/ed_border"
+                    android:gravity="center">
 
-            </TextView>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyappliedsubcat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                    <TextView
+                        android:id="@+id/tvname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
 
 
-            </androidx.recyclerview.widget.RecyclerView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Applied Karat :"
-                android:textColor="#666666">
+                        android:textColor="@color/headercolor"
+                        android:textSize="12sp">
 
-            </TextView>
+                    </TextView>
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyappliedkarat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-
-            </androidx.recyclerview.widget.RecyclerView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Applied Color :"
-                android:textColor="#666666">
-
-            </TextView>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyappliedcolor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-
-            </androidx.recyclerview.widget.RecyclerView>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Applied weight :"
-                android:textColor="#666666">
-
-            </TextView>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyappliedweight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Applied Price :"
-                android:textColor="#666666">
-
-            </TextView>
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:id="@+id/laytprice"
-                android:layout_margin="20dp"
-
-                android:background="@drawable/oval_btn_signin"
-                android:gravity="center">
+                </LinearLayout>
 
                 <TextView
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:id="@+id/tvprice"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-
-
-                    android:textColor="#fff"
-                    android:textSize="15sp">
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Applied Sub Category :"
+                    android:textColor="#666666">
 
                 </TextView>
 
-            </LinearLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Applied Gender:"
-                android:textColor="#666666">
 
-            </TextView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyappliedsubcat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
 
 
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="90dp"
-                android:layout_height="40dp"
-                android:id="@+id/laytgender"
-                android:layout_margin="20dp"
-
-                android:background="@drawable/oval_btn_signin"
-                android:gravity="center">
+                </androidx.recyclerview.widget.RecyclerView>
 
                 <TextView
-                    android:id="@+id/tvgender"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-
-
-                    android:textColor="#fff"
-                    android:textSize="15sp">
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Applied Karat :"
+                    android:textColor="#666666">
 
                 </TextView>
 
-            </LinearLayout>
-        </LinearLayout>
 
-</androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyappliedkarat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Applied Color :"
+                    android:textColor="#666666">
+
+                </TextView>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyappliedcolor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Applied weight :"
+                    android:textColor="#666666">
+
+                </TextView>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyappliedweight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <TextView
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Applied Price :"
+                    android:textColor="#666666">
+
+                </TextView>
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/laytprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_margin="2dp"
+
+                    android:background="@drawable/ed_border"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvprice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+
+
+                        android:textColor="@color/headercolor"
+                        android:textSize="12sp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Applied Gender:"
+                    android:textColor="#666666">
+
+                </TextView>
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/laytgender"
+                    android:layout_width="90dp"
+                    android:layout_height="40dp"
+                    android:layout_margin="2dp"
+
+                    android:background="@drawable/ed_border"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvgender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+
+
+                        android:textColor="@color/headercolor"
+                        android:textSize="12sp">
+
+                    </TextView>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
     </FrameLayout>
 </layout>

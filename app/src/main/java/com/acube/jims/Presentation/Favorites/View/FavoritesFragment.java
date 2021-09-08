@@ -90,6 +90,7 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
     AddtoFavoritesViewModel addtoFavoritesViewModel;
     String AuthToken;
     List<String> compareitemlist;
+    FavoritesItemAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
@@ -130,10 +131,27 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
             @Override
             public void onChanged(List<ResponseFavorites> responseFavorites) {
                 hideProgressDialog();
-                if (responseFavorites!=null){
-                    binding.recycartitems.setAdapter(new FavoritesItemAdapter(getActivity(), responseFavorites, FavoritesFragment.this, FavoritesFragment.this::compareitems));
+                if (responseFavorites != null) {
+                    adapter = new FavoritesItemAdapter(getActivity(), responseFavorites, FavoritesFragment.this, FavoritesFragment.this::compareitems);
+                    binding.recycartitems.setAdapter(adapter);
 
                 }
+
+            }
+        });
+
+        binding.btnSelectall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (binding.btnSelectall.getText().equals("Select all")){
+                    adapter.selectAll();
+                    binding.btnSelectall.setText("Unselect all");
+                }else{
+                    adapter.unselectall();
+                    binding.btnSelectall.setText("select all");
+                }
+
+
 
             }
         });
@@ -178,9 +196,9 @@ public class FavoritesFragment extends BaseFragment implements FavoritesItemAdap
     public void compareitems(List<String> comparelist) {
         compareitemlist = new ArrayList<>();
         if (comparelist.size() > 1) {
-            binding.bottomlayt.setVisibility(View.VISIBLE);
+         //   binding.bottomlayt.setVisibility(View.VISIBLE);
         } else {
-            binding.bottomlayt.setVisibility(View.GONE);
+           // binding.bottomlayt.setVisibility(View.GONE);
         }
         compareitemlist = comparelist;
 

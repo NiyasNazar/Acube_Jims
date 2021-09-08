@@ -2,9 +2,10 @@ package com.acube.jims.datalayer.remote.dbmodel;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(tableName = "CustomerHistory", indices = @Index(value = {"SerialNo"}, unique = true))
 public class CustomerHistory {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -14,6 +15,8 @@ public class CustomerHistory {
     private Integer itemID;
     @ColumnInfo
     private String StartTime;
+    @ColumnInfo
+    private String SerialNo;
 
     public Integer getCustomerID() {
         return customerID;
@@ -45,5 +48,13 @@ public class CustomerHistory {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getSerialNo() {
+        return SerialNo;
+    }
+
+    public void setSerialNo(String serialNo) {
+        SerialNo = serialNo;
     }
 }

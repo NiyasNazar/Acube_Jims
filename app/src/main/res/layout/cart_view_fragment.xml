@@ -30,7 +30,7 @@
 
             </include>
 
-            <androidx.core.widget.NestedScrollView
+            <RelativeLayout
                 android:id="@+id/nestedscrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -62,7 +62,7 @@
                         android:gravity="center_horizontal"
                         android:letterSpacing="0.01"
                         android:text="CART PAGE"
-                        android:textColor="#666666"
+                        android:textColor="@color/headercolor"
                         android:textSize="26.7sp"
                         android:textStyle="normal" />
 
@@ -140,7 +140,7 @@
 
 
                 </RelativeLayout>
-            </androidx.core.widget.NestedScrollView>
+            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/bottomlayt"
@@ -171,6 +171,7 @@
                 <androidx.appcompat.widget.AppCompatButton
 
                     style="@style/Widget.AppCompat.Button.Borderless"
+                    android:id="@+id/btn_next"
 
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"

@@ -5,22 +5,34 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:preserveLegacyExternalStorage="true"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AcubeJims"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".Presentation.Quotation.PdfViewerExampleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Presentation.Quotation.MainActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Presentation.Quotation.PdfCreatorExampleActivity"
+            android:exported="true" />
         <activity
             android:name=".Presentation.CustomerManagment.View.CustomerSearch"
             android:exported="true" />
-        <activity android:name=".Presentation.Catalogue.View.CatalogueActivity"></activity>
+        <activity android:name=".Presentation.Catalogue.View.CatalogueActivity" />
         <activity android:name=".Presentation.HomePage.View.HomePageActivity" />
         <activity android:name=".Presentation.Login.View.GuestLoginActivity" />
         <activity android:name=".Presentation.GuestHomePage.GuestHomePageActivity" />
@@ -31,6 +43,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.acube.jims.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+
+            <!-- ressource file to create -->
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

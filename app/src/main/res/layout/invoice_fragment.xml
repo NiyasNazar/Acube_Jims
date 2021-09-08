@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp">
+
+            </include>
+
+            <RelativeLayout
+                android:id="@+id/nestedscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_border_detailspage">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tvcarttext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center_horizontal"
+                        android:letterSpacing="0.01"
+                        android:text="PROFORMA INVOICE"
+                        android:textColor="@color/headercolor"
+                        android:textSize="26.7sp"
+                        android:textStyle="normal" />
+
+                    <TextView
+                        android:id="@+id/tvcustomername"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvcarttext"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="@color/textcolor"
+                        android:textSize="18sp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvcustomercontactnumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvcustomername"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="@color/textcolor"
+                        android:textSize="18sp">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvcarttext"
+                        android:layout_alignParentRight="true"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="@color/textcolor"
+                        android:textSize="18sp">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:id="@+id/header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvcustomercontactnumber"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="15dp"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
+
+
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Item Name"
+                            android:textAllCaps="false"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Gold Weight"
+                            android:textAllCaps="false"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Making Charge"
+                            android:textAllCaps="false"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Discount %"
+                            android:textAllCaps="false"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="42dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Price"
+                            android:textAllCaps="false"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyvinvoiceitems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/header"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+
+                </RelativeLayout>
+                <TextView
+                    android:id="@+id/tvsalesamount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/tvDiscount"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Sales Amount"
+                    android:textAllCaps="true"
+                    android:textColor="@color/headercolor">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tvDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/tvtax"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Discount"
+                    android:textAllCaps="true"
+                    android:textColor="@color/headercolor">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/tvtax"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/tvtotal"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Discount"
+                    android:textAllCaps="true"
+                    android:textColor="@color/headercolor">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tvtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/bottomlayt"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="25dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="Total"
+                    android:textAllCaps="true"
+                    android:textColor="@color/headercolor">
+
+                </TextView>
+
+                <LinearLayout
+                    android:id="@+id/bottomlayt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="32dp"
+
+                    android:gravity="center_horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnback"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+
+
+                        android:layout_width="90dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rec_button"
+                        android:text="Cancel"
+                        android:textColor="@color/white">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_generate"
+
+                        style="@style/Widget.AppCompat.Button.Borderless"
+
+                        android:layout_width="180dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/rec_button"
+                        android:backgroundTint="#3699ff"
+                        android:text="Generate"
+                        android:textColor="@color/white">
+
+                    </androidx.appcompat.widget.AppCompatButton>
+                </LinearLayout>
+            </RelativeLayout>
+
+
+            <FrameLayout
+                android:id="@+id/emptycart"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar"
+                android:layout_centerInParent="true"
+
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/item_border_detailspage"
+                android:backgroundTint="#FFF"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/emptycart">
+
+                </ImageView>
+            </FrameLayout>
+
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

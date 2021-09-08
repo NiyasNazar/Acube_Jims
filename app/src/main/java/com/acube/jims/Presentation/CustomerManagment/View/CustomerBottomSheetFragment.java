@@ -1,13 +1,14 @@
 package com.acube.jims.Presentation.CustomerManagment.View;
 
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -18,9 +19,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.CartManagment.ViewModel.CartViewModel;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.CustomerHistoryViewModel;
+import com.acube.jims.Presentation.CustomerManagment.ViewModel.CustomerLogoutViewModel;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.HomePage.ViewModel.CustomerViewModel;
-import com.acube.jims.Presentation.HomePage.adapter.CustomerListAdapter;
+import com.acube.jims.Presentation.CustomerManagment.adapter.CustomerListAdapter;
 import com.acube.jims.Presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
@@ -30,10 +33,17 @@ import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.Cart.ResponseCart;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.acube.jims.datalayer.remote.dbmodel.CustomerHistory;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.shashank.sony.fancydialoglib.Animation;
 import com.shashank.sony.fancydialoglib.FancyAlertDialog;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +58,9 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
     CustomerListAdapter adapter;
     List<ResponseCustomerListing> dataset;
     private CartViewModel mViewModel;
+    CustomerLogoutViewModel customerLogoutViewModel;
+    String Starttime;
+    CustomerHistoryViewModel customerHistoryViewModel;
 
     @Override
 
@@ -59,8 +72,13 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
 
 
+        customerLogoutViewModel = new ViewModelProvider(this).get(CustomerLogoutViewModel.class);
         customerViewModel = new ViewModelProvider(this).get(CustomerViewModel.class);
+
+        customerHistoryViewModel = new ViewModelProvider(this).get(CustomerHistoryViewModel.class);
+        customerHistoryViewModel.init();
         customerViewModel.init();
+        customerLogoutViewModel.init();
         createCustomerViewModel = ViewModelProviders.of(this).get(CreateCustomerViewModel.class);
         createCustomerViewModel.init();
         linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -71,8 +89,10 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
         String GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerName");
         String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerCode");
-        String Starttime = LocalPreferences.retrieveStringPreferences(getActivity(), "CustomerSessionStartTime");
-        if (GuestCustomerID.equalsIgnoreCase("")) {
+        Starttime = LocalPreferences.retrieveStringPreferences(getActivity(), "CustomerSessionStartTime");
+
+        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getActivity()), GuestCustomerID);
+        if (CustomerCode.equalsIgnoreCase("")) {
             binding.laytCustomerdetails.setVisibility(View.GONE);
             binding.parent.setVisibility(View.VISIBLE);
         } else {
@@ -87,14 +107,19 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
             @Override
             public void onClick(View v) {
                 showDialog();
-                LocalPreferences.removePreferences(getActivity(), "GuestCustomerID");
-                LocalPreferences.removePreferences(getActivity(), "GuestCustomerName");
-                LocalPreferences.removePreferences(getActivity(), "GuestCustomerCode");
-                LocalPreferences.removePreferences(getActivity(), "CustomerSessionStartTime");
 
 
             }
         });
+        customerLogoutViewModel.getCustomerLiveData().observe(getActivity(), new Observer<JsonObject>() {
+            @Override
+            public void onChanged(JsonObject jsonObject) {
+                if (jsonObject!=null){
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerBottomSheetFragment());
+                }
+            }
+        });
+
         binding.btnAddcustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,10 +198,10 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
             public void onChanged(ResponseCart responseCart) {
                 if (responseCart != null) {
                     LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID, responseCart.getCartListNo());
-                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(), "");
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerViewfragment());
                 } else {
                     LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID, "");
-                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(), "");
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerViewfragment());
                 }
             }
         });
@@ -239,6 +264,7 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
         //LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
 
 
+
     }
 
     public void showDialog() {
@@ -261,7 +287,83 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
     }
 
     private void LogoutExistingCustomer() {
+
+        FetchCustomerHistory();
+
     }
+
+    private void FetchCustomerHistory() {
+        String GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
+        Log.d("onPostExecute", "onPostExecute: " + GuestCustomerID);
+
+        class GetTasks extends AsyncTask<Void, Void, List<CustomerHistory>> {
+            @Override
+            protected List<CustomerHistory> doInBackground(Void... voids) {
+                List<CustomerHistory> taskList = DatabaseClient
+                        .getInstance(getActivity())
+                        .getAppDatabase()
+                        .customerHistoryDao().getAll(GuestCustomerID);
+                return taskList;
+            }
+
+            @Override
+            protected void onPostExecute(List<CustomerHistory> responseItems) {
+                super.onPostExecute(responseItems);
+                Log.d("onPostExecute", "onPostExecute: " + responseItems.size());
+                JSONArray itemViewLIst = new JSONArray();
+                JSONObject jsonObject = null;
+                for (int i = 0; i < responseItems.size(); i++) {
+                    jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("customerID", responseItems.get(i).getCustomerID());
+                        jsonObject.put("itemID", responseItems.get(i).getItemID());
+                        jsonObject.put("serialNumber",responseItems.get(i).getSerialNo());
+                        jsonObject.put("trayID", 3);
+                        jsonObject.put("employeeID", 1);
+                        itemViewLIst.put(jsonObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                JSONObject jsonObject1 = new JSONObject();
+                try {
+                    jsonObject1.put("employeeID", 1);
+                    jsonObject1.put("customerID", GuestCustomerID);
+                    jsonObject1.put("startTime", Starttime);
+                    jsonObject1.put("trayID", 3);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                JSONObject parent = new JSONObject();
+                try {
+                    parent.put("staffEngagementData", jsonObject1);
+                    parent.put("itemViewList", itemViewLIst);
+                    JsonParser jsonParser = new JsonParser();
+                    JsonObject gsonObject = new JsonObject();
+                    gsonObject = (JsonObject) jsonParser.parse(parent.toString());
+
+                    Log.d("gsonObject", "onPostExecute: " + gsonObject);
+
+                    customerLogoutViewModel.CustomerLogout(LocalPreferences.getToken(getActivity()), gsonObject);
+                    LocalPreferences.removePreferences(getContext(), "GuestCustomerName");
+                    LocalPreferences.removePreferences(getContext(), "GuestCustomerCode");
+                    LocalPreferences.removePreferences(getContext(), "GuestCustomerID");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }
+
+        GetTasks gt = new GetTasks();
+        gt.execute();
+    }
+
 
 }
 

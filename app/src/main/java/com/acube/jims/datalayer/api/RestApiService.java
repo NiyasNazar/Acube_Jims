@@ -9,6 +9,7 @@ import com.acube.jims.datalayer.models.Cart.ResponseCart;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.Compare.ResponseCompare;
+import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerHistory;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceUpdation;
@@ -17,6 +18,7 @@ import com.acube.jims.datalayer.models.DeviceRegistration.ResponseTrayMaster;
 import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
+import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -96,4 +98,9 @@ public interface RestApiService {
     Call<JsonObject> CustomerLogout(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
 
+    @GET("CustomerRegistration/GetCustomerHistory/{CustomerID}")
+    Call<ResponseCustomerHistory> FetchCustomerHistory(@Header("Authorization") String Auth, @Path("CustomerID") String CustomerID);
+
+    @POST("Sale/GetQuoteDetails")
+    Call<List<ResponseInvoiceList> >InvoiceItems(@Header("Authorization") String Auth, @Body String[] data);
 }

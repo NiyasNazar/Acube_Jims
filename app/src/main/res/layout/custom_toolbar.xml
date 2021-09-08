@@ -50,8 +50,8 @@
 
         <ImageView
             android:id="@+id/option_menu"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="10dp"
@@ -61,29 +61,30 @@
 
         <ImageView
             android:id="@+id/imvprofile"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
 
 
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/option_menu"
-            android:src="@drawable/ic_my_profile">
+            android:src="@drawable/ic_customer">
 
         </ImageView>
 
         <ImageView
             android:id="@+id/imvcart"
-            android:layout_width="@dimen/_18sdp"
+            android:layout_width="40dp"
 
-            android:layout_height="@dimen/_18sdp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
 
 
             android:layout_marginRight="10dp"
             android:layout_toLeftOf="@id/imvprofile"
-            android:src="@drawable/ic_cart">
+            android:src="@drawable/ic___cart_shopping_icon">
 
         </ImageView>
+
     </RelativeLayout>
 </layout>

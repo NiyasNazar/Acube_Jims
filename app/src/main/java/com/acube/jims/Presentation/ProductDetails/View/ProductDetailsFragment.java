@@ -1,21 +1,32 @@
 package com.acube.jims.Presentation.ProductDetails.View;
 
+import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.os.Environment;
+import android.os.StrictMode;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.acube.jims.BaseFragment;
@@ -46,6 +57,13 @@ import com.like.OnLikeListener;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class ProductDetailsFragment extends BaseFragment {
 
     private ItemDetailsViewModel mViewModel;
@@ -57,6 +75,8 @@ public class ProductDetailsFragment extends BaseFragment {
     String CartId;
     AddtoFavoritesViewModel addtoFavoritesViewModel;
     String GuestCustomerID, UserId;
+    String emailbody, emailsubject;
+    String imageurl;
 
     public static ProductDetailsFragment newInstance(String Id) {
         ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
@@ -94,8 +114,47 @@ public class ProductDetailsFragment extends BaseFragment {
         mViewModel.init();
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
         CartId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.CartID);
-       // GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
+        GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         UserId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+
+        StrictMode.setThreadPolicy(policy);
+        binding.imvshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                File dir = null ;
+                Log.d("onClick", "onClick: "+getLocalBitmapUri(binding.imvsingleitemimage));
+                try {
+
+
+                    Log.d("onClick", "onClick: ");
+
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setType("text/plain");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"rony8652@gmail.com"});
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailsubject);
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, emailbody);
+                    File root = Environment.getExternalStorageDirectory();
+                   /* String pathToMyAttachedFile = "temp/attachement.xml";
+                    File file = new File(root, pathToMyAttachedFile);
+                    if (!file.exists() || !file.canRead()) {
+                        return;
+                    }*/
+                 //   Uri uri = Uri.fromFile(getLocalBitmapUri(binding.imvsingleitemimage));
+                   emailIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
+                    startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                } catch (ActivityNotFoundException e) {
+                    Log.d("onClick", "onClick: " + e.getLocalizedMessage());
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    // return null;
+                }
+
+
+            }
+        });
 
 
         binding.favButton.setOnLikeListener(new OnLikeListener() {
@@ -219,11 +278,12 @@ public class ProductDetailsFragment extends BaseFragment {
                     mSerialno = responseCatalogDetails.getSerialNumber();
                     Id = String.valueOf(responseCatalogDetails.getId());
 
-                 /*   CustomerHistory customerHistory = new CustomerHistory();
+                    CustomerHistory customerHistory = new CustomerHistory();
                     customerHistory.setCustomerID(Integer.valueOf(GuestCustomerID));
                     customerHistory.setItemID(Integer.valueOf(Id));
-                    customerHistory.setStartTime("10:10");
-                    SaveHistory(customerHistory);*/
+                    customerHistory.setSerialNo(responseCatalogDetails.getSerialNumber());
+
+                    SaveHistory(customerHistory);
                     binding.tvMrp.setText(responseCatalogDetails.getMrp() + " SAR ");
                     binding.tvItemName.setText(responseCatalogDetails.getItemName());
                     binding.tvbrandname.setText(responseCatalogDetails.getItemBrandName());
@@ -238,8 +298,9 @@ public class ProductDetailsFragment extends BaseFragment {
                     binding.tvgrossweight.setText("" + responseCatalogDetails.getGrossWeight() + " g");
                     binding.tvcategory.setText(responseCatalogDetails.getCategoryName());
                     binding.tvSubcategory.setText(responseCatalogDetails.getSubCategoryName());
+                    emailbody = "Hey \n" + "Check this new item " + responseCatalogDetails.getItemName() + " ," + responseCatalogDetails.getItemDesc() + " " + responseCatalogDetails.getKaratName();
 
-
+                    imageurl = responseCatalogDetails.getItemSubList().get(0).getImageFilePath();
                     if (responseCatalogDetails.getStoneWeight() != null) {
                         binding.tvItemStoneweight.setText("Stone Weight: " + responseCatalogDetails.getStoneWeight() + " g");
                     } else {
@@ -288,5 +349,53 @@ public class ProductDetailsFragment extends BaseFragment {
         SavePlan st = new SavePlan();
         st.execute();
     }
+    public Uri getLocalBitmapUri(ImageView imageView) {
+        // Extract Bitmap from ImageView drawable
+        Drawable drawable = imageView.getDrawable();
+        Bitmap bmp = null;
+        if (drawable instanceof BitmapDrawable){
+            bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+        } else {
+            return null;
+        }
+        // Store image to default external storage directory
+        Uri bmpUri = null;
+        try {
+            // Use methods on Context to access package-specific directories on external storage.
+            // This way, you don't need to request external read/write permission.
+            // See https://youtu.be/5xVh-7ywKpE?t=25m25s
+            File file =  new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.close();
+            // **Warning:** This will fail for API >= 24, use a FileProvider as shown below instead.
+            bmpUri = getBitmapFromDrawable(bmp);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmpUri;
+    }
+    public Uri getBitmapFromDrawable(Bitmap bmp){
 
+        // Store image to default external storage directory
+        Uri bmpUri = null;
+        try {
+            // Use methods on Context to access package-specific directories on external storage.
+            // This way, you don't need to request external read/write permission.
+            // See https://youtu.be/5xVh-7ywKpE?t=25m25s
+            File file =  new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            FileOutputStream out = new FileOutputStream(file);
+            bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
+            out.close();
+
+            // wrap File object into a content provider. NOTE: authority here should match authority in manifest declaration
+            bmpUri = FileProvider.getUriForFile(getActivity(), "com.acube.jims.provider", file);  // use this version for API >= 24
+
+            // **Note:** For API < 24, you may use bmpUri = Uri.fromFile(file);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return bmpUri;
+    }
 }

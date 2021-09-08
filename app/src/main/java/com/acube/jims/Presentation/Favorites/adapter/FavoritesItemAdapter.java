@@ -39,6 +39,7 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
     DeleteProduct deleteProduct;
     List<String> comparelist;
     Comaparelist comaparelist;
+    boolean isSelectedAll;
     public FavoritesItemAdapter(Context mCtx, List<ResponseFavorites> dataset, DeleteProduct deleteProduct,Comaparelist comaparelist) {
         this.mCtx = mCtx;
         this.dataset = dataset;
@@ -96,6 +97,14 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
         } else {
             holder.textViewWeight.setText("Stone Weight: N/A");
         }
+        if (!isSelectedAll){
+            holder.comparecheckbox.setChecked(false);
+            comparelist=new ArrayList<>();
+        }
+        else {
+            holder.comparecheckbox.setChecked(true);
+            comparelist.add(String.valueOf(dataset.get(position).getSerialNumber()));
+        }
 
 
     }
@@ -140,7 +149,6 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
 
                     } else if (!isChecked) {
                         comparelist.remove(String.valueOf(dataset.get(getAdapterPosition()).getSerialNumber()));
-
                         comaparelist.compareitems(comparelist);
                     }
                 }
@@ -164,4 +172,14 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
     public interface Comaparelist {
         void compareitems(List<String> comparelist);
     }
+
+    public void selectAll(){
+        isSelectedAll=true;
+        notifyDataSetChanged();
+    }
+    public void unselectall(){
+        isSelectedAll=false;
+        notifyDataSetChanged();
+    }
+
 }

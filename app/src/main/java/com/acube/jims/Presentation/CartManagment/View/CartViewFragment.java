@@ -24,6 +24,7 @@ import com.acube.jims.Presentation.CartManagment.ViewModel.CartViewModel;
 import com.acube.jims.Presentation.CartManagment.adapter.CartItemAdapter;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
+import com.acube.jims.Presentation.Quotation.InvoiceFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
@@ -89,6 +90,12 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
         String customerId = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         addtoCartViewModel = new ViewModelProvider(this).get(AddtoCartViewModel.class);
         addtoCartViewModel.init();
+        binding.btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new InvoiceFragment());
+            }
+        });
 
         mViewModel.ViewCart(AppConstants.Authorization + AuthToken, customerId);
         mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseCart>() {

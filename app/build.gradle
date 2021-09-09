@@ -94,6 +94,7 @@ dependencies {
     implementation 'com.github.Shashank02051997:FancyAlertDialog-Android:0.2'
     implementation 'com.yahoo.mobile.client.android.util.rangeseekbar:rangeseekbar-library:0.1.0'
     implementation 'com.github.tejpratap46:PDFCreatorAndroid:3.0.2'
+    implementation 'com.github.Gkemon:XML-to-PDF-generator:2.5'
 
 
 

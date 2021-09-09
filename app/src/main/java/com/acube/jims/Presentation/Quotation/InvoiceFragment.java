@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 
 import com.acube.jims.Presentation.Quotation.adapter.InvoiceAdapter;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.InvoiceFragmentBinding;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
@@ -66,7 +67,8 @@ public class InvoiceFragment extends Fragment {
         binding.btnGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), PdfCreatorExampleActivity.class));
+         startActivity(new Intent(getActivity(), PdfCreatorExampleActivity.class));
+               // FragmentHelper.replaceFragment(getActivity(),R.id.content,new PdfCreatorExampleActivity());
             }
         });
 
@@ -113,4 +115,6 @@ public class InvoiceFragment extends Fragment {
         String json = gson.toJson(list);
         LocalPreferences.storeStringPreference(getActivity(), key, json);
     }
+
+
 }

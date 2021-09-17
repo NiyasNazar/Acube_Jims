@@ -112,6 +112,7 @@ public class DeviceRegistrationFragment extends BaseFragment {
                     ArrayAdapter<ResponseTrayMaster> arrayAdapter = new ArrayAdapter<ResponseTrayMaster>(getActivity(), android.R.layout.simple_spinner_item, datasettray);
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     binding.edMacaddress.setAdapter(arrayAdapter);
+
                     //binding.edTrayname.setOnItemSelectedListener(DeviceRegistrationFragment.this);
                 }
             }

@@ -114,8 +114,11 @@ public class LoginActivity extends BaseActivity {
                     LocalPreferences.storeAuthenticationToken(getApplicationContext(), responseLogin.getToken());
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserRole, responseLogin.getRoleName());
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserID, String.valueOf(responseLogin.getEmployeeID()));
-                    mViewModel.getHomeMenu(LocalPreferences.getToken(getApplicationContext()), AppConstants.HomeMenuAppName, responseLogin.getRoleName())
-                    ;
+                    LocalPreferences.storeStringPreference(getApplicationContext(),"CompanyID", responseLogin.getCompanyID());
+                    LocalPreferences.storeStringPreference(getApplicationContext(),"warehouseId", String.valueOf(responseLogin.getWarehouseID()));
+                    LocalPreferences.storeStringPreference(getApplicationContext(),"EmployeeName",responseLogin.getEmployeeName());
+
+                    mViewModel.getHomeMenu(LocalPreferences.getToken(getApplicationContext()), AppConstants.HomeMenuAppName, responseLogin.getRoleName());
 
 
                 } else {

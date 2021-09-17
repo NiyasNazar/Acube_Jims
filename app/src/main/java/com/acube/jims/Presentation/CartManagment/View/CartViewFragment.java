@@ -5,6 +5,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,7 @@ import com.acube.jims.Presentation.CartManagment.adapter.CartItemAdapter;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.Presentation.Quotation.InvoiceFragment;
+import com.acube.jims.Presentation.Quotation.adapter.DiscountItem;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
@@ -33,6 +35,10 @@ import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Cart.CartDetail;
 import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;
 import com.acube.jims.datalayer.models.Cart.ResponseCart;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -77,6 +83,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
             }
         });
+        Delete();
         mViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         mViewModel.init();
         binding.btnback.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +114,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
                     EmployeeID = String.valueOf(responseCart.getEmployeeID());
                     CartId = responseCart.getCartListNo();
                     List<CartDetail> dataset = responseCart.getCartDetails();
+                    setList("cartitem", dataset);
                     Log.d("onChangedss", "onChanged: " + dataset.size());
                     binding.recycartitems.setAdapter(new CartItemAdapter(getActivity(), dataset, CartViewFragment.this, CartViewFragment.this));
                     if (dataset != null && dataset.isEmpty()) {
@@ -151,12 +159,52 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
     @Override
     public void removefromcart(String itemid, String quantity, String serialno) {
         showProgressDialog();
-    //    addtoCartViewModel.AddtoCart( AppConstants.Authorization + AuthToken, );
+        JsonObject items = new JsonObject();
+
+        items.addProperty("cartListNo", CartId);
+        items.addProperty("customerID", CustomerID);
+        items.addProperty("employeeID", EmployeeID);
+        items.addProperty("serialNumber", serialno);
+        items.addProperty("itemID", itemid);
+        items.addProperty("qty", 0);
+        JsonArray jsonArray = new JsonArray();
+        jsonArray.add(items);
+        addtoCartViewModel.AddtoCart(AppConstants.Authorization + AuthToken, "delete", jsonArray);
 
     }
 
 
     public interface BackHandler {
         void backpress();
+    }
+
+    public <T> void setList(String key, List<T> list) {
+        Gson gson = new Gson();
+        String json = gson.toJson(list);
+        LocalPreferences.storeStringPreference(getActivity(), key, json);
+    }
+
+    private void Delete() {
+        class SavePlan extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseClient
+                        .getInstance(getActivity())
+                        .getAppDatabase()
+                        .discountItemsDao()
+                        .deleteall();
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+            }
+        }
+
+        SavePlan st = new SavePlan();
+        st.execute();
     }
 }

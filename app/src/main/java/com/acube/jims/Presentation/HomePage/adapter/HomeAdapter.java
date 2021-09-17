@@ -42,6 +42,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
 
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.layout_home_item, parent, false);
+
         return new ProductViewHolder(view);
     }
 
@@ -93,7 +94,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fragmenttransition.replaceFragment(getAdapterPosition());
+                    fragmenttransition.replaceFragment(homemenuList.get(getAbsoluteAdapterPosition()).getMenuName());
 
                 }
             });
@@ -101,7 +102,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
     }
 
     public interface FragmentTransition {
-        void replaceFragment(int pos);
+        void replaceFragment(String  menuname);
 
     }
 }

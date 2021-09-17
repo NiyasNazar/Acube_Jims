@@ -3,8 +3,139 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+    <TableRow
+        android:id="@+id/tableRow4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:id="@+id/tv_itemname"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/table_item_border"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+
+        <TextView
+            android:id="@+id/tv_serialnumber"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:gravity="center"
+
+            android:singleLine="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/table_item_border"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+        <TextView
+            android:id="@+id/tv_goldweight"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:gravity="center"
+
+            android:singleLine="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/table_item_border"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+        <TextView
+            android:id="@+id/tvlabourcharge"
+            android:layout_width="0dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:gravity="center"
+
+            android:background="@drawable/table_item_border"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+
+        <EditText
+            android:id="@+id/tvtax"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:background="@drawable/table_item_border"
+
+
+            android:fontFamily="@font/poppins_regular"
+            android:hint="Discount %"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:letterSpacing="0.01"
+            android:paddingLeft="5dp"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:textStyle="normal" />
+        <TextView
+            android:id="@+id/tvwithouttax"
+            android:layout_width="0dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:gravity="center"
+
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/table_item_border"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+
+
+        <TextView
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="#666666"
+            android:textSize="12sp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:id="@+id/tvprice"
+            android:layout_width="0dp"
+            android:gravity="center"
+
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:background="@drawable/table_item_border"
+            android:padding="5dp"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceMedium"></TextView>
+
+
+
+
+
+    </TableRow>
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -19,19 +150,19 @@
 
 
             <TextView
-                android:id="@+id/tv_itemname"
                 android:layout_width="311dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:fontFamily="@font/poppins_regular"
+                android:textColor="#666666"
+                android:textSize="12sp"
                 android:gravity="center_horizontal"
                 android:letterSpacing="0.01"
                 android:maxLines="2"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:text="Latin Solitare Ring - "
-                android:textColor="#666666"
-                android:textSize="12sp"
+                android:text=" "
+
                 android:textStyle="normal" />
 
 
@@ -45,8 +176,8 @@
             android:background="@drawable/table_item_border">
 
             <TextView
-                android:id="@+id/tv_serialnumber"
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
 
                 android:layout_centerInParent="true"
@@ -63,7 +194,6 @@
             android:background="@drawable/table_item_border">
 
             <TextView
-                android:id="@+id/tvlabourcharge"
                 android:layout_width="311dp"
                 android:layout_height="22dp"
                 android:layout_centerVertical="true"
@@ -83,23 +213,6 @@
             android:layout_weight="1"
             android:background="@drawable/table_item_border">
 
-            <EditText
-                android:id="@+id/tvtax"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="#FFF"
-                android:fontFamily="@font/poppins_regular"
-                android:hint="Discount %"
-                android:singleLine="true"
-                android:imeOptions="actionDone"
-                android:letterSpacing="0.01"
-                android:paddingLeft="5dp"
-                android:textColor="#666666"
-                android:textSize="12sp"
-                android:textStyle="normal" />
 
         </RelativeLayout>
 
@@ -111,7 +224,6 @@
             android:background="@drawable/table_item_border">
 
             <TextView
-                android:id="@+id/tvprice"
                 android:layout_width="311dp"
                 android:layout_height="22dp"
                 android:layout_centerVertical="true"

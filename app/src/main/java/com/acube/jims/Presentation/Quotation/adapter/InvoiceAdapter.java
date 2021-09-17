@@ -2,6 +2,7 @@ package com.acube.jims.Presentation.Quotation.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,15 +17,18 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Cart.CartDetail;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductViewHolder> {
@@ -40,13 +44,17 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
     double totalamountwithalltax = 0.0;
     double minpercentage = 0.0;
     double maxpercentage = 0.0;
-
+    double calucalteddiscount = 0.0;
+    double labrchrgdiscount = 0.0;
+    List<DiscountItem> discountdata;
+    DiscountSum discountSum;
 
     public InvoiceAdapter(Context mCtx, List<ResponseInvoiceList> dataset, UpdateQuantity updateQuantity, DeleteProduct deleteProduct) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         this.updateQuantity = updateQuantity;
         this.deleteProduct = deleteProduct;
+
     }
 
     public InvoiceAdapter(Context mCtx) {
@@ -54,10 +62,11 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
 
     }
 
-    public InvoiceAdapter(Context mCtx, List<ResponseInvoiceList> dataset) {
+    public InvoiceAdapter(Context mCtx, List<ResponseInvoiceList> dataset, DiscountSum discountSum) {
         this.mCtx = mCtx;
         this.dataset = dataset;
-
+        this.discountSum = discountSum;
+        discountdata = new ArrayList<>();
     }
 
     @Override
@@ -73,6 +82,8 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
         ResponseInvoiceList cartDetail = dataset.get(position);
         holder.textViewitemName.setText(cartDetail.getItemName());
         holder.textViewSerialno.setText(cartDetail.getSerialNumber());
+        holder.Pricetvwithouttax.setText("" + cartDetail.getPriceWithoutTax());
+        holder.textViewWeight.setText("" + cartDetail.getGoldWeight() + " g");
         labourchargewithtax = (cartDetail.getLabourCharge() / 100.0f) * cartDetail.getLabourTax() + cartDetail.getLabourCharge();
         Log.d("Labourcharge", "onBindViewHolder: " + labourchargewithtax);
 
@@ -82,51 +93,11 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
         maxpercentage = cartDetail.getLabourChargeMax();
         holder.textViewPrice.setText("SAR " + totalamountwithalltax);
         holder.textViewlabourcharge.setText("SAR " + cartDetail.getLabourCharge());
-
-        holder.textViewTax.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                // TODO Auto-generated method stub
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (!s.toString().equalsIgnoreCase("")) {
-                    double enteredvalue = Double.parseDouble(s.toString());
-                    if (enteredvalue > maxpercentage) {
-                        Toast.makeText(mCtx, "Discount Percentage Exceeded", Toast.LENGTH_SHORT).show();
-                    } else if (enteredvalue < minpercentage) {
-                        Toast.makeText(mCtx, "Discount Percentage Minimum", Toast.LENGTH_SHORT).show();
-                    } else {
-                        double labrchrgdiscount = (cartDetail.getLabourCharge() / 100.0f) *enteredvalue;
-                        double lbr = cartDetail.getLabourCharge() - labrchrgdiscount;
-                        double  labourchargewithtax = (lbr / 100.0f) * cartDetail.getLabourTax() + lbr;
-                        double pricewithtax = (cartDetail.getPriceWithoutTax() / 100.0f) * cartDetail.getItemTax() + cartDetail.getPriceWithoutTax();
-                        double   totalamountwithalltax = pricewithtax + labourchargewithtax;
-                        holder.textViewPrice.setText("SAR " + totalamountwithalltax);
-                    }
-                }else{
-                    labourchargewithtax = (cartDetail.getLabourCharge() / 100.0f) * cartDetail.getLabourTax() + cartDetail.getLabourCharge();
-                    Log.d("Labourcharge", "onBindViewHolder: " + labourchargewithtax);
-
-                    pricewithtax = (cartDetail.getPriceWithoutTax() / 100.0f) * cartDetail.getItemTax() + cartDetail.getPriceWithoutTax();
-                    totalamountwithalltax = pricewithtax + labourchargewithtax;
-                    minpercentage = cartDetail.getLabourChargeMin();
-                    maxpercentage = cartDetail.getLabourChargeMax();
-                    holder.textViewPrice.setText("SAR " + totalamountwithalltax);
-                }
-
-                // TODO Auto-generated method stub
-            }
-        });
-
+       /* DiscountItem discountItem=new DiscountItem();
+        discountItem.setItemserial(cartDetail.getSerialNumber());
+        discountItem.setAmt(labrchrgdiscount);
+        discountItem.setTotalwithtax(totalamountwithalltax);
+        SaveItems(discountItem);*/
 
     }
 
@@ -139,7 +110,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewQuantity, textViewitemName, textViewWeight, textViewStoneweight, textViewSerialno, textViewPrice, textViewlabourcharge;
+        TextView Pricetvwithouttax, textViewitemName, textViewWeight, textViewStoneweight, textViewSerialno, textViewPrice, textViewlabourcharge;
         ImageView imageViewadd, imageViewremove, ItemImage, imageviewdelete;
         EditText textViewTax;
 
@@ -147,13 +118,71 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
             super(itemView);
             textViewitemName = itemView.findViewById(R.id.tv_itemname);
             textViewSerialno = itemView.findViewById(R.id.tv_serialnumber);
-
+            Pricetvwithouttax = itemView.findViewById(R.id.tvwithouttax);
+            textViewWeight = itemView.findViewById(R.id.tv_goldweight);
 
             textViewPrice = itemView.findViewById(R.id.tvprice);
             textViewlabourcharge = itemView.findViewById(R.id.tvlabourcharge);
 
             textViewTax = itemView.findViewById(R.id.tvtax);
+            textViewTax.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    // TODO Auto-generated method stub
+                }
 
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    ResponseInvoiceList cartDetail = dataset.get(getAbsoluteAdapterPosition());
+                    if (!s.toString().equalsIgnoreCase("")) {
+                        double enteredvalue = Double.parseDouble(s.toString());
+                        // if (enteredvalue > maxpercentage) {
+                        //    Toast.makeText(mCtx, "Discount Percentage Exceeded", Toast.LENGTH_SHORT).show();
+                        // } else if (enteredvalue < minpercentage) {
+                        //  Toast.makeText(mCtx, "Discount Percentage Minimum", Toast.LENGTH_SHORT).show();
+                        //   } else {
+                        labrchrgdiscount = (cartDetail.getLabourCharge() / 100.0f) * enteredvalue;
+                        double lbr = cartDetail.getLabourCharge() - labrchrgdiscount;
+                        double labourchargewithtax = (lbr / 100.0f) * cartDetail.getLabourTax() + lbr;
+                        double pricewithtax = (cartDetail.getPriceWithoutTax() / 100.0f) * cartDetail.getItemTax() + cartDetail.getPriceWithoutTax();
+                        double totalamountwithalltax = pricewithtax + labourchargewithtax;
+                        textViewPrice.setText("SAR " + totalamountwithalltax);
+                        DiscountItem discountItem = new DiscountItem();
+                        discountItem.setItemserial(cartDetail.getSerialNumber());
+                        discountItem.setAmt(labrchrgdiscount);
+                        discountItem.setTotalwithtax(totalamountwithalltax);
+                        SaveItems(discountItem);
+                        discountSum.somofdiscount(labrchrgdiscount);
+
+                        Log.d("afterTextChanged", "removed: " + labrchrgdiscount);
+
+
+                        // }
+                    } else {
+                        labrchrgdiscount = (cartDetail.getLabourCharge() / 100.0f) * 0;
+                        double lbr = cartDetail.getLabourCharge() - labrchrgdiscount;
+                        double labourchargewithtax = (lbr / 100.0f) * cartDetail.getLabourTax() + lbr;
+                        double pricewithtax = (cartDetail.getPriceWithoutTax() / 100.0f) * cartDetail.getItemTax() + cartDetail.getPriceWithoutTax();
+                        double totalamountwithalltax = pricewithtax + labourchargewithtax;
+                        minpercentage = cartDetail.getLabourChargeMin();
+                        maxpercentage = cartDetail.getLabourChargeMax();
+                        textViewPrice.setText("SAR " + totalamountwithalltax);
+                        DiscountItem discountItem = new DiscountItem();
+                        discountItem.setItemserial(cartDetail.getSerialNumber());
+                        discountItem.setAmt(0.0);
+                        discountItem.setTotalwithtax(totalamountwithalltax);
+                        SaveItems(discountItem);
+                        discountSum.somofdiscount(0.0);
+                    }
+
+                    // TODO Auto-generated method stub
+                }
+            });
 
 
           /*  imageviewdelete.setOnClickListener(new View.OnClickListener() {
@@ -200,5 +229,57 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
     public interface DeleteProduct {
         void removefromcart(String itemid, String quantity, String serialno);
 
+    }
+
+    public interface DiscountSum {
+        void somofdiscount(double sum);
+    }
+
+    private void SaveItems(DiscountItem items) {
+        class SavePlan extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseClient
+                        .getInstance(mCtx)
+                        .getAppDatabase()
+                        .discountItemsDao()
+                        .insert(items);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+            }
+        }
+
+        SavePlan st = new SavePlan();
+        st.execute();
+    }
+
+    private void Delete(DiscountItem items) {
+        class SavePlan extends AsyncTask<Void, Void, Void> {
+
+            @Override
+            protected Void doInBackground(Void... voids) {
+                DatabaseClient
+                        .getInstance(mCtx)
+                        .getAppDatabase()
+                        .discountItemsDao()
+                        .delete(items);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                super.onPostExecute(aVoid);
+
+            }
+        }
+
+        SavePlan st = new SavePlan();
+        st.execute();
     }
 }

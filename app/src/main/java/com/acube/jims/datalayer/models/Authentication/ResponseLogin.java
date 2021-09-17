@@ -19,10 +19,20 @@ public class ResponseLogin {
     @SerializedName("message")
     @Expose
     private String message;
+    @SerializedName("warehouseID")
+    @Expose
+    private Integer warehouseID;
+    @SerializedName("companyID")
+    @Expose
+    private String companyID;
 
     public String getUserName() {
         return userName;
     }
+    @SerializedName("employeeName")
+    @Expose
+    private String employeeName;
+
 
     public void setUserName(String userName) {
         this.userName = userName;
@@ -58,5 +68,30 @@ public class ResponseLogin {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Integer getWarehouseID() {
+        return warehouseID;
+    }
+
+    public void setWarehouseID(Integer warehouseID) {
+        this.warehouseID = warehouseID;
+    }
+
+
+    public String getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(String companyID) {
+        this.companyID = companyID;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
     }
 }

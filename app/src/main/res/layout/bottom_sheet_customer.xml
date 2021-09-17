@@ -60,7 +60,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Select Customer"
                             android:textColor="@color/headercolor"
-                            android:textSize="@dimen/_13ssp"></TextView>
+                            android:textSize="22sp"></TextView>
 
 
                     </LinearLayout>
@@ -117,7 +117,7 @@
                                 android:gravity="center"
                                 android:text="Customer Name"
                                 android:textColor="#FFFFFF"
-                                android:textSize="@dimen/_8ssp">
+                                android:textSize="20sp">
 
                             </TextView>
 
@@ -132,7 +132,7 @@
                                 android:gravity="center"
                                 android:text="Contact Number"
                                 android:textColor="#FFFFFF"
-                                android:textSize="@dimen/_8ssp">
+                                android:textSize="20sp">
 
                             </TextView>
 
@@ -145,7 +145,7 @@
                                 android:gravity="center"
                                 android:text="Email"
                                 android:textColor="#FFFFFF"
-                                android:textSize="@dimen/_8ssp">
+                                android:textSize="20sp">
 
                             </TextView>
 

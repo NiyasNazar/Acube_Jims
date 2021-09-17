@@ -35,6 +35,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.acube.jims.BaseFragment;
+import com.acube.jims.Presentation.Audit.AuditFragment;
+import com.acube.jims.Presentation.Audit.AuditMenuFragment;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
 import com.acube.jims.Presentation.CustomerManagment.View.CustomerBottomSheetFragment;
 import com.acube.jims.Presentation.HomePage.ViewModel.CustomerViewModel;
@@ -109,19 +111,25 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
 
     @Override
-    public void replaceFragment(int pos) {
+    public void replaceFragment(String value) {
 
 
-        if (pos == 3) {
+        if (value .equalsIgnoreCase("ItemCatalog")) {
             FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
             FilterPreference.clearPreferences(getActivity());
 
-        } else if (pos == 8) {
+        } else if (value.equalsIgnoreCase("Customer")) {
             FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerBottomSheetFragment());
 
-        } else if (pos == 6) {
+        } else if (value .equalsIgnoreCase("Scan")) {
             //  startActivity(new Intent(getActivity(),));
-            DeleteItems();
+            PerformScan();
+
+
+
+        } else if (value .equalsIgnoreCase("InventoryAudit")) {
+            //  startActivity(new Intent(getActivity(),));
+            FragmentHelper.replaceFragment(getActivity(), R.id.content, new AuditMenuFragment());
 
 
 
@@ -130,7 +138,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
     }
 
-    private void DeleteItems() {
+    private void PerformScan() {
         class SavePlan extends AsyncTask<Void, Void, Void> {
 
             @Override
@@ -148,10 +156,10 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                 super.onPostExecute(aVoid);
                 try {
                     Intent res = new Intent();
-                   // String mPackage = "com.acube.smarttray";// package name
-                   // String mClass = ".SmartTrayReading";//the activity name which return results*/
-              String mPackage = "com.example.acubetest";// package name
-              String mClass = ".MainActivity";//the activity name which return results
+                   String mPackage = "com.acube.smarttray";// package name
+                    String mClass = ".SmartTrayReading";//the activity name which return results*/
+             // String mPackage = "com.example.acubetest";// package name
+              //String mClass = ".MainActivity";//the activity name which return results
                     res.putExtra("url", AppConstants.BASE_URL);
                     res.putExtra("macAddress", "C0:7E:F0:90:EF:7A");
                     res.putExtra("jsonSerialNo", "json");

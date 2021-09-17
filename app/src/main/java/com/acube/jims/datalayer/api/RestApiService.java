@@ -1,6 +1,9 @@
 package com.acube.jims.datalayer.api;
 
 import com.acube.jims.Presentation.ScanItems.ResponseItems;
+import com.acube.jims.datalayer.models.Audit.AuditScanUpload;
+import com.acube.jims.datalayer.models.Audit.ResponseAudit;
+import com.acube.jims.datalayer.models.Audit.ResponseLocationList;
 import com.acube.jims.datalayer.models.Authentication.ResponseCheckCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
@@ -102,5 +105,14 @@ public interface RestApiService {
     Call<ResponseCustomerHistory> FetchCustomerHistory(@Header("Authorization") String Auth, @Path("CustomerID") String CustomerID);
 
     @POST("Sale/GetQuoteDetails")
-    Call<List<ResponseInvoiceList> >InvoiceItems(@Header("Authorization") String Auth, @Body String[] data);
+    Call<List<ResponseInvoiceList>> InvoiceItems(@Header("Authorization") String Auth, @Body String[] data);
+
+    @POST("Audit/GetAuditHeadMobile")
+    Call<List<ResponseAudit>> AuditDetails(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("Audit/GetAuditCandidateList")
+    Call<List<ResponseLocationList>> AuditLocationList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("Audit/AuditScanUpload")
+    Call<AuditScanUpload> AuditUpload(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 }

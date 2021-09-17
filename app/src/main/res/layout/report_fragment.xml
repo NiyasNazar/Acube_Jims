@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+
+        tools:context=".Presentation.Audit.AuditFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp">
+
+            </include>
+            <LinearLayout
+                android:layout_marginLeft="15dp"
+                android:id="@+id/tablayout"
+                android:orientation="horizontal"
+                android:layout_below="@id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/tabfound"
+                    android:background="@drawable/tab_border"
+                    android:layout_width="wrap_content"
+                    android:text="Found"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:textColor="@color/appmaincolor"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="19dp"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/tabmissing"
+                    android:background="@drawable/tab_border"
+                    android:layout_width="wrap_content"
+                    android:text="Missing"
+                    android:textColor="@color/appmaincolor"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="19dp"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+                <TextView
+                    android:id="@+id/tabextra"
+                    android:background="@drawable/tab_border"
+                    android:layout_width="wrap_content"
+                    android:text="Extra"
+                    android:textColor="@color/appmaincolor"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:paddingBottom="5dp"
+                    android:paddingRight="19dp"
+                    android:textSize="18sp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+            </LinearLayout>
+
+            <RelativeLayout
+
+                android:id="@+id/nestedscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tablayout"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_border_detailspage">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="16dp">
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/ed_auditid"
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/ed_rect_border"
+                        android:dropDownSelector="@color/headercolor"
+                        android:inputType="none"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp"
+                        app:hintText="Select Audit">
+
+                    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+
+                    <TextView
+                        android:id="@+id/tvdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/ed_auditid"
+                        android:layout_marginLeft="20dp"
+
+
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center"
+                        android:textAllCaps="false"
+                        android:textColor="#666666">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:id="@+id/btn_scan"
+                        android:layout_width="139dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="57dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+
+
+                        android:layout_marginBottom="36dp"
+                        android:background="@drawable/oval_btn_signin"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Scan Now"
+                            android:textColor="#FFFFFF">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+                    <FrameLayout
+                        android:id="@+id/container"
+                        android:layout_below="@id/btn_scan"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="match_parent">
+
+                    </FrameLayout>
+
+
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

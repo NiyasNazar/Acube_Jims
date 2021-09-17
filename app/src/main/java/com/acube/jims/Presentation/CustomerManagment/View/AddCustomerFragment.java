@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
 import com.acube.jims.Presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
+import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.AppUtility;
 import com.acube.jims.Utils.FragmentHelper;
@@ -121,9 +122,9 @@ public class AddCustomerFragment extends BaseFragment {
                 if (responseCreateCustomer != null) {
                     LocalPreferences.storeStringPreference(getContext(),"GuestCustomerName",responseCreateCustomer.getCustomerName());
                     LocalPreferences.storeStringPreference(getContext(),"GuestCustomerCode",responseCreateCustomer.getCustomerCode());
+                    LocalPreferences.storeStringPreference(getContext(), "GuestCustomerID", String.valueOf(responseCreateCustomer.getId()));
 
-                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
-
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
                 } else {
 
 
@@ -140,7 +141,6 @@ public class AddCustomerFragment extends BaseFragment {
         jsonObject.addProperty("customerName", vaguestname);
         jsonObject.addProperty("emailID", vaemail);
         jsonObject.addProperty("contactNumber", vamobile);
-
         createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token), jsonObject);
 
     }

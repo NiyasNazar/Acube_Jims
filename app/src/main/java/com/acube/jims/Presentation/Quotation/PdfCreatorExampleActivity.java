@@ -49,7 +49,14 @@ import java.util.Locale;
 
 public class PdfCreatorExampleActivity extends PDFCreatorActivity {
     List<ResponseInvoiceList> dataset;
+    double total = 0.0;
 
+    double totalItemtax = 0.0;
+    double netamount = 0.0;
+    double discount = 0.0;
+    double labourchargewithtax = 0.0;
+    double labourchargetax = 0.0;
+    double labourcharge = 0.0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,7 +102,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
                 60,
                 60, 0);
         imageView.setImageScale(ImageView.ScaleType.CENTER_INSIDE);
-        imageView.setImageResource(R.mipmap.ic_launcher);
+
         imageLayoutParam.setMargins(0, 0, 10, 0);
         imageView.setLayout(imageLayoutParam);
 
@@ -114,7 +121,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
         PDFBody pdfBody = new PDFBody();
 
         PDFTextView pdfCompanyNameView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
-       // pdfCompanyNameView.setText("Company Name");
+        // pdfCompanyNameView.setText("Company Name");
         pdfBody.addView(pdfCompanyNameView);
         PDFLineSeparatorView lineSeparatorView1 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.WHITE);
         pdfBody.addView(lineSeparatorView1);
@@ -132,7 +139,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
         pdfBody.addView(lineSeparatorView3);
 
         int[] widthPercent = {25, 25, 25, 25}; // Sum should be equal to 100%
-        String[] textInTable = {"Item Name", "Gold Weight", "Making Charge", "Price without tax", "Price with tax"};
+        String[] textInTable = {"Item Name", "Serial No.", "Gold Weight", "Making Charge", "Price without tax", "Price with tax"};
         PDFTextView pdfTableTitleView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
         //pdfTableTitleView.setText("PROFORMA INVOICE");
         pdfBody.addView(pdfTableTitleView);
@@ -153,6 +160,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
 
         goldweight = new ArrayList<>();
         goldweight.add(dataset.get(1).getItemName());
+        goldweight.add(dataset.get(1).getSerialNumber());
         goldweight.add(String.valueOf(dataset.get(1).getGoldWeight()));
         goldweight.add(String.valueOf(dataset.get(1).getLabourCharge()));
         goldweight.add(String.valueOf(dataset.get(1).getPriceWithoutTax()));
@@ -174,12 +182,20 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
         ArrayList<String> newdata;
         for (int i = 0; i < dataset.size(); i++) {
             // Create 10 rows and add to table.
+
+            total += dataset.get(i).getPriceWithoutTax();
+            totalItemtax += (dataset.get(i).getPriceWithoutTax() / 100.0f) * dataset.get(i).getItemTax();
+            labourchargetax += (dataset.get(i).getLabourCharge() / 100.0f) * dataset.get(i).getLabourTax();
+            labourcharge += dataset.get(i).getLabourCharge();
+            labourchargewithtax += (dataset.get(i).getLabourCharge() / 100.0f) * dataset.get(i).getLabourTax() + dataset.get(i).getLabourCharge();
+            double totals=dataset.get(i).getPriceWithoutTax() +  (dataset.get(i).getPriceWithoutTax() / 100.0f) * dataset.get(i).getItemTax() + (dataset.get(i).getLabourCharge() / 100.0f) * dataset.get(i).getLabourTax() + dataset.get(i).getLabourCharge();
             newdata = new ArrayList<>();
             newdata.add(dataset.get(i).getItemName());
+            newdata.add(dataset.get(i).getSerialNumber());
             newdata.add(String.valueOf(dataset.get(i).getGoldWeight()));
             newdata.add(String.valueOf(dataset.get(i).getLabourCharge()));
             newdata.add(String.valueOf(dataset.get(i).getPriceWithoutTax()));
-            newdata.add(String.valueOf(dataset.get(i).getPriceWithoutTax()));
+            newdata.add(String.valueOf(totals));
             String[] strArrays = newdata.toArray(new String[newdata.size()]);
             PDFTableView.PDFTableRowView tableRowView = new PDFTableView.PDFTableRowView(getApplicationContext());
             for (String s : strArrays) {
@@ -214,58 +230,78 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT, 0));
         pdfTextViewPage.getView().setGravity(Gravity.CENTER_HORIZONTAL);
         PDFTextView pdfTextViewtotal = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
-        pdfTextViewtotal.setText("Discount : 3562566");
+
         pdfTextViewtotal.setLayout(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT, 0));
         pdfTextViewtotal.getView().setGravity(Gravity.END);
+        LocalPreferences.retrieveStringPreferences(getApplicationContext(), "discount");
+        pdfTextViewtotal.setText("Total : " + LocalPreferences.retrieveStringPreferences(getApplicationContext(), "total"));
+
 
         PDFTextView pdfTextViewDiscount = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
-        pdfTextViewDiscount.setText("Total : 3562566");
+        PDFTextView pdfTexttotalwithouttax = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+        double tot=total+labourcharge;
         pdfTextViewDiscount.setLayout(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT, 0));
         pdfTextViewDiscount.getView().setGravity(Gravity.END);
+        pdfTexttotalwithouttax.setText("Price withot tax : "+  LocalPreferences.retrieveStringPreferences(getApplicationContext(),"pricewithouttax"));
+
+        pdfTexttotalwithouttax.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        pdfTexttotalwithouttax.getView().setGravity(Gravity.END);
+        pdfTextViewDiscount.setText("Discount : " + LocalPreferences.retrieveStringPreferences(getApplicationContext(), "discount"));
+        PDFTextView totaltax = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+        LocalPreferences.retrieveStringPreferences(getApplicationContext(), "totaltax");
+        totaltax.setText("Total Tax :" + LocalPreferences.retrieveStringPreferences(getApplicationContext(), "totaltax"));
+        totaltax.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        totaltax.getView().setGravity(Gravity.END);
+
+        pdfTextViewDiscount.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        pdfTextViewDiscount.getView().setGravity(Gravity.END);
+        footerView.addView(pdfTexttotalwithouttax);
+
+
+        footerView.addView(pdfTextViewDiscount);
+        footerView.addView(totaltax);
         footerView.addView(pdfTextViewtotal);
         footerView.addView(pdfTextViewPage);
-        footerView.addView(pdfTextViewDiscount);
-
         return footerView;
     }
 
     @Nullable
     @Override
     protected PDFImageView getWatermarkView(int forPage) {
-        PDFImageView pdfImageView = new PDFImageView(getApplicationContext());
+       /* PDFImageView pdfImageView = new PDFImageView(getApplicationContext());
         FrameLayout.LayoutParams childLayoutParams = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 200, Gravity.CENTER);
         pdfImageView.setLayout(childLayoutParams);
 
-        pdfImageView.setImageResource(R.mipmap.ic_launcher);
+        pdfImageView.setImageResource(n);
         pdfImageView.setImageScale(ImageView.ScaleType.FIT_CENTER);
-        pdfImageView.getView().setAlpha(0.3F);
+        pdfImageView.getView().setAlpha(0.3F);*/
 
-        return pdfImageView;
+        return null;
     }
 
     @Override
     protected void onNextClicked(final File savedPDFFile) {
         Uri pdfUri = Uri.fromFile(savedPDFFile);
 
-       Intent intentPdfViewer = new Intent(PdfCreatorExampleActivity.this, PdfViewerExampleActivity.class);
-       intentPdfViewer.putExtra(PdfViewerExampleActivity.PDF_FILE_URI, pdfUri);
+        Intent intentPdfViewer = new Intent(PdfCreatorExampleActivity.this, PdfViewerExampleActivity.class);
+        intentPdfViewer.putExtra(PdfViewerExampleActivity.PDF_FILE_URI, pdfUri);
 
-       startActivity(intentPdfViewer);
-
-
+        startActivity(intentPdfViewer);
 
 
     }
-
-
-
-
 
 
     public List<ResponseInvoiceList> getList() {

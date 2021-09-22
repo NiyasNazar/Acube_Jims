@@ -114,23 +114,21 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
     public void replaceFragment(String value) {
 
 
-        if (value .equalsIgnoreCase("ItemCatalog")) {
+        if (value.equalsIgnoreCase("ItemCatalog")) {
             FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
             FilterPreference.clearPreferences(getActivity());
 
         } else if (value.equalsIgnoreCase("Customer")) {
             FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerBottomSheetFragment());
 
-        } else if (value .equalsIgnoreCase("Scan")) {
+        } else if (value.equalsIgnoreCase("Scan")) {
             //  startActivity(new Intent(getActivity(),));
             PerformScan();
 
 
-
-        } else if (value .equalsIgnoreCase("InventoryAudit")) {
+        } else if (value.equalsIgnoreCase("InventoryAudit")) {
             //  startActivity(new Intent(getActivity(),));
             FragmentHelper.replaceFragment(getActivity(), R.id.content, new AuditMenuFragment());
-
 
 
         }
@@ -153,15 +151,21 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
             @Override
             protected void onPostExecute(Void aVoid) {
+                String TrayMacAddress = LocalPreferences.retrieveStringPreferences(getActivity(), "TrayMacAddress");
+                Log.d("TrayMacAddress", "onPostExecute: "+TrayMacAddress);
                 super.onPostExecute(aVoid);
                 try {
+
+
+                    Log.d("TrayMacAddress", "onPostExecute: "+TrayMacAddress);
+
                     Intent res = new Intent();
-                   String mPackage = "com.acube.smarttray";// package name
+                    String mPackage = "com.acube.smarttray";// package name
                     String mClass = ".SmartTrayReading";//the activity name which return results*/
-             // String mPackage = "com.example.acubetest";// package name
-              //String mClass = ".MainActivity";//the activity name which return results
+                    // String mPackage = "com.example.acubetest";// package name
+                    //String mClass = ".MainActivity";//the activity name which return results
                     res.putExtra("url", AppConstants.BASE_URL);
-                    res.putExtra("macAddress", "C0:7E:F0:90:EF:7A");
+                    res.putExtra("macAddress", TrayMacAddress);
                     res.putExtra("jsonSerialNo", "json");
                     res.setComponent(new ComponentName(mPackage, mPackage + mClass));
                     someActivityResultLauncher.launch(res);

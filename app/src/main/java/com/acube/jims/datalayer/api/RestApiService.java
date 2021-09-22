@@ -4,6 +4,7 @@ import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.datalayer.models.Audit.AuditScanUpload;
 import com.acube.jims.datalayer.models.Audit.ResponseAudit;
 import com.acube.jims.datalayer.models.Audit.ResponseLocationList;
+import com.acube.jims.datalayer.models.Audit.ResponseReport;
 import com.acube.jims.datalayer.models.Authentication.ResponseCheckCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
@@ -22,6 +23,7 @@ import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
+import com.acube.jims.datalayer.models.ScanHistory.ResponseScanHistory;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -115,4 +117,10 @@ public interface RestApiService {
 
     @POST("Audit/AuditScanUpload")
     Call<AuditScanUpload> AuditUpload(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("Audit/GetAuditReport")
+    Call<ResponseReport> FetchReport(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("Audit/GetAuditHistory")
+    Call<List<ResponseScanHistory>> ItemHistory(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 }

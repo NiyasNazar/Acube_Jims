@@ -121,9 +121,11 @@ public class DeviceRegistrationFragment extends BaseFragment {
         binding.edMacaddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("onItemSelected", "onItemSelected: ");
+
                 vaTrayID = datasettray.get(position).getId();
                 vaTrayMacAddress = datasettray.get(position).getTrayMacAddress();
+                Log.d("onItemSelected", "onItemSelected: "+vaTrayMacAddress);
+                LocalPreferences.storeStringPreference(getActivity(),"TrayMacAddress",vaTrayMacAddress);
                 vaTrayName = datasettray.get(position).getTrayName();
                 binding.edTrayname.setText(vaTrayName);
 

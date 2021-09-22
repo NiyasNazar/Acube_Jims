@@ -21,6 +21,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".Presentation.Report.View.reports.FoundReportActivity"
+            android:exported="true" />
+        <activity
             android:name=".Presentation.Quotation.PdfViewerExampleActivity"
             android:exported="true" />
         <activity
@@ -43,6 +46,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Presentation.Report.View.reports.MisiingReport"></activity>
+        <activity android:name=".Presentation.Report.View.reports.LocationMistmatchReport"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

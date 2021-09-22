@@ -30,59 +30,140 @@
                 android:layout_marginTop="10dp">
 
             </include>
-            <LinearLayout
-                android:layout_marginLeft="15dp"
+
+            <RelativeLayout
+                android:layout_marginTop="10dp"
                 android:id="@+id/tablayout"
-                android:orientation="horizontal"
-                android:layout_below="@id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/toolbar"
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/tabfound"
-                    android:background="@drawable/tab_border"
                     android:layout_width="wrap_content"
-                    android:text="Found"
+                    android:layout_height="40dp"
+                    android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
-                    android:textColor="@color/appmaincolor"
                     android:paddingLeft="19dp"
                     android:paddingTop="5dp"
-                    android:paddingBottom="5dp"
                     android:paddingRight="19dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content">
+                    android:paddingBottom="5dp"
+                    android:text="Found"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="18sp">
 
                 </TextView>
+
                 <TextView
                     android:id="@+id/tabmissing"
-                    android:background="@drawable/tab_border"
                     android:layout_width="wrap_content"
-                    android:text="Missing"
-                    android:textColor="@color/appmaincolor"
+                    android:layout_height="40dp"
+                    android:layout_toRightOf="@id/tabfound"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
                     android:paddingLeft="19dp"
                     android:paddingTop="5dp"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:paddingBottom="5dp"
                     android:paddingRight="19dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content">
+                    android:paddingBottom="5dp"
+                    android:text="Missing"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="18sp">
 
                 </TextView>
                 <TextView
-                    android:id="@+id/tabextra"
-                    android:background="@drawable/tab_border"
+                    android:id="@+id/tablocationmismatch"
                     android:layout_width="wrap_content"
-                    android:text="Extra"
-                    android:textColor="@color/appmaincolor"
+                    android:layout_height="40dp"
+                    android:layout_toRightOf="@id/tabmissing"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
                     android:paddingLeft="19dp"
                     android:paddingTop="5dp"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:paddingBottom="5dp"
                     android:paddingRight="19dp"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content">
+                    android:paddingBottom="5dp"
+                    android:text="Location Mismatch"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="18sp">
 
                 </TextView>
-            </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tabextra"
+                    android:layout_toRightOf="@id/tablocationmismatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="19dp"
+                    android:paddingBottom="5dp"
+                    android:text="Extra"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="18sp">
+
+                </TextView>
+
+                <Button
+
+
+                    android:id="@+id/startbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@id/enddatebtn"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="6dp"
+                    android:text="Start Date"
+                    android:textAllCaps="false"
+                    android:textSize="15sp">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/enddatebtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toLeftOf="@id/btn_scan"
+
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:padding="6dp"
+                    android:text="End Date"
+                    android:textAllCaps="false"
+                    android:textSize="15sp">
+
+                </Button>
+
+                <LinearLayout
+                    android:id="@+id/btn_scan"
+
+                    android:layout_width="125dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerHorizontal="true"
+
+                    android:layout_marginLeft="20dp"
+
+
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/oval_btn_signin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Filter"
+                        android:textColor="#FFFFFF">
+
+                    </TextView>
+
+
+                </LinearLayout>
+            </RelativeLayout>
 
             <RelativeLayout
 
@@ -103,16 +184,18 @@
                     android:layout_marginRight="14dp"
                     android:layout_marginBottom="16dp">
 
+
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/ed_auditid"
                         android:layout_width="300dp"
                         android:layout_height="50dp"
-                        android:layout_marginTop="20dp"
-                        android:background="@drawable/ed_rect_border"
-                        android:dropDownSelector="@color/headercolor"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="15dp"
+
                         android:inputType="none"
                         android:paddingRight="10dp"
                         android:textSize="14sp"
+                        android:visibility="gone"
                         app:hintText="Select Audit">
 
                     </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
@@ -132,41 +215,16 @@
 
                     </TextView>
 
-                    <LinearLayout
-                        android:id="@+id/btn_scan"
-                        android:layout_width="139dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="57dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="20dp"
 
-
-                        android:layout_marginBottom="36dp"
-                        android:background="@drawable/oval_btn_signin"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Scan Now"
-                            android:textColor="#FFFFFF">
-
-                        </TextView>
-
-
-                    </LinearLayout>
                     <FrameLayout
                         android:id="@+id/container"
-                        android:layout_below="@id/btn_scan"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/ed_auditid"
 
-                        android:layout_height="match_parent">
+                        >
 
                     </FrameLayout>
-
-
 
 
                 </RelativeLayout>

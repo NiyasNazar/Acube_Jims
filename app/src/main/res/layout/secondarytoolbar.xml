@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:background="#FFF">
+
+        <ImageView
+            android:id="@+id/imvlogo"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5sp"
+            android:src="@drawable/logo"></ImageView>
+
+        <TextView
+            android:id="@+id/tvacube"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_6sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+
+
+            android:layout_toRightOf="@id/imvlogo"
+            android:fontFamily="@font/karla_bold"
+            android:text="@string/acube"
+            android:textColor="#BF8F3A"
+            android:textSize="30sp"></TextView>
+
+        <TextView
+            android:id="@+id/tvsubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvacube"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="1dp"
+
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@id/imvlogo"
+            android:fontFamily="@font/karla_bold"
+            android:text="@string/rfidpowered"
+            android:textColor="#666666"
+            android:textSize="12sp"></TextView>
+
+
+
+    </RelativeLayout>
+</layout>

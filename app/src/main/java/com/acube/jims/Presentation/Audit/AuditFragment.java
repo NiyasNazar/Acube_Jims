@@ -11,12 +11,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -33,17 +31,16 @@ import com.acube.jims.Presentation.Audit.ViewModel.AuditLocationViewModel;
 import com.acube.jims.Presentation.Audit.ViewModel.AuditUploadViewModel;
 import com.acube.jims.Presentation.Audit.ViewModel.AuditViewModel;
 import com.acube.jims.Presentation.Audit.adapter.AuditLocationadapter;
-import com.acube.jims.Presentation.ScanItems.ScanItemsActivity;
+import com.acube.jims.Presentation.Report.View.reports.FoundReportActivity;
+import com.acube.jims.Presentation.Report.View.reports.LocationMistmatchReport;
+import com.acube.jims.Presentation.Report.View.reports.MisiingReport;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.AuditFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Audit.AuditScanUpload;
 import com.acube.jims.datalayer.models.Audit.ResponseAudit;
 import com.acube.jims.datalayer.models.Audit.ResponseLocationList;
-import com.acube.jims.datalayer.models.DeviceRegistration.ResponseTrayMaster;
-import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -72,6 +69,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
     String auditid;
     AuditUploadViewModel auditUploadViewModel;
     int found, missing, locationmismatch, totalstock;
+    String locationid = "0";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -85,6 +83,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
 
     String warehouseID, Employeename, companyID;
     List<ResponseAudit> datasetaudits;
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -96,7 +95,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
         auditUploadViewModel.init();
         mViewModel.init();
         auditLocationViewModedetails.init();
-        datasetaudits=new ArrayList<>();
+        datasetaudits = new ArrayList<>();
 
         companyID = LocalPreferences.retrieveStringPreferences(getActivity(), "CompanyID");
         warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
@@ -111,7 +110,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
             @Override
             public void onChanged(List<ResponseAudit> responseAudits) {
                 if (responseAudits != null) {
-                    datasetaudits=responseAudits;
+                    datasetaudits = responseAudits;
                     ArrayAdapter<ResponseAudit> arrayAdapter = new ArrayAdapter<ResponseAudit>(getActivity(), android.R.layout.simple_spinner_item, responseAudits);
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     binding.edAuditid.setAdapter(arrayAdapter);
@@ -122,6 +121,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 auditid = parent.getItemAtPosition(position).toString();
+
                 showProgressDialog();
                 totalstock = datasetaudits.get(position).getTotalStock();
                 missing = datasetaudits.get(position).getMissing();
@@ -143,7 +143,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
                 Toast.makeText(getActivity(), "items" + auditid, Toast.LENGTH_SHORT).show();
                 JsonObject jsonObject1 = new JsonObject();
                 jsonObject1.addProperty("auditID", auditid);
-
+                LocalPreferences.storeStringPreference(getActivity(), "auditID", auditid);
 
                 jsonObject1.addProperty("companyID", companyID);
                 jsonObject1.addProperty("warehouseID", warehouseID);
@@ -152,6 +152,30 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        binding.cdvfound.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), FoundReportActivity.class).putExtra("locationid", locationid));
+
+            }
+        });
+
+        binding.cdvmissing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), MisiingReport.class).putExtra("locationid", locationid));
+
+            }
+        });
+
+        binding.cdvlocationmismatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), LocationMistmatchReport.class).putExtra("locationid", locationid));
 
             }
         });
@@ -319,6 +343,8 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
 
     @Override
     public void passid(String id) {
+        locationid = id;
+
         JsonObject jsonObject1 = new JsonObject();
         jsonObject1.addProperty("auditID", auditid);
         jsonObject1.addProperty("locationID", id);

@@ -45,11 +45,10 @@ public class AuditLocationadapter extends RecyclerView.Adapter<AuditLocationadap
     PassId passId;
 
 
-    public AuditLocationadapter(Context mCtx, List<ResponseLocationList> dataset,PassId passId) {
+    public AuditLocationadapter(Context mCtx, List<ResponseLocationList> dataset, PassId passId) {
         this.mCtx = mCtx;
         this.dataset = dataset;
-        this.passId=passId;
-
+        this.passId = passId;
 
 
     }
@@ -73,9 +72,9 @@ public class AuditLocationadapter extends RecyclerView.Adapter<AuditLocationadap
             @Override
             public void onClick(View view) {
                 row_index = position;
-                LocalPreferences.storeStringPreference(mCtx,"locationID", String.valueOf(responseLocationList.getCandidateLocationID()));
+                LocalPreferences.storeStringPreference(mCtx, "locationID", String.valueOf(responseLocationList.getCandidateLocationID()));
                 passId.passid(String.valueOf(responseLocationList.getCandidateLocationID()));
-
+                LocalPreferences.storeStringPreference(mCtx, "auditID", responseLocationList.getAuditID());
                 notifyDataSetChanged();
             }
         });
@@ -112,13 +111,7 @@ public class AuditLocationadapter extends RecyclerView.Adapter<AuditLocationadap
         }
 
 
-
-
-
     }
-
-
-
 
 
     @Override
@@ -129,7 +122,7 @@ public class AuditLocationadapter extends RecyclerView.Adapter<AuditLocationadap
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewLoccode,textViewDate;
+        TextView textViewItemName, textViewLoccode, textViewDate;
         ImageView imageView;
         CheckBox comparecheckbox;
         ResponseItems responseItems;
@@ -141,16 +134,16 @@ public class AuditLocationadapter extends RecyclerView.Adapter<AuditLocationadap
 
             textViewItemName = itemView.findViewById(R.id.tvlocationname);
             selection = itemView.findViewById(R.id.layoutparent);
-            tableRow4=itemView.findViewById(R.id.tableRow4);
+            tableRow4 = itemView.findViewById(R.id.tableRow4);
 
             textViewLoccode = itemView.findViewById(R.id.tvlocationcode);
             textViewDate = itemView.findViewById(R.id.tv_date);
 
 
-
         }
     }
-    public interface PassId{
+
+    public interface PassId {
         void passid(String id);
     }
 

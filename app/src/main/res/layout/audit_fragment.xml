@@ -61,7 +61,6 @@
                         android:layout_marginTop="20dp"
 
 
-                        android:background="@drawable/ed_rect_border"
 
 
                         android:dropDownSelector="@color/headercolor"
@@ -235,6 +234,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:elevation="5dp"
+                            android:id="@+id/cdvfound"
                             app:cardCornerRadius="5dp"
                             app:cardUseCompatPadding="true">
 
@@ -269,6 +269,7 @@
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="0dp"
+                            android:id="@+id/cdvmissing"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:elevation="5dp"
@@ -305,6 +306,7 @@
                         </androidx.cardview.widget.CardView>
 
                         <androidx.cardview.widget.CardView
+                            android:id="@+id/cdvlocationmismatch"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

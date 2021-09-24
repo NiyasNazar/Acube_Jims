@@ -122,34 +122,34 @@ public class ProductDetailsFragment extends BaseFragment {
         binding.imvshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                File dir = null ;
-                Log.d("onClick", "onClick: "+getLocalBitmapUri(binding.imvsingleitemimage));
+
                 try {
 
 
-                    Log.d("onClick", "onClick: ");
 
-                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                 /*   Intent emailIntent = new Intent(Intent.ACTION_SEND);
                     emailIntent.setType("text/plain");
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"rony8652@gmail.com"});
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailsubject);
                     emailIntent.putExtra(Intent.EXTRA_TEXT, emailbody);
-                    File root = Environment.getExternalStorageDirectory();
-                   /* String pathToMyAttachedFile = "temp/attachement.xml";
-                    File file = new File(root, pathToMyAttachedFile);
-                    if (!file.exists() || !file.canRead()) {
-                        return;
-                    }*/
-                 //   Uri uri = Uri.fromFile(getLocalBitmapUri(binding.imvsingleitemimage));
-                   emailIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
-                    startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                    emailIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
+                    emailIntent.setPackage("com.google.android.gm");//Added Gmail Package to forcefully open Gmail App
+                    startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));*/
+
+                    Intent share = new Intent();
+                    share.setAction(Intent.ACTION_SEND);
+                    share.putExtra(Intent.EXTRA_TEXT, emailbody);
+
+                    share.setType("application/pdf");
+                    share.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
+                    share.setPackage("com.whatsapp");
+                    startActivity(share);
                 } catch (ActivityNotFoundException e) {
-                    Log.d("onClick", "onClick: " + e.getLocalizedMessage());
 
 
                 } catch (Exception e) {
                     e.printStackTrace();
-                    // return null;
+
                 }
 
 
@@ -349,11 +349,12 @@ public class ProductDetailsFragment extends BaseFragment {
         SavePlan st = new SavePlan();
         st.execute();
     }
+
     public Uri getLocalBitmapUri(ImageView imageView) {
         // Extract Bitmap from ImageView drawable
         Drawable drawable = imageView.getDrawable();
         Bitmap bmp = null;
-        if (drawable instanceof BitmapDrawable){
+        if (drawable instanceof BitmapDrawable) {
             bmp = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
         } else {
             return null;
@@ -364,7 +365,7 @@ public class ProductDetailsFragment extends BaseFragment {
             // Use methods on Context to access package-specific directories on external storage.
             // This way, you don't need to request external read/write permission.
             // See https://youtu.be/5xVh-7ywKpE?t=25m25s
-            File file =  new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            File file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
             FileOutputStream out = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();
@@ -375,7 +376,8 @@ public class ProductDetailsFragment extends BaseFragment {
         }
         return bmpUri;
     }
-    public Uri getBitmapFromDrawable(Bitmap bmp){
+
+    public Uri getBitmapFromDrawable(Bitmap bmp) {
 
         // Store image to default external storage directory
         Uri bmpUri = null;
@@ -383,7 +385,7 @@ public class ProductDetailsFragment extends BaseFragment {
             // Use methods on Context to access package-specific directories on external storage.
             // This way, you don't need to request external read/write permission.
             // See https://youtu.be/5xVh-7ywKpE?t=25m25s
-            File file =  new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
+            File file = new File(getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES), "share_image_" + System.currentTimeMillis() + ".png");
             FileOutputStream out = new FileOutputStream(file);
             bmp.compress(Bitmap.CompressFormat.PNG, 90, out);
             out.close();

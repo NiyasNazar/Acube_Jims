@@ -24,17 +24,24 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoundFragment extends Fragment {
 
     private FoundViewModel mViewModel;
+    List<Found> dataset;
 
-    public static FoundFragment newInstance() {
-        return new FoundFragment();
+    public static FoundFragment newInstance(List<Found> dataset) {
+
+        return new FoundFragment(dataset);
     }
 
     FoundFragmentBinding binding;
+
+    public FoundFragment(List<Found> dataset) {
+        this.dataset = dataset;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -44,7 +51,7 @@ public class FoundFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.found_fragment, container, false);
         binding.recyvfound.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.recyvfound.setAdapter(new Foundadapter(getActivity(), getList()));
+        binding.recyvfound.setAdapter(new Foundadapter(getActivity(), dataset));
 
 
         return binding.getRoot();

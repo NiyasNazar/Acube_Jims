@@ -52,6 +52,8 @@ public class ItemHistoryadapter extends RecyclerView.Adapter<ItemHistoryadapter.
         holder.textViewItemName.setText(responseScanHistory.getScanLocationName());
         holder.textViewLoccode.setText(responseScanHistory.getScanLocationCode());
         holder.textViewDate.setText(responseScanHistory.getScannedDate());
+        holder.textViewSerialNo.setText(responseScanHistory.getSerialNumber());
+        holder.textViewAuditID.setText(responseScanHistory.getAuditID());
 
 
     }
@@ -65,7 +67,7 @@ public class ItemHistoryadapter extends RecyclerView.Adapter<ItemHistoryadapter.
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewLoccode, textViewDate;
+        TextView textViewItemName, textViewLoccode, textViewDate, textViewAuditID, textViewSerialNo;
         ImageView imageView;
         CheckBox locatecheckbox;
         ResponseItems responseItems;
@@ -78,9 +80,10 @@ public class ItemHistoryadapter extends RecyclerView.Adapter<ItemHistoryadapter.
             textViewItemName = itemView.findViewById(R.id.tvlocationname);
             selection = itemView.findViewById(R.id.layoutparent);
             tableRow4 = itemView.findViewById(R.id.tableRow4);
-
+            textViewAuditID = itemView.findViewById(R.id.tv_auditid);
             textViewLoccode = itemView.findViewById(R.id.tvlocationcode);
             textViewDate = itemView.findViewById(R.id.tv_date);
+            textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
 
 
         }

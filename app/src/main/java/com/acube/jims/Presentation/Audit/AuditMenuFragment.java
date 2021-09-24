@@ -15,6 +15,7 @@ import com.acube.jims.Presentation.Report.ReportFragment;
 import com.acube.jims.Presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
+import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ReportMenuBinding;
 
 public class AuditMenuFragment extends Fragment {
@@ -43,6 +44,10 @@ public class AuditMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new AuditFragment());
+                LocalPreferences.storeIntegerPreference(getActivity(),"totalstock",0);
+                LocalPreferences.storeIntegerPreference(getActivity(),"missing",0);
+                LocalPreferences.storeIntegerPreference(getActivity(),"found",0);
+                LocalPreferences.storeIntegerPreference(getActivity(),"locationmismatch",0);
             }
         });
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);

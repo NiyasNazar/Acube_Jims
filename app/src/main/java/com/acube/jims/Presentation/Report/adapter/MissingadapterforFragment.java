@@ -14,27 +14,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
-import com.acube.jims.datalayer.models.Audit.Found;
-import com.acube.jims.datalayer.models.Audit.LocationMismatch;
+import com.acube.jims.datalayer.models.Audit.Missing;
 
 import java.util.List;
 
-public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismatchAdapter.ProductViewHolder> {
+public class MissingadapterforFragment extends RecyclerView.Adapter<MissingadapterforFragment.ProductViewHolder> {
 
 
     private Context mCtx;
     int row_index = -1;
-
-    private final List<LocationMismatch> dataset;
+    boolean isSelectedAll;
+    private final List<Missing> dataset;
 
     PassId passId;
 
 
-    public LocationMismatchAdapter(Context mCtx, List<LocationMismatch> dataset) {
+    public MissingadapterforFragment(Context mCtx, List<Missing> dataset, PassId passId) {
         this.mCtx = mCtx;
         this.dataset = dataset;
-
-
+        this.passId=passId;
 
 
     }
@@ -43,29 +41,23 @@ public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismat
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.layout_found_item, parent, false);
+        View view = inflater.inflate(R.layout.layout_missing_item_frag, parent, false);
         return new ProductViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
-        LocationMismatch locationMismatch = dataset.get(position);
-        holder.textViewItemName.setText(locationMismatch.getSystemLocationName());
-        holder.textViewLoccode.setText(locationMismatch.getScanLocationName());
-        holder.textViewDate.setText(locationMismatch.getSerialNumber());
-
-
-
+        Missing missing = dataset.get(position);
+        holder.textViewItemName.setText(missing.getSystemLocationName());
+        holder.textViewLoccode.setText(missing.getScanLocationName());
+        holder.textViewSerialNo.setText(missing.getSerialNumber());
 
 
 
 
 
     }
-
-
-
 
 
     @Override
@@ -76,9 +68,9 @@ public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismat
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewLoccode,textViewDate;
+        TextView textViewItemName, textViewLoccode, textViewSerialNo;
         ImageView imageView;
-        CheckBox comparecheckbox;
+        CheckBox locatecheckbox;
         ResponseItems responseItems;
         RelativeLayout selection;
         TableRow tableRow4;
@@ -88,17 +80,24 @@ public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismat
 
             textViewItemName = itemView.findViewById(R.id.tvlocationname);
             selection = itemView.findViewById(R.id.layoutparent);
-            tableRow4=itemView.findViewById(R.id.tableRow4);
+            tableRow4 = itemView.findViewById(R.id.tableRow4);
 
             textViewLoccode = itemView.findViewById(R.id.tvlocationcode);
-            textViewDate = itemView.findViewById(R.id.tv_serialnumber);
-
+            textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
+            locatecheckbox = itemView.findViewById(R.id.checkBox);
+            textViewSerialNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    passId.passid(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber(),dataset.get(getBindingAdapterPosition()).getScanLocationID());
+                }
+            });
 
 
         }
     }
-    public interface PassId{
-        void passid(String id);
+
+    public interface PassId {
+        void passid(String id,Integer locid);
     }
 
 

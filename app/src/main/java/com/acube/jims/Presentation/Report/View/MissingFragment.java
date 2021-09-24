@@ -27,6 +27,7 @@ import com.acube.jims.Presentation.Audit.ViewModel.AuditViewModel;
 import com.acube.jims.Presentation.Report.adapter.Foundadapter;
 import com.acube.jims.Presentation.Report.adapter.ItemHistoryadapter;
 import com.acube.jims.Presentation.Report.adapter.Missingadapter;
+import com.acube.jims.Presentation.Report.adapter.MissingadapterforFragment;
 import com.acube.jims.Presentation.ScanHistory.ItemHistoryViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.LocalPreferences;
@@ -44,16 +45,21 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MissingFragment extends Fragment implements Missingadapter.PassId {
+public class MissingFragment extends Fragment implements MissingadapterforFragment.PassId {
 
     private ItemHistoryViewModel mViewModel;
+    List<Missing> dataset;
 
-    public static MissingFragment newInstance() {
-        return new MissingFragment();
+    public static MissingFragment newInstance(List<Missing> dataset) {
+        return new MissingFragment(dataset);
     }
 
     MissingFragmentBinding binding;
-    Missingadapter adapter;
+    MissingadapterforFragment adapter;
+
+    public MissingFragment(List<Missing> dataset) {
+        this.dataset = dataset;
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -81,47 +87,13 @@ public class MissingFragment extends Fragment implements Missingadapter.PassId {
         });
 
         binding.recyvfound.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new Missingadapter(getActivity(), getList(), MissingFragment.this);
+        adapter = new MissingadapterforFragment(getActivity(), dataset, MissingFragment.this);
         binding.recyvfound.setAdapter(adapter);
-        binding.checkBoxselectall.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-
-                    adapter.selectAll();
-                    binding.checkBoxselectall.setText("Unselect All");
-
-
-                } else {
-                    adapter.unselectall();
-                    binding.checkBoxselectall.setText("Select All");
-                }
-
-            }
-        });
 
 
         return binding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        // TODO: Use the ViewModel
-    }
-
-    public List<Missing> getList() {
-        List<Missing> mMainCategory = null;
-        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), "datsetmissing");
-        if (serializedObject != null) {
-            Gson gson = new Gson();
-            Type type = new TypeToken<List<Missing>>() {
-            }.getType();
-            mMainCategory = gson.fromJson(serializedObject, type);
-        }
-        return mMainCategory;
-    }
 
     @Override
     public void passid(String id, Integer locid) {

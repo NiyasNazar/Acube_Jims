@@ -1,11 +1,13 @@
 package com.acube.jims.Presentation.Report;
 
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.DatePickerDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,6 +26,7 @@ import com.acube.jims.Presentation.Audit.ViewModel.AuditViewModel;
 import com.acube.jims.Presentation.Favorites.View.FavoritesFragment;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.Report.View.FoundFragment;
+import com.acube.jims.Presentation.Report.View.LocationMismatchFragment;
 import com.acube.jims.Presentation.Report.View.MissingFragment;
 import com.acube.jims.Presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
@@ -31,6 +34,7 @@ import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ReportFragmentBinding;
 import com.acube.jims.datalayer.models.Audit.Found;
+import com.acube.jims.datalayer.models.Audit.LocationMismatch;
 import com.acube.jims.datalayer.models.Audit.Missing;
 import com.acube.jims.datalayer.models.Audit.ResponseAudit;
 import com.acube.jims.datalayer.models.Audit.ResponseReport;
@@ -51,7 +55,11 @@ public class ReportFragment extends Fragment {
         return new ReportFragment();
     }
 
+    List<Found> datsetfound;
+    List<Missing> datsetmissing;
     List<ResponseAudit> datasetaudits;
+    List<LocationMismatch> datasetlocationmismatch;
+
     ReportFragmentBinding binding;
     private int mYear, mMonth, mDay, mHour, mMinute;
     String dbfromdate, dbtodate;
@@ -66,6 +74,9 @@ public class ReportFragment extends Fragment {
         mViewModel.init();
         auditViewModel.init();
         datasetaudits = new ArrayList<>();
+        datsetfound = new ArrayList<>();
+        datsetmissing = new ArrayList<>();
+        datasetlocationmismatch = new ArrayList<>();
         String companyID = LocalPreferences.retrieveStringPreferences(getActivity(), "CompanyID");
         String warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
         //String auditID = LocalPreferences.retrieveStringPreferences(getActivity(), "auditID");
@@ -84,7 +95,7 @@ public class ReportFragment extends Fragment {
         binding.edAuditid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LocalPreferences.storeStringPreference(getActivity(),"AuditID",String.valueOf(parent.getItemAtPosition(position)));
+                LocalPreferences.storeStringPreference(getActivity(), "AuditID", String.valueOf(parent.getItemAtPosition(position)));
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("auditID", String.valueOf(parent.getItemAtPosition(position)));
                 jsonObject.addProperty("companyID", companyID);
@@ -111,6 +122,7 @@ public class ReportFragment extends Fragment {
                 jsonObject.addProperty("fromDate", dbfromdate);
                 jsonObject.addProperty("toDate", dbtodate);
                 auditViewModel.Audit(LocalPreferences.getToken(getActivity()), jsonObject);
+                binding.edAuditid.setVisibility(View.VISIBLE);
             }
         });
 
@@ -138,7 +150,10 @@ public class ReportFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
-
+        binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+        binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+        binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+        binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
         binding.enddatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,7 +173,7 @@ public class ReportFragment extends Fragment {
                                 String dateString = String.format("%02d/%02d/%d", dayOfMonth, (monthOfYear + 1), year);
                                 dbtodate = String.format("%02d/%02d/%d", year, (monthOfYear + 1), dayOfMonth);
                                 binding.enddatebtn.setText(dateString);
-                                binding.edAuditid.setVisibility(View.VISIBLE);
+
 
                             }
                         }, mYear, mMonth, mDay);
@@ -170,37 +185,64 @@ public class ReportFragment extends Fragment {
             @Override
             public void onChanged(ResponseReport responseReport) {
                 if (responseReport != null) {
-                    List<Found> datsetfound = responseReport.getFound();
-                    List<Missing> datsetmissing = responseReport.getMissing();
+
+                    datsetfound = responseReport.getFound();
+                    datsetmissing = responseReport.getMissing();
+                    datasetlocationmismatch = responseReport.getLocationMismatches();
                     setList("datsetfound", datsetfound);
                     setList("datsetmissing", datsetmissing);
-                    replace(new FoundFragment());
+                    replace(FoundFragment.newInstance(datsetfound));
                 }
             }
         });
 
+        final int sdk = android.os.Build.VERSION.SDK_INT;
 
         binding.toolbar.tvFragname.setText("Report");
         binding.tabfound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
 
-                replace(new FoundFragment());
+                replace(FoundFragment.newInstance(datsetfound));
             }
         });
 
         binding.tabmissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                replace(new MissingFragment());
+
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+
+
+                replace(new MissingFragment(datsetmissing));
             }
         });
         binding.tabextra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 //   replace(new FoundFragment());
 
+            }
+        });
+        binding.tablocationmismatch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                replace(LocationMismatchFragment.newInstance(datasetlocationmismatch));
             }
         });
 

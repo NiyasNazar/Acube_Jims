@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.acube.jims.BaseActivity;
 import com.acube.jims.Presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.Presentation.Report.adapter.LocationMismatchAdapter;
 import com.acube.jims.Presentation.Report.adapter.Reportadapter;
@@ -18,12 +19,13 @@ import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityReportLocationmismatchBinding;
 import com.acube.jims.databinding.ActivityReportViewbycatBinding;
 import com.acube.jims.datalayer.models.Audit.Found;
+import com.acube.jims.datalayer.models.Audit.LocationMismatch;
 import com.acube.jims.datalayer.models.Audit.ResponseReport;
 import com.google.gson.JsonObject;
 
 import java.util.List;
 
-public class LocationMistmatchReport extends AppCompatActivity {
+public class LocationMistmatchReport extends BaseActivity {
     ActivityReportLocationmismatchBinding binding;
     private ReportViewModel mViewModel;
     LocationMismatchAdapter locationMismatchAdapter;
@@ -40,7 +42,8 @@ public class LocationMistmatchReport extends AppCompatActivity {
         String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
         String warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
         String AuditID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "auditID");
-        binding.backlayout.tvFragname.setText("Found");
+        binding.backlayout.tvFragname.setText("Location Mismatch");
+        showProgressDialog();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("auditID", AuditID);
@@ -48,12 +51,6 @@ public class LocationMistmatchReport extends AppCompatActivity {
         jsonObject.addProperty("warehouseID", warehouseID);
         jsonObject.addProperty("locationID", Integer.parseInt(locationid));
 
-        binding.cdvlocate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
 
 
@@ -61,8 +58,9 @@ public class LocationMistmatchReport extends AppCompatActivity {
         mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
             @Override
             public void onChanged(ResponseReport responseReport) {
+                hideProgressDialog();
                 if (responseReport != null) {
-                    List<Found> datsetfound = responseReport.getFound();
+                    List<LocationMismatch> datsetfound = responseReport.getLocationMismatches();
                     locationMismatchAdapter = new LocationMismatchAdapter(getApplicationContext(), datsetfound);
                     binding.recyvfound.setAdapter(locationMismatchAdapter);
                 }

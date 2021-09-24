@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
@@ -27,7 +28,7 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     int row_index = -1;
     boolean isSelectedAll;
     private final List<Missing> dataset;
-
+    List<String> datalist;
     PassId passId;
 
 
@@ -36,6 +37,7 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
         this.dataset = dataset;
         this.passId=passId;
 
+        datalist = new ArrayList<>();
 
     }
 
@@ -58,10 +60,10 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
 
         if (!isSelectedAll) {
             holder.locatecheckbox.setChecked(false);
-            //  comparelist=new ArrayList<>();
+              datalist=new ArrayList<>();
         } else {
             holder.locatecheckbox.setChecked(true);
-            // comparelist.add(String.valueOf(dataset.get(position).getSerialNumber()));
+           datalist.add(String.valueOf(dataset.get(position).getSerialNumber()));
         }
 
 
@@ -100,12 +102,26 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
                 }
             });
 
+            locatecheckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        datalist.add(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber()));
+                        passId.compareitems(datalist);
 
+
+                    } else if (!isChecked) {
+                        datalist.remove(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber()));
+                        passId.compareitems(datalist);
+                    }
+                }
+            });
         }
     }
 
     public interface PassId {
         void passid(String id,Integer locid);
+        void compareitems(List<String> comparelist);
     }
 
     public void selectAll() {

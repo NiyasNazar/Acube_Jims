@@ -39,6 +39,7 @@ import com.acube.jims.Presentation.Audit.AuditFragment;
 import com.acube.jims.Presentation.Audit.AuditMenuFragment;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
 import com.acube.jims.Presentation.CustomerManagment.View.CustomerBottomSheetFragment;
+import com.acube.jims.Presentation.DashBoard.DashBoardFragment;
 import com.acube.jims.Presentation.HomePage.ViewModel.CustomerViewModel;
 import com.acube.jims.Presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.Presentation.CustomerManagment.adapter.CustomerListAdapter;
@@ -129,6 +130,11 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         } else if (value.equalsIgnoreCase("InventoryAudit")) {
             //  startActivity(new Intent(getActivity(),));
             FragmentHelper.replaceFragment(getActivity(), R.id.content, new AuditMenuFragment());
+
+
+        } else if (value.equalsIgnoreCase("AndroidDashboard")) {
+            //  startActivity(new Intent(getActivity(),));
+            FragmentHelper.replaceFragment(getActivity(), R.id.content, new DashBoardFragment());
 
 
         }

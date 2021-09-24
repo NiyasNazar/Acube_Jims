@@ -42,10 +42,18 @@ public class PdfViewerExampleActivity  extends PDFViewerActivity {
         intentShareFile.setDataAndType(apkURI, URLConnection.guessContentTypeFromName(fileToShare.getName()));
         intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        intentShareFile.putExtra(Intent.EXTRA_STREAM,
-                apkURI);
+       /* intentShareFile.putExtra(Intent.EXTRA_STREAM,
+                apkURI);*/
 
-        startActivity(Intent.createChooser(intentShareFile, "Share File"));
+    //  startActivity(Intent.createChooser(intentShareFile, "Share File"));
+        Intent share = new Intent();
+        share.setAction(Intent.ACTION_SEND);
+        share.setType("application/pdf");
+        share.putExtra(Intent.EXTRA_STREAM, apkURI);
+        share.setPackage("com.whatsapp");
+        startActivity(share);
+
+
     }
 
 

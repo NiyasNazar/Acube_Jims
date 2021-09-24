@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 
+import com.acube.jims.BaseActivity;
 import com.acube.jims.Presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.Presentation.Report.adapter.Foundadapter;
 import com.acube.jims.Presentation.Report.adapter.Reportadapter;
@@ -23,10 +24,10 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
-public class FoundReportActivity extends AppCompatActivity {
+public class FoundReportActivity extends BaseActivity {
     ActivityFoundreportBinding binding;
     private ReportViewModel mViewModel;
-    Reportadapter reportadapter;
+    Foundadapter reportadapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class FoundReportActivity extends AppCompatActivity {
         binding.recyvfound.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         mViewModel.init();
+        showProgressDialog();
         String locationid = getIntent().getStringExtra("locationid");
         String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
         String warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
@@ -48,12 +50,6 @@ public class FoundReportActivity extends AppCompatActivity {
         jsonObject.addProperty("warehouseID", warehouseID);
         jsonObject.addProperty("locationID", Integer.parseInt(locationid));
 
-        binding.cdvlocate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
 
 
@@ -61,9 +57,10 @@ public class FoundReportActivity extends AppCompatActivity {
         mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
             @Override
             public void onChanged(ResponseReport responseReport) {
+                hideProgressDialog();
                 if (responseReport != null) {
                     List<Found> datsetfound = responseReport.getFound();
-                    reportadapter = new Reportadapter(getApplicationContext(), datsetfound);
+                    reportadapter = new Foundadapter(getApplicationContext(), datsetfound);
                     binding.recyvfound.setAdapter(reportadapter);
                 }
             }

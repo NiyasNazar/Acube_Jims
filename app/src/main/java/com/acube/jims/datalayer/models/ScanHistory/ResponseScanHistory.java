@@ -17,6 +17,10 @@ public class ResponseScanHistory {
     @SerializedName("scanLocationName")
     @Expose
     private String scanLocationName;
+    @SerializedName("serialNumber")
+    @Expose
+    private String serialNumber;
+
 
     public String getAuditID() {
         return auditID;
@@ -48,5 +52,12 @@ public class ResponseScanHistory {
 
     public void setScanLocationName(String scanLocationName) {
         this.scanLocationName = scanLocationName;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+    public String getSerialNumber() {
+        return serialNumber;
     }
 }

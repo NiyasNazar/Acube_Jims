@@ -15,6 +15,11 @@ public class ResponseReport {
     @SerializedName("extra")
     @Expose
     private List<Object> extra = null;
+    @SerializedName("locationMismatch")
+    @Expose
+    private  List<LocationMismatch> locationMismatches = null;
+
+
 
     public List<Found> getFound() {
         return found;
@@ -38,5 +43,13 @@ public class ResponseReport {
 
     public void setExtra(List<Object> extra) {
         this.extra = extra;
+    }
+
+    public List<LocationMismatch> getLocationMismatches() {
+        return locationMismatches;
+    }
+
+    public void setLocationMismatches(List<LocationMismatch> locationMismatches) {
+        this.locationMismatches = locationMismatches;
     }
 }

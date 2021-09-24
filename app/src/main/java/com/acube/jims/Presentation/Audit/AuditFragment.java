@@ -66,7 +66,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
     AuditLocationViewModel auditLocationViewModel;
 
     AuditLocationDetailsModel auditLocationViewModedetails;
-    String auditid;
+    String auditid = "";
     AuditUploadViewModel auditUploadViewModel;
     int found, missing, locationmismatch, totalstock;
     String locationid = "0";
@@ -121,11 +121,13 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 auditid = parent.getItemAtPosition(position).toString();
-
                 showProgressDialog();
                 totalstock = datasetaudits.get(position).getTotalStock();
                 missing = datasetaudits.get(position).getMissing();
                 found = datasetaudits.get(position).getFound();
+                LocalPreferences.storeIntegerPreference(getActivity(), "totalstock", totalstock);
+                LocalPreferences.storeIntegerPreference(getActivity(), "missing", missing);
+                LocalPreferences.storeIntegerPreference(getActivity(), "found", found);
                 locationmismatch = datasetaudits.get(position).getLocationMismatch();
                 if (totalstock == missing) {
                     missing = 0;
@@ -144,7 +146,6 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
                 JsonObject jsonObject1 = new JsonObject();
                 jsonObject1.addProperty("auditID", auditid);
                 LocalPreferences.storeStringPreference(getActivity(), "auditID", auditid);
-
                 jsonObject1.addProperty("companyID", companyID);
                 jsonObject1.addProperty("warehouseID", warehouseID);
                 auditLocationViewModel.Audit(LocalPreferences.getToken(getActivity()), jsonObject1);
@@ -206,6 +207,10 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
                     missing = responseLocationLists.get(0).getMissing();
                     found = responseLocationLists.get(0).getFound();
                     locationmismatch = responseLocationLists.get(0).getLocationMismatch();
+                    LocalPreferences.storeIntegerPreference(getActivity(), "totalstock", totalstock);
+                    LocalPreferences.storeIntegerPreference(getActivity(), "missing", missing);
+                    LocalPreferences.storeIntegerPreference(getActivity(), "found", found);
+                    LocalPreferences.storeIntegerPreference(getActivity(), "locationmismatch", locationmismatch);
                     if (totalstock == missing) {
                         missing = 0;
                         binding.tvmissing.setText("" + missing);
@@ -229,6 +234,10 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
                     missing = auditScanUpload.getMissing();
                     found = auditScanUpload.getFound();
                     locationmismatch = auditScanUpload.getLocationMismatch();
+                    LocalPreferences.storeIntegerPreference(getActivity(), "totalstock", totalstock);
+                    LocalPreferences.storeIntegerPreference(getActivity(), "missing", missing);
+                    LocalPreferences.storeIntegerPreference(getActivity(), "found", found);
+                    LocalPreferences.storeIntegerPreference(getActivity(), "locationmismatch", locationmismatch);
                     if (totalstock == missing) {
                         missing = 0;
                         binding.tvmissing.setText("" + missing);
@@ -274,14 +283,16 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
     }
 
     private void PerformScan() {
+        String TrayMacAddress = LocalPreferences.retrieveStringPreferences(getActivity(), "TrayMacAddress");
+
         try {
             Intent res = new Intent();
-            //  String mPackage = "com.acube.smarttray";// package name
-            // String mClass = ".SmartTrayReading";//the activity name which return results*/
-            String mPackage = "com.example.acubetest";// package name
-            String mClass = ".Audit";//the activity name which return results
+            String mPackage = "com.acube.smarttray";// package name
+            String mClass = ".InventoryAuditActivity";//the activity name which return results*/
+            // String mPackage = "com.example.acubetest";// package name
+            //   String mClass = ".Audit";//the activity name which return results
             res.putExtra("url", AppConstants.BASE_URL);
-            res.putExtra("macAddress", "C0:7E:F0:90:EF:7A");
+            res.putExtra("macAddress", TrayMacAddress);
             res.putExtra("jsonSerialNo", "json");
             res.setComponent(new ComponentName(mPackage, mPackage + mClass));
             someActivityResultLauncher.launch(res);
@@ -340,6 +351,27 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
                     }
                 }
             });
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        totalstock = LocalPreferences.retrieveIntegerPreferences(getActivity(), "totalstock");
+        missing = LocalPreferences.retrieveIntegerPreferences(getActivity(), "missing");
+        found = LocalPreferences.retrieveIntegerPreferences(getActivity(), "found");
+        locationmismatch = LocalPreferences.retrieveIntegerPreferences(getActivity(), "locationmismatch");
+
+        if (totalstock == missing) {
+            missing = 0;
+            binding.tvmissing.setText("" + missing);
+
+        } else {
+            binding.tvmissing.setText("" + missing);
+
+        }
+        binding.tvtotalstock.setText("" + totalstock);
+        binding.tvlocationmismatch.setText("" + locationmismatch);
+        binding.tvfound.setText("" + found);
+    }
 
     @Override
     public void passid(String id) {

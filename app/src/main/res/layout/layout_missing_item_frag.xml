@@ -13,40 +13,6 @@
 
         <TextView
 
-            android:id="@+id/tv_date"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/table_item_border"
-            android:ellipsize="end"
-
-            android:fontFamily="@font/poppins_regular"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="TextView"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#666666"
-            android:textSize="12sp"></TextView>
-        <TextView
-
-            android:id="@+id/tv_auditid"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/table_item_border"
-            android:ellipsize="end"
-
-            android:fontFamily="@font/poppins_regular"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="TextView"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#666666"
-            android:textSize="12sp"></TextView>
-        <TextView
-
             android:id="@+id/tv_serialnumber"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -62,22 +28,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#666666"
             android:textSize="12sp"></TextView>
-        <TextView
-            android:id="@+id/tvlocationcode"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/table_item_border"
-            android:ellipsize="end"
 
-            android:fontFamily="@font/poppins_regular"
-            android:gravity="center"
-            android:padding="5dp"
-            android:singleLine="true"
-            android:text="TextView"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#666666"
-            android:textSize="12sp"></TextView>
+
         <TextView
             android:id="@+id/tvlocationname"
             android:layout_width="0dp"
@@ -94,11 +46,27 @@
             android:textColor="#666666"
             android:textSize="12sp"></TextView>
 
+        <TextView
+            android:id="@+id/tvlocationcode"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/table_item_border"
+            android:ellipsize="end"
 
+            android:fontFamily="@font/poppins_regular"
+            android:gravity="center"
+            android:padding="5dp"
+            android:singleLine="true"
+            android:text="TextView"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="#666666"
+            android:textSize="12sp"></TextView>
 
 
 
     </TableRow>
+
 
 
 

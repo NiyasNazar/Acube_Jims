@@ -21,6 +21,7 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/drawable/rec_button.xml" value="0.250625" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/drawable/shape_window_dim.xml" value="0.28359375" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/drawable/tab_border.xml" value="0.25701754385964914" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/drawable/tab_border_unselected.xml" value="0.287109375" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/drawable/table_border.xml" value="0.287109375" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/drawable/table_item_border.xml" value="0.287109375" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/drawable/table_item_border_selected.xml" value="0.287109375" />
@@ -62,6 +63,7 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/fragment_category_filter.xml" value="0.275" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/fragment_color_filter.xml" value="0.275" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/fragment_customer_viewfragment.xml" value="0.25" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/fragment_dash_board.xml" value="0.275" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/fragment_demo_invoice.xml" value="0.2555418719211823" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/fragment_favorites.xml" value="0.25" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/fragment_gender.xml" value="0.36666666666666664" />
@@ -79,7 +81,7 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_child_item_karat.xml" value="0.16964285714285715" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_color_item.xml" value="0.27548543689320387" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_compare_item.xml" value="0.275" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_custom_dialog.xml" value="0.275" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_custom_dialog.xml" value="0.33" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_customer_dialog.xml" value="0.25" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_customer_item.xml" value="0.24444444444444444" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_favorites_item.xml" value="0.25" />
@@ -89,11 +91,12 @@
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_invoice_item.xml" value="0.33" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_lastviewed_item.xml" value="0.67" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_missing_item.xml" value="0.275" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_missing_item_frag.xml" value="0.275" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_parent_item.xml" value="0.21375" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_scanned_item.xml" value="0.25" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_sub_category_item.xml" value="0.275" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/layout_sub_item.xml" value="0.67" />
-        <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/missing_fragment.xml" value="0.44416243654822335" />
+        <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/missing_fragment.xml" value="0.16" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/pager_item.xml" value="0.275" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/pop_up_layout_smarttool.xml" value="0.275" />
         <entry key="..\:/Users/HP/AndroidStudioProjects/Acube_Jims/app/src/main/res/layout/product_details_fragment.xml" value="0.264" />

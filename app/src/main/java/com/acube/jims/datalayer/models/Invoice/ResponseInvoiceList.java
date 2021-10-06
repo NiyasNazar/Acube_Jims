@@ -47,6 +47,11 @@ public class ResponseInvoiceList {
     @Expose
     private Object priceForGram;
 
+    @Expose
+    private Double goldVat;
+    @Expose
+    private Double laborVat;
+
     public String getSerialNumber() {
         return serialNumber;
     }
@@ -157,5 +162,21 @@ public class ResponseInvoiceList {
 
     public void setLabourChargeMin(Double labourChargeMin) {
         this.labourChargeMin = labourChargeMin;
+    }
+
+    public Double getGoldVat() {
+        return goldVat;
+    }
+
+    public void setGoldVat(Double goldVat) {
+        this.goldVat = goldVat;
+    }
+
+    public Double getLaborVat() {
+        return laborVat;
+    }
+
+    public void setLaborVat(Double laborVat) {
+        this.laborVat = laborVat;
     }
 }

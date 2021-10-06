@@ -51,6 +51,7 @@ public class FoundFragment extends Fragment {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.found_fragment, container, false);
         binding.recyvfound.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.tvTotaldata.setText("Total Items Found : "+dataset.size());
         binding.recyvfound.setAdapter(new Foundadapter(getActivity(), dataset));
 
 
@@ -64,15 +65,5 @@ public class FoundFragment extends Fragment {
         // TODO: Use the ViewModel
     }
 
-    public List<Found> getList() {
-        List<Found> mMainCategory = null;
-        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), "datsetfound");
-        if (serializedObject != null) {
-            Gson gson = new Gson();
-            Type type = new TypeToken<List<Found>>() {
-            }.getType();
-            mMainCategory = gson.fromJson(serializedObject, type);
-        }
-        return mMainCategory;
-    }
+
 }

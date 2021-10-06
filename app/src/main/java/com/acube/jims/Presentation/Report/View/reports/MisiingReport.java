@@ -109,8 +109,15 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
                 hideProgressDialog();
                 if (responseReport != null) {
                     List<Missing> datsetfound = responseReport.getMissing();
+                    binding.tvTotaldata.setText("Total Items : " + datsetfound.size());
                     reportadapter = new Missingadapter(getApplicationContext(), datsetfound, MisiingReport.this);
                     binding.recyvfound.setAdapter(reportadapter);
+                    if (reportadapter.getItemCount() == 0) {
+                        binding.tvNotfound.setVisibility(View.VISIBLE);
+                    } else {
+
+                        binding.tvNotfound.setVisibility(View.GONE);
+                    }
                 }
             }
         });

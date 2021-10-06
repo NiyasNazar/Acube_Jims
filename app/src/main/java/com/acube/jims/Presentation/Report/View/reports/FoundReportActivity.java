@@ -37,6 +37,7 @@ public class FoundReportActivity extends BaseActivity {
         binding.recyvfound.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         mViewModel.init();
+        binding.tvNotfound.setVisibility(View.GONE);
         showProgressDialog();
         String locationid = getIntent().getStringExtra("locationid");
         String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
@@ -51,8 +52,6 @@ public class FoundReportActivity extends BaseActivity {
         jsonObject.addProperty("locationID", Integer.parseInt(locationid));
 
 
-
-
         mViewModel.FetchInvoice(LocalPreferences.getToken(getApplicationContext()), jsonObject);
         mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
             @Override
@@ -60,8 +59,18 @@ public class FoundReportActivity extends BaseActivity {
                 hideProgressDialog();
                 if (responseReport != null) {
                     List<Found> datsetfound = responseReport.getFound();
+                    binding.tvTotaldata.setText("Total Items : " + datsetfound.size());
+
                     reportadapter = new Foundadapter(getApplicationContext(), datsetfound);
                     binding.recyvfound.setAdapter(reportadapter);
+                    if (reportadapter.getItemCount() == 0) {
+                        binding.tvNotfound.setVisibility(View.VISIBLE);
+                    } else {
+
+                        binding.tvNotfound.setVisibility(View.GONE);
+                    }
+                } else {
+
                 }
             }
         });

@@ -33,6 +33,13 @@ public class AuditMenuFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.report_menu, container, false);
+        binding.toolbar.tvFragname.setText("Inventory Audit");
+        binding.toolbar.parentlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
 
         binding.layoutreport.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,10 +51,11 @@ public class AuditMenuFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new AuditFragment());
-                LocalPreferences.storeIntegerPreference(getActivity(),"totalstock",0);
-                LocalPreferences.storeIntegerPreference(getActivity(),"missing",0);
-                LocalPreferences.storeIntegerPreference(getActivity(),"found",0);
-                LocalPreferences.storeIntegerPreference(getActivity(),"locationmismatch",0);
+                LocalPreferences.storeIntegerPreference(getActivity(), "totalstock", 0);
+                LocalPreferences.storeIntegerPreference(getActivity(), "missing", 0);
+                LocalPreferences.storeIntegerPreference(getActivity(), "found", 0);
+                LocalPreferences.storeIntegerPreference(getActivity(), "locationmismatch", 0);
+                LocalPreferences.storeStringPreference(getActivity(), "auditID", "");
             }
         });
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
@@ -56,7 +64,6 @@ public class AuditMenuFragment extends Fragment {
         return binding.getRoot();
 
     }
-
 
 
 }

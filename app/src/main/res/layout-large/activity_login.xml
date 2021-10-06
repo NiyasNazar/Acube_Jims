@@ -65,18 +65,18 @@
                 <EditText
                     android:id="@+id/ed_email"
                     android:layout_width="300dp"
-                    android:inputType="textEmailAddress"
                     android:layout_height="50dp"
                     android:layout_below="@+id/tvsubtitle"
-
-                    android:paddingRight="10dp"
                     android:layout_centerHorizontal="true"
+
                     android:layout_marginLeft="57dp"
                     android:layout_marginTop="13dp"
                     android:layout_marginRight="57dp"
                     android:background="@drawable/ed_border"
                     android:hint="@string/hint_email_id"
+                    android:inputType="textEmailAddress"
                     android:paddingLeft="24dp"
+                    android:paddingRight="10dp"
                     android:textSize="14sp">
 
                 </EditText>

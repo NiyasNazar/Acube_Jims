@@ -34,10 +34,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginLeft="@dimen/_25sdp"
 
 
-                android:layout_marginRight="@dimen/_25sdp"
+
                 android:elevation="5dp"
                 app:cardCornerRadius="25dp">
 
@@ -63,14 +62,15 @@
 
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/ed_macaddress"
-                        android:layout_width="@dimen/_300sdp"
+                        android:layout_width="350dp"
+
                         android:layout_height="50dp"
                         android:layout_below="@+id/tvsubtitle"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginLeft="57dp"
+                        android:layout_marginTop="55dp"
 
-                        android:layout_marginRight="@dimen/_20sdp"
+                        android:layout_marginRight="57dp"
 
 
                         android:background="@drawable/ed_rect_border"
@@ -86,16 +86,16 @@
 
                     <EditText
                         android:id="@+id/ed_deviceId"
-                        android:layout_width="@dimen/_300sdp"
+                        android:layout_width="350dp"
                         android:layout_height="50dp"
                         android:layout_below="@+id/ed_macaddress"
                         android:layout_centerHorizontal="true"
 
-                        android:layout_marginLeft="@dimen/_20sdp"
+                        android:layout_marginLeft="57dp"
                         android:layout_marginTop="12dp"
                         android:textColorHint="#000"
 
-                        android:layout_marginRight="@dimen/_20sdp"
+                        android:layout_marginRight="57dp"
                         android:background="@drawable/ed_rect_border"
 
                         android:hint="Device ID"
@@ -111,22 +111,22 @@
                     <EditText
 
                         android:id="@+id/ed_trayname"
-                        android:textColorHint="#000"
+                        android:layout_width="350dp"
 
-                        android:layout_width="@dimen/_300sdp"
                         android:layout_height="50dp"
                         android:layout_below="@+id/ed_deviceId"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginLeft="@dimen/_20sdp"
-                        android:paddingLeft="24dp"
+                        android:layout_marginLeft="57dp"
                         android:layout_marginTop="12dp"
-                        android:layout_marginRight="@dimen/_20sdp"
-
+                        android:layout_marginRight="57dp"
                         android:background="@drawable/ed_rect_border"
                         android:hint="Tray Name"
 
-
+                        android:paddingLeft="24dp"
                         android:paddingRight="10dp"
+
+
+                        android:textColorHint="#000"
                         android:textSize="14sp">
 
                     </EditText>

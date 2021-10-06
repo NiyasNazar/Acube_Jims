@@ -94,6 +94,7 @@ public class DeviceRegistrationFragment extends BaseFragment {
             public void onChanged(ResponseGetRegistered responseGetRegistered) {
                 hideProgressDialog();
                 if (responseGetRegistered != null) {
+                    vaTrayMacAddress = responseGetRegistered.getMacAddress();
 
                     binding.edDeviceId.setText(responseGetRegistered.getDeviceID());
                     binding.edTrayname.setText(responseGetRegistered.getTrayName());
@@ -124,8 +125,8 @@ public class DeviceRegistrationFragment extends BaseFragment {
 
                 vaTrayID = datasettray.get(position).getId();
                 vaTrayMacAddress = datasettray.get(position).getTrayMacAddress();
-                Log.d("onItemSelected", "onItemSelected: "+vaTrayMacAddress);
-                LocalPreferences.storeStringPreference(getActivity(),"TrayMacAddress",vaTrayMacAddress);
+                Log.d("onItemSelected", "onItemSelected: " + vaTrayMacAddress);
+                LocalPreferences.storeStringPreference(getActivity(), "TrayMacAddress", vaTrayMacAddress);
                 vaTrayName = datasettray.get(position).getTrayName();
                 binding.edTrayname.setText(vaTrayName);
 

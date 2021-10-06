@@ -15,12 +15,14 @@ import java.util.List;
 
 @Dao
 public interface DiscountItemsDao {
-    @Query("SELECT SUM(amt) as amt FROM `DiscountItem`")
+    @Query("SELECT SUM(discount) as discount FROM `DiscountItem`")
     Double getdiscountsum();
-
+    @Query("SELECT SUM(amt) as amt FROM `DiscountItem`")
+    Double totalwithouttax();
     @Query("SELECT SUM(totalwithtax) as totalwithtax FROM `DiscountItem`")
     Double gettotalpayable();
-
+    @Query("SELECT SUM(totaltax) as totaltax FROM `DiscountItem`")
+    Double gettotaltax();
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(DiscountItem discountItems);
 
@@ -32,4 +34,7 @@ public interface DiscountItemsDao {
 
     @Update
     void update(DiscountItem discountItems);
+    @Query("SELECT * FROM DiscountItem")
+    List<DiscountItem> getAll();
+
 }

@@ -309,6 +309,9 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
             @Override
             protected void onPostExecute(List<CustomerHistory> responseItems) {
                 super.onPostExecute(responseItems);
+            String  warehouseId=  LocalPreferences.retrieveStringPreferences(getActivity(),"warehouseId");
+            String employeeID=    LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
+
                 Log.d("onPostExecute", "onPostExecute: " + responseItems.size());
                 JSONArray itemViewLIst = new JSONArray();
                 JSONObject jsonObject = null;
@@ -319,7 +322,8 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
                         jsonObject.put("itemID", responseItems.get(i).getItemID());
                         jsonObject.put("serialNumber",responseItems.get(i).getSerialNo());
                         jsonObject.put("trayID", 3);
-                        jsonObject.put("employeeID", 1);
+                        jsonObject.put("employeeID", employeeID);
+                        jsonObject.put("WarehouseID", warehouseId);
                         itemViewLIst.put(jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -329,10 +333,12 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
 
                 JSONObject jsonObject1 = new JSONObject();
                 try {
-                    jsonObject1.put("employeeID", 1);
+                    jsonObject1.put("employeeID", employeeID);
                     jsonObject1.put("customerID", GuestCustomerID);
                     jsonObject1.put("startTime", Starttime);
                     jsonObject1.put("trayID", 3);
+                    jsonObject1.put("WarehouseID", warehouseId);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

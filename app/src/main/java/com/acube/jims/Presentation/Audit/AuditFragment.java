@@ -31,10 +31,12 @@ import com.acube.jims.Presentation.Audit.ViewModel.AuditLocationViewModel;
 import com.acube.jims.Presentation.Audit.ViewModel.AuditUploadViewModel;
 import com.acube.jims.Presentation.Audit.ViewModel.AuditViewModel;
 import com.acube.jims.Presentation.Audit.adapter.AuditLocationadapter;
+import com.acube.jims.Presentation.Report.ReportFragment;
 import com.acube.jims.Presentation.Report.View.reports.FoundReportActivity;
 import com.acube.jims.Presentation.Report.View.reports.LocationMistmatchReport;
 import com.acube.jims.Presentation.Report.View.reports.MisiingReport;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.AuditFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
@@ -78,6 +80,14 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.audit_fragment, container, false);
 
+        binding.btnDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new ReportFragment());
+
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -96,7 +106,13 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
         mViewModel.init();
         auditLocationViewModedetails.init();
         datasetaudits = new ArrayList<>();
-
+        binding.toolbar.tvFragname.setText("Audit");
+        binding.toolbar.parentlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         companyID = LocalPreferences.retrieveStringPreferences(getActivity(), "CompanyID");
         warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
         Employeename = LocalPreferences.retrieveStringPreferences(getActivity(), "EmployeeName");
@@ -160,7 +176,13 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
         binding.cdvfound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), FoundReportActivity.class).putExtra("locationid", locationid));
+                if (auditid.equalsIgnoreCase("")){
+                    customSnackBar(binding.parent,"Please Select an Audit");
+
+                }else{
+                    startActivity(new Intent(getActivity(), FoundReportActivity.class).putExtra("locationid", locationid));
+                }
+
 
             }
         });
@@ -168,7 +190,14 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
         binding.cdvmissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), MisiingReport.class).putExtra("locationid", locationid));
+
+                if (auditid.equalsIgnoreCase("")){
+                    customSnackBar(binding.parent,"Please Select an Audit");
+
+                }else{
+                    startActivity(new Intent(getActivity(), MisiingReport.class).putExtra("locationid", locationid));
+                }
+
 
             }
         });
@@ -176,7 +205,12 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
         binding.cdvlocationmismatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(), LocationMistmatchReport.class).putExtra("locationid", locationid));
+                if (auditid.equalsIgnoreCase("")){
+                    customSnackBar(binding.parent,"Please Select an Audit");
+
+                }else{
+                    startActivity(new Intent(getActivity(), LocationMistmatchReport.class).putExtra("locationid", locationid));
+                }
 
             }
         });
@@ -230,6 +264,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
             public void onChanged(AuditScanUpload auditScanUpload) {
                 hideProgressDialog();
                 if (auditScanUpload != null) {
+
                     totalstock = auditScanUpload.getTotalStock();
                     missing = auditScanUpload.getMissing();
                     found = auditScanUpload.getFound();
@@ -287,10 +322,10 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
 
         try {
             Intent res = new Intent();
-            String mPackage = "com.acube.smarttray";// package name
-            String mClass = ".InventoryAuditActivity";//the activity name which return results*/
-            // String mPackage = "com.example.acubetest";// package name
-            //   String mClass = ".Audit";//the activity name which return results
+           // String mPackage = "com.acube.smarttray";// package name
+          //  String mClass = ".InventoryAuditActivity";//the activity name which return results*/
+           String mPackage = "com.example.acubetest";// package name
+           String mClass = ".Audit";//the activity name which return results
             res.putExtra("url", AppConstants.BASE_URL);
             res.putExtra("macAddress", TrayMacAddress);
             res.putExtra("jsonSerialNo", "json");
@@ -308,6 +343,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         showProgressDialog();
+
                         // Here, no request code
                         Intent data = result.getData();
                         if (data != null) {
@@ -317,6 +353,7 @@ public class AuditFragment extends BaseFragment implements AuditLocationadapter.
                             JsonObject itemsobject = null;
                             JsonArray itemsarray = new JsonArray();
                             JsonObject body = new JsonObject();
+                            binding.totalScannedLayout.setVisibility(View.VISIBLE);
 
                             try {
                                 JSONArray jsonArray = new JSONArray(json);

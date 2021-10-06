@@ -97,6 +97,9 @@ dependencies {
     implementation 'com.github.Gkemon:XML-to-PDF-generator:2.5'
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
-
+    implementation platform('com.google.firebase:firebase-bom:28.4.1')
+    implementation 'com.google.firebase:firebase-crashlytics'
 
 }
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'

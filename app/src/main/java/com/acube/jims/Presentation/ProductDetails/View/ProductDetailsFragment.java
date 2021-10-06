@@ -6,8 +6,10 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.ActivityNotFoundException;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -21,6 +23,7 @@ import androidx.annotation.Nullable;
 
 import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -122,25 +125,26 @@ public class ProductDetailsFragment extends BaseFragment {
         binding.imvshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                sendTextMsgOnWhatsApp("+919747337738","hi");
 
-                try {
+            /*    try {
 
 
 
-                 /*   Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                 *//*   Intent emailIntent = new Intent(Intent.ACTION_SEND);
                     emailIntent.setType("text/plain");
                     emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"rony8652@gmail.com"});
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailsubject);
                     emailIntent.putExtra(Intent.EXTRA_TEXT, emailbody);
                     emailIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
                     emailIntent.setPackage("com.google.android.gm");//Added Gmail Package to forcefully open Gmail App
-                    startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));*/
-
-                    Intent share = new Intent();
+                    startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));*//*
+                    Uri uri = Uri.parse("smsto:" + "919747337738");
+                    Intent share = new Intent(Intent.ACTION_SENDTO, uri);
                     share.setAction(Intent.ACTION_SEND);
                     share.putExtra(Intent.EXTRA_TEXT, emailbody);
 
-                    share.setType("application/pdf");
+                    //share.setType("application/pdf");
                     share.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
                     share.setPackage("com.whatsapp");
                     startActivity(share);
@@ -150,7 +154,7 @@ public class ProductDetailsFragment extends BaseFragment {
                 } catch (Exception e) {
                     e.printStackTrace();
 
-                }
+                }*/
 
 
             }
@@ -173,6 +177,7 @@ public class ProductDetailsFragment extends BaseFragment {
 
         if (getArguments() != null) {
             String Id = getArguments().getString("Id");
+            showProgressDialog();
             mViewModel.FetchItemDetails(AppConstants.Authorization + AuthToken, Id);
         }
 
@@ -189,6 +194,12 @@ public class ProductDetailsFragment extends BaseFragment {
 
 
         binding.toolbar.tvFragname.setText("View Details-Single item");
+        binding.toolbar.dashboardLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         binding.toolbar.dashboardLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -253,6 +264,7 @@ public class ProductDetailsFragment extends BaseFragment {
         mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseCatalogDetails>() {
             @Override
             public void onChanged(ResponseCatalogDetails responseCatalogDetails) {
+                hideProgressDialog();
                 if (responseCatalogDetails != null) {
                     if (responseCatalogDetails.getItemSubList().size() > 0) {
                         Glide.with(getActivity())
@@ -400,4 +412,77 @@ public class ProductDetailsFragment extends BaseFragment {
         }
         return bmpUri;
     }
+
+    public void sendTextMsgOnWhatsApp(String sContactNo, String sMessage) {
+        String toNumber = sContactNo; // contains spaces, i.e., example +91 98765 43210
+        toNumber = toNumber.replace("+", "").replace(" ", "");
+
+        /*this method contactIdByPhoneNumber() will get unique id for given contact,
+        if this return's null then it means that you don't have any contact save with this mobile no.*/
+        String sContactId = contactIdByPhoneNumber(toNumber);
+
+        if (sContactId != null && sContactId.length() > 0) {
+
+            /*
+             * Once We get the contact id, we check whether contact has a registered with WhatsApp or not.
+             * this hasWhatsApp(hasWhatsApp) method will return null,
+             * if contact doesn't associate with whatsApp services.
+             * */
+            String sWhatsAppNo = hasWhatsApp(sContactId);
+
+            if (sWhatsAppNo != null && sWhatsAppNo.length() > 0) {
+                Intent sendIntent = new Intent("android.intent.action.MAIN");
+                sendIntent.putExtra("jid", toNumber + "@s.whatsapp.net");
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sMessage);
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.setPackage("com.whatsapp");
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);
+            } else {
+                // this contact does not exist in any WhatsApp application
+                Toast.makeText(getActivity(), "Contact not found in WhatsApp !!", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // this contact does not exist in your contact
+            Toast.makeText(getActivity(), "create contact for " + toNumber, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String contactIdByPhoneNumber(String phoneNumber) {
+        String contactId = null;
+        if (phoneNumber != null && phoneNumber.length() > 0) {
+            ContentResolver contentResolver = getActivity().getContentResolver();
+            Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(phoneNumber));
+            String[] projection = new String[]{ContactsContract.PhoneLookup._ID};
+
+            Cursor cursor = contentResolver.query(uri, projection, null, null, null);
+
+            if (cursor != null) {
+                while (cursor.moveToNext()) {
+                    contactId = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.PhoneLookup._ID));
+                }
+                cursor.close();
+            }
+        }
+        return contactId;
+    }
+
+    public String hasWhatsApp(String contactID) {
+        String rowContactId = null;
+        boolean hasWhatsApp;
+
+        String[] projection = new String[]{ContactsContract.RawContacts._ID};
+        String selection = ContactsContract.RawContacts.CONTACT_ID + " = ? AND " + ContactsContract.RawContacts.ACCOUNT_TYPE + " = ?";
+        String[] selectionArgs = new String[]{contactID, "com.whatsapp"};
+        Cursor cursor = getActivity().getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI, projection, selection, selectionArgs, null);
+        if (cursor != null) {
+            hasWhatsApp = cursor.moveToNext();
+            if (hasWhatsApp) {
+                rowContactId = cursor.getString(0);
+            }
+            cursor.close();
+        }
+        return rowContactId;
+    }
+
 }

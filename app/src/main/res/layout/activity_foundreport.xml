@@ -35,20 +35,32 @@
             android:layout_height="match_parent"
             android:layout_below="@id/backlayout"
             android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:layout_marginRight="15dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/item_border_detailspage"
             android:orientation="vertical"
             tools:context=".Presentation.Report.View.FoundFragment">
 
+            <TextView
+                android:id="@+id/tv_totaldata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_semibold"
+
+                android:textColor="@color/textcolor">
+
+            </TextView>
+
             <TableRow
                 android:id="@+id/header"
-
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tv_totaldata"
                 android:layout_marginLeft="6dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="6dp"
                 android:orientation="horizontal">
 
@@ -73,8 +85,6 @@
                     android:layout_height="50dp"
                     android:layout_weight="1"
                     android:background="@drawable/table_border"
-
-
                     android:fontFamily="@font/poppins_semibold"
                     android:gravity="center"
                     android:text="System Location"
@@ -97,7 +107,6 @@
                 </TextView>
 
 
-
             </TableRow>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -110,6 +119,16 @@
                 android:layout_marginRight="6dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/tv_notfound"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="No Records Found">
+
+            </TextView>
 
 
         </RelativeLayout>

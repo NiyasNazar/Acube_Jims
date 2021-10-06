@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "8707002006",
+    "project_id": "acubejims",
+    "storage_bucket": "acubejims.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8707002006:android:8f116193e8365958b57cb7",
+        "android_client_info": {
+          "package_name": "com.acube.jims"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8707002006-g1p7ifb4o3m9jlp6opg5fd4judcp94qo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2w4wwJGujv8O-1ZBwscUr-YYsSLWOXHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8707002006-g1p7ifb4o3m9jlp6opg5fd4judcp94qo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

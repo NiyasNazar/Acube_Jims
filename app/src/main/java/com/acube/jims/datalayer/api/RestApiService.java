@@ -123,4 +123,12 @@ public interface RestApiService {
 
     @POST("Audit/GetAuditHistory")
     Call<List<ResponseScanHistory>> ItemHistory(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("SaleMobile/SaveSale")
+    Call<JsonObject> markSaleOrQuotation(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST(" CatalogCart/ClearCart/{CustomerID}")
+    Call<JsonObject> ClearCart(@Header("Authorization") String Auth, @Path("CustomerID") String CustomerID);
+
+
 }

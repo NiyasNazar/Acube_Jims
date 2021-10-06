@@ -59,6 +59,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
     List<NavMenuModel> headerList = new ArrayList<>();
     HashMap<NavMenuModel, List<NavMenuModel>> childList = new HashMap<>();
     PopupWindow mypopupWindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,11 +76,17 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
         init();
         prepareMenuData();
         populateExpandableList();
-        replaceFragment(new CustomerBottomSheetFragment());
+        boolean showlogout = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "showlogout");
+        if (showlogout){
+            replaceFragment(new CustomerBottomSheetFragment());
+        }else{
+            replaceFragment(new HomeFragment());
+        }
+
+
         binding.toolbar.imvcart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, new CartViewFragment());
             }
         });
@@ -102,17 +109,16 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
             }
         });
     }
+
     private void setPopUpWindow() {
         LayoutInflater inflater = (LayoutInflater)
-               getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.filter_layout, null);
         ImageView morecat = view.findViewById(R.id.more_cat);
         ImageView morekarat = view.findViewById(R.id.imvkaratmore);
         ImageView morecolor = view.findViewById(R.id.imvmorecolor);
         Button btncancel = view.findViewById(R.id.btn_cancel);
         Button btnapply = view.findViewById(R.id.btn_apply);
-
-
 
 
         //  expandableListDetail = ExpandableListDataPump.getData();
@@ -134,14 +140,14 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
         btncancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              /*  binding.parent.getForeground().setAlpha(0);*/
+                /*  binding.parent.getForeground().setAlpha(0);*/
                 mypopupWindow.dismiss();
             }
         });
         btnapply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            //    binding.parent.getForeground().setAlpha(0);
+                //    binding.parent.getForeground().setAlpha(0);
                 // LoadFirstPage();
                 mypopupWindow.dismiss();
             }
@@ -149,6 +155,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
 
 
     }
+
     private void prepareMenuData() {
         NavMenuModel menuModel = new NavMenuModel("Home", true, true, R.drawable.ic_baseline_home_24); //Menu of Android Tutorial. No sub menus
         headerList.add(menuModel);

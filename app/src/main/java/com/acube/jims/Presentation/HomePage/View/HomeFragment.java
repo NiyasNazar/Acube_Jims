@@ -89,6 +89,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         customerViewModel.init();
         createCustomerViewModel = ViewModelProviders.of(this).get(CreateCustomerViewModel.class);
         createCustomerViewModel.init();
+        LocalPreferences.storeBooleanPreference(getActivity(), "showlogout", false);
 
         binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         binding.recyvhomemenu.setHasFixedSize(true);
@@ -166,17 +167,18 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                     Log.d("TrayMacAddress", "onPostExecute: "+TrayMacAddress);
 
                     Intent res = new Intent();
-                    String mPackage = "com.acube.smarttray";// package name
-                    String mClass = ".SmartTrayReading";//the activity name which return results*/
-                    // String mPackage = "com.example.acubetest";// package name
-                    //String mClass = ".MainActivity";//the activity name which return results
+                 //  String mPackage = "com.acube.smarttray";// package name
+                 // String mClass = ".SmartTrayReading";//the activity name which return results*/
+                   String mPackage = "com.example.acubetest";// package name
+                    String mClass = ".MainActivity";//the activity name which return results
+                    res.putExtra("token",LocalPreferences.getToken(getActivity()));
                     res.putExtra("url", AppConstants.BASE_URL);
                     res.putExtra("macAddress", TrayMacAddress);
                     res.putExtra("jsonSerialNo", "json");
                     res.setComponent(new ComponentName(mPackage, mPackage + mClass));
                     someActivityResultLauncher.launch(res);
                 } catch (Exception e) {
-                    Log.d(TAG, "replaceFragment: ");
+                    Log.d(TAG, "replaceFragment: "+e.getMessage());
                 }
             }
         }

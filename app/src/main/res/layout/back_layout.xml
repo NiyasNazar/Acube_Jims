@@ -6,6 +6,7 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/parentlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -25,20 +26,19 @@
                 android:fontFamily="@font/montserratsemibold"
                 android:gravity="center_vertical"
                 android:letterSpacing="0.01"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_2sdp"
-                android:text=" VIEW DETAILS – SINGLE ITEM"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
-                android:textSize="@dimen/_7ssp"
+                android:textSize="15sp"
                 android:textStyle="normal" />
 
             <ImageView
                 android:layout_width="@dimen/_17sdp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:paddingTop="@dimen/_2sdp"
-                android:paddingBottom="@dimen/_2sdp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"
                 android:src="@drawable/icon_back">
 
             </ImageView>
@@ -62,10 +62,10 @@
                 android:letterSpacing="0.01"
                 android:paddingTop="@dimen/_2sdp"
                 android:paddingBottom="@dimen/_2sdp"
-                android:text=" Dashboard"
+                android:text=" Home"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
-                android:textSize="@dimen/_7ssp"
+                android:textSize="15sp"
                 android:textStyle="normal" />
 
 

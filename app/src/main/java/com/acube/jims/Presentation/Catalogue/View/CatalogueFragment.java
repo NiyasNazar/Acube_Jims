@@ -98,13 +98,16 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         binding.parent.setForeground(getResources().getDrawable(R.drawable.shape_window_dim));
         binding.parent.getForeground().setAlpha(0);
         binding.toolbar.tvFragname.setText("Catalogue");
-        binding.toolbar.dashboardLayout.setOnClickListener(new View.OnClickListener() {
+        binding.toolbar.parentlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
+               /// FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
+              // getsuppo
+                getActivity().onBackPressed();
             }
         });
         init();
+
         String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerName");
         String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerCode");
         binding.tvCustomername.setText("Customer : " + Customername+"  -  "+CustomerCode);

@@ -25,6 +25,7 @@ import com.acube.jims.Presentation.Audit.AuditFragment;
 import com.acube.jims.Presentation.Audit.ViewModel.AuditViewModel;
 import com.acube.jims.Presentation.Favorites.View.FavoritesFragment;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
+import com.acube.jims.Presentation.Report.View.ExtraFragment;
 import com.acube.jims.Presentation.Report.View.FoundFragment;
 import com.acube.jims.Presentation.Report.View.LocationMismatchFragment;
 import com.acube.jims.Presentation.Report.View.MissingFragment;
@@ -243,6 +244,16 @@ public class ReportFragment extends Fragment {
                 binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
                 replace(LocationMismatchFragment.newInstance(datasetlocationmismatch));
+            }
+        });
+        binding.tabextra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                replace(ExtraFragment.newInstance());
             }
         });
 

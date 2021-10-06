@@ -18,8 +18,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.Presentation.DeviceRegistration.View.DeviceRegistrationFragment;
@@ -57,8 +59,7 @@ public class LoginActivity extends BaseActivity {
         binding.edEmail.setText("Admin");
         binding.edPassword.setText("Admin@acube");
 
-        Log.d("onCreate", "onCreate: "+getMacAddr());
-
+        Log.d("onCreate", "onCreate: " + getMacAddr());
 
 
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -114,9 +115,10 @@ public class LoginActivity extends BaseActivity {
                     LocalPreferences.storeAuthenticationToken(getApplicationContext(), responseLogin.getToken());
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserRole, responseLogin.getRoleName());
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserID, String.valueOf(responseLogin.getEmployeeID()));
-                    LocalPreferences.storeStringPreference(getApplicationContext(),"CompanyID", responseLogin.getCompanyID());
-                    LocalPreferences.storeStringPreference(getApplicationContext(),"warehouseId", String.valueOf(responseLogin.getWarehouseID()));
-                    LocalPreferences.storeStringPreference(getApplicationContext(),"EmployeeName",responseLogin.getEmployeeName());
+                    LocalPreferences.storeStringPreference(getApplicationContext(), "CompanyID", responseLogin.getCompanyID());
+                    LocalPreferences.storeStringPreference(getApplicationContext(), "warehouseId", String.valueOf(responseLogin.getWarehouseID()));
+                    LocalPreferences.storeStringPreference(getApplicationContext(), "EmployeeName", responseLogin.getEmployeeName());
+                    LocalPreferences.storeBooleanPreference(getApplicationContext(), "showlogout", true);
 
                     mViewModel.getHomeMenu(LocalPreferences.getToken(getApplicationContext()), AppConstants.HomeMenuAppName, responseLogin.getRoleName());
 
@@ -150,6 +152,7 @@ public class LoginActivity extends BaseActivity {
         String json = gson.toJson(list);
         LocalPreferences.storeStringPreference(getApplicationContext(), key, json);
     }
+
     public static String getMacAddr() {
         try {
             List<NetworkInterface> all = Collections.list(NetworkInterface.getNetworkInterfaces());
@@ -163,7 +166,7 @@ public class LoginActivity extends BaseActivity {
 
                 StringBuilder res1 = new StringBuilder();
                 for (byte b : macBytes) {
-                    res1.append(String.format("%02X:",b));
+                    res1.append(String.format("%02X:", b));
                 }
 
                 if (res1.length() > 0) {
@@ -172,7 +175,7 @@ public class LoginActivity extends BaseActivity {
                 return res1.toString();
             }
         } catch (Exception ex) {
-            Log.d("TAG", "getMacAddr: "+ex);
+            Log.d("TAG", "getMacAddr: " + ex);
         }
         return "02:00:00:00:00:00";
     }

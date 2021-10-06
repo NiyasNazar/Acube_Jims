@@ -1,6 +1,7 @@
 package com.acube.jims;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected static final String TAG = BaseActivity.class.getSimpleName();
     protected ProgressDialog mProgressDialog;
+    Dialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
+        dialog = new Dialog(BaseActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_loader);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         if (new AppUtility(this).isTablet(this)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -42,14 +47,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void showProgressDialog() {
-        if (mProgressDialog != null) {
+      //  dialog.show();
+       if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
         mProgressDialog = ProgressDialog.show(this, "", "Please wait...");
     }
 
     protected void hideProgressDialog() {
-        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+      //  dialog.dismiss();
+       if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
             mProgressDialog = null;
         }

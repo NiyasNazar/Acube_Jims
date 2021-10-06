@@ -1,5 +1,6 @@
 package com.acube.jims;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -20,13 +21,16 @@ import com.google.android.material.snackbar.Snackbar;
 public abstract class BaseFragment extends Fragment {
     protected static final String TAG = BaseFragment.class.getSimpleName();
     protected ProgressDialog mProgressDialog;
-
+    Dialog dialog ;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
+        dialog = new Dialog(getActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_loader);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         if (new AppUtility(getActivity()).isTablet(getActivity())) {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -38,14 +42,16 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showProgressDialog() {
-
-        if (mProgressDialog != null) {
+       // dialog.show();
+   if (mProgressDialog != null) {
             mProgressDialog.dismiss();
         }
         mProgressDialog = ProgressDialog.show(getActivity(), "", "Please wait...");
     }
 
     protected void hideProgressDialog() {
+
+      //  dialog.dismiss();
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
             mProgressDialog = null;

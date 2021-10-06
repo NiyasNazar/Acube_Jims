@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.PhoneNumberUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Toast;
 
 import com.acube.jims.R;
 import com.tejpratapsingh.pdfcreator.activity.PDFViewerActivity;
@@ -46,13 +48,29 @@ public class PdfViewerExampleActivity  extends PDFViewerActivity {
                 apkURI);*/
 
     //  startActivity(Intent.createChooser(intentShareFile, "Share File"));
-        Intent share = new Intent();
+       String customerPhoneNumber = String.format("%s%s", "91", "7012297229");
+
+
+    /*    Intent share = new Intent();
         share.setAction(Intent.ACTION_SEND);
+        Uri mUri = Uri.parse("smsto:" + "+917012297229");
+
+
         share.setType("application/pdf");
         share.putExtra(Intent.EXTRA_STREAM, apkURI);
         share.setPackage("com.whatsapp");
-        startActivity(share);
+        startActivity(share);*/
+        Intent intent = new Intent(Intent.ACTION_VIEW);
 
+        intent.putExtra(Intent.EXTRA_STREAM, apkURI);
+        intent.setPackage("com.whatsapp");
+        intent.setDataAndType(Uri.parse(String.format("https://api.whatsapp.com/send?phone=%s", "917012297229")),"application/pdf");
+
+        if (getPackageManager().resolveActivity(intent, 0) != null) {
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Please install whatsApp", Toast.LENGTH_SHORT).show();
+        }
 
     }
 

@@ -89,6 +89,7 @@ public class MissingFragment extends Fragment implements MissingadapterforFragme
         binding.recyvfound.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MissingadapterforFragment(getActivity(), dataset, MissingFragment.this);
         binding.recyvfound.setAdapter(adapter);
+        binding.tvTotaldata.setText("Total Items Missing : " + dataset.size());
 
 
         return binding.getRoot();

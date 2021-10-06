@@ -1,10 +1,14 @@
 package com.acube.jims.Presentation.CartManagment.View;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -77,7 +81,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
                 inflater, R.layout.cart_view_fragment, container, false);
         binding.toolbar.tvFragname.setText("Cart");
         binding.recycartitems.setLayoutManager(new LinearLayoutManager(getActivity()));
-        binding.toolbar.dashboardLayout.setOnClickListener(new View.OnClickListener() {
+        binding.toolbar.parentlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
@@ -100,7 +104,8 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
         binding.btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentHelper.replaceFragment(getActivity(), R.id.content, new InvoiceFragment());
+                showPopupWindow(v);
+
             }
         });
 
@@ -127,6 +132,10 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
                         binding.bottomlayt.setVisibility(View.VISIBLE);
                     }
 
+                }else{
+                    binding.emptycart.setVisibility(View.VISIBLE);
+                    binding.nestedscrollview.setVisibility(View.GONE);
+                    binding.bottomlayt.setVisibility(View.GONE);
                 }
             }
         });
@@ -152,6 +161,38 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
     public void updatevalue(String itemid, String quantity) {
         showProgressDialog();
         // addtoCartViewModel.AddtoCart(CartId, AppConstants.Authorization + AuthToken, CustomerID, EmployeeID, itemid, "edit", quantity);
+
+
+    }
+
+    public void showPopupWindow(final View view) {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.pop_up_layout_invoice, null);
+        CardView checkout = alertLayout.findViewById(R.id.cdvcheckout);
+        // CardView compare = alertLayout.findViewById(R.id.cdvcompare);
+
+
+        //  final TextInputEditText etPassword = alertLayout.findViewById(R.id.tiet_password);
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle("");
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+
+        AlertDialog dialog = alert.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+
+
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new InvoiceFragment());
+            }
+        });
 
 
     }

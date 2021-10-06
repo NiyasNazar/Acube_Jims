@@ -60,9 +60,17 @@ public class LocationMistmatchReport extends BaseActivity {
             public void onChanged(ResponseReport responseReport) {
                 hideProgressDialog();
                 if (responseReport != null) {
+
                     List<LocationMismatch> datsetfound = responseReport.getLocationMismatches();
+                    binding.tvTotaldata.setText("Total Items : " + datsetfound.size());
                     locationMismatchAdapter = new LocationMismatchAdapter(getApplicationContext(), datsetfound);
                     binding.recyvfound.setAdapter(locationMismatchAdapter);
+                    if (locationMismatchAdapter.getItemCount() == 0) {
+                        binding.tvNotfound.setVisibility(View.VISIBLE);
+                    } else {
+
+                        binding.tvNotfound.setVisibility(View.GONE);
+                    }
                 }
             }
         });

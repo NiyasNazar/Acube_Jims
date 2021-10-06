@@ -6,12 +6,13 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/parentlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-      >
+        android:orientation="horizontal">
 
         <LinearLayout
+
             android:id="@+id/currentfrag_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +27,6 @@
                 android:letterSpacing="0.01"
                 android:paddingTop="@dimen/_2sdp"
                 android:paddingBottom="@dimen/_2sdp"
-                android:text=" VIEW DETAILS – SINGLE ITEM"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
                 android:textSize="@dimen/_7ssp"
@@ -60,7 +60,7 @@
                 android:letterSpacing="0.01"
                 android:paddingTop="@dimen/_2sdp"
                 android:paddingBottom="@dimen/_2sdp"
-                android:text=" Dashboard"
+                android:text=" Home"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
                 android:textSize="@dimen/_7ssp"

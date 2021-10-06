@@ -43,7 +43,10 @@ import com.tejpratapsingh.pdfcreator.views.basic.PDFTextView;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.net.URLConnection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -57,6 +60,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
     double labourchargewithtax = 0.0;
     double labourchargetax = 0.0;
     double labourcharge = 0.0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,8 +68,9 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
-
-        createPDF("test", new PDFUtil.PDFUtilListener() {
+        dataset = new ArrayList<>();
+        dataset = getList();
+        createPDF("Invoice " + getCurrentDateAndTime(), new PDFUtil.PDFUtilListener() {
             @Override
             public void pdfGenerationSuccess(File savedPDFFile) {
                 Toast.makeText(PdfCreatorExampleActivity.this, "PDF Created", Toast.LENGTH_SHORT).show();
@@ -77,6 +82,13 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
             }
         });
 
+    }
+
+    public static String getCurrentDateAndTime() {
+        Date c = Calendar.getInstance().getTime();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MMM/yyyy");
+        String formattedDate = simpleDateFormat.format(c);
+        return formattedDate;
     }
 
     @Override
@@ -153,18 +165,17 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
             pdfTextView.setText("" + s);
             tableHeader.addToRow(pdfTextView);
         }
-        dataset = new ArrayList<>();
-        dataset = getList();
+
         PDFTableView.PDFTableRowView tableRowView1 = new PDFTableView.PDFTableRowView(getApplicationContext());
         ArrayList<String> goldweight = null;
 
         goldweight = new ArrayList<>();
-        goldweight.add(dataset.get(1).getItemName());
-        goldweight.add(dataset.get(1).getSerialNumber());
-        goldweight.add(String.valueOf(dataset.get(1).getGoldWeight()));
-        goldweight.add(String.valueOf(dataset.get(1).getLabourCharge()));
-        goldweight.add(String.valueOf(dataset.get(1).getPriceWithoutTax()));
-        goldweight.add(String.valueOf(dataset.get(1).getPriceWithoutTax()));
+        goldweight.add(dataset.get(0).getItemName());
+        goldweight.add(dataset.get(0).getSerialNumber());
+        goldweight.add(String.valueOf(dataset.get(0).getGoldWeight()));
+        goldweight.add(String.valueOf(dataset.get(0).getLabourCharge()));
+        goldweight.add(String.valueOf(dataset.get(0).getPriceWithoutTax()));
+        goldweight.add(String.valueOf(dataset.get(0).getPriceWithoutTax()));
 
 
         String[] strArray = goldweight.toArray(new String[goldweight.size()]);
@@ -188,7 +199,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
             labourchargetax += (dataset.get(i).getLabourCharge() / 100.0f) * dataset.get(i).getLabourTax();
             labourcharge += dataset.get(i).getLabourCharge();
             labourchargewithtax += (dataset.get(i).getLabourCharge() / 100.0f) * dataset.get(i).getLabourTax() + dataset.get(i).getLabourCharge();
-            double totals=dataset.get(i).getPriceWithoutTax() +  (dataset.get(i).getPriceWithoutTax() / 100.0f) * dataset.get(i).getItemTax() + (dataset.get(i).getLabourCharge() / 100.0f) * dataset.get(i).getLabourTax() + dataset.get(i).getLabourCharge();
+            double totals = dataset.get(i).getPriceWithoutTax() + (dataset.get(i).getPriceWithoutTax() / 100.0f) * dataset.get(i).getItemTax() + (dataset.get(i).getLabourCharge() / 100.0f) * dataset.get(i).getLabourTax() + dataset.get(i).getLabourCharge();
             newdata = new ArrayList<>();
             newdata.add(dataset.get(i).getItemName());
             newdata.add(dataset.get(i).getSerialNumber());
@@ -209,7 +220,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
         pdfBody.addView(tableView);
 
 
-        PDFLineSeparatorView lineSeparatorView4 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
+       PDFLineSeparatorView lineSeparatorView4 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
         pdfBody.addView(lineSeparatorView4);
 
         PDFTextView pdfIconLicenseView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
@@ -241,12 +252,12 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
 
         PDFTextView pdfTextViewDiscount = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
         PDFTextView pdfTexttotalwithouttax = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
-        double tot=total+labourcharge;
+        double tot = total + labourcharge;
         pdfTextViewDiscount.setLayout(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT, 0));
         pdfTextViewDiscount.getView().setGravity(Gravity.END);
-        pdfTexttotalwithouttax.setText("Price withot tax : "+  LocalPreferences.retrieveStringPreferences(getApplicationContext(),"pricewithouttax"));
+        pdfTexttotalwithouttax.setText("Price without tax : " + LocalPreferences.retrieveStringPreferences(getApplicationContext(), "pricewithouttax"));
 
         pdfTexttotalwithouttax.setLayout(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,

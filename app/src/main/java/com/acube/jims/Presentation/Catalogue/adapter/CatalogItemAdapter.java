@@ -38,7 +38,6 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
     List<ResponseItems> list;
 
 
-
     public CatalogItemAdapter(Context mCtx, List<ResponseItems> dataset, Datalist datalist) {
         this.mCtx = mCtx;
         this.dataset = dataset;
@@ -60,35 +59,32 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
 
         ResponseItems responseCatalogueListing = dataset.get(position);
         holder.textViewItemName.setText(responseCatalogueListing.getItemName());
-        holder.textViewPrice.setText("SAR " + responseCatalogueListing.getMrp());
+        holder.textViewPrice.setText("SAR " + Math.round(responseCatalogueListing.getMrp()));
         holder.textViewSerialNo.setText(responseCatalogueListing.getSerialNumber());
-        holder.textViewKarat.setText("Karat - " + responseCatalogueListing.getKaratName());
+        holder.textViewKarat.setText("Karat - " + String.format("%.0f", responseCatalogueListing.getKaratCode()));
         holder.textViewGrossweight.setText("Gross Weight - " + responseCatalogueListing.getGrossWeight() + " g");
         holder.textViewStoneWeight.setText("Stone Weight - " + responseCatalogueListing.getStoneWeight() + " g");
         // holder.imageView.setImageResource(homeData.getImage());
 
-            Glide.with(mCtx)
-                    .load(responseCatalogueListing.getImagePath())
-                    //  .placeholder(R.drawable.placeholder)
-                    //  .error(R.drawable.imagenotfound)
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            // log exception
-                            Log.e("TAG", "Error loading image", e);
-                            return false; // important to return false so the error placeholder can be placed
-                        }
+        Glide.with(mCtx)
+                .load(responseCatalogueListing.getImagePath())
+                //  .placeholder(R.drawable.placeholder)
+                //  .error(R.drawable.imagenotfound)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        // log exception
+                        Log.e("TAG", "Error loading image", e);
+                        return false; // important to return false so the error placeholder can be placed
+                    }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .into(holder.imageView);
-        }
-
-
-
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(holder.imageView);
+    }
 
 
     @Override
@@ -155,6 +151,7 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
 
     public interface Datalist {
         void datalist(List<ResponseItems> comparelist);
+
         void replace(String Id);
     }
 }

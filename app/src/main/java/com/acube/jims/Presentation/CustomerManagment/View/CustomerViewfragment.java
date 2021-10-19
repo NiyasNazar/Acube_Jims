@@ -123,7 +123,10 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
                     binding.tvCustomername.setText(GuestCustomerName);
                     binding.tvcustomercode.setText(responseCustomerHistory.getCustomerCode());
                     binding.tvcustomercontact.setText(responseCustomerHistory.getCustomerContactNo());
-                    binding.tvlastvisit.setText(ParseDate(responseCustomerHistory.getLastVisit()));
+                    if(responseCustomerHistory.getLastVisit()!=null){
+                        binding.tvlastvisit.setText(ParseDate(responseCustomerHistory.getLastVisit()));
+
+                    }
                     binding.tvcustomeremail.setText(responseCustomerHistory.getCustomerEmailID());
                     binding.tvtotalvisit.setText("" + responseCustomerHistory.getTotalVisit());
                     binding.tvtoalpurchase.setText("" + responseCustomerHistory.getTotalPurchase());
@@ -135,6 +138,16 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
 
             }
         });
+
+        binding.viewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerViewedItemsFragment());
+
+            }
+        });
+
 
         return binding.getRoot();
     }
@@ -166,7 +179,7 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
         try {
             date = inputFormat.parse(lastvisitdate);
 
-        } catch (ParseException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         String formattedDate = outputFormat.format(date);

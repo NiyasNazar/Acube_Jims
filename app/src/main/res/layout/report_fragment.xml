@@ -32,12 +32,12 @@
             </include>
 
             <RelativeLayout
-                android:layout_marginTop="10dp"
                 android:id="@+id/tablayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/toolbar"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -72,6 +72,7 @@
                     android:textSize="18sp">
 
                 </TextView>
+
                 <TextView
                     android:id="@+id/tablocationmismatch"
                     android:layout_width="wrap_content"
@@ -90,10 +91,27 @@
                 </TextView>
 
                 <TextView
-                    android:id="@+id/tabextra"
-                    android:layout_toRightOf="@id/tablocationmismatch"
+                    android:id="@+id/tabLocationApproved"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
+                    android:layout_toRightOf="@id/tablocationmismatch"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="19dp"
+                    android:paddingBottom="5dp"
+                    android:text="Mismatch Approved"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="18sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tabextra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toRightOf="@id/tabLocationApproved"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
                     android:paddingLeft="19dp"
@@ -127,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_toLeftOf="@id/btn_scan"
+                    android:layout_toLeftOf="@id/btn_filter"
 
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/poppins_semibold"
@@ -139,7 +157,7 @@
                 </Button>
 
                 <LinearLayout
-                    android:id="@+id/btn_scan"
+                    android:id="@+id/btn_filter"
 
                     android:layout_width="125dp"
                     android:layout_height="40dp"

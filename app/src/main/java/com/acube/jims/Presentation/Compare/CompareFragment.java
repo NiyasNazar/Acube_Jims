@@ -58,6 +58,13 @@ public class CompareFragment extends Fragment {
                 inflater, R.layout.compare_fragment, container, false);
 
         binding.toolbar.tvFragname.setText("Compare");
+        binding.toolbar.parentlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+
+            }
+        });
         binding.viewPager.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

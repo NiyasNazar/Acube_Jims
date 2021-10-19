@@ -3,6 +3,8 @@ package com.acube.jims.datalayer.models.Invoice;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class ResponseInvoiceList {
     @SerializedName("serialNumber")
     @Expose
@@ -46,12 +48,17 @@ public class ResponseInvoiceList {
     @SerializedName("priceForGram")
     @Expose
     private Object priceForGram;
+    @SerializedName("karatCode")
+    @Expose
+    private String karatCode;
 
     @Expose
     private Double goldVat;
     @Expose
     private Double laborVat;
-
+    @SerializedName("karatPriceList")
+    @Expose
+    private List<KaratPrice> karatPriceList = null;
     public String getSerialNumber() {
         return serialNumber;
     }
@@ -178,5 +185,21 @@ public class ResponseInvoiceList {
 
     public void setLaborVat(Double laborVat) {
         this.laborVat = laborVat;
+    }
+
+    public List<KaratPrice> getKaratPriceList() {
+        return karatPriceList;
+    }
+
+    public void setKaratPriceList(List<KaratPrice> karatPriceList) {
+        this.karatPriceList = karatPriceList;
+    }
+
+    public String getKaratCode() {
+        return karatCode;
+    }
+
+    public void setKaratCode(String karatCode) {
+        this.karatCode = karatCode;
     }
 }

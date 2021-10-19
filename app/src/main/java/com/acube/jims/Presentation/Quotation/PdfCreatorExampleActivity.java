@@ -1,13 +1,17 @@
 package com.acube.jims.Presentation.Quotation;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import androidx.core.text.HtmlCompat;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.print.PrintAttributes;
@@ -16,6 +20,8 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -25,9 +31,12 @@ import android.widget.Toast;
 import com.acube.jims.R;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
+import com.acube.jims.datalayer.models.Invoice.KaratPrice;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.normal.TedPermission;
 import com.tejpratapsingh.pdfcreator.activity.PDFCreatorActivity;
 import com.tejpratapsingh.pdfcreator.utils.PDFUtil;
 import com.tejpratapsingh.pdfcreator.views.PDFBody;
@@ -53,6 +62,7 @@ import java.util.Locale;
 public class PdfCreatorExampleActivity extends PDFCreatorActivity {
     List<ResponseInvoiceList> dataset;
     double total = 0.0;
+    PermissionListener permissionlistener;
 
     double totalItemtax = 0.0;
     double netamount = 0.0;
@@ -60,6 +70,8 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
     double labourchargewithtax = 0.0;
     double labourchargetax = 0.0;
     double labourcharge = 0.0;
+    File fileToShare;
+    List<KaratPrice> karatPriceList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +81,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
             getSupportActionBar().hide();
         }
         dataset = new ArrayList<>();
+
         dataset = getList();
         createPDF("Invoice " + getCurrentDateAndTime(), new PDFUtil.PDFUtilListener() {
             @Override
@@ -81,7 +94,19 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
                 Toast.makeText(PdfCreatorExampleActivity.this, "PDF NOT Created", Toast.LENGTH_SHORT).show();
             }
         });
+        permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted  () {
 
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                // Toast.makeText(getActivity(), "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+        };
     }
 
     public static String getCurrentDateAndTime() {
@@ -151,7 +176,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
         pdfBody.addView(lineSeparatorView3);
 
         int[] widthPercent = {25, 25, 25, 25}; // Sum should be equal to 100%
-        String[] textInTable = {"Item Name", "Serial No.", "Gold Weight", "Making Charge", "Price without tax", "Price with tax"};
+        String[] textInTable = {"Item Name", "Karat", "Serial No.", "Gold Weight", "Making Charge", "Price without tax", "Price with tax"};
         PDFTextView pdfTableTitleView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.P);
         //pdfTableTitleView.setText("PROFORMA INVOICE");
         pdfBody.addView(pdfTableTitleView);
@@ -171,6 +196,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
 
         goldweight = new ArrayList<>();
         goldweight.add(dataset.get(0).getItemName());
+        goldweight.add(dataset.get(0).getKaratCode());
         goldweight.add(dataset.get(0).getSerialNumber());
         goldweight.add(String.valueOf(dataset.get(0).getGoldWeight()));
         goldweight.add(String.valueOf(dataset.get(0).getLabourCharge()));
@@ -202,6 +228,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
             double totals = dataset.get(i).getPriceWithoutTax() + (dataset.get(i).getPriceWithoutTax() / 100.0f) * dataset.get(i).getItemTax() + (dataset.get(i).getLabourCharge() / 100.0f) * dataset.get(i).getLabourTax() + dataset.get(i).getLabourCharge();
             newdata = new ArrayList<>();
             newdata.add(dataset.get(i).getItemName());
+            newdata.add(dataset.get(i).getKaratCode());
             newdata.add(dataset.get(i).getSerialNumber());
             newdata.add(String.valueOf(dataset.get(i).getGoldWeight()));
             newdata.add(String.valueOf(dataset.get(i).getLabourCharge()));
@@ -220,7 +247,7 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
         pdfBody.addView(tableView);
 
 
-       PDFLineSeparatorView lineSeparatorView4 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
+        PDFLineSeparatorView lineSeparatorView4 = new PDFLineSeparatorView(getApplicationContext()).setBackgroundColor(Color.BLACK);
         pdfBody.addView(lineSeparatorView4);
 
         PDFTextView pdfIconLicenseView = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
@@ -241,23 +268,20 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT, 0));
         pdfTextViewPage.getView().setGravity(Gravity.CENTER_HORIZONTAL);
         PDFTextView pdfTextViewtotal = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
-
         pdfTextViewtotal.setLayout(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT, 0));
         pdfTextViewtotal.getView().setGravity(Gravity.END);
         LocalPreferences.retrieveStringPreferences(getApplicationContext(), "discount");
         pdfTextViewtotal.setText("Total : " + LocalPreferences.retrieveStringPreferences(getApplicationContext(), "total"));
-
-
         PDFTextView pdfTextViewDiscount = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
         PDFTextView pdfTexttotalwithouttax = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
-        double tot = total + labourcharge;
+
         pdfTextViewDiscount.setLayout(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT, 0));
         pdfTextViewDiscount.getView().setGravity(Gravity.END);
-        pdfTexttotalwithouttax.setText("Price without tax : " + LocalPreferences.retrieveStringPreferences(getApplicationContext(), "pricewithouttax"));
+        pdfTexttotalwithouttax.setText("\n\n Price without tax : " + LocalPreferences.retrieveStringPreferences(getApplicationContext(), "pricewithouttax"));
 
         pdfTexttotalwithouttax.setLayout(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -276,13 +300,61 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT, 0));
         pdfTextViewDiscount.getView().setGravity(Gravity.END);
+
+        //goldrateview
+        PDFTextView rateheader = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+
+        rateheader.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        rateheader.getView().setGravity(Gravity.END);
+        rateheader.setText("Today's Rate \n");
+        footerView.addView(rateheader);
+        for (int i = 0; i < dataset.size(); i++) {
+            karatPriceList = new ArrayList<>();
+            karatPriceList = dataset.get(i).getKaratPriceList();
+        }
+        for (int i = 0; i < karatPriceList.size(); i++) {
+            PDFTextView karatone = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+            karatone.setLayout(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT, 0));
+            karatone.getView().setGravity(Gravity.END);
+            karatone.setText(karatPriceList.get(i).getKaratCode() + " K: " + karatPriceList.get(i).getKaratPrice());
+            footerView.addView(karatone);
+        }
+
+       /* PDFTextView karatone = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+
+        karatone.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        karatone.getView().setGravity(Gravity.END);
+        karatone.setText(dataset.get(0).getKaratPriceList().get(0).getKaratCode()+" : " + dataset.get(0).getKaratPriceList().get(0).getKaratPrice());
+*/
+      /*  PDFTextView karattwo = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+        karattwo.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        karattwo.getView().setGravity(Gravity.END);
+        karattwo.setText(dataset.get(1).getKaratPriceList().get(1).getKaratCode()+" : " + dataset.get(1).getKaratPriceList().get(1).getKaratPrice());
+*/
+ /*       PDFTextView karatthree = new PDFTextView(getApplicationContext(), PDFTextView.PDF_TEXT_SIZE.H3);
+        karattwo.setLayout(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT, 0));
+        karatthree.getView().setGravity(Gravity.END);
+        karatthree.setText(dataset.get(2).getKaratPriceList().get(2).getKaratCode()+" : " + dataset.get(2).getKaratPriceList().get(2).getKaratPrice());*/
+
+       /* footerView.addView(karatone);
+        footerView.addView(karattwo);
+        footerView.addView(karatthree);*/
         footerView.addView(pdfTexttotalwithouttax);
-
-
         footerView.addView(pdfTextViewDiscount);
         footerView.addView(totaltax);
         footerView.addView(pdfTextViewtotal);
         footerView.addView(pdfTextViewPage);
+
         return footerView;
     }
 
@@ -305,12 +377,15 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
     @Override
     protected void onNextClicked(final File savedPDFFile) {
         Uri pdfUri = Uri.fromFile(savedPDFFile);
-
-        Intent intentPdfViewer = new Intent(PdfCreatorExampleActivity.this, PdfViewerExampleActivity.class);
+        fileToShare = new File(pdfUri.getPath());
+        Uri apkURI = FileProvider.getUriForFile(
+                getApplicationContext(),
+                getApplicationContext()
+                        .getPackageName() + ".provider", fileToShare);
+       /* Intent intentPdfViewer = new Intent(PdfCreatorExampleActivity.this, PdfViewerExampleActivity.class);
         intentPdfViewer.putExtra(PdfViewerExampleActivity.PDF_FILE_URI, pdfUri);
-
-        startActivity(intentPdfViewer);
-
+        startActivity(intentPdfViewer);*/
+        showPopupWindow(apkURI);
 
     }
 
@@ -326,4 +401,62 @@ public class PdfCreatorExampleActivity extends PDFCreatorActivity {
         }
         return mMainCategory;
     }
+
+    public void showPopupWindow(Uri pdf) {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.pop_up_layout_share, null);
+        CardView whatsapp = alertLayout.findViewById(R.id.cdvsharewhatsapp);
+        CardView email = alertLayout.findViewById(R.id.cdvshareemail);
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"rony8652@gmail.com"});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Invoice");
+                emailIntent.putExtra(Intent.EXTRA_TEXT, "Hi,\n Please find the attachment for invoice");
+                emailIntent.putExtra(Intent.EXTRA_STREAM, pdf);
+                emailIntent.setPackage("com.google.android.gm");//Added Gmail Package to forcefully open Gmail App
+                startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+            }
+        });
+
+
+        //  final TextInputEditText etPassword = alertLayout.findViewById(R.id.tiet_password);
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(PdfCreatorExampleActivity.this);
+        alert.setTitle("");
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+
+        AlertDialog dialog = alert.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        whatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                //   sendTextMsgOnWhatsApp("+919747337738",emailbody);
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.setPackage("com.whatsapp");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Please check the invoice");
+                shareIntent.putExtra(Intent.EXTRA_STREAM, pdf);
+                shareIntent.setType("image/jpeg");
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                try {
+                    startActivity(shareIntent);
+                } catch (android.content.ActivityNotFoundException ex) {
+                    Toast.makeText(getApplicationContext(),"Install Whatsapp",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+    }
+
 }

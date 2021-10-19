@@ -1,18 +1,25 @@
 package com.acube.jims.Presentation.Quotation;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.acube.jims.R;
+import com.gun0912.tedpermission.normal.TedPermission;
 import com.tejpratapsingh.pdfcreator.activity.PDFViewerActivity;
 
 import java.io.File;
@@ -44,33 +51,9 @@ public class PdfViewerExampleActivity  extends PDFViewerActivity {
         intentShareFile.setDataAndType(apkURI, URLConnection.guessContentTypeFromName(fileToShare.getName()));
         intentShareFile.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-       /* intentShareFile.putExtra(Intent.EXTRA_STREAM,
-                apkURI);*/
-
-    //  startActivity(Intent.createChooser(intentShareFile, "Share File"));
-       String customerPhoneNumber = String.format("%s%s", "91", "7012297229");
 
 
-    /*    Intent share = new Intent();
-        share.setAction(Intent.ACTION_SEND);
-        Uri mUri = Uri.parse("smsto:" + "+917012297229");
 
-
-        share.setType("application/pdf");
-        share.putExtra(Intent.EXTRA_STREAM, apkURI);
-        share.setPackage("com.whatsapp");
-        startActivity(share);*/
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-
-        intent.putExtra(Intent.EXTRA_STREAM, apkURI);
-        intent.setPackage("com.whatsapp");
-        intent.setDataAndType(Uri.parse(String.format("https://api.whatsapp.com/send?phone=%s", "917012297229")),"application/pdf");
-
-        if (getPackageManager().resolveActivity(intent, 0) != null) {
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, "Please install whatsApp", Toast.LENGTH_SHORT).show();
-        }
 
     }
 

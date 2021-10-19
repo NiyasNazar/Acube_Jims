@@ -35,6 +35,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.acube.jims.BaseFragment;
+import com.acube.jims.Presentation.Analytics.AnalyticsFragment;
 import com.acube.jims.Presentation.Audit.AuditFragment;
 import com.acube.jims.Presentation.Audit.AuditMenuFragment;
 import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
@@ -138,6 +139,8 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
             FragmentHelper.replaceFragment(getActivity(), R.id.content, new DashBoardFragment());
 
 
+        }else if(value.equalsIgnoreCase("Analytics")){
+            FragmentHelper.replaceFragment(getActivity(), R.id.content, new AnalyticsFragment());
         }
 
 
@@ -167,10 +170,10 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                     Log.d("TrayMacAddress", "onPostExecute: "+TrayMacAddress);
 
                     Intent res = new Intent();
-                 //  String mPackage = "com.acube.smarttray";// package name
-                 // String mClass = ".SmartTrayReading";//the activity name which return results*/
-                   String mPackage = "com.example.acubetest";// package name
-                    String mClass = ".MainActivity";//the activity name which return results
+                 String mPackage = "com.acube.smarttray";// package name
+                 String mClass = ".SmartTrayReading";//the activity name which return results*/
+                 //  String mPackage = "com.example.acubetest";// package name
+                 //   String mClass = ".MainActivity";//the activity name which return results
                     res.putExtra("token",LocalPreferences.getToken(getActivity()));
                     res.putExtra("url", AppConstants.BASE_URL);
                     res.putExtra("macAddress", TrayMacAddress);

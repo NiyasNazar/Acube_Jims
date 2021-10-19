@@ -45,9 +45,10 @@ public class LastViewedAdapter extends RecyclerView.Adapter<LastViewedAdapter.Pr
 
         ItemViewHistory responseListing = itemViewHistoryList.get(position);
         Glide.with(mCtx).load(responseListing.getImagePath()).into(holder.imageView);
-        holder.textViewSerialNo.setText("Sl No. "+responseListing.getSerialNumber());
+        holder.textViewSerialNo.setText("Sl No. " + responseListing.getSerialNumber());
+        holder.textViewName.setText(responseListing.getItemName());
 
-  holder.textViewWeight.setText("Weight "+responseListing.getGoldWeight()+" g");
+        holder.textViewWeight.setText("Weight " + responseListing.getGoldWeight() + " g");
 
     }
 
@@ -60,13 +61,14 @@ public class LastViewedAdapter extends RecyclerView.Adapter<LastViewedAdapter.Pr
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewWeight, textViewSerialNo, textViewContact;
+        TextView textViewWeight, textViewSerialNo, textViewName;
         ImageView imageView;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imvitemimage);
+            textViewName = itemView.findViewById(R.id.tv_itemname);
 
             textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
             textViewWeight = itemView.findViewById(R.id.tv_weight);
@@ -76,10 +78,10 @@ public class LastViewedAdapter extends RecyclerView.Adapter<LastViewedAdapter.Pr
                 @Override
                 public void onClick(View v) {
                     int pos = getAdapterPosition();
-                  //  LocalPreferences.storeStringPreference(mCtx, "GuestCustomerID", String.valueOf(customerListings.get(pos).getId()));
+                    //  LocalPreferences.storeStringPreference(mCtx, "GuestCustomerID", String.valueOf(customerListings.get(pos).getId()));
 
 
-                  replaceFragment.replacefragments(itemViewHistoryList.get(pos).getSerialNumber());
+                    replaceFragment.replacefragments(itemViewHistoryList.get(pos).getSerialNumber());
                 }
             });
 

@@ -77,7 +77,7 @@
                         android:layout_marginTop="18dp"
                         android:layout_marginRight="50dp"
                         android:layout_marginBottom="30dp"
-
+                        android:digits="0123456789,a bcdefghijklmnopqrstuvwxyz"
                         android:background="@drawable/ed_border"
                         android:hint="@string/hint_search"
 
@@ -319,6 +319,20 @@
                         android:background="@drawable/rec_button"
                         android:backgroundTint="#BF8F3A"
                         android:text="Logout"
+                        android:textColor="@color/white"
+
+                        android:textSize="12sp"></androidx.appcompat.widget.AppCompatButton>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_continue"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/rec_button"
+                        android:backgroundTint="#BF8F3A"
+                        android:text="Continue"
                         android:textColor="@color/white"
 
                         android:textSize="12sp"></androidx.appcompat.widget.AppCompatButton>

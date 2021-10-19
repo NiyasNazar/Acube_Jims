@@ -38,6 +38,12 @@ public class LocationMistmatchReport extends BaseActivity {
         binding.recyvfound.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         mViewModel.init();
+        binding.backlayout.parentlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         String locationid = getIntent().getStringExtra("locationid");
         String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
         String warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");

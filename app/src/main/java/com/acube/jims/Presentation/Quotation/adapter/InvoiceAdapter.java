@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -82,6 +83,12 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
         ResponseInvoiceList cartDetail = dataset.get(position);
+        if (cartDetail.getGoldWeight()==0){
+            holder.edViewWeight.setEnabled(false);
+        }else{
+            holder.edViewWeight.setEnabled(true);
+
+        }
         holder.textViewitemName.setText(cartDetail.getItemName());
         holder.textViewSerialno.setText(cartDetail.getSerialNumber());
         holder.Pricetvwithouttax.setText("" + cartDetail.getPriceWithoutTax());
@@ -96,6 +103,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
         minpercentage = cartDetail.getLabourChargeMin();
         maxpercentage = cartDetail.getLabourChargeMax();
         holder.textViewPrice.setText("SAR " + totalamountwithalltax);
+        holder.textViewItemKarat.setText(cartDetail.getKaratCode());
         holder.textViewlabourcharge.setText("SAR " + cartDetail.getLabourCharge() * cartDetail.getGoldWeight());
        /* DiscountItem discountItem=new DiscountItem();
         discountItem.setItemserial(cartDetail.getSerialNumber());
@@ -114,7 +122,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Pricetvwithouttax, textViewitemName, textViewStoneweight, textViewSerialno, textViewPrice, textViewlabourcharge;
+        TextView Pricetvwithouttax, textViewitemName, textViewItemKarat, textViewSerialno, textViewPrice, textViewlabourcharge;
         ImageView imageViewadd, imageViewremove, ItemImage, imageviewdelete;
         EditText edDiscount, edViewWeight;
 
@@ -124,7 +132,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
             textViewSerialno = itemView.findViewById(R.id.tv_serialnumber);
             Pricetvwithouttax = itemView.findViewById(R.id.tvwithouttax);
             edViewWeight = itemView.findViewById(R.id.tv_goldweight);
-
+            textViewItemKarat= itemView.findViewById(R.id.tv_itemkarat);
             textViewPrice = itemView.findViewById(R.id.tvprice);
             textViewlabourcharge = itemView.findViewById(R.id.tvlabourcharge);
 
@@ -143,8 +151,56 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
                 @Override
                 public void afterTextChanged(Editable s) {
                     ResponseInvoiceList cartDetail = dataset.get(getAbsoluteAdapterPosition());
+
                     if (!s.toString().equalsIgnoreCase("")) {
+
+
                         double enteredvalue = Double.parseDouble(s.toString());
+                        if (cartDetail.getGoldWeight() == 0) {
+                            double goldprice = (cartDetail.getPriceWithoutTax());
+
+                            // if (enteredvalue > maxpercentage) {
+                            //    Toast.makeText(mCtx, "Discount Percentage Exceeded", Toast.LENGTH_SHORT).show();
+                            // } else if (enteredvalue < minpercentage) {
+                            //  Toast.makeText(mCtx, "Discount Percentage Minimum", Toast.LENGTH_SHORT).show();
+                            //   } else {
+                            labrchrgdiscount = (goldprice / 100.0f) * enteredvalue;
+                            double discountedprice = goldprice - labrchrgdiscount;
+                           // double labourchargewithtax = (lbr / 100.0f) * cartDetail.getLabourTax() + lbr;
+
+
+                         //   double labourtax = (lbr / 100.0f) * cartDetail.getLabourTax();
+                            double itemtax = (discountedprice / 100.0f) * cartDetail.getItemTax();
+                          //  double totaltax = labourtax + itemtax;
+                            double pricewithtax = (discountedprice / 100.0f) * cartDetail.getItemTax() + discountedprice;
+                           // double totalamountwithalltax = pricewithtax ;
+
+                            textViewPrice.setText("SAR " + pricewithtax);
+                            Log.d("diamonf", "afterTextChanged: ");
+                            DiscountItem discountItem = new DiscountItem();
+                            discountItem.setItemserial(cartDetail.getSerialNumber());
+                            discountItem.setDiscount(labrchrgdiscount);
+                            discountItem.setTotaltax(itemtax);
+                            discountItem.setItemID(cartDetail.getItemID());
+                            discountItem.setDiscountpercentage(enteredvalue);
+                            discountItem.setItemVat(cartDetail.getGoldVat());
+                            discountItem.setLaborRate(0.0);
+                            discountItem.setItemVatAmount(itemtax);
+                            discountItem.setGoldweight(goldweighEnteredvalue);
+
+                            discountItem.setLabourVat(cartDetail.getLaborVat());
+                            discountItem.setLabourVatAmount(0.0);
+
+
+                            discountItem.setAmt(discountedprice);
+                            discountItem.setTotalwithtax(pricewithtax);
+                            SaveItems(discountItem);
+                            discountSum.somofdiscount(labrchrgdiscount);
+
+                        } else {
+
+
+
                         calculatedlabourcharge = cartDetail.getLabourCharge() * goldweighEnteredvalue;
                         // if (enteredvalue > maxpercentage) {
                         //    Toast.makeText(mCtx, "Discount Percentage Exceeded", Toast.LENGTH_SHORT).show();
@@ -170,7 +226,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
                         discountItem.setItemID(cartDetail.getItemID());
                         discountItem.setDiscountpercentage(enteredvalue);
                         discountItem.setItemVat(cartDetail.getGoldVat());
-                        discountItem.setDiscount(lbr);
+                        discountItem.setLaborRate(lbr);
                         discountItem.setItemVatAmount(itemtax);
                         discountItem.setGoldweight(goldweighEnteredvalue);
 
@@ -185,7 +241,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
 
                         // Log.d("niyastesting", "removed: " + s.toString());
                         Log.d("niyastesting", "disc: " + s.toString());
-
+                    }
                         // }
                     } else {
                         double goldprice = ((cartDetail.getPriceWithoutTax() / 1000) * (goldweighEnteredvalue * 1000));
@@ -220,6 +276,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
                         discountSum.somofdiscount(0.0);
                     }
 
+
                     // TODO Auto-generated method stub
                 }
             });
@@ -241,6 +298,46 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
                     edViewWeight.setError(null);
                     ResponseInvoiceList cartDetail = dataset.get(getAbsoluteAdapterPosition());
                     if (!s.toString().equalsIgnoreCase("")) {
+                        if (cartDetail.getGoldWeight()==0){
+
+                            double calculation = (cartDetail.getPriceWithoutTax() );
+                            Log.d("beforeTextChanged", "beforeTextChanged: " + calculation);
+                            Log.d("niyastesting", "weight: " + s.toString());
+                          //  calculatedlabourcharge = cartDetail.getLabourCharge() * goldweighEnteredvalue;
+                          //  textViewlabourcharge.setText("SAR " + calculatedlabourcharge);
+                            Log.d("calculatedlabourcharge", "calculatedlabourcharge: " + calculatedlabourcharge);
+                          //  labrchrgdiscount = (calculatedlabourcharge / 100.0f) * 0;
+                         ////   double lbr = calculatedlabourcharge - labrchrgdiscount;
+                         //   double labourchargewithtax = (lbr / 100.0f) * cartDetail.getLabourTax() + lbr;
+                            double pricewithtax = (calculation / 100.0f) * cartDetail.getItemTax() + calculation;
+                         //   double labourtax = (lbr / 100.0f) * cartDetail.getLabourTax();
+                            double itemtax = (calculation / 100.0f) * cartDetail.getItemTax();
+                        //    double totaltax = labourtax + itemtax;
+                            double totalamountwithalltax = pricewithtax + labourchargewithtax;
+                            minpercentage = cartDetail.getLabourChargeMin();
+                            maxpercentage = cartDetail.getLabourChargeMax();
+                            textViewPrice.setText("SAR " + totalamountwithalltax);
+                            DiscountItem discountItem = new DiscountItem();
+                            discountItem.setItemserial(cartDetail.getSerialNumber());
+                            discountItem.setDiscount(labrchrgdiscount);
+                            discountItem.setTotaltax(itemtax);
+                            discountItem.setItemID(cartDetail.getItemID());
+                            discountItem.setDiscountpercentage(0);
+                            discountItem.setGoldweight(0.0);
+                            discountItem.setItemVat(cartDetail.getGoldVat());
+                            discountItem.setDiscount(0);
+                            discountItem.setItemVatAmount(itemtax);
+                            discountItem.setLabourVat(cartDetail.getLaborVat());
+                            discountItem.setLabourVatAmount(0.0);
+
+
+                            discountItem.setAmt(calculation + calculatedlabourcharge);
+                            discountItem.setTotalwithtax(totalamountwithalltax);
+                            SaveItems(discountItem);
+                            discountSum.somofdiscount(labrchrgdiscount);
+                        }else{
+
+
 
                         goldweighEnteredvalue = Double.parseDouble(s.toString());
                         double calculation = ((cartDetail.getPriceWithoutTax() / 1000) * (goldweighEnteredvalue * 1000));
@@ -278,7 +375,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
                         discountItem.setTotalwithtax(totalamountwithalltax);
                         SaveItems(discountItem);
                         discountSum.somofdiscount(labrchrgdiscount);
-
+                        }
 
                     } else {
                         edViewWeight.setError("Weight cannot be Empty");

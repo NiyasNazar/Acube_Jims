@@ -1,17 +1,22 @@
 package com.acube.jims.Presentation.ProductDetails.View;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.FileProvider;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -37,6 +42,8 @@ import com.acube.jims.Presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.Presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.ViewModel.ItemDetailsViewModel;
+import com.acube.jims.Presentation.Quotation.InvoiceFragment;
+import com.acube.jims.Presentation.Quotation.SaleFragment;
 import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
@@ -54,6 +61,8 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.gun0912.tedpermission.PermissionListener;
+import com.gun0912.tedpermission.normal.TedPermission;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
 
@@ -66,6 +75,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
 
 public class ProductDetailsFragment extends BaseFragment {
 
@@ -80,6 +90,7 @@ public class ProductDetailsFragment extends BaseFragment {
     String GuestCustomerID, UserId;
     String emailbody, emailsubject;
     String imageurl;
+    PermissionListener permissionlistener;
 
     public static ProductDetailsFragment newInstance(String Id) {
         ProductDetailsFragment productDetailsFragment = new ProductDetailsFragment();
@@ -122,12 +133,29 @@ public class ProductDetailsFragment extends BaseFragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
+
+
+        permissionlistener = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                sendTextMsgOnWhatsApp("45", emailbody);
+            }
+
+            @Override
+            public void onPermissionDenied(List<String> deniedPermissions) {
+                Toast.makeText(getActivity(), "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+            }
+
+
+        };
+
         binding.imvshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendTextMsgOnWhatsApp("+919747337738","hi");
+                showPopupWindow(v);
 
-            /*    try {
+
+                /*    try {
 
 
 
@@ -289,14 +317,15 @@ public class ProductDetailsFragment extends BaseFragment {
 
                     mSerialno = responseCatalogDetails.getSerialNumber();
                     Id = String.valueOf(responseCatalogDetails.getId());
+                    if (!GuestCustomerID.equalsIgnoreCase("")) {
+                        CustomerHistory customerHistory = new CustomerHistory();
+                        customerHistory.setCustomerID(Integer.valueOf(GuestCustomerID));
+                        customerHistory.setItemID(Integer.valueOf(Id));
+                        customerHistory.setSerialNo(responseCatalogDetails.getSerialNumber());
+                        SaveHistory(customerHistory);
+                    }
 
-                    CustomerHistory customerHistory = new CustomerHistory();
-                    customerHistory.setCustomerID(Integer.valueOf(GuestCustomerID));
-                    customerHistory.setItemID(Integer.valueOf(Id));
-                    customerHistory.setSerialNo(responseCatalogDetails.getSerialNumber());
-
-                    SaveHistory(customerHistory);
-                    binding.tvMrp.setText(responseCatalogDetails.getMrp() + " SAR ");
+                    binding.tvMrp.setText(Math.round(responseCatalogDetails.getMrp())+ " SAR ");
                     binding.tvItemName.setText(responseCatalogDetails.getItemName());
                     binding.tvbrandname.setText(responseCatalogDetails.getItemBrandName());
                     binding.tvDescription.setText(responseCatalogDetails.getItemDesc());
@@ -310,7 +339,7 @@ public class ProductDetailsFragment extends BaseFragment {
                     binding.tvgrossweight.setText("" + responseCatalogDetails.getGrossWeight() + " g");
                     binding.tvcategory.setText(responseCatalogDetails.getCategoryName());
                     binding.tvSubcategory.setText(responseCatalogDetails.getSubCategoryName());
-                    emailbody = "Hey \n" + "Check this new item " + responseCatalogDetails.getItemName() + " ," + responseCatalogDetails.getItemDesc() + " " + responseCatalogDetails.getKaratName();
+                    emailbody = "Hey \n" + "Check this new item " + responseCatalogDetails.getItemName() + " ," + responseCatalogDetails.getGrossWeight() + "g  " + responseCatalogDetails.getKaratName()+" for "+responseCatalogDetails.getMrp();
 
                     imageurl = responseCatalogDetails.getItemSubList().get(0).getImageFilePath();
                     if (responseCatalogDetails.getStoneWeight() != null) {
@@ -414,37 +443,21 @@ public class ProductDetailsFragment extends BaseFragment {
     }
 
     public void sendTextMsgOnWhatsApp(String sContactNo, String sMessage) {
-        String toNumber = sContactNo; // contains spaces, i.e., example +91 98765 43210
-        toNumber = toNumber.replace("+", "").replace(" ", "");
 
-        /*this method contactIdByPhoneNumber() will get unique id for given contact,
-        if this return's null then it means that you don't have any contact save with this mobile no.*/
-        String sContactId = contactIdByPhoneNumber(toNumber);
 
-        if (sContactId != null && sContactId.length() > 0) {
 
-            /*
-             * Once We get the contact id, we check whether contact has a registered with WhatsApp or not.
-             * this hasWhatsApp(hasWhatsApp) method will return null,
-             * if contact doesn't associate with whatsApp services.
-             * */
-            String sWhatsAppNo = hasWhatsApp(sContactId);
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.setPackage("com.whatsapp");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, sMessage);
+        shareIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
+        shareIntent.setType("image/jpeg");
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-            if (sWhatsAppNo != null && sWhatsAppNo.length() > 0) {
-                Intent sendIntent = new Intent("android.intent.action.MAIN");
-                sendIntent.putExtra("jid", toNumber + "@s.whatsapp.net");
-                sendIntent.putExtra(Intent.EXTRA_TEXT, sMessage);
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.setPackage("com.whatsapp");
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);
-            } else {
-                // this contact does not exist in any WhatsApp application
-                Toast.makeText(getActivity(), "Contact not found in WhatsApp !!", Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            // this contact does not exist in your contact
-            Toast.makeText(getActivity(), "create contact for " + toNumber, Toast.LENGTH_SHORT).show();
+        try {
+            startActivity(shareIntent);
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getActivity(),"Install Whatsapp",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -485,4 +498,53 @@ public class ProductDetailsFragment extends BaseFragment {
         return rowContactId;
     }
 
+    public void showPopupWindow(final View view) {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.pop_up_layout_share, null);
+        CardView whatsapp = alertLayout.findViewById(R.id.cdvsharewhatsapp);
+        CardView email = alertLayout.findViewById(R.id.cdvshareemail);
+
+
+        //  final TextInputEditText etPassword = alertLayout.findViewById(R.id.tiet_password);
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        alert.setTitle("");
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+
+        AlertDialog dialog = alert.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        whatsapp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                //   sendTextMsgOnWhatsApp("+919747337738",emailbody);
+                TedPermission.create()
+                        .setPermissionListener(permissionlistener)
+                        .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                        .setPermissions(Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS)
+                        .check();
+
+            }
+        });
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                emailIntent.setType("text/plain");
+                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"rony8652@gmail.com"});
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailsubject);
+                emailIntent.putExtra(Intent.EXTRA_TEXT, emailbody);
+                emailIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
+                emailIntent.setPackage("com.google.android.gm");//Added Gmail Package to forcefully open Gmail App
+                startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+            }
+        });
+
+
+    }
 }

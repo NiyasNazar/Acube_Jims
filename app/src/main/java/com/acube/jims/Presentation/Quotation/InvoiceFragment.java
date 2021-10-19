@@ -97,9 +97,9 @@ public class InvoiceFragment extends BaseFragment implements InvoiceAdapter.Disc
         binding.btnGenerate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow(v);
 
-                //   startActivity(new Intent(getActivity(), PdfCreatorExampleActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                startActivity(new Intent(getActivity(), PdfCreatorExampleActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 // FragmentHelper.replaceFragment(getActivity(),R.id.content,new PdfCreatorExampleActivity());
             }
         });
@@ -123,7 +123,7 @@ public class InvoiceFragment extends BaseFragment implements InvoiceAdapter.Disc
             @Override
             public void onChanged(JsonObject jsonObject) {
                 hideProgressDialog();
-                startActivity(new Intent(getActivity(),SaleSuccessActivity.class));
+                startActivity(new Intent(getActivity(), SaleSuccessActivity.class));
             }
         });
         mViewModel.FetchInvoice(LocalPreferences.getToken(getActivity()), strArray);

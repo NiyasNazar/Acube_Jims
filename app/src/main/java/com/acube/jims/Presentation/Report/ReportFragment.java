@@ -29,6 +29,7 @@ import com.acube.jims.Presentation.Report.View.ExtraFragment;
 import com.acube.jims.Presentation.Report.View.FoundFragment;
 import com.acube.jims.Presentation.Report.View.LocationMismatchFragment;
 import com.acube.jims.Presentation.Report.View.MissingFragment;
+import com.acube.jims.Presentation.Report.View.reports.MissmatchApprovedFragment;
 import com.acube.jims.Presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
@@ -36,6 +37,7 @@ import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ReportFragmentBinding;
 import com.acube.jims.datalayer.models.Audit.Found;
 import com.acube.jims.datalayer.models.Audit.LocationMismatch;
+import com.acube.jims.datalayer.models.Audit.LocationMismatchApproved;
 import com.acube.jims.datalayer.models.Audit.Missing;
 import com.acube.jims.datalayer.models.Audit.ResponseAudit;
 import com.acube.jims.datalayer.models.Audit.ResponseReport;
@@ -60,6 +62,7 @@ public class ReportFragment extends Fragment {
     List<Missing> datsetmissing;
     List<ResponseAudit> datasetaudits;
     List<LocationMismatch> datasetlocationmismatch;
+    List<LocationMismatchApproved> datasetlocationapproved;
 
     ReportFragmentBinding binding;
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -77,6 +80,7 @@ public class ReportFragment extends Fragment {
         datasetaudits = new ArrayList<>();
         datsetfound = new ArrayList<>();
         datsetmissing = new ArrayList<>();
+        datasetlocationapproved = new ArrayList<>();
         datasetlocationmismatch = new ArrayList<>();
         String companyID = LocalPreferences.retrieveStringPreferences(getActivity(), "CompanyID");
         String warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
@@ -112,7 +116,7 @@ public class ReportFragment extends Fragment {
         });
 
 
-        binding.btnScan.setOnClickListener(new View.OnClickListener() {
+        binding.btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 JsonObject jsonObject = new JsonObject();
@@ -120,8 +124,8 @@ public class ReportFragment extends Fragment {
                 jsonObject.addProperty("companyID", companyID);
                 jsonObject.addProperty("warehouseID", warehouseID);
                 jsonObject.addProperty("locationID", 0);
-                jsonObject.addProperty("fromDate", dbfromdate);
-                jsonObject.addProperty("toDate", dbtodate);
+                jsonObject.addProperty("fromDate", "");
+                jsonObject.addProperty("toDate", "");
                 auditViewModel.Audit(LocalPreferences.getToken(getActivity()), jsonObject);
                 binding.edAuditid.setVisibility(View.VISIBLE);
             }
@@ -155,6 +159,8 @@ public class ReportFragment extends Fragment {
         binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
         binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
         binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+        binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+
         binding.enddatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,6 +196,7 @@ public class ReportFragment extends Fragment {
                     datsetfound = responseReport.getFound();
                     datsetmissing = responseReport.getMissing();
                     datasetlocationmismatch = responseReport.getLocationMismatches();
+                    datasetlocationapproved = responseReport.getLocationMismatchApprovedList();
                     setList("datsetfound", datsetfound);
                     setList("datsetmissing", datsetmissing);
                     replace(FoundFragment.newInstance(datsetfound));
@@ -207,6 +214,7 @@ public class ReportFragment extends Fragment {
                 binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
 
                 replace(FoundFragment.newInstance(datsetfound));
             }
@@ -215,6 +223,7 @@ public class ReportFragment extends Fragment {
         binding.tabmissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
 
                 binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
@@ -228,6 +237,8 @@ public class ReportFragment extends Fragment {
         binding.tabextra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+
                 binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
@@ -239,6 +250,8 @@ public class ReportFragment extends Fragment {
         binding.tablocationmismatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+
                 binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
@@ -250,10 +263,24 @@ public class ReportFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
                 binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
                 replace(ExtraFragment.newInstance());
+            }
+        });
+
+        binding.tabLocationApproved.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                replace(MissmatchApprovedFragment.newInstance(datasetlocationapproved));
+
             }
         });
 

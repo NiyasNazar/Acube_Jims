@@ -71,7 +71,7 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int pos = getAdapterPosition();
+                    int pos = getBindingAdapterPosition();
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerID", String.valueOf(customerListings.get(pos).getId()));
 
 

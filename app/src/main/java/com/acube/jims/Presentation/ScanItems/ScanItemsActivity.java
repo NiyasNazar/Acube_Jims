@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -38,6 +39,7 @@ import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.Presentation.Catalogue.adapter.CatalogItemAdapter;
 import com.acube.jims.Presentation.Compare.CompareFragment;
+import com.acube.jims.Presentation.PdfGeneration.ShareScannedItems;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
@@ -90,6 +92,12 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
         addtoCartViewModel = new ViewModelProvider(this).get(AddtoCartViewModel.class);
         addtoCartViewModel.init();
         binding.toolbar.tvFragname.setText("Scan Items");
+        binding.parent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         CartId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.CartID);
         GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         UserId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
@@ -137,6 +145,8 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
                         dataset.setGrossWeight(responseItems.get(i).getGrossWeight());
                         dataset.setItemName(responseItems.get(i).getItemName());
                         dataset.setMrp(responseItems.get(i).getMrp());
+                        dataset.setStoneWeight(responseItems.get(i).getStoneWeight());
+                        dataset.setKaratCode(responseItems.get(i).getKaratCode());
                         dataset.setItemID(responseItems.get(i).getItemID());
                         dataset.setImagePath(responseItems.get(i).getImagePath());
 
@@ -250,7 +260,7 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
         View alertLayout = inflater.inflate(R.layout.pop_up_layout_smarttool, null);
         CardView addtocart = alertLayout.findViewById(R.id.cdvaddtocart);
         CardView compare = alertLayout.findViewById(R.id.cdvcompare);
-
+        CardView cdvshare = alertLayout.findViewById(R.id.cdvshare);
         addtocart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -296,6 +306,13 @@ public class ScanItemsActivity extends BaseFragment implements CatalogItemAdapte
                 dialog.dismiss();
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new CompareFragment());
 
+            }
+        });
+        cdvshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ShareScannedItems.class));
+                dialog.dismiss();
             }
         });
 

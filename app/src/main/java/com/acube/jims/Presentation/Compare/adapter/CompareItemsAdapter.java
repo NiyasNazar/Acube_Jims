@@ -94,6 +94,10 @@ public class CompareItemsAdapter extends RecyclerView.Adapter<CompareItemsAdapte
         public void bind(ResponseCompare responseCompare) {
             binding.tvbrandname.setText(responseCompare.getItemName());
             binding.tvDescription.setText(responseCompare.getKaratName());
+            binding.tvSerialnumber.setText(responseCompare.getSerialNumber());
+            binding.tvgrossweight.setText(""+responseCompare.getGrossWeight()+" g");
+            binding.tvKaratname.setText(responseCompare.getKaratName());
+
             Glide.with(mCtx).load(responseCompare.getImagePath()).into(binding.imvsingleitemimage);
 
         }

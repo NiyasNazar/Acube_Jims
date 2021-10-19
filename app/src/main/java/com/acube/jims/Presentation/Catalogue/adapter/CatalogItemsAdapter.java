@@ -106,7 +106,7 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                     catalogVH.textViewStoneWeight.setText("N/A");
 
                 }
-                ((CatalogVH) holder).textViewPrice.setText("Price : SAR " + responseCatalogueListing.getMrp());
+                ((CatalogVH) holder).textViewPrice.setText("Price : SAR " + Math.round(responseCatalogueListing.getMrp()));
 
                 // holder.imageView.setImageResource(homeData.getImage());
                 if (responseCatalogueListing.getItemSubList().size() > 0) {

@@ -7,14 +7,19 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.pdf.PdfDocument;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -27,10 +32,11 @@ import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.Presentation.CartManagment.ViewModel.CartViewModel;
 import com.acube.jims.Presentation.CartManagment.adapter.CartItemAdapter;
+import com.acube.jims.Presentation.CartManagment.adapter.CartItemAdapterForSharing;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
-import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
+import com.acube.jims.Presentation.PdfGeneration.ShareItemsScreen;
 import com.acube.jims.Presentation.Quotation.InvoiceFragment;
-import com.acube.jims.Presentation.Quotation.adapter.DiscountItem;
+import com.acube.jims.Presentation.Quotation.SaleFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
@@ -40,11 +46,19 @@ import com.acube.jims.datalayer.models.Cart.CartDetail;
 import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;
 import com.acube.jims.datalayer.models.Cart.ResponseCart;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.gkemon.XMLtoPDF.PdfGenerator;
+import com.gkemon.XMLtoPDF.PdfGeneratorListener;
+import com.gkemon.XMLtoPDF.model.FailureResponse;
+import com.gkemon.XMLtoPDF.model.SuccessResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import java.math.BigInteger;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CartViewFragment extends BaseFragment implements CartItemAdapter.UpdateQuantity, CartItemAdapter.DeleteProduct {
@@ -57,6 +71,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
     String CartId;
     String CustomerID;
     BackHandler backHandler;
+    List<CartDetail> dataset;
 
     public static CartViewFragment newInstance() {
         return new CartViewFragment();
@@ -80,6 +95,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.cart_view_fragment, container, false);
         binding.toolbar.tvFragname.setText("Cart");
+        dataset = new ArrayList<>();
         binding.recycartitems.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.toolbar.parentlayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,7 +134,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
                     CustomerID = String.valueOf(responseCart.getCustomerID());
                     EmployeeID = String.valueOf(responseCart.getEmployeeID());
                     CartId = responseCart.getCartListNo();
-                    List<CartDetail> dataset = responseCart.getCartDetails();
+                    dataset = responseCart.getCartDetails();
                     setList("cartitem", dataset);
                     Log.d("onChangedss", "onChanged: " + dataset.size());
                     binding.recycartitems.setAdapter(new CartItemAdapter(getActivity(), dataset, CartViewFragment.this, CartViewFragment.this));
@@ -132,7 +148,7 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
                         binding.bottomlayt.setVisibility(View.VISIBLE);
                     }
 
-                }else{
+                } else {
                     binding.emptycart.setVisibility(View.VISIBLE);
                     binding.nestedscrollview.setVisibility(View.GONE);
                     binding.bottomlayt.setVisibility(View.GONE);
@@ -170,7 +186,8 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
         LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.pop_up_layout_invoice, null);
         CardView checkout = alertLayout.findViewById(R.id.cdvcheckout);
-        // CardView compare = alertLayout.findViewById(R.id.cdvcompare);
+        CardView cdvquote = alertLayout.findViewById(R.id.cdvcreatequote);
+        CardView cdvshare = alertLayout.findViewById(R.id.cdvshare);
 
 
         //  final TextInputEditText etPassword = alertLayout.findViewById(R.id.tiet_password);
@@ -188,9 +205,25 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-
-
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new SaleFragment());
+            }
+        });
+        cdvquote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new InvoiceFragment());
+                dialog.dismiss();
+            }
+        });
+        cdvshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), ShareItemsScreen.class));
+
+
+                dialog.dismiss();
+
+
             }
         });
 
@@ -248,4 +281,6 @@ public class CartViewFragment extends BaseFragment implements CartItemAdapter.Up
         SavePlan st = new SavePlan();
         st.execute();
     }
+
+
 }

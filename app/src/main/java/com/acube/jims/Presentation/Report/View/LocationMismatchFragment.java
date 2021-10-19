@@ -49,6 +49,7 @@ public class LocationMismatchFragment extends Fragment {
                 inflater, R.layout.found_fragment, container, false);
         binding.recyvfound.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recyvfound.setAdapter(new LocationMismatchAdapter(getActivity(), datasetlocationmismatch));
+
         binding.tvTotaldata.setText("Total Items Location Mismatch : " + datasetlocationmismatch.size());
 
         return binding.getRoot();

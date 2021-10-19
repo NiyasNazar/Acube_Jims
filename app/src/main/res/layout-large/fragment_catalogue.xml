@@ -12,33 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-
         tools:context=".Presentation.Catalogue.View.CatalogueFragment">
 
         <RelativeLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
 
-                android:id="@+id/tv_customername"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_12sdp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/poppins_regular"
-                android:textSize="16sp"
-                android:textColor="@color/headercolor">
-
-            </TextView>
 
             <TextView
                 android:visibility="gone"
                 android:id="@+id/tv_customercode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_customername"
                 android:layout_marginLeft="@dimen/_12sdp"
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserratsemibold"
@@ -92,9 +78,23 @@
                         android:layout_toRightOf="@id/tvfilter"
                         android:src="@drawable/ic_filter"></ImageView>
                 </LinearLayout>
+                <TextView
 
+                    android:id="@+id/tv_customername"
+                    android:layout_toRightOf="@id/laytfilter"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:layout_centerVertical="true"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_7ssp"
+                    android:textColor="@color/headercolor">
+
+                </TextView>
                 <TextView
                     android:id="@+id/tvsortby"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"

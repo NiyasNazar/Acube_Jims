@@ -23,7 +23,7 @@ public class ResponseCatalogueListing {
     private Object itemReqQty;
     @SerializedName("mrp")
     @Expose
-    private Object mrp;
+    private Double mrp;
     @SerializedName("makingChargeMin")
     @Expose
     private Object makingChargeMin;
@@ -162,11 +162,11 @@ public class ResponseCatalogueListing {
         this.itemReqQty = itemReqQty;
     }
 
-    public Object getMrp() {
+    public Double getMrp() {
         return mrp;
     }
 
-    public void setMrp(Object mrp) {
+    public void setMrp(Double mrp) {
         this.mrp = mrp;
     }
 

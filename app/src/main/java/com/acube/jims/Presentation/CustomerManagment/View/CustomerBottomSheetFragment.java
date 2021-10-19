@@ -111,11 +111,18 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
 
             }
         });
+        binding.btnContinue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(),"");
+            }
+        });
         customerLogoutViewModel.getCustomerLiveData().observe(getActivity(), new Observer<JsonObject>() {
             @Override
             public void onChanged(JsonObject jsonObject) {
+                hideProgressDialog();
                 if (jsonObject!=null){
-                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerBottomSheetFragment());
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerBottomSheetFragment(),"");
                 }
             }
         });
@@ -138,7 +145,7 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
                     LocalPreferences.storeStringPreference(getContext(), "GuestCustomerName", responseCreateCustomer.getCustomerName());
                     LocalPreferences.storeStringPreference(getContext(), "GuestCustomerCode", responseCreateCustomer.getCustomerCode());
                     LocalPreferences.storeStringPreference(getContext(), "GuestCustomerID", String.valueOf(responseCreateCustomer.getId()));
-                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
+                    FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(),"");
 
                 } else {
 
@@ -153,7 +160,7 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
                 LocalPreferences.storeStringPreference(getContext(), "GuestCustomerCode", "");
                 LocalPreferences.storeStringPreference(getContext(), "GuestCustomerID", "");
 
-                FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(),"");
 
             }
         });
@@ -293,6 +300,7 @@ public class CustomerBottomSheetFragment extends BaseFragment implements Custome
     }
 
     private void FetchCustomerHistory() {
+        showProgressDialog();
         String GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         Log.d("onPostExecute", "onPostExecute: " + GuestCustomerID);
 

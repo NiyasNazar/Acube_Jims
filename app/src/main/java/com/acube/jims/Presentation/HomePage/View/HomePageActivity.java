@@ -77,9 +77,9 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
         prepareMenuData();
         populateExpandableList();
         boolean showlogout = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "showlogout");
-        if (showlogout){
+        if (showlogout) {
             replaceFragment(new CustomerBottomSheetFragment());
-        }else{
+        } else {
             replaceFragment(new HomeFragment());
         }
 
@@ -295,7 +295,11 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
+        int fragments = getSupportFragmentManager().getBackStackEntryCount();
+        Log.d("onBackPressed", "onBackPressed: "+fragments);
+/*else if (fragments == 1) {
+            //finish();
+        }*/
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.content);
         if (f instanceof HomeFragment) {
 
@@ -303,7 +307,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
         }
         if (drawer.isDrawerOpen(GravityCompat.END)) {
             drawer.closeDrawer(GravityCompat.END);
-        } else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+        }  else if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
             Log.d("onBackPressed", ":onBackPressed" + getFragmentManager().getBackStackEntryCount());
 
@@ -314,7 +318,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductDetail
     }
 
     public void replaceFragment(Fragment fragment) {
-        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment);
+        FragmentHelper.replaceFragment(HomePageActivity.this, R.id.content, fragment,"");
     }
 
     @Override

@@ -38,6 +38,13 @@ public class FoundReportActivity extends BaseActivity {
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         mViewModel.init();
         binding.tvNotfound.setVisibility(View.GONE);
+        binding.backlayout.parentlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         showProgressDialog();
         String locationid = getIntent().getStringExtra("locationid");
         String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");

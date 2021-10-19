@@ -61,7 +61,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
 
         holder.textViewQuantity.setText("" + IntValue);
         holder.textViewSerialno.setText(cartDetail.getSerialNumber());
-        holder.textViewPrice.setText("SAR "+cartDetail.getFinalAmount());
+        holder.textViewPrice.setText("SAR "+Math.round(cartDetail.getFinalAmount()));
 
         Glide.with(mCtx)
                 .load(cartDetail.getImagePath())

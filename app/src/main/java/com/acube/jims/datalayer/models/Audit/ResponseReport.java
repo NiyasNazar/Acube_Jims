@@ -14,11 +14,13 @@ public class ResponseReport {
     private List<Missing> missing = null;
     @SerializedName("extra")
     @Expose
-    private List<Object> extra = null;
+    private List<ExtraItems> extra = null;
     @SerializedName("locationMismatch")
     @Expose
     private  List<LocationMismatch> locationMismatches = null;
-
+    @SerializedName("locationMismatchApproved")
+    @Expose
+    private final List<LocationMismatchApproved> locationMismatchApprovedList = null;
 
 
     public List<Found> getFound() {
@@ -37,11 +39,11 @@ public class ResponseReport {
         this.missing = missing;
     }
 
-    public List<Object> getExtra() {
+    public List<ExtraItems> getExtra() {
         return extra;
     }
 
-    public void setExtra(List<Object> extra) {
+    public void setExtra(List<ExtraItems> extra) {
         this.extra = extra;
     }
 
@@ -51,5 +53,9 @@ public class ResponseReport {
 
     public void setLocationMismatches(List<LocationMismatch> locationMismatches) {
         this.locationMismatches = locationMismatches;
+    }
+
+    public List<LocationMismatchApproved> getLocationMismatchApprovedList() {
+        return locationMismatchApprovedList;
     }
 }

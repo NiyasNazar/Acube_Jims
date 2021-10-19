@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+    <!--  android:background="@drawable/homepagebg"
+            android:foreground="@drawable/shape_window_dim"-->
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".Presentation.Catalogue.View.CatalogueFragment">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_customercode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:textSize="@dimen/_7ssp"
+                android:textColor="#c4224a">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/header"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_customercode"
+                android:layout_marginTop="10dp">
+
+
+
+
+
+
+
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/back_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true">
+
+                </include>
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyvvieweditems"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/header"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="@dimen/_12sdp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </RelativeLayout>
+
+
+    </FrameLayout>
+</layout>

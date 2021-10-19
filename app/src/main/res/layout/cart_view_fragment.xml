@@ -9,6 +9,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
+        android:id="@+id/parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
         tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
@@ -200,13 +201,16 @@
                 android:background="@drawable/item_border_detailspage"
                 android:backgroundTint="#FFF">
 
-                <ImageView
+                <TextView
                     android:layout_width="wrap_content"
+                    android:text="NO RECORDS FOUND"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:textColor="@color/textcolor"
                     android:layout_gravity="center"
-                    android:src="@drawable/emptycart">
+                    >
 
-                </ImageView>
+                </TextView>
             </FrameLayout>
 
         </RelativeLayout>

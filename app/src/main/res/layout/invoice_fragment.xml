@@ -120,12 +120,25 @@
 
                             android:fontFamily="@font/poppins_semibold"
                             android:gravity="center"
-                            android:text="Item Name"
+                            android:text="Item"
                             android:textAllCaps="false"
                             android:textColor="#666666">
 
                         </TextView>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
 
+
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Karat"
+                            android:textAllCaps="false"
+                            android:textColor="#666666">
+
+                        </TextView>
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="50dp"

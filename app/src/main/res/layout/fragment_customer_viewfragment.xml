@@ -296,7 +296,7 @@
                         </TextView>
 
                         <TextView
-                            android:id="@+id/ViewAll"
+                            android:id="@+id/viewAll"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"

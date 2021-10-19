@@ -62,6 +62,12 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
         mViewModel.init();
         auditUploadViewModel = new ViewModelProvider(this).get(AuditUploadViewModel.class);
         auditUploadViewModel.init();
+        binding.backlayout.parentlayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         locationid = getIntent().getStringExtra("locationid");
         companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
         warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
@@ -164,14 +170,14 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
             commaseparatedlist
                     = commaseparatedlist.substring(
                     0, commaseparatedlist.length() - 1);
-        Log.d(TAG, "PerformScan: "+commaseparatedlist);
+        Log.d(TAG, "PerformScan: " + commaseparatedlist);
 
 
         try {
             Intent res = new Intent();
-             String mPackage = "com.acube.smarttray";// package name
-             String mClass = ".MissingAuditActivity";//the activity name which return results*/
-         //   String mPackage = "com.example.acubetest";// package name
+           String mPackage = "com.acube.smarttray";// package name
+            String mClass = ".MissingAuditActivity";//the activity name which return results*/
+          //  String mPackage = "com.example.acubetest";// package name
           //  String mClass = ".Audit";//the activity name which return results
             res.putExtra("url", AppConstants.BASE_URL);
             res.putExtra("macAddress", TrayMacAddress);

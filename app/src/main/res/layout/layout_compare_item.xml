@@ -154,7 +154,7 @@
                             android:textStyle="normal" />
 
                         <TextView
-                            android:id="@+id/tv_itemcode"
+                            android:id="@+id/tv_serialnumber"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"

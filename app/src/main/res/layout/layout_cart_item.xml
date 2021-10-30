@@ -4,170 +4,120 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="182dp"
+        <ImageView
+            android:id="@+id/imvdelete"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="25dp"
 
-            android:layout_weight=".6"
-            android:background="@drawable/table_item_border">
+            android:src="@drawable/ic_delete"></ImageView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cdv_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="5dp"
+            app:cardCornerRadius="6.7dp">
 
             <ImageView
-                android:id="@+id/imvdelete"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_delete"></ImageView>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-
-            android:layout_height="182dp"
-            android:layout_weight="2"
-            android:background="@drawable/table_item_border">
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cdv_image"
-                android:layout_width="142dp"
-                android:layout_height="100dp"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                app:cardCornerRadius="6.7dp">
-
-                <ImageView
-                    android:id="@+id/item_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/dummy_item_image"></ImageView>
-
-
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/tv_itemname"
-                android:layout_width="311dp"
+                android:id="@+id/item_image"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@id/tv_weight"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/cdv_image"
-                android:fontFamily="@font/montserratsemibold"
-                android:gravity="center_horizontal"
-                android:letterSpacing="0.01"
-                android:maxLines="2"
-                android:text="Latin Solitare Ring - LSR0002350"
-                android:textColor="#666666"
-                android:textSize="16sp"
-                android:textStyle="normal" />
+                android:src="@drawable/dummy_item_image"></ImageView>
 
-            <TextView
-                android:id="@+id/tv_weight"
-                android:layout_width="311dp"
-                android:layout_height="22dp"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/cdv_image"
-                android:fontFamily="@font/montserratsemibold"
-                android:gravity="center_horizontal"
-                android:letterSpacing="0.01"
-                android:text="18K - Weight : 6.76 g"
-                android:textColor="#666666"
-                android:textSize="16sp"
-                android:textStyle="normal" />
 
-            <TextView
-                android:id="@+id/tv_stoneweight"
-                android:layout_width="311dp"
-                android:layout_height="22dp"
-                android:layout_below="@id/tv_weight"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@id/cdv_image"
-                android:fontFamily="@font/montserratsemibold"
-                android:gravity="center_horizontal"
-                android:letterSpacing="0.01"
-                android:text="18K - Weight : 6.76 g"
-                android:textColor="#666666"
-                android:textSize="16sp"
-                android:textStyle="normal" />
+        </androidx.cardview.widget.CardView>
 
-        </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_itemname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/cdv_image"
+            android:fontFamily="@font/montserratsemibold"
+            android:letterSpacing="0.01"
+            android:maxLines="2"
+            android:text="dsfdsfsdfsdfdsf"
+            android:textColor="#666666"
+            android:textSize="10sp"
+            android:textStyle="normal" />
 
-        <RelativeLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tv_weight"
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+            android:layout_below="@id/tv_serialnumber"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/cdv_image"
+            android:fontFamily="@font/montserratsemibold"
 
-            android:layout_height="182dp"
-            android:layout_weight="1"
-            android:background="@drawable/table_item_border">
-            <TextView
-                android:fontFamily="@font/montserratsemibold"
-                android:layout_centerInParent="true"
-                android:id="@+id/tv_serialnumber"
+            android:letterSpacing="0.01"
 
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></TextView>
-            <LinearLayout
-                android:visibility="invisible"
-                android:gravity="center_vertical"
-                android:layout_centerInParent="true"
-                android:background="@drawable/quantity_updation_bg"
-                android:orientation="horizontal"
-                android:layout_width="80dp"
-                android:layout_height="30dp">
-                <ImageView
-                    android:id="@+id/imvremove"
-                    android:layout_weight="1"
-                    android:paddingLeft="1dp"
-                    android:src="@drawable/remove_circle"
-                    android:layout_width="0dp"
-                    android:layout_height="24dp"></ImageView>
-                <TextView
-                    android:gravity="center"
-                    android:layout_width="0dp"
-                    android:text="1"
-                    android:id="@+id/tv_quantity"
-                    android:textColor="#666666"
-                    android:layout_weight="2"
-                    android:layout_height="wrap_content">
 
-                </TextView>
-                <ImageView
-                    android:id="@+id/imvadd"
-                    android:paddingRight="1dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/add_circle"
-                    android:layout_width="0dp"
-                    android:layout_height="24dp"></ImageView>
+            android:textColor="#666666"
+            android:textSize="9sp"
+            android:textStyle="normal" />
 
-            </LinearLayout>
+        <TextView
+            android:id="@+id/tv_stoneweight"
+            android:layout_width="311dp"
+            android:layout_height="22dp"
+            android:layout_below="@id/tv_weight"
 
-        </RelativeLayout>
 
-        <RelativeLayout
-            android:layout_width="0dp"
+            android:layout_toRightOf="@id/cdv_image"
 
-            android:layout_height="182dp"
-            android:layout_weight="1"
-            android:background="@drawable/table_item_border">
+            android:fontFamily="@font/montserratsemibold"
+            android:letterSpacing="0.01"
 
-            <TextView
-                android:id="@+id/tvprice"
-                android:layout_width="311dp"
-                android:layout_height="22dp"
-                android:layout_centerVertical="true"
-                android:fontFamily="@font/montserratsemibold"
-                android:gravity="center_horizontal"
-                android:letterSpacing="0.01"
-                android:text="10000 SAR"
-                android:textColor="#666666"
-                android:textSize="12sp"
-                android:textStyle="normal" />
-        </RelativeLayout>
-    </LinearLayout>
+            android:textColor="#666666"
+            android:textSize="9sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/tvprice"
+
+            android:layout_width="wrap_content"
+            android:layout_height="22dp"
+
+            android:layout_below="@id/tv_stoneweight"
+            android:layout_toRightOf="@id/cdv_image"
+            android:fontFamily="@font/montserratsemibold"
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.01"
+
+            android:textColor="#666666"
+            android:textSize="10sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:textColor="#666666"
+            android:id="@+id/tv_serialnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_itemname"
+            android:layout_toRightOf="@id/cdv_image"
+            android:fontFamily="@font/montserratsemibold"
+            android:textSize="10sp"></TextView>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1.5px"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/cdv_image"
+
+            android:background="#dfdfdf"></View>
+    </RelativeLayout>
 
 
 </RelativeLayout>

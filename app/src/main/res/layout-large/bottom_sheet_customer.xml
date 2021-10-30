@@ -60,7 +60,7 @@
                             android:fontFamily="@font/poppins_semibold"
                             android:text="Select Customer"
                             android:textColor="@color/headercolor"
-                            android:textSize="17sp"></TextView>
+                            android:textSize="22sp"></TextView>
 
 
                     </LinearLayout>
@@ -117,7 +117,7 @@
                                 android:gravity="center"
                                 android:text="Customer Name"
                                 android:textColor="#FFFFFF"
-                                android:textSize="10sp">
+                                android:textSize="20sp">
 
                             </TextView>
 
@@ -132,7 +132,7 @@
                                 android:gravity="center"
                                 android:text="Contact Number"
                                 android:textColor="#FFFFFF"
-                                android:textSize="10sp">
+                                android:textSize="20sp">
 
                             </TextView>
 
@@ -145,7 +145,7 @@
                                 android:gravity="center"
                                 android:text="Email"
                                 android:textColor="#FFFFFF"
-                                android:textSize="10sp">
+                                android:textSize="20sp">
 
                             </TextView>
 
@@ -199,7 +199,7 @@
                                 android:id="@+id/btn_skip"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/rec_button"
@@ -207,13 +207,13 @@
                                 android:text="Salesman"
                                 android:textColor="@color/white"
 
-                                android:textSize="9sp"></androidx.appcompat.widget.AppCompatButton>
+                                android:textSize="12sp"></androidx.appcompat.widget.AppCompatButton>
 
                             <androidx.appcompat.widget.AppCompatButton
                                 android:id="@+id/btn_addcustomer"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
                                 android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/rec_button"
@@ -221,7 +221,7 @@
                                 android:backgroundTint="#BF8F3A"
                                 android:text="ADD customer"
                                 android:textColor="@color/white"
-                                android:textSize="9sp">
+                                android:textSize="12sp">
 
                             </androidx.appcompat.widget.AppCompatButton>
 
@@ -229,14 +229,15 @@
                                 android:id="@+id/btbguestlogin"
                                 style="@style/Widget.AppCompat.Button.Borderless"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="40dp"
+                                android:layout_margin="5dp"
                                 android:layout_weight="1"
                                 android:background="@drawable/rec_button"
 
                                 android:backgroundTint="#BF8F3A"
                                 android:text="continue as guest"
                                 android:textColor="@color/white"
-                                android:textSize="9sp">
+                                android:textSize="12sp">
 
                             </androidx.appcompat.widget.AppCompatButton>
                         </LinearLayout>

@@ -87,26 +87,26 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 final CatalogVH catalogVH = (CatalogVH) holder;
                 ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
 
-                catalogVH.textViewItemName.setText("Name : " + responseCatalogueListing.getItemName());
-                catalogVH.textViewSerialnumber.setText("Serial No. : " + responseCatalogueListing.getSerialNumber());
-                catalogVH.textViewKarat.setText("Karat : " + responseCatalogueListing.getKaratName());
-                catalogVH.textViewStock.setText("Availability : "+responseCatalogueListing.getInventoryStatus());
+                catalogVH.textViewItemName.setText("" + responseCatalogueListing.getItemName());
+                catalogVH.textViewSerialnumber.setText("" + responseCatalogueListing.getSerialNumber());
+                catalogVH.textViewKarat.setText("" + responseCatalogueListing.getKaratName());
+                catalogVH.textViewStock.setText(""+responseCatalogueListing.getInventoryStatus());
 
                 if (responseCatalogueListing.getGrossWeight() != null) {
-                    catalogVH.textViewGrossWeight.setText("Weight: " + responseCatalogueListing.getGrossWeight() + " g");
+                    catalogVH.textViewGrossWeight.setText("" + responseCatalogueListing.getGrossWeight() + " g");
 
                 } else {
                     catalogVH.textViewGrossWeight.setText(responseCatalogueListing.getKaratName() + "- Weight:  N/A");
 
                 }
                 if (responseCatalogueListing.getStoneWeight() != null) {
-                    catalogVH.textViewStoneWeight.setText("Stone weight: " + responseCatalogueListing.getStoneWeight() + " g");
+                    catalogVH.textViewStoneWeight.setText("" + responseCatalogueListing.getStoneWeight() + " g");
 
                 } else {
                     catalogVH.textViewStoneWeight.setText("N/A");
 
                 }
-                ((CatalogVH) holder).textViewPrice.setText("Price : SAR " + Math.round(responseCatalogueListing.getMrp()));
+                ((CatalogVH) holder).textViewPrice.setText("" + Math.round(responseCatalogueListing.getMrp()));
 
                 // holder.imageView.setImageResource(homeData.getImage());
                 if (responseCatalogueListing.getItemSubList().size() > 0) {

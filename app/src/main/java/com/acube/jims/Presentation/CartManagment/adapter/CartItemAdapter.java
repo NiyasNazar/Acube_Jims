@@ -59,7 +59,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
         holder.textViewitemName.setText(cartDetail.getItemName());
         int IntValue = (int) Math.round(cartDetail.getQty());
 
-        holder.textViewQuantity.setText("" + IntValue);
+//        holder.textViewQuantity.setText("" + IntValue);
         holder.textViewSerialno.setText(cartDetail.getSerialNumber());
         holder.textViewPrice.setText("SAR "+Math.round(cartDetail.getFinalAmount()));
 

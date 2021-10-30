@@ -25,7 +25,7 @@ public class ReportViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void FetchInvoice(String Auth, JsonObject jsonObject) {
+    public void FetchReports(String Auth, JsonObject jsonObject) {
         repository.FetchReport(Auth,jsonObject);
     }
 

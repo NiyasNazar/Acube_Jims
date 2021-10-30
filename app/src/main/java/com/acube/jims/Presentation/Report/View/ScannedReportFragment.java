@@ -25,6 +25,7 @@ import com.acube.jims.Presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ReportFragmentBinding;
+import com.acube.jims.databinding.ScannedReportFragmentBinding;
 import com.acube.jims.datalayer.models.Audit.Found;
 import com.acube.jims.datalayer.models.Audit.LocationMismatch;
 import com.acube.jims.datalayer.models.Audit.LocationMismatchApproved;
@@ -43,6 +44,7 @@ public class ScannedReportFragment extends Fragment {
     private ReportViewModel mViewModel;
     private AuditViewModel auditViewModel;
     AuditUploadViewModel auditUploadViewModel;
+
     public static ScannedReportFragment newInstance() {
         return new ScannedReportFragment();
     }
@@ -53,7 +55,7 @@ public class ScannedReportFragment extends Fragment {
     List<LocationMismatch> datasetlocationmismatch;
     List<LocationMismatchApproved> datasetlocationapproved;
 
-    ReportFragmentBinding binding;
+    ScannedReportFragmentBinding binding;
     private int mYear, mMonth, mDay, mHour, mMinute;
     String dbfromdate, dbtodate;
 
@@ -61,7 +63,7 @@ public class ScannedReportFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(
-                inflater, R.layout.report_fragment, container, false);
+                inflater, R.layout.scanned_report_fragment, container, false);
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         auditViewModel = new ViewModelProvider(this).get(AuditViewModel.class);
         auditUploadViewModel = new ViewModelProvider(this).get(AuditUploadViewModel.class);
@@ -76,124 +78,22 @@ public class ScannedReportFragment extends Fragment {
         String companyID = LocalPreferences.retrieveStringPreferences(getActivity(), "CompanyID");
         String warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
         //String auditID = LocalPreferences.retrieveStringPreferences(getActivity(), "auditID");
-
-        auditViewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseAudit>>() {
-            @Override
-            public void onChanged(List<ResponseAudit> responseAudits) {
-                if (responseAudits != null) {
-                    datasetaudits = responseAudits;
-                    ArrayAdapter<ResponseAudit> arrayAdapter = new ArrayAdapter<ResponseAudit>(getActivity(), android.R.layout.simple_spinner_item, responseAudits);
-                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    binding.edAuditid.setAdapter(arrayAdapter);
-                }
-            }
-        });
-        binding.edAuditid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LocalPreferences.storeStringPreference(getActivity(), "AuditID", String.valueOf(parent.getItemAtPosition(position)));
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("auditID", String.valueOf(parent.getItemAtPosition(position)));
-                jsonObject.addProperty("companyID", companyID);
-                jsonObject.addProperty("warehouseID", warehouseID);
-                jsonObject.addProperty("locationID", 0);
-                mViewModel.FetchInvoice(LocalPreferences.getToken(getContext()), jsonObject);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        String auditID = LocalPreferences.retrieveStringPreferences(getActivity(), "auditID");
+        String locationID = LocalPreferences.retrieveStringPreferences(getActivity(), "locationID");
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("auditID", auditID);
+        jsonObject.addProperty("companyID", companyID);
+        jsonObject.addProperty("warehouseID", warehouseID);
+        jsonObject.addProperty("locationID", locationID);
+        mViewModel.FetchReports(LocalPreferences.getToken(getContext()), jsonObject);
 
 
-        binding.btnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("auditID", "");
-                jsonObject.addProperty("companyID", companyID);
-                jsonObject.addProperty("warehouseID", warehouseID);
-                jsonObject.addProperty("locationID", 0);
-                jsonObject.addProperty("fromDate", "");
-                jsonObject.addProperty("toDate", "");
-                auditViewModel.Audit(LocalPreferences.getToken(getActivity()), jsonObject);
-                binding.edAuditid.setVisibility(View.VISIBLE);
-            }
-        });
-
-        binding.startbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get Current Date
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Dialog,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                String dateString = String.format("%02d/%02d/%d", dayOfMonth, (monthOfYear + 1), year);
-                                binding.startbutton.setText(dateString);
-                                dbfromdate = String.format("%02d/%02d/%d", year, (monthOfYear + 1), dayOfMonth);
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
-        });
         binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
         binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
         binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
         binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
         binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
 
-        binding.enddatebtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Get Current Date
-                final Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Dialog,
-                        new DatePickerDialog.OnDateSetListener() {
-
-                            @Override
-                            public void onDateSet(DatePicker view, int year,
-                                                  int monthOfYear, int dayOfMonth) {
-                                String dateString = String.format("%02d/%02d/%d", dayOfMonth, (monthOfYear + 1), year);
-                                dbtodate = String.format("%02d/%02d/%d", year, (monthOfYear + 1), dayOfMonth);
-                                binding.enddatebtn.setText(dateString);
-
-
-                            }
-                        }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
-        });
-
-        mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseReport>() {
-            @Override
-            public void onChanged(ResponseReport responseReport) {
-                if (responseReport != null) {
-
-                    datsetfound = responseReport.getFound();
-                    datsetmissing = responseReport.getMissing();
-                    datasetlocationmismatch = responseReport.getLocationMismatches();
-                    datasetlocationapproved = responseReport.getLocationMismatchApprovedList();
-                    setList("datsetfound", datsetfound);
-                    setList("datsetmissing", datsetmissing);
-                    replace(FoundFragment.newInstance(datsetfound));
-                }
-            }
-        });
 
         final int sdk = android.os.Build.VERSION.SDK_INT;
 
@@ -272,6 +172,21 @@ public class ScannedReportFragment extends Fragment {
                 binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
                 replace(MissmatchApprovedFragment.newInstance(datasetlocationapproved));
 
+            }
+        });
+        mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseReport>() {
+            @Override
+            public void onChanged(ResponseReport responseReport) {
+                if (responseReport != null) {
+
+                    datsetfound = responseReport.getFound();
+                    datsetmissing = responseReport.getMissing();
+                    datasetlocationmismatch = responseReport.getLocationMismatches();
+                    datasetlocationapproved = responseReport.getLocationMismatchApprovedList();
+                    setList("datsetfound", datsetfound);
+                    setList("datsetmissing", datsetmissing);
+                    replace(FoundFragment.newInstance(datsetfound));
+                }
             }
         });
 

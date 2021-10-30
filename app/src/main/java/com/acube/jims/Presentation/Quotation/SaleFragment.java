@@ -30,6 +30,7 @@ import com.acube.jims.databinding.SaleFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Cart.CartDetail;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
+import com.acube.jims.datalayer.models.Invoice.SaleSuccess;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -110,11 +111,11 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
 
         String[] strArray = filteredvalue.toArray(new String[filteredvalue.size()]);
         // jsonObject
-        saleViewModel.getLiveData().observe(getActivity(), new Observer<JsonObject>() {
+        saleViewModel.getLiveData().observe(getActivity(), new Observer<SaleSuccess>() {
             @Override
-            public void onChanged(JsonObject jsonObject) {
+            public void onChanged(SaleSuccess jsonObject) {
                 hideProgressDialog();
-                startActivity(new Intent(getActivity(), SaleSuccessActivity.class));
+                startActivity(new Intent(getActivity(), SaleSuccessActivity.class).putExtra("invoice",jsonObject.getInvoiceNo()).putExtra("date",jsonObject.getInvoiceDate()));
             }
         });
         mViewModel.FetchInvoice(LocalPreferences.getToken(getActivity()), strArray);

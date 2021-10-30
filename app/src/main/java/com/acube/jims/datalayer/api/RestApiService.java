@@ -23,6 +23,7 @@ import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
+import com.acube.jims.datalayer.models.Invoice.SaleSuccess;
 import com.acube.jims.datalayer.models.ScanHistory.ResponseScanHistory;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -125,9 +126,9 @@ public interface RestApiService {
     Call<List<ResponseScanHistory>> ItemHistory(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
     @POST("SaleMobile/SaveSale")
-    Call<JsonObject> markSaleOrQuotation(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+    Call<SaleSuccess> markSaleOrQuotation(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
-    @POST(" CatalogCart/ClearCart/{CustomerID}")
+    @POST("CatalogCart/ClearCart/{CustomerID}")
     Call<JsonObject> ClearCart(@Header("Authorization") String Auth, @Path("CustomerID") String CustomerID);
 
 

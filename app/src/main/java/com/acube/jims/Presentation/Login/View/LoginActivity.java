@@ -35,6 +35,7 @@ import com.acube.jims.databinding.ActivityLoginBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
+import com.acube.jims.datalayer.models.Invoice.KaratPrice;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -113,14 +114,26 @@ public class LoginActivity extends BaseActivity {
 
                 if (responseLogin != null) {
                     LocalPreferences.storeAuthenticationToken(getApplicationContext(), responseLogin.getToken());
-                    LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserRole, responseLogin.getRoleName());
+                    LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserRole, String.valueOf(responseLogin.getRoleName()));
                     LocalPreferences.storeStringPreference(getApplicationContext(), AppConstants.UserID, String.valueOf(responseLogin.getEmployeeID()));
                     LocalPreferences.storeStringPreference(getApplicationContext(), "CompanyID", responseLogin.getCompanyID());
                     LocalPreferences.storeStringPreference(getApplicationContext(), "warehouseId", String.valueOf(responseLogin.getWarehouseID()));
                     LocalPreferences.storeStringPreference(getApplicationContext(), "EmployeeName", responseLogin.getEmployeeName());
                     LocalPreferences.storeBooleanPreference(getApplicationContext(), "showlogout", true);
+                    List<KaratPrice>dataset=responseLogin.getKaratPriceList();
+                    String karatprice;
+                    StringBuilder result = new StringBuilder();
 
-                    mViewModel.getHomeMenu(LocalPreferences.getToken(getApplicationContext()), AppConstants.HomeMenuAppName, responseLogin.getRoleName());
+                    for (int i=0;i<dataset.size();i++){
+                        karatprice=dataset.get(i).getKaratCode()+"K: "+dataset.get(i).getKaratPrice();
+                        result.append(karatprice);
+                        result.append(",");
+
+                    }
+                    Log.d("TAG", "onChanged: "+result.toString());
+                    LocalPreferences.storeStringPreference(getApplicationContext(),"GoldRate",result.toString());
+
+                    mViewModel.getHomeMenu(LocalPreferences.getToken(getApplicationContext()), AppConstants.HomeMenuAppName, String.valueOf(responseLogin.getRoleName()));
 
 
                 } else {

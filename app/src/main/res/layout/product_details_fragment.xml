@@ -52,17 +52,16 @@
 
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-
-
                         android:layout_marginBottom="16dp">
 
 
                         <RelativeLayout
                             android:id="@+id/laytimage"
-                            android:layout_width="400dp"
+                            android:layout_width="match_parent"
                             android:layout_height="360dp"
-                            android:layout_marginLeft="26dp"
-                            android:layout_marginTop="48dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="12dp"
+                            android:layout_marginRight="8dp"
                             android:background="@drawable/item_border_image">
 
                             <ImageView
@@ -74,29 +73,31 @@
                                 android:src="@drawable/dummy_item_image">
 
                             </ImageView>
+
                             <ImageView
 
                                 android:id="@+id/imvshare"
                                 android:layout_width="wrap_content"
-
-
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginRight="30dp"
+                                android:layout_marginTop="10dp"
+
+
+                                android:layout_marginRight="5dp"
+                                android:layout_toLeftOf="@id/fav_button"
                                 android:gravity="center_horizontal"
                                 android:src="@drawable/ic_baseline_share_24">
 
                             </ImageView>
+
                             <com.like.LikeButton
                                 android:id="@+id/fav_button"
-                                android:layout_width="30dp"
-                                android:layout_height="30dp"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_marginTop="10dp"
                                 android:layout_marginRight="10dp"
 
-                                app:icon_size="25dp"
+                                app:icon_size="23dp"
                                 app:icon_type="heart" />
                         </RelativeLayout>
 
@@ -169,11 +170,11 @@
                             android:id="@+id/layout_details"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="35dp"
-                            android:layout_marginTop="5dp"
+                            android:layout_below="@+id/laytimage"
+                            android:layout_marginLeft="5dp"
 
-                            android:layout_marginBottom="50dp"
-                            android:layout_toRightOf="@id/laytimage"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
                             android:orientation="vertical">
 
                             <RelativeLayout
@@ -183,6 +184,7 @@
                                 <TextView
                                     android:layout_width="253dp"
                                     android:layout_height="27dp"
+                                    android:layout_centerHorizontal="true"
                                     android:layout_marginTop="15dp"
                                     android:fontFamily="@font/montserratsemibold"
                                     android:gravity="center_horizontal"
@@ -204,6 +206,7 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
                                     android:orientation="vertical">
 
                                     <LinearLayout

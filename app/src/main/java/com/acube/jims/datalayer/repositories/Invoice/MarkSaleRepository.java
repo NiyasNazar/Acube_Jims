@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.acube.jims.datalayer.api.RestApiService;
 import com.acube.jims.datalayer.api.RetrofitInstance;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
+import com.acube.jims.datalayer.models.Invoice.SaleSuccess;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import retrofit2.Response;
 
 public class MarkSaleRepository {
     private Application application;
-    private MutableLiveData<JsonObject> dataset;
+    private MutableLiveData<SaleSuccess> dataset;
 
     public MarkSaleRepository() {
         dataset = new MutableLiveData<>();
@@ -29,10 +30,10 @@ public class MarkSaleRepository {
         RestApiService restApiService = RetrofitInstance.getApiService();
 
 
-        Call<JsonObject> call = restApiService.markSaleOrQuotation(Auth, JsonObject);
-        call.enqueue(new Callback<JsonObject>() {
+        Call<SaleSuccess> call = restApiService.markSaleOrQuotation(Auth, JsonObject);
+        call.enqueue(new Callback<SaleSuccess>() {
             @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+            public void onResponse(Call<SaleSuccess> call, Response<SaleSuccess> response) {
                 if (response.body() != null && response.code() == 200 || response.code() == 201) {
                     dataset.setValue(response.body());
                 } else {
@@ -43,7 +44,7 @@ public class MarkSaleRepository {
             }
 
             @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
+            public void onFailure(Call<SaleSuccess> call, Throwable t) {
                 dataset.setValue(null);
                 Log.d("TAG", "onFailure: " + t.getMessage());
             }
@@ -51,7 +52,7 @@ public class MarkSaleRepository {
 
     }
 
-    public LiveData<JsonObject> getResponseLiveData() {
+    public LiveData<SaleSuccess> getResponseLiveData() {
         return dataset;
     }
 }

@@ -71,8 +71,8 @@
                 android:layout_width="@dimen/_17sdp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:paddingTop="@dimen/_5sdp"
-                android:paddingBottom="@dimen/_5sdp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:src="@drawable/icon_back">
 
             </ImageView>

@@ -290,7 +290,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         catalogViewModelNextPage.init();
         filterViewModel.init();
         if (new AppUtility(getActivity()).isTablet(getActivity())) {
-            gridLayoutManager = new GridLayoutManager(getActivity(), 3);
+            gridLayoutManager = new GridLayoutManager(getActivity(), 4);
             // binding.recyvcatalog.setLayoutManager(new GridLayoutManager(getActivity(), 3));
             binding.recyvcatalog.setLayoutManager(gridLayoutManager);
 

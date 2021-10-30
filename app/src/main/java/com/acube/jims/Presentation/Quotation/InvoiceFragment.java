@@ -39,6 +39,7 @@ import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Cart.CartDetail;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
+import com.acube.jims.datalayer.models.Invoice.SaleSuccess;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -119,9 +120,9 @@ public class InvoiceFragment extends BaseFragment implements InvoiceAdapter.Disc
 
         String[] strArray = filteredvalue.toArray(new String[filteredvalue.size()]);
         // jsonObject
-        saleViewModel.getLiveData().observe(getActivity(), new Observer<JsonObject>() {
+        saleViewModel.getLiveData().observe(getActivity(), new Observer<SaleSuccess>() {
             @Override
-            public void onChanged(JsonObject jsonObject) {
+            public void onChanged(SaleSuccess jsonObject) {
                 hideProgressDialog();
                 startActivity(new Intent(getActivity(), SaleSuccessActivity.class));
             }

@@ -38,7 +38,7 @@ public class ResponseCustomerHistory {
     private List<ItemViewHistory> itemViewHistory = null;
     @SerializedName("saleHistory")
     @Expose
-    private List<Object> saleHistory = null;
+    private List<SalesHistory> saleHistory = null;
 
     public Integer getCustomerID() {
         return customerID;
@@ -112,11 +112,11 @@ public class ResponseCustomerHistory {
         this.itemViewHistory = itemViewHistory;
     }
 
-    public List<Object> getSaleHistory() {
+    public List<SalesHistory> getSaleHistory() {
         return saleHistory;
     }
 
-    public void setSaleHistory(List<Object> saleHistory) {
+    public void setSaleHistory(List<SalesHistory> saleHistory) {
         this.saleHistory = saleHistory;
     }
 

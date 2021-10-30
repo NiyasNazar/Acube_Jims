@@ -59,7 +59,7 @@ public class FoundReportActivity extends BaseActivity {
         jsonObject.addProperty("locationID", Integer.parseInt(locationid));
 
 
-        mViewModel.FetchInvoice(LocalPreferences.getToken(getApplicationContext()), jsonObject);
+        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
         mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
             @Override
             public void onChanged(ResponseReport responseReport) {

@@ -1,6 +1,9 @@
 package com.acube.jims.Presentation.CustomerManagment.View;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
@@ -8,31 +11,27 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.CustomerManagment.ViewModel.CustomerHistoryViewModel;
-import com.acube.jims.Presentation.CustomerManagment.adapter.LastViewedAdapter;
 import com.acube.jims.Presentation.CustomerManagment.adapter.LastViewedAdapterAll;
+import com.acube.jims.Presentation.CustomerManagment.adapter.SalesHistoryAdapter;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentCustomerViewedItemsBinding;
-import com.acube.jims.databinding.FragmentCustomerViewfragmentBinding;
 import com.acube.jims.datalayer.models.CustomerManagment.ItemViewHistory;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerHistory;
+import com.acube.jims.datalayer.models.CustomerManagment.SalesHistory;
 
 import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CustomerViewedItemsFragment#newInstance} factory method to
+ * Use the {@link CustomerSalesHistoryFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerViewedItemsFragment extends BaseFragment implements LastViewedAdapterAll.ReplaceFragment {
+public class CustomerSalesHistoryFragment extends BaseFragment implements SalesHistoryAdapter.ReplaceFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -43,7 +42,7 @@ public class CustomerViewedItemsFragment extends BaseFragment implements LastVie
     private String mParam1;
     private String mParam2;
 
-    public CustomerViewedItemsFragment() {
+    public CustomerSalesHistoryFragment() {
         // Required empty public constructor
     }
 
@@ -56,8 +55,8 @@ public class CustomerViewedItemsFragment extends BaseFragment implements LastVie
      * @return A new instance of fragment CustomerViewedItemsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CustomerViewedItemsFragment newInstance(String param1, String param2) {
-        CustomerViewedItemsFragment fragment = new CustomerViewedItemsFragment();
+    public static CustomerSalesHistoryFragment newInstance(String param1, String param2) {
+        CustomerSalesHistoryFragment fragment = new CustomerSalesHistoryFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,10 +85,6 @@ public class CustomerViewedItemsFragment extends BaseFragment implements LastVie
                 inflater, R.layout.fragment_customer_viewed_items, container, false);
         binding.toolbar.tvFragname.setText("Last Viewed Items");
         showProgressDialog();
-        String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "custname");
-        String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "custcode");
-
-        binding.tvloggeduserdetails.setText("Customer Details: "+Customername+"-"+CustomerCode);
         binding.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +93,10 @@ public class CustomerViewedItemsFragment extends BaseFragment implements LastVie
         });
         customerHistoryViewModel = ViewModelProviders.of(this).get(CustomerHistoryViewModel.class);
         customerHistoryViewModel.init();
+        String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "custname");
+        String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "custcode");
+
+        binding.tvloggeduserdetails.setText("Customer Details: "+Customername+"-"+CustomerCode);
         String GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getActivity()), GuestCustomerID);
         customerHistoryViewModel.getCustomerLiveData().observe(getActivity(), new Observer<ResponseCustomerHistory>() {
@@ -105,8 +104,8 @@ public class CustomerViewedItemsFragment extends BaseFragment implements LastVie
             public void onChanged(ResponseCustomerHistory responseCustomerHistory) {
                 hideProgressDialog();
                 if (responseCustomerHistory != null) {
-                    List<ItemViewHistory> itemViewHistory = responseCustomerHistory.getItemViewHistory();
-                    binding.recyvvieweditems.setAdapter(new LastViewedAdapterAll(getActivity(), itemViewHistory, CustomerViewedItemsFragment.this));
+                    List<SalesHistory> itemViewHistory = responseCustomerHistory.getSaleHistory();
+                    binding.recyvvieweditems.setAdapter(new SalesHistoryAdapter(getActivity(), itemViewHistory, CustomerSalesHistoryFragment.this));
                 }
             }
         });

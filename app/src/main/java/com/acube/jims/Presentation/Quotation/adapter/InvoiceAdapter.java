@@ -90,21 +90,23 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
 
         }
         holder.textViewitemName.setText(cartDetail.getItemName());
+        holder.textViewStoneWeight.setText(""+cartDetail.getStoneWeight());
         holder.textViewSerialno.setText(cartDetail.getSerialNumber());
         holder.Pricetvwithouttax.setText("" + cartDetail.getPriceWithoutTax());
-        holder.edViewWeight.setText("" + cartDetail.getGoldWeight());
-        double labourcharge = cartDetail.getLabourCharge() * cartDetail.getGoldWeight();
+        double totalgoldweight=cartDetail.getGoldWeight()+cartDetail.getStoneWeight();
+        holder.edViewWeight.setText("" + totalgoldweight);
+        double labourcharge = cartDetail.getLabourCharge() * totalgoldweight;
         labourchargewithtax = (labourcharge / 100.0f) * cartDetail.getLabourTax() + labourcharge;
 
         Log.d("Labourcharge", "onBindViewHolder: " + labourchargewithtax);
-        double goldprice = ((cartDetail.getPriceWithoutTax() / 1000) * (cartDetail.getGoldWeight() * 1000));
+        double goldprice = ((cartDetail.getPriceWithoutTax() / 1000) * (totalgoldweight * 1000));
         pricewithtax = (goldprice / 100.0f) * cartDetail.getItemTax() + goldprice;
         totalamountwithalltax = pricewithtax + labourchargewithtax;
         minpercentage = cartDetail.getLabourChargeMin();
         maxpercentage = cartDetail.getLabourChargeMax();
         holder.textViewPrice.setText("SAR " + totalamountwithalltax);
         holder.textViewItemKarat.setText(cartDetail.getKaratCode());
-        holder.textViewlabourcharge.setText("SAR " + cartDetail.getLabourCharge() * cartDetail.getGoldWeight());
+        holder.textViewlabourcharge.setText("SAR " + cartDetail.getLabourCharge() * totalgoldweight);
        /* DiscountItem discountItem=new DiscountItem();
         discountItem.setItemserial(cartDetail.getSerialNumber());
         discountItem.setAmt(labrchrgdiscount);
@@ -122,7 +124,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Pricetvwithouttax, textViewitemName, textViewItemKarat, textViewSerialno, textViewPrice, textViewlabourcharge;
+        TextView Pricetvwithouttax, textViewitemName, textViewItemKarat, textViewSerialno, textViewPrice, textViewlabourcharge,textViewStoneWeight;
         ImageView imageViewadd, imageViewremove, ItemImage, imageviewdelete;
         EditText edDiscount, edViewWeight;
 
@@ -135,7 +137,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
             textViewItemKarat= itemView.findViewById(R.id.tv_itemkarat);
             textViewPrice = itemView.findViewById(R.id.tvprice);
             textViewlabourcharge = itemView.findViewById(R.id.tvlabourcharge);
-
+            textViewStoneWeight= itemView.findViewById(R.id.tv_stoneweight);
             edDiscount = itemView.findViewById(R.id.tvdiscount);
             edDiscount.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -300,7 +302,7 @@ public class InvoiceAdapter extends RecyclerView.Adapter<InvoiceAdapter.ProductV
                     if (!s.toString().equalsIgnoreCase("")) {
                         if (cartDetail.getGoldWeight()==0){
 
-                            double calculation = (cartDetail.getPriceWithoutTax() );
+                            double calculation = (cartDetail.getPriceWithoutTax());
                             Log.d("beforeTextChanged", "beforeTextChanged: " + calculation);
                             Log.d("niyastesting", "weight: " + s.toString());
                           //  calculatedlabourcharge = cartDetail.getLabourCharge() * goldweighEnteredvalue;

@@ -73,8 +73,8 @@ public class CustomerListAdapter extends RecyclerView.Adapter<CustomerListAdapte
                 public void onClick(View v) {
                     int pos = getBindingAdapterPosition();
                     LocalPreferences.storeStringPreference(mCtx, "GuestCustomerID", String.valueOf(customerListings.get(pos).getId()));
-
-
+                    LocalPreferences.storeStringPreference(mCtx, "custname", customerListings.get(pos).getCustomerName());
+                    LocalPreferences.storeStringPreference(mCtx, "custcode", customerListings.get(pos).getCustomerCode());
                     replaceFragment.replacefragments();
                 }
             });

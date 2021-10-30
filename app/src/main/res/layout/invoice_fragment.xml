@@ -100,152 +100,200 @@
 
                     </TextView>
 
-                    <TableRow
-                        android:id="@+id/header"
+                    <HorizontalScrollView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_below="@id/tvcustomercontactnumber"
                         android:layout_marginLeft="6dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="6dp"
-                        android:orientation="horizontal">
+                        android:layout_marginRight="6dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <TableRow
+                                android:id="@+id/header"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="6dp"
+                                android:orientation="horizontal">
 
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/table_border"
 
 
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Item"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:text="Item"
+                                    android:textAllCaps="false"
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
 
-                        </TextView>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
+                                </TextView>
 
-
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Karat"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Serial No"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Gold Weight(g)"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Making Charge"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-
-                            android:text="Discount %"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:minLines="2"
-                            android:text="Price"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-
-                        <TextView
-                            android:layout_width="0dp"
-
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:minLines="2"
-                            android:text="Price with tax"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/table_border"
+                                    android:fontFamily="@font/poppins_semibold"
 
 
-                    </TableRow>
+                                    android:gravity="center"
+                                    android:text="Karat"
+                                    android:textAllCaps="false"
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyvinvoiceitems"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/header"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="6dp"
-                        android:layout_marginBottom="15dp">
+                                </TextView>
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/table_border"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:text="Serial No"
+                                    android:textAllCaps="false"
+
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:layout_width="100dp"
+                                    android:layout_height="50dp"
+
+                                    android:background="@drawable/table_border"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:text="Stone\n Weight(g)"
+
+                                    android:textAllCaps="false"
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/table_border"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:text="Gold Weight(g)"
+
+                                    android:textAllCaps="false"
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/table_border"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:text="Making Charge"
+
+                                    android:textAllCaps="false"
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/table_border"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:text="Discount %"
+
+                                    android:textAllCaps="false"
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="50dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/table_border"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:minLines="2"
+                                    android:text="Price"
+
+                                    android:textAllCaps="false"
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:layout_width="0dp"
+
+                                    android:layout_height="50dp"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/table_border"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+                                    android:minLines="2"
+                                    android:text="Price with tax"
+
+                                    android:textAllCaps="false"
+                                    android:textColor="#666666"
+                                    android:textSize="10sp">
+
+                                </TextView>
+
+
+                            </TableRow>
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyvinvoiceitems"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/header"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginBottom="15dp">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
 
                 </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/summarylayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
                     android:layout_above="@id/bottomlayt"
                     android:layout_alignParentRight="true"
+                    android:orientation="vertical">
 
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/tvsalesamount"
                         android:layout_width="wrap_content"
@@ -273,6 +321,7 @@
                         android:textColor="@color/headercolor">
 
                     </TextView>
+
                     <TextView
                         android:id="@+id/tvtax"
                         android:layout_width="wrap_content"

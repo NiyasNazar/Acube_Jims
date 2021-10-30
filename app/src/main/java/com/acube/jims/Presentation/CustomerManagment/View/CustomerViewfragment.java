@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import com.acube.jims.BaseFragment;
 import com.acube.jims.Presentation.CustomerManagment.ViewModel.CustomerHistoryViewModel;
 import com.acube.jims.Presentation.CustomerManagment.adapter.LastViewedAdapter;
+import com.acube.jims.Presentation.CustomerManagment.adapter.SalesHistoryAdapter;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
@@ -26,6 +27,7 @@ import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentCustomerViewfragmentBinding;
 import com.acube.jims.datalayer.models.CustomerManagment.ItemViewHistory;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerHistory;
+import com.acube.jims.datalayer.models.CustomerManagment.SalesHistory;
 import com.google.gson.JsonObject;
 
 import java.text.ParseException;
@@ -41,7 +43,7 @@ import java.util.Locale;
  * Use the {@link CustomerViewfragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CustomerViewfragment extends BaseFragment implements LastViewedAdapter.ReplaceFragment {
+public class CustomerViewfragment extends BaseFragment implements LastViewedAdapter.ReplaceFragment, SalesHistoryAdapter.ReplaceFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -85,7 +87,7 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
 
     FragmentCustomerViewfragmentBinding binding;
     CustomerHistoryViewModel customerHistoryViewModel;
-    String GuestCustomerName, GuestCustomerCode, GuestCustomerID, CustomerSessionStartTime,CustomerMobile;
+    String GuestCustomerName, GuestCustomerCode, GuestCustomerID, CustomerSessionStartTime, CustomerMobile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -107,6 +109,8 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
             }
         });
         binding.recyvvieweditems.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        binding.recyvsaleshistory.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+
         GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
         showProgressDialog();
         customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getActivity()), GuestCustomerID);
@@ -118,12 +122,12 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
 
                     GuestCustomerName = responseCustomerHistory.getCustomerName();
                     GuestCustomerCode = responseCustomerHistory.getCustomerCode();
-                    CustomerMobile=responseCustomerHistory.getCustomerContactNo();
+                    CustomerMobile = responseCustomerHistory.getCustomerContactNo();
                     Log.d("onChanged", "onChanged: " + GuestCustomerName);
                     binding.tvCustomername.setText(GuestCustomerName);
                     binding.tvcustomercode.setText(responseCustomerHistory.getCustomerCode());
                     binding.tvcustomercontact.setText(responseCustomerHistory.getCustomerContactNo());
-                    if(responseCustomerHistory.getLastVisit()!=null){
+                    if (responseCustomerHistory.getLastVisit() != null) {
                         binding.tvlastvisit.setText(ParseDate(responseCustomerHistory.getLastVisit()));
 
                     }
@@ -131,6 +135,13 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
                     binding.tvtotalvisit.setText("" + responseCustomerHistory.getTotalVisit());
                     binding.tvtoalpurchase.setText("" + responseCustomerHistory.getTotalPurchase());
                     List<ItemViewHistory> itemViewHistory = responseCustomerHistory.getItemViewHistory();
+                    List<SalesHistory> datasetsaleshistory = responseCustomerHistory.getSaleHistory();
+                    if (datasetsaleshistory != null && datasetsaleshistory.size() != 0) {
+                        binding.recyvsaleshistory.setAdapter(new SalesHistoryAdapter(getActivity(), datasetsaleshistory, CustomerViewfragment.this));
+                        binding.laytsaleshistory.setVisibility(View.VISIBLE);
+                    } else {
+                        binding.laytsaleshistory.setVisibility(View.GONE);
+                    }
                     binding.recyvvieweditems.setAdapter(new LastViewedAdapter(getActivity(), itemViewHistory, CustomerViewfragment.this));
 
 
@@ -145,6 +156,12 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
 
                 FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerViewedItemsFragment());
 
+            }
+        });
+        binding.viewAllsales.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentHelper.replaceFragment(getActivity(), R.id.content, new CustomerSalesHistoryFragment());
             }
         });
 
@@ -162,7 +179,7 @@ public class CustomerViewfragment extends BaseFragment implements LastViewedAdap
         LocalPreferences.storeStringPreference(getActivity(), "GuestCustomerCode", GuestCustomerCode);
         LocalPreferences.storeStringPreference(getActivity(), "GuestCustomerID", GuestCustomerID);
         LocalPreferences.storeStringPreference(getActivity(), "CustomerSessionStartTime", starttime);
-        LocalPreferences.storeStringPreference(getActivity(),"CustomerMobile",CustomerMobile);
+        LocalPreferences.storeStringPreference(getActivity(), "CustomerMobile", CustomerMobile);
         FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment(), "");
     }
 

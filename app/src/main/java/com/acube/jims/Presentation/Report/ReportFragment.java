@@ -106,7 +106,7 @@ public class ReportFragment extends Fragment {
                 jsonObject.addProperty("companyID", companyID);
                 jsonObject.addProperty("warehouseID", warehouseID);
                 jsonObject.addProperty("locationID", 0);
-                mViewModel.FetchInvoice(LocalPreferences.getToken(getContext()), jsonObject);
+                mViewModel.FetchReports(LocalPreferences.getToken(getContext()), jsonObject);
             }
 
             @Override

@@ -108,7 +108,7 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
         });
 
 
-        mViewModel.FetchInvoice(LocalPreferences.getToken(getApplicationContext()), jsonObject);
+        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
         mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
             @Override
             public void onChanged(ResponseReport responseReport) {

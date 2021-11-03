@@ -17,7 +17,9 @@ import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Audit.Found;
 import com.acube.jims.datalayer.models.Audit.Missing;
+import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +34,10 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     PassId passId;
 
 
-    public Missingadapter(Context mCtx, List<Missing> dataset,PassId passId) {
+    public Missingadapter(Context mCtx, List<Missing> dataset, PassId passId) {
         this.mCtx = mCtx;
         this.dataset = dataset;
-        this.passId=passId;
-
+        this.passId = passId;
         datalist = new ArrayList<>();
 
     }
@@ -53,17 +54,28 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         Missing missing = dataset.get(position);
-        holder.textViewItemName.setText(missing.getSystemLocationName());
-        holder.textViewLoccode.setText(missing.getScanLocationName());
-        holder.textViewSerialNo.setText(missing.getSerialNumber());
+        holder.tvlocationname.setText("System Location : " + missing.getSystemLocationName());
+        holder.textViewItemName.setText("Item : " + missing.getItemName());
+        holder.textViewLoccode.setText("Scanned Location : " + missing.getScanLocationName());
+        holder.textViewSerialNo.setText("Sl No. : " + missing.getSerialNumber());
+        try {
+            DecimalFormat format = new DecimalFormat("0.#");
+
+            holder.tvkarat.setText("Karat: " + format.format(missing.getKaratCode()));
+        } catch (NumberFormatException e) {
+
+        }
+
+        holder.tvcategory.setText("Category : " + missing.getCategoryName());
+        Glide.with(mCtx).load(missing.getItemImagePath()).into(holder.imageView);
 
 
         if (!isSelectedAll) {
             holder.locatecheckbox.setChecked(false);
-              datalist=new ArrayList<>();
+            datalist = new ArrayList<>();
         } else {
             holder.locatecheckbox.setChecked(true);
-           datalist.add(String.valueOf(dataset.get(position).getSerialNumber()));
+            datalist.add(String.valueOf(dataset.get(position).getSerialNumber()));
         }
 
 
@@ -78,8 +90,7 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewLoccode, textViewSerialNo;
-        ImageView imageView;
+        TextView textViewItemName, textViewLoccode, textViewSerialNo, tvlocationname, tvkarat, tvcategory;        ImageView imageView;
         CheckBox locatecheckbox;
         ResponseItems responseItems;
         RelativeLayout selection;
@@ -87,10 +98,12 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-
-            textViewItemName = itemView.findViewById(R.id.tvlocationname);
+            tvlocationname = itemView.findViewById(R.id.tvlocationname);
+            tvkarat = itemView.findViewById(R.id.tvkarat);
+            tvcategory = itemView.findViewById(R.id.tvcategory);
+            textViewItemName = itemView.findViewById(R.id.tvitemname);
             selection = itemView.findViewById(R.id.layoutparent);
-            tableRow4 = itemView.findViewById(R.id.tableRow4);
+            imageView = itemView.findViewById(R.id.imvitemimage);
 
             textViewLoccode = itemView.findViewById(R.id.tvlocationcode);
             textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
@@ -98,7 +111,7 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
             textViewSerialNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    passId.passid(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber(),dataset.get(getBindingAdapterPosition()).getScanLocationID());
+                    passId.passid(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber(), dataset.get(getBindingAdapterPosition()).getScanLocationID());
                 }
             });
 
@@ -120,7 +133,8 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     }
 
     public interface PassId {
-        void passid(String id,Integer locid);
+        void passid(String id, Integer locid);
+
         void compareitems(List<String> comparelist);
     }
 

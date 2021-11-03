@@ -8,11 +8,13 @@ import com.acube.jims.Presentation.Quotation.adapter.DiscountItem;
 import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
+import com.acube.jims.datalayer.models.LocateProduct.LocateItem;
 import com.acube.jims.datalayer.remote.dbmodel.CustomerHistory;
 import com.acube.jims.datalayer.remote.dbmodel.HomeMenu;
 
 
-@Database(entities = {HomeData.class, ResponseItems.class, CustomerHistory.class, DiscountItem.class}, version = 5)
+@Database(entities = {HomeData.class, ResponseItems.class, CustomerHistory.class,
+        DiscountItem.class, LocateItem.class}, version = 6)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract HomeMenuDao homeMenuDao();
 
@@ -23,6 +25,8 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract CustomerHistoryDao customerHistoryDao();
 
     public abstract DiscountItemsDao discountItemsDao();
+
+    public abstract LocateItemsDao locateItemsDao();
 
 }
 

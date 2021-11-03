@@ -18,8 +18,11 @@ import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.datalayer.models.Audit.Found;
+import com.acube.jims.datalayer.models.Audit.Missing;
 import com.acube.jims.datalayer.models.Audit.ResponseLocationList;
+import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class Foundadapter extends RecyclerView.Adapter<Foundadapter.ProductViewHolder> {
@@ -38,8 +41,6 @@ public class Foundadapter extends RecyclerView.Adapter<Foundadapter.ProductViewH
         this.dataset = dataset;
 
 
-
-
     }
 
     @Override
@@ -53,22 +54,30 @@ public class Foundadapter extends RecyclerView.Adapter<Foundadapter.ProductViewH
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
+
         Found found = dataset.get(position);
-        holder.textViewItemName.setText(found.getSystemLocationName());
-        holder.textViewLoccode.setText(found.getScanLocationName());
-        holder.textViewDate.setText(found.getSerialNumber());
+        holder.tvlocationname.setText("System Location : " + found.getSystemLocationName());
+        holder.textViewItemName.setText("Item : " + found.getItemName());
+        holder.textViewLoccode.setText("Scanned Location : " + found.getScanLocationName());
+        holder.textViewSerialNo.setText("Sl No. : " + found.getSerialNumber());
+        try {
+            if(found.getKaratCode()!=null){
+                DecimalFormat format = new DecimalFormat("0.#");
 
+                holder.tvkarat.setText("Karat: " + format.format(found.getKaratCode()));
+            }else{
+                holder.tvkarat.setText("Karat: " + "N/A");
+            }
 
+        } catch (NumberFormatException e) {
 
+        }
 
-
-
+        holder.tvcategory.setText("Category : " + found.getCategoryName());
+        Glide.with(mCtx).load(found.getItemImagePath()).into(holder.imageView);
 
 
     }
-
-
-
 
 
     @Override
@@ -79,7 +88,7 @@ public class Foundadapter extends RecyclerView.Adapter<Foundadapter.ProductViewH
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewLoccode,textViewDate;
+        TextView textViewItemName, textViewLoccode, textViewSerialNo, tvlocationname, tvkarat, tvcategory;
         ImageView imageView;
         CheckBox comparecheckbox;
         ResponseItems responseItems;
@@ -88,19 +97,21 @@ public class Foundadapter extends RecyclerView.Adapter<Foundadapter.ProductViewH
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-
-            textViewItemName = itemView.findViewById(R.id.tvlocationname);
+            tvlocationname = itemView.findViewById(R.id.tvlocationname);
+            textViewItemName = itemView.findViewById(R.id.tvitemname);
             selection = itemView.findViewById(R.id.layoutparent);
-            tableRow4=itemView.findViewById(R.id.tableRow4);
-
+            tableRow4 = itemView.findViewById(R.id.tableRow4);
+            tvkarat = itemView.findViewById(R.id.tvkarat);
+            tvcategory = itemView.findViewById(R.id.tvcategory);
+            imageView = itemView.findViewById(R.id.imvitemimage);
             textViewLoccode = itemView.findViewById(R.id.tvlocationcode);
-            textViewDate = itemView.findViewById(R.id.tv_serialnumber);
-
+            textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
 
 
         }
     }
-    public interface PassId{
+
+    public interface PassId {
         void passid(String id);
     }
 

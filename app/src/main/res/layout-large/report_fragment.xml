@@ -11,15 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-
         tools:context=".Presentation.Audit.AuditFragment">
 
         <RelativeLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-
 
 
             <RelativeLayout
@@ -34,9 +31,10 @@
                 <TextView
                     android:id="@+id/tabfound"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
                     android:paddingLeft="19dp"
                     android:paddingTop="5dp"
                     android:paddingRight="19dp"
@@ -50,10 +48,11 @@
                 <TextView
                     android:id="@+id/tabmissing"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_toRightOf="@id/tabfound"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
                     android:paddingLeft="19dp"
                     android:paddingTop="5dp"
                     android:paddingRight="19dp"
@@ -67,10 +66,11 @@
                 <TextView
                     android:id="@+id/tablocationmismatch"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_toRightOf="@id/tabmissing"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
                     android:paddingLeft="19dp"
                     android:paddingTop="5dp"
                     android:paddingRight="19dp"
@@ -84,10 +84,11 @@
                 <TextView
                     android:id="@+id/tabLocationApproved"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_toRightOf="@id/tablocationmismatch"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
                     android:paddingLeft="19dp"
                     android:paddingTop="5dp"
                     android:paddingRight="19dp"
@@ -101,12 +102,14 @@
                 <TextView
                     android:id="@+id/tabextra"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="35dp"
                     android:layout_toRightOf="@id/tabLocationApproved"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
                     android:paddingLeft="19dp"
                     android:paddingTop="5dp"
+
                     android:paddingRight="19dp"
                     android:paddingBottom="5dp"
                     android:text="Extra"
@@ -117,16 +120,20 @@
 
 
             </RelativeLayout>
+
             <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="20dp"
 
-                android:id="@+id/toolbar"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                >
 
             </include>
+
             <RelativeLayout
 
                 android:id="@+id/nestedscrollview"
@@ -143,6 +150,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="14dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginRight="14dp"
                     android:layout_marginBottom="16dp">
 
@@ -214,22 +222,22 @@
 
                     <RelativeLayout
                         android:id="@+id/auditlayt"
-                        android:layout_width="300dp"
-                        android:layout_height="50dp"
-                        android:layout_marginTop="9dp"
+                        android:layout_width="200dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="0dp"
                         android:layout_toRightOf="@id/laytdate"
                         android:background="@drawable/shapebg_1"
                         android:inputType="none"
                         android:paddingRight="10dp"
                         android:textSize="14sp"
-                        android:visibility="visible"
+                        android:visibility="gone"
 
                         app:hintText="Select Audit">
 
                         <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/ed_auditid"
-                            android:layout_width="300dp"
-                            android:layout_height="50dp"
+                            android:layout_width="200dp"
+                            android:layout_height="30dp"
 
 
                             android:inputType="none"
@@ -242,6 +250,7 @@
                     </RelativeLayout>
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:id="@+id/laytfilter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

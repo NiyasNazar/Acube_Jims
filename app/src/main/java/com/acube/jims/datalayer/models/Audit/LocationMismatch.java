@@ -127,6 +127,33 @@ public class LocationMismatch {
     @SerializedName("locationMismatch")
     @Expose
     private Object locationMismatch;
+    @SerializedName("locationMismatchApproved")
+    @Expose
+    private Object locationMismatchApproved;
+    @SerializedName("unknown")
+    @Expose
+    private Object unknown;
+    @SerializedName("itemImagePath")
+    @Expose
+    private String itemImagePath;
+    @SerializedName("categoryName")
+    @Expose
+    private String categoryName;
+    @SerializedName("subCategoryName")
+    @Expose
+    private String subCategoryName;
+    @SerializedName("karatCode")
+    @Expose
+    private Double karatCode;
+    @SerializedName("categoryID")
+    @Expose
+    private Integer categoryID;
+    @SerializedName("subCategoryID")
+    @Expose
+    private Integer subCategoryID;
+    @SerializedName("karatID")
+    @Expose
+    private Integer karatID;
 
     public String getAuditID() {
         return auditID;
@@ -455,4 +482,77 @@ public class LocationMismatch {
     public void setLocationMismatch(Object locationMismatch) {
         this.locationMismatch = locationMismatch;
     }
+
+    public Object getLocationMismatchApproved() {
+        return locationMismatchApproved;
+    }
+
+    public void setLocationMismatchApproved(Object locationMismatchApproved) {
+        this.locationMismatchApproved = locationMismatchApproved;
+    }
+
+    public Object getUnknown() {
+        return unknown;
+    }
+
+    public void setUnknown(Object unknown) {
+        this.unknown = unknown;
+    }
+
+    public String getItemImagePath() {
+        return itemImagePath;
+    }
+
+    public void setItemImagePath(String itemImagePath) {
+        this.itemImagePath = itemImagePath;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
+    }
+
+    public Double getKaratCode() {
+        return karatCode;
+    }
+
+    public void setKaratCode(Double karatCode) {
+        this.karatCode = karatCode;
+    }
+
+    public Integer getCategoryID() {
+        return categoryID;
+    }
+
+    public void setCategoryID(Integer categoryID) {
+        this.categoryID = categoryID;
+    }
+
+    public Integer getSubCategoryID() {
+        return subCategoryID;
+    }
+
+    public void setSubCategoryID(Integer subCategoryID) {
+        this.subCategoryID = subCategoryID;
+    }
+
+    public Integer getKaratID() {
+        return karatID;
+    }
+
+    public void setKaratID(Integer karatID) {
+        this.karatID = karatID;
+    }
+
 }

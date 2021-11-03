@@ -8,12 +8,15 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
+import com.acube.jims.Presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.Presentation.Report.adapter.Foundadapter;
 import com.acube.jims.R;
 import com.acube.jims.Utils.LocalPreferences;
@@ -50,9 +53,10 @@ public class FoundFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.found_fragment, container, false);
-        binding.recyvfound.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyvfound.setLayoutManager(new GridLayoutManager(getActivity(),2));
         binding.tvTotaldata.setText("Total Items Found : "+dataset.size());
         binding.recyvfound.setAdapter(new Foundadapter(getActivity(), dataset));
+
 
 
         return binding.getRoot();

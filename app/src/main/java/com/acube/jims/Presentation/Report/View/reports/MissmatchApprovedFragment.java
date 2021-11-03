@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -71,7 +72,7 @@ public class MissmatchApprovedFragment extends Fragment {
 
                 inflater, R.layout.fragment_missmatch_approved, container, false);
 
-        binding.recyvapproved.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyvapproved.setLayoutManager(new GridLayoutManager(getActivity(),2));
         binding.recyvapproved.setAdapter(new LocationApprovedAdapter(getActivity(),locationMismatchApprovedList));
         binding.tvTotaldata.setText("Total Mismatch Approved Items : " + locationMismatchApprovedList.size());
         return binding.getRoot();

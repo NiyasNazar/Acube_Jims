@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp">
+
+            </include>
+
+            <RelativeLayout
+                android:id="@+id/nestedscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_border_detailspage">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="16dp">
+
+                    <TextView
+                        android:id="@+id/tvheader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/montserratsemibold"
+                        android:gravity="center_horizontal"
+                        android:letterSpacing="0.01"
+                        android:text="Locate Product"
+                        android:textColor="@color/headercolor"
+                        android:textSize="18sp"
+                        android:textStyle="normal" />
+
+                    <EditText
+                        android:id="@+id/ed_locate"
+                        android:layout_width="300dp"
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/tvheader"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/ed_border"
+                        android:hint="Enter serial no.s "
+                        android:inputType="textEmailAddress"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp">
+
+                    </EditText>
+
+                    <LinearLayout
+                        android:id="@+id/btn_add"
+                        android:layout_width="139dp"
+
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/tvheader"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="36dp"
+
+
+                        android:layout_toRightOf="@id/ed_locate"
+                        android:background="@drawable/oval_btn_signin"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Add"
+                            android:textColor="#FFFFFF">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/btn_clear"
+                        android:layout_width="139dp"
+
+                        android:layout_height="50dp"
+                        android:layout_below="@+id/tvheader"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="13dp"
+                        android:layout_marginBottom="36dp"
+
+
+                        android:layout_toRightOf="@id/btn_add"
+                        android:background="@drawable/oval_btn_signin"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Clear"
+                            android:textColor="#FFFFFF">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recylocateitems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/ed_locate"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginTop="9dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_marginBottom="15dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/btn_locate"
+                    android:layout_width="139dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+
+                    android:layout_alignParentBottom="true"
+
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+
+
+                    android:background="@drawable/oval_btn_signin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Locate"
+                        android:textColor="#FFFFFF">
+
+                    </TextView>
+
+
+                </LinearLayout>
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+    </FrameLayout>
+</layout>

@@ -18,14 +18,15 @@
             android:id="@+id/tv_totaldata"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/poppins_semibold"
+            android:layout_marginTop="5dp"
 
-            android:textColor="@color/textcolor">
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/lighblack">
 
         </TextView>
+
         <TableRow
+            android:visibility="gone"
             android:layout_below="@id/tv_totaldata"
             android:id="@+id/header"
 

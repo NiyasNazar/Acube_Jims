@@ -20,6 +20,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -86,7 +87,7 @@ public class MissingFragment extends Fragment implements MissingadapterforFragme
             }
         });
 
-        binding.recyvfound.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyvfound.setLayoutManager(new GridLayoutManager(getActivity(),2));
         adapter = new MissingadapterforFragment(getActivity(), dataset, MissingFragment.this);
         binding.recyvfound.setAdapter(adapter);
         binding.tvTotaldata.setText("Total Items Missing : " + dataset.size());

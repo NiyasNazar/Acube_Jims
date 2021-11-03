@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.Presentation.Report.adapter.Foundadapter;
@@ -47,7 +48,7 @@ public class LocationMismatchFragment extends Fragment {
 
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.found_fragment, container, false);
-        binding.recyvfound.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding.recyvfound.setLayoutManager(new GridLayoutManager(getActivity(),2));
         binding.recyvfound.setAdapter(new LocationMismatchAdapter(getActivity(), datasetlocationmismatch));
 
         binding.tvTotaldata.setText("Total Items Location Mismatch : " + datasetlocationmismatch.size());

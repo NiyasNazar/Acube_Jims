@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.BaseActivity;
@@ -35,7 +36,7 @@ public class LocationMistmatchReport extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_report_locationmismatch);
-        binding.recyvfound.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         mViewModel.init();
         binding.backlayout.parentlayout.setOnClickListener(new View.OnClickListener() {

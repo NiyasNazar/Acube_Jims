@@ -55,95 +55,44 @@
 
             </TextView>
 
-            <TableRow
-                android:id="@+id/header"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/laytcheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
 
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tv_totaldata"
-                android:layout_marginLeft="6dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginRight="6dp"
+
+                android:layout_marginTop="3dp"
+
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1"
+                android:gravity="center"
                 android:orientation="horizontal">
 
-                <TextView
+                <CheckBox
 
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/table_border"
-
-
-                    android:fontFamily="@font/poppins_semibold"
+                    android:id="@+id/checkBoxselectall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Serial No."
-                    android:textAllCaps="false"
-                    android:textColor="#666666">
 
-                </TextView>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/table_border"
+                    android:text="Select All"
 
 
-                    android:fontFamily="@font/poppins_semibold"
-                    android:gravity="center"
-                    android:text="System Location"
-                    android:textAllCaps="false"
-                    android:textColor="#666666">
-
-                </TextView>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/table_border"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:gravity="center"
-                    android:text="Scanned Location"
-                    android:textAllCaps="false"
-                    android:textColor="#666666">
-
-                </TextView>
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-
-                    android:layout_height="50dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/table_border"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <CheckBox
-
-                        android:id="@+id/checkBoxselectall"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-
-                        android:text="Select All"
-
-
-                        />
-                </LinearLayout>
-
-            </TableRow>
+                    />
+            </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyvfound"
-
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/header"
+
+                android:layout_height="match_parent"
+                android:layout_below="@id/laytcheckbox"
                 android:layout_marginLeft="6dp"
-                android:layout_marginRight="6dp">
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginBottom="15dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -170,6 +119,7 @@
                 </TextView>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
+
         <TextView
             android:id="@+id/tv_notfound"
             android:layout_width="wrap_content"

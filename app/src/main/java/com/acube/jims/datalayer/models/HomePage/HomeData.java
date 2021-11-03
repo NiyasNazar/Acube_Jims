@@ -54,6 +54,7 @@ public class HomeData implements Serializable {
     @ColumnInfo(name = "sortOrder")
 
     private Integer sortOrder;
+    private int menuicon;
 
     public String getMenuType() {
         return menuType;
@@ -125,5 +126,13 @@ public class HomeData implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getMenuicon() {
+        return menuicon;
+    }
+
+    public void setMenuicon(int menuicon) {
+        this.menuicon = menuicon;
     }
 }

@@ -16,7 +16,9 @@ import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Audit.LocationMismatch;
 import com.acube.jims.datalayer.models.Audit.LocationMismatchApproved;
+import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class LocationApprovedAdapter extends RecyclerView.Adapter<LocationApprovedAdapter.ProductViewHolder> {
@@ -50,10 +52,26 @@ public class LocationApprovedAdapter extends RecyclerView.Adapter<LocationApprov
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
-        LocationMismatchApproved locationMismatch = dataset.get(position);
-        holder.textViewItemName.setText(locationMismatch.getSystemLocationName());
-        holder.textViewLoccode.setText(locationMismatch.getScanLocationName());
-        holder.textViewDate.setText(locationMismatch.getSerialNumber());
+        LocationMismatchApproved approved = dataset.get(position);
+        holder.tvlocationname.setText("System Location : " + approved.getSystemLocationName());
+        holder.textViewItemName.setText("Item : " + approved.getItemName());
+        holder.textViewLoccode.setText("Scanned Location : " + approved.getScanLocationName());
+        holder.textViewSerialNo.setText("Sl No. : " + approved.getSerialNumber());
+        try {
+            if(approved.getKaratCode()!=null){
+                DecimalFormat format = new DecimalFormat("0.#");
+
+                holder.tvkarat.setText("Karat: " + format.format(approved.getKaratCode()));
+            }else{
+                holder.tvkarat.setText("Karat: " + "N/A");
+            }
+
+        } catch (NumberFormatException e) {
+
+        }
+
+        holder.tvcategory.setText("Category : " + approved.getCategoryName());
+        Glide.with(mCtx).load(approved.getItemImagePath()).into(holder.imageView);
 
 
 
@@ -76,7 +94,7 @@ public class LocationApprovedAdapter extends RecyclerView.Adapter<LocationApprov
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewLoccode,textViewDate;
+        TextView textViewItemName, textViewLoccode, textViewSerialNo, tvlocationname, tvkarat, tvcategory;
         ImageView imageView;
         CheckBox comparecheckbox;
         ResponseItems responseItems;
@@ -85,13 +103,15 @@ public class LocationApprovedAdapter extends RecyclerView.Adapter<LocationApprov
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-
-            textViewItemName = itemView.findViewById(R.id.tvlocationname);
+            tvlocationname = itemView.findViewById(R.id.tvlocationname);
+            textViewItemName = itemView.findViewById(R.id.tvitemname);
             selection = itemView.findViewById(R.id.layoutparent);
             tableRow4=itemView.findViewById(R.id.tableRow4);
 
             textViewLoccode = itemView.findViewById(R.id.tvlocationcode);
-            textViewDate = itemView.findViewById(R.id.tv_serialnumber);
+            tvkarat = itemView.findViewById(R.id.tvkarat);
+            tvcategory = itemView.findViewById(R.id.tvcategory);
+            imageView = itemView.findViewById(R.id.imvitemimage);
 
 
 

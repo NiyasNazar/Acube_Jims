@@ -26,6 +26,7 @@
 
         </TextView>
         <TableRow
+            android:visibility="gone"
             android:layout_below="@id/tv_totaldata"
             android:id="@+id/header"
 

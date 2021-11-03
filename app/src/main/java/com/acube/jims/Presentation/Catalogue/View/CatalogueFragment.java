@@ -247,11 +247,11 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         showProgressDialog();
         adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this,CatalogueFragment.this);
         binding.recyvcatalog.setAdapter(adapter);
-        vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
-        vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
-        vaKaratID = FilterPreference.retrieveStringPreferences(getContext(), "karatid");
-        vaCatID = FilterPreference.retrieveStringPreferences(getActivity(), "catid");
-        vaWeight = FilterPreference.retrieveStringPreferences(getActivity(), "weightid");
+            vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
+            vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
+            vaKaratID = FilterPreference.retrieveStringPreferences(getContext(), "karatid");
+            vaCatID = FilterPreference.retrieveStringPreferences(getActivity(), "catid");
+            vaWeight = FilterPreference.retrieveStringPreferences(getActivity(), "weightid");
         vaPriceMin = FilterPreference.retrieveStringPreferences(getActivity(), "MinValue");
         vapriceMax = FilterPreference.retrieveStringPreferences(getActivity(), "MaxValue");
         Log.d(TAG, "LoadFirstPage: " + vaSubCatID);

@@ -23,15 +23,19 @@ import android.widget.DatePicker;
 
 import com.acube.jims.Presentation.Audit.AuditFragment;
 import com.acube.jims.Presentation.Audit.ViewModel.AuditViewModel;
+import com.acube.jims.Presentation.Catalogue.View.CatalogueFragment;
+import com.acube.jims.Presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.Presentation.Favorites.View.FavoritesFragment;
 import com.acube.jims.Presentation.HomePage.View.HomeFragment;
 import com.acube.jims.Presentation.Report.View.ExtraFragment;
 import com.acube.jims.Presentation.Report.View.FoundFragment;
 import com.acube.jims.Presentation.Report.View.LocationMismatchFragment;
 import com.acube.jims.Presentation.Report.View.MissingFragment;
+import com.acube.jims.Presentation.Report.View.ReportFilterBottomSheetFragment;
 import com.acube.jims.Presentation.Report.View.reports.MissmatchApprovedFragment;
 import com.acube.jims.Presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
+import com.acube.jims.Utils.FilterPreference;
 import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ReportFragmentBinding;
@@ -49,7 +53,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class ReportFragment extends Fragment {
+public class ReportFragment extends Fragment implements ReportFilterBottomSheetFragment.ApplyFilter {
 
     private ReportViewModel mViewModel;
     private AuditViewModel auditViewModel;
@@ -63,10 +67,11 @@ public class ReportFragment extends Fragment {
     List<ResponseAudit> datasetaudits;
     List<LocationMismatch> datasetlocationmismatch;
     List<LocationMismatchApproved> datasetlocationapproved;
+    String vaSubCatID, vaCatID = "", vaKaratID = "", vaColorID = "", vaWeight = "", vapriceMax = "", vaPriceMin = "", vagender = "";
 
     ReportFragmentBinding binding;
     private int mYear, mMonth, mDay, mHour, mMinute;
-    String dbfromdate, dbtodate;
+    String dbfromdate, dbtodate, mAuditId,companyID,warehouseID;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -82,8 +87,8 @@ public class ReportFragment extends Fragment {
         datsetmissing = new ArrayList<>();
         datasetlocationapproved = new ArrayList<>();
         datasetlocationmismatch = new ArrayList<>();
-        String companyID = LocalPreferences.retrieveStringPreferences(getActivity(), "CompanyID");
-        String warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
+         companyID = LocalPreferences.retrieveStringPreferences(getActivity(), "CompanyID");
+         warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
         //String auditID = LocalPreferences.retrieveStringPreferences(getActivity(), "auditID");
 
         auditViewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseAudit>>() {
@@ -101,11 +106,17 @@ public class ReportFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LocalPreferences.storeStringPreference(getActivity(), "AuditID", String.valueOf(parent.getItemAtPosition(position)));
+                mAuditId = String.valueOf(parent.getItemAtPosition(position));
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("auditID", String.valueOf(parent.getItemAtPosition(position)));
+                jsonObject.addProperty("auditID", mAuditId);
                 jsonObject.addProperty("companyID", companyID);
                 jsonObject.addProperty("warehouseID", warehouseID);
                 jsonObject.addProperty("locationID", 0);
+                jsonObject.addProperty("categoryID", 0);
+                jsonObject.addProperty("subCategoryID", 0);
+                jsonObject.addProperty("karatID", 0);
+                jsonObject.addProperty("tabType", "");
+                jsonObject.addProperty("serialNo", "");
                 mViewModel.FetchReports(LocalPreferences.getToken(getContext()), jsonObject);
             }
 
@@ -127,7 +138,7 @@ public class ReportFragment extends Fragment {
                 jsonObject.addProperty("fromDate", "");
                 jsonObject.addProperty("toDate", "");
                 auditViewModel.Audit(LocalPreferences.getToken(getActivity()), jsonObject);
-                binding.edAuditid.setVisibility(View.VISIBLE);
+                binding.auditlayt.setVisibility(View.VISIBLE);
             }
         });
 
@@ -187,6 +198,15 @@ public class ReportFragment extends Fragment {
                 datePickerDialog.show();
             }
         });
+        binding.laytfilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ReportFilterBottomSheetFragment bottomSheet = new ReportFilterBottomSheetFragment(ReportFragment.this::applyfilter);
+
+                bottomSheet.show(getActivity().getSupportFragmentManager(),
+                        "ModalBottomSheet");
+            }
+        });
 
         mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseReport>() {
             @Override
@@ -200,6 +220,7 @@ public class ReportFragment extends Fragment {
                     setList("datsetfound", datsetfound);
                     setList("datsetmissing", datsetmissing);
                     replace(FoundFragment.newInstance(datsetfound));
+                    binding.laytfilter.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -298,5 +319,26 @@ public class ReportFragment extends Fragment {
         Gson gson = new Gson();
         String json = gson.toJson(list);
         LocalPreferences.storeStringPreference(getActivity(), key, json);
+    }
+
+    @Override
+    public void applyfilter() {
+        vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
+        vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
+        vaKaratID = FilterPreference.retrieveStringPreferences(getContext(), "karatid");
+        vaCatID = FilterPreference.retrieveStringPreferences(getActivity(), "catid");
+        vaWeight = FilterPreference.retrieveStringPreferences(getActivity(), "weightid");
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("auditID", mAuditId);
+        jsonObject.addProperty("companyID", companyID);
+        jsonObject.addProperty("warehouseID", warehouseID);
+        jsonObject.addProperty("locationID", 0);
+        jsonObject.addProperty("categoryID", vaCatID);
+        jsonObject.addProperty("subCategoryID", vaSubCatID);
+        jsonObject.addProperty("karatID", vaKaratID);
+        jsonObject.addProperty("tabType", "Found");
+        jsonObject.addProperty("serialNo", "");
+        mViewModel.FetchReports(LocalPreferences.getToken(getContext()), jsonObject);
     }
 }

@@ -26,23 +26,23 @@
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/toolbar"
-            android:orientation="horizontal">
-
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
 
             <RelativeLayout
                 android:id="@+id/layoutaudit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp">
 
                 <ImageView
                     android:id="@+id/imvaudit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/audit">
 
                 </ImageView>
@@ -58,22 +58,23 @@
                     android:text="Audit"
                     android:textAllCaps="true"
                     android:textColor="#ab7e2f"
-                    android:textSize="22sp">
+                    android:textSize="18sp">
 
                 </TextView>
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/layoutreport"
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp">
+                android:layout_margin="5dp">
 
                 <ImageView
                     android:id="@+id/imvreporticon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="150dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/report">
 
                 </ImageView>
@@ -89,15 +90,54 @@
                     android:text="Report"
                     android:textAllCaps="true"
                     android:textColor="#ab7e2f"
-                    android:textSize="22sp">
+                    android:textSize="18sp">
 
                 </TextView>
 
             </RelativeLayout>
 
+            <RelativeLayout
+                android:id="@+id/layoutlocate"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <ImageView
+                    android:id="@+id/imvlocate"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:src="@drawable/locateproduct">
+
+                </ImageView>
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imvlocate"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/karla_bold"
+                    android:text="Locate Product"
+                    android:textAllCaps="true"
+                    android:textColor="#ab7e2f"
+                    android:textSize="18sp">
+
+                </TextView>
+
+            </RelativeLayout>
 
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyvhomemenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never">
 
+        </androidx.recyclerview.widget.RecyclerView>
     </RelativeLayout>
 </layout>

@@ -5,15 +5,14 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/parentlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_toLeftOf="@id/dashboard_layout"
+
             android:id="@+id/currentfrag_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,26 +25,25 @@
                 android:fontFamily="@font/montserratsemibold"
                 android:gravity="center_vertical"
                 android:letterSpacing="0.01"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
-                android:textSize="10sp"
+                android:textSize="@dimen/_7ssp"
                 android:textStyle="normal" />
 
             <ImageView
                 android:layout_width="@dimen/_17sdp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
+                android:paddingTop="@dimen/_2sdp"
+                android:paddingBottom="@dimen/_2sdp"
                 android:src="@drawable/icon_back">
 
             </ImageView>
         </LinearLayout>
 
         <LinearLayout
-            android:layout_alignParentRight="true"
             android:id="@+id/dashboard_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +63,7 @@
                 android:text=" Home"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
-                android:textSize="10sp"
+                android:textSize="@dimen/_7ssp"
                 android:textStyle="normal" />
 
 
@@ -79,5 +77,5 @@
 
             </ImageView>
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </layout>

@@ -16,7 +16,9 @@ import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Audit.Found;
 import com.acube.jims.datalayer.models.Audit.LocationMismatch;
+import com.bumptech.glide.Glide;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismatchAdapter.ProductViewHolder> {
@@ -43,7 +45,7 @@ public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismat
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(mCtx);
-        View view = inflater.inflate(R.layout.layout_found_item, parent, false);
+        View view = inflater.inflate(R.layout.layout_locationsmissmatch_item, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -51,11 +53,25 @@ public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismat
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         LocationMismatch locationMismatch = dataset.get(position);
-        holder.textViewItemName.setText(locationMismatch.getSystemLocationName());
-        holder.textViewLoccode.setText(locationMismatch.getScanLocationName());
-        holder.textViewDate.setText(locationMismatch.getSerialNumber());
+        holder.tvlocationname.setText("System Location : " + locationMismatch.getSystemLocationName());
+        holder.textViewItemName.setText("Item : " + locationMismatch.getItemName());
+        holder.textViewLoccode.setText("Scanned Location : " + locationMismatch.getScanLocationName());
+        holder.textViewSerialNo.setText("Sl No. : " + locationMismatch.getSerialNumber());
+        try {
+            if(locationMismatch.getKaratCode()!=null){
+                DecimalFormat format = new DecimalFormat("0.#");
 
+                holder.tvkarat.setText("Karat: " + format.format(locationMismatch.getKaratCode()));
+            }else{
+                holder.tvkarat.setText("Karat: " + "N/A");
+            }
 
+        } catch (NumberFormatException e) {
+
+        }
+
+        holder.tvcategory.setText("Category : " + locationMismatch.getCategoryName());
+        Glide.with(mCtx).load(locationMismatch.getItemImagePath()).into(holder.imageView);
 
 
 
@@ -76,7 +92,7 @@ public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismat
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewLoccode,textViewDate;
+        TextView textViewItemName, textViewLoccode, textViewSerialNo, tvlocationname, tvkarat, tvcategory;
         ImageView imageView;
         CheckBox comparecheckbox;
         ResponseItems responseItems;
@@ -85,13 +101,15 @@ public class LocationMismatchAdapter extends RecyclerView.Adapter<LocationMismat
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-
-            textViewItemName = itemView.findViewById(R.id.tvlocationname);
+            tvlocationname = itemView.findViewById(R.id.tvlocationname);
+            textViewItemName = itemView.findViewById(R.id.tvitemname);
             selection = itemView.findViewById(R.id.layoutparent);
             tableRow4=itemView.findViewById(R.id.tableRow4);
-
+            tvkarat = itemView.findViewById(R.id.tvkarat);
+            tvcategory = itemView.findViewById(R.id.tvcategory);
+            imageView = itemView.findViewById(R.id.imvitemimage);
             textViewLoccode = itemView.findViewById(R.id.tvlocationcode);
-            textViewDate = itemView.findViewById(R.id.tv_serialnumber);
+            textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
 
 
 

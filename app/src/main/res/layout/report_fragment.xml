@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-
         tools:context=".Presentation.Audit.AuditFragment">
 
         <RelativeLayout
@@ -37,13 +36,14 @@
                     android:layout_height="40dp"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
-                    android:paddingLeft="19dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="19dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp"
                     android:text="Found"
+                    android:gravity="center"
                     android:textColor="@color/appmaincolor"
-                    android:textSize="15sp">
+                    android:textSize="10sp">
 
                 </TextView>
 
@@ -54,13 +54,14 @@
                     android:layout_toRightOf="@id/tabfound"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
-                    android:paddingLeft="19dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="19dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp"
                     android:text="Missing"
+                    android:gravity="center"
                     android:textColor="@color/appmaincolor"
-                    android:textSize="15sp">
+                    android:textSize="10sp">
 
                 </TextView>
 
@@ -71,30 +72,32 @@
                     android:layout_toRightOf="@id/tabmissing"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
-                    android:paddingLeft="19dp"
+                    android:gravity="center"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="19dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Location Mismatch"
+                    android:text="Mismatch"
                     android:textColor="@color/appmaincolor"
-                    android:textSize="15sp">
+                    android:textSize="10sp">
 
                 </TextView>
 
                 <TextView
                     android:id="@+id/tabLocationApproved"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_toRightOf="@id/tablocationmismatch"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
-                    android:paddingLeft="19dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="19dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Mismatch Approved"
+                    android:text="Approved"
+                    android:gravity="center"
                     android:textColor="@color/appmaincolor"
-                    android:textSize="15sp">
+                    android:textSize="10sp">
 
                 </TextView>
 
@@ -105,13 +108,14 @@
                     android:layout_toRightOf="@id/tabLocationApproved"
                     android:background="@drawable/tab_border"
                     android:fontFamily="@font/montserratsemibold"
-                    android:paddingLeft="19dp"
+                    android:paddingLeft="10dp"
                     android:paddingTop="5dp"
-                    android:paddingRight="19dp"
+                    android:paddingRight="10dp"
                     android:paddingBottom="5dp"
                     android:text="Extra"
+                    android:gravity="center"
                     android:textColor="@color/appmaincolor"
-                    android:textSize="15sp">
+                    android:textSize="10sp">
 
                 </TextView>
 
@@ -160,11 +164,11 @@
                             android:layout_height="30dp"
                             android:layout_toLeftOf="@id/enddatebtn"
                             android:background="@drawable/tab_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/poppins_regular"
                             android:padding="6dp"
                             android:text="Start Date"
                             android:textAllCaps="false"
-                            android:textSize="13sp">
+                            android:textSize="10sp">
 
                         </Button>
 
@@ -176,11 +180,11 @@
                             android:layout_toLeftOf="@id/btn_filter"
 
                             android:background="@drawable/tab_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/poppins_regular"
                             android:padding="6dp"
                             android:text="End Date"
                             android:textAllCaps="false"
-                            android:textSize="13sp">
+                            android:textSize="10sp">
 
                         </Button>
 

@@ -1,6 +1,10 @@
 package com.acube.jims.datalayer.api;
 
 import com.acube.jims.Presentation.ScanItems.ResponseItems;
+import com.acube.jims.datalayer.models.Analytics.ResponseAnalyticsGraph;
+import com.acube.jims.datalayer.models.Analytics.ResponseAnalyticsSummary;
+import com.acube.jims.datalayer.models.Analytics.ResponseCustomerServed;
+import com.acube.jims.datalayer.models.Analytics.ResponseItemWiseAnalytics;
 import com.acube.jims.datalayer.models.Audit.AuditScanUpload;
 import com.acube.jims.datalayer.models.Audit.ResponseAudit;
 import com.acube.jims.datalayer.models.Audit.ResponseLocationList;
@@ -15,6 +19,11 @@ import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.acube.jims.datalayer.models.Compare.ResponseCompare;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerHistory;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
+import com.acube.jims.datalayer.models.Dashboard.ResponseDashBoardGraph;
+import com.acube.jims.datalayer.models.Dashboard.ResponseDashboardSummary;
+import com.acube.jims.datalayer.models.Dashboard.ResponseDashboardpiechart;
+import com.acube.jims.datalayer.models.Dashboard.ResponseTop10ProductsSold;
+import com.acube.jims.datalayer.models.Dashboard.ResponseTopCategory;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceUpdation;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseGetRegistered;
@@ -25,6 +34,7 @@ import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
 import com.acube.jims.datalayer.models.Invoice.SaleSuccess;
 import com.acube.jims.datalayer.models.ScanHistory.ResponseScanHistory;
+import com.acube.jims.datalayer.models.warehouse.ResponseWareHouse;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -132,4 +142,32 @@ public interface RestApiService {
     Call<JsonObject> ClearCart(@Header("Authorization") String Auth, @Path("CustomerID") String CustomerID);
 
 
+    @POST("AnalyticsReport/GetAnalyticsSummary")
+    Call<ResponseAnalyticsSummary> getAnalyticsSummary(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+    @POST("AnalyticsReport/GetItemWiseAnalytics")
+    Call<ResponseItemWiseAnalytics> getGetItemWiseAnalytics(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("AnalyticsReport/GetEmployeeWiseAnalytics")
+    Call<ResponseCustomerServed> getCustomerServed(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("AnalyticsReport/GetCategoryWiseAnalytics")
+    Call<ResponseAnalyticsGraph> getAnalyticsGraph(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+    @GET("warehouse")
+    Call<List<ResponseWareHouse>> Fetchwarehouse(@Header("Authorization") String Auth);
+
+   @POST("DashboardReport/GetDashboardSummary")
+    Call<ResponseDashboardSummary> getDashboardSummary(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+    @POST("DashboardReport/GetDashboardGraph")
+    Call<ResponseDashBoardGraph> getDashboardGraph(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+
+    @POST("DashboardReport/GetDashboardEmployeePieChart")
+    Call<ResponseDashboardpiechart> getDashboardPiechart(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+
+    @POST("DashboardReport/GetDashboardItemWiseSummary")
+    Call<ResponseTop10ProductsSold> getProductsSold(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("DashboardReport/GetDashboardCategoryWiseSummary")
+    Call<ResponseTopCategory> getTopSoldCategory(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 }

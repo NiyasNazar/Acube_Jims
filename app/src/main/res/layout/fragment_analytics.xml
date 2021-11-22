@@ -1,0 +1,497 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".Presentation.Audit.AuditFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp">
+
+            </include>
+
+            <androidx.core.widget.NestedScrollView
+
+                android:id="@+id/nestedscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_border_detailspage">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/laytspinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shapebg_1">
+
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/ed_storeselection"
+                            android:layout_width="150dp"
+                            android:layout_height="40dp"
+
+                            android:dropDownSelector="@color/headercolor"
+                            android:gravity="center"
+                            android:inputType="none"
+                            android:paddingRight="10dp"
+                            android:textSize="14sp"
+                            app:hintText="Select Store/Warehouse">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/laytperiodr"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@id/laytspinner"
+                        android:background="@drawable/shapebg_1">
+
+
+                        <Spinner
+                            android:id="@+id/ed_period"
+                            android:layout_width="150dp"
+                            android:layout_height="40dp"
+
+                            android:dropDownSelector="@color/headercolor"
+                            android:gravity="center"
+                            android:inputType="none"
+                            android:paddingRight="10dp"
+                            android:textSize="14sp"
+                            >
+
+                        </Spinner>
+                    </LinearLayout>
+
+                    <WebView
+                        android:id="@+id/webview"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="15dp"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:id="@+id/mainheader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/laytspinner"
+                        android:layout_marginTop="15dp"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_margin="5dp"
+
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#17A2B8">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/label"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="#1591A5"
+                                    android:gravity="center"
+                                    android:text="Products Viewed"
+                                    android:textColor="#FFF">
+
+                                </TextView>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_below="@id/label">
+
+                                    <TextView
+                                        android:id="@+id/tvviewcount"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="40dp"
+                                        android:text="0"
+                                        android:textColor="#FFF"
+                                        android:textSize="16dp">
+
+                                    </TextView>
+
+                                    <ImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="20dp"
+                                        android:src="@drawable/necklace">
+
+                                    </ImageView>
+                                </RelativeLayout>
+                            </RelativeLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_margin="5dp"
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#28A745">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/label2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="#24963E"
+                                    android:gravity="center"
+                                    android:text="Products Not Viewed"
+                                    android:textColor="#FFF">
+
+                                </TextView>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_below="@id/label2">
+
+                                    <TextView
+                                        android:id="@+id/tvnotviewedcount"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="40dp"
+                                        android:text="0"
+                                        android:textColor="#FFF"
+                                        android:textSize="16dp">
+
+                                    </TextView>
+
+                                    <ImageView
+                                        android:layout_width="60dp"
+
+                                        android:layout_height="60dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="20dp"
+                                        android:src="@drawable/notviewed">
+
+                                    </ImageView>
+                                </RelativeLayout>
+                            </RelativeLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_margin="5dp"
+
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="#FFC107">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/label3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="#E5AD06"
+                                    android:gravity="center"
+                                    android:text="Total Customers Served"
+                                    android:textColor="#FFF">
+
+                                </TextView>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_below="@id/label3">
+
+                                    <TextView
+                                        android:id="@+id/tvtotalcustviewed"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_gravity="center"
+                                        android:layout_marginLeft="40dp"
+                                        android:text="0"
+                                        android:textColor="#FFF"
+                                        android:textSize="16dp">
+
+                                    </TextView>
+
+                                    <ImageView
+                                        android:layout_width="60dp"
+
+                                        android:layout_height="60dp"
+                                        android:layout_alignParentRight="true"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginRight="20dp"
+                                        android:src="@drawable/customer_insight">
+
+                                    </ImageView>
+                                </RelativeLayout>
+                            </RelativeLayout>
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/catlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/mainheader"
+                        android:background="#9C7C38">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Viewed Category Analytics"
+                            android:textColor="#fff">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:id="@+id/laycategoryfilter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+
+                            android:background="@drawable/shapebg_1">
+
+
+                            <Spinner
+                                android:id="@+id/ed_categroyfilter"
+                                android:layout_width="150dp"
+                                android:layout_height="40dp"
+
+                                android:dropDownSelector="@color/headercolor"
+                                android:gravity="center"
+                                android:inputType="none"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                app:hintText="Select">
+
+                            </Spinner>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <com.github.mikephil.charting.charts.BarChart
+                        android:id="@+id/chart1"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_below="@id/catlayout" />
+
+                    <RelativeLayout
+                        android:id="@+id/itemwiselayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/chart1"
+                        android:background="#9C7C38">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Top 10 Viewed Products"
+                            android:textColor="#fff">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:id="@+id/layitemwisefilter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+
+                            android:background="@drawable/shapebg_1">
+
+
+                            <Spinner
+                                android:id="@+id/ed_itemfilter"
+                                android:layout_width="150dp"
+                                android:layout_height="40dp"
+
+                                android:dropDownSelector="@color/headercolor"
+                                android:gravity="center"
+                                android:inputType="none"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                app:hintText="Select">
+
+                            </Spinner>
+                        </LinearLayout>
+                    </RelativeLayout>
+                    <TableRow
+                        android:layout_below="@id/itemwiselayout"
+                        android:id="@+id/header"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/table_border"
+
+
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Product"
+                            android:textAllCaps="false"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="50dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/table_border"
+
+
+                            android:fontFamily="@font/poppins_semibold"
+                            android:gravity="center"
+                            android:text="Views"
+                            android:textAllCaps="false"
+                            android:textColor="#666666">
+
+                        </TextView>
+
+
+
+                    </TableRow>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyvitemwisefilter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/header"
+                        android:layout_marginTop="5dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                    <RelativeLayout
+                        android:id="@+id/custlayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/recyvitemwisefilter"
+                        android:background="#9C7C38">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:text="Top 5 Employees - Customer Served"
+                            android:textColor="#fff">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:id="@+id/layservedfilter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="15dp"
+
+                            android:background="@drawable/shapebg_1">
+
+
+                            <Spinner
+                                android:id="@+id/ed_servrdfilter"
+                                android:layout_width="150dp"
+                                android:layout_height="40dp"
+
+                                android:dropDownSelector="@color/headercolor"
+                                android:gravity="center"
+                                android:inputType="none"
+                                android:paddingRight="10dp"
+                                android:textSize="14sp"
+                                app:hintText="Select">
+
+                            </Spinner>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyvcustomerserved"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/custlayout"
+                        android:layout_marginTop="5dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+
+                </RelativeLayout>
+
+            </androidx.core.widget.NestedScrollView>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

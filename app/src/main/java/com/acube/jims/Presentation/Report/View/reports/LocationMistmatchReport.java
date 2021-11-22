@@ -16,6 +16,7 @@ import com.acube.jims.Presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.Presentation.Report.adapter.LocationMismatchAdapter;
 import com.acube.jims.Presentation.Report.adapter.Reportadapter;
 import com.acube.jims.R;
+import com.acube.jims.Utils.AppUtility;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityReportLocationmismatchBinding;
 import com.acube.jims.databinding.ActivityReportViewbycatBinding;
@@ -36,7 +37,12 @@ public class LocationMistmatchReport extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_report_locationmismatch);
-        binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        if (new AppUtility(LocationMistmatchReport.this).isTablet(LocationMistmatchReport.this)){
+            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        }else{
+            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),1));
+        }
+
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         mViewModel.init();
         binding.backlayout.parentlayout.setOnClickListener(new View.OnClickListener() {

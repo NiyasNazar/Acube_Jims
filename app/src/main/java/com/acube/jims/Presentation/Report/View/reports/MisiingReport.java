@@ -27,6 +27,7 @@ import com.acube.jims.Presentation.Report.adapter.Foundadapter;
 import com.acube.jims.Presentation.Report.adapter.Missingadapter;
 import com.acube.jims.Presentation.Report.adapter.Reportadapter;
 import com.acube.jims.R;
+import com.acube.jims.Utils.AppUtility;
 import com.acube.jims.Utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityReportViewbycatBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
@@ -58,7 +59,11 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_report_viewbycat);
-        binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        if (new AppUtility(MisiingReport.this).isTablet(MisiingReport.this)){
+            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        }else{
+            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),1));
+        }
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         mViewModel.init();
         auditUploadViewModel = new ViewModelProvider(this).get(AuditUploadViewModel.class);

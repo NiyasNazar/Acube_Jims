@@ -153,7 +153,6 @@ public class LoginActivity extends BaseActivity {
     private void LoginCustomer(String vaEmail, String vaPassword) {
         showProgressDialog();
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("companyID", AppConstants.companyID);
         jsonObject.addProperty("applicationID", AppConstants.applicationID);
         jsonObject.addProperty("userName", vaEmail);
         jsonObject.addProperty("password", vaPassword);

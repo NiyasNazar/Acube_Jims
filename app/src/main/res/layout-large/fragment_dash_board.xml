@@ -442,7 +442,7 @@
 
                             <Spinner
                                 android:id="@+id/ed_servrdfilter"
-                                android:layout_width="match_parent"
+                                android:layout_width="150dp"
                                 android:layout_height="40dp"
 
                                 android:dropDownSelector="@color/headercolor"
@@ -500,7 +500,7 @@
 
                             <Spinner
                                 android:id="@+id/ed_itemfilter"
-                                android:layout_width="match_parent"
+                                android:layout_width="150dp"
                                 android:layout_height="40dp"
 
                                 android:dropDownSelector="@color/headercolor"
@@ -619,7 +619,7 @@
 
                             <Spinner
                                 android:id="@+id/ed_catfilter"
-                                android:layout_width="match_parent"
+                                android:layout_width="150dp"
                                 android:layout_height="40dp"
 
                                 android:dropDownSelector="@color/headercolor"

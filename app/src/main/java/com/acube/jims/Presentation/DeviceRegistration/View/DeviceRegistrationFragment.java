@@ -51,17 +51,17 @@ import java.util.UUID;
 public class DeviceRegistrationFragment extends BaseFragment {
 
 
-    AddDeviceViewModel addDeviceViewModel;
-    DeviceRegistrationViewModel mViewModel;
-    TrayMasterViewModel trayMasterViewModel;
-    UpdateDeviceViewModel updateDeviceViewModel;
-    DeviceRegistrationFragmentBinding binding;
-    int key = 0;
-    Boolean isDeviceRegistered = false;
-    String AuthToken;
-    int vaTrayID = 0;
-    String vaTrayMacAddress, vaTrayName;
-    List<ResponseTrayMaster> datasettray;
+        AddDeviceViewModel addDeviceViewModel;
+        DeviceRegistrationViewModel mViewModel;
+        TrayMasterViewModel trayMasterViewModel;
+        UpdateDeviceViewModel updateDeviceViewModel;
+        DeviceRegistrationFragmentBinding binding;
+        int key = 0;
+        Boolean isDeviceRegistered = false;
+        String AuthToken;
+        int vaTrayID = 0;
+        String vaTrayMacAddress, vaTrayName;
+        List<ResponseTrayMaster> datasettray;
 
     public static DeviceRegistrationFragment newInstance() {
         return new DeviceRegistrationFragment();

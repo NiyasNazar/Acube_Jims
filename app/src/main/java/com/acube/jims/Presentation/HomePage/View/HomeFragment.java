@@ -175,7 +175,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                 // String mClass = ".SmartTrayReading";//the activity name which return results*/
                    String mPackage = "com.example.acubetest";// package name
                    String mClass = ".MainActivity";//the activity name which return results
-                    res.putExtra("token",LocalPreferences.getToken(getActivity()));
+                        res.putExtra("token",LocalPreferences.getToken(getActivity()));
                     res.putExtra("url", AppConstants.BASE_URL);
                     res.putExtra("macAddress", TrayMacAddress);
                     res.putExtra("jsonSerialNo", "json");

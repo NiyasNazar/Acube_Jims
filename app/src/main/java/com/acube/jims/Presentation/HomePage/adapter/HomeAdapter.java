@@ -35,6 +35,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
         this.mCtx = mCtx;
         this.homemenuList = homemenuList;
         this.fragmenttransition=fragmenttransition;
+
     }
 
     @Override

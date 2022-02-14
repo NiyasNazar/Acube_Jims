@@ -86,7 +86,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     CatalogViewModelNextPage catalogViewModelNextPage;
     FilterViewModel filterViewModel;
     PopupWindow mypopupWindow;
-    String GuestCustomerID,UserId;
+    String GuestCustomerID, UserId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,8 +101,8 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
         binding.toolbar.parentlayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               /// FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
-              // getsuppo
+                /// FragmentHelper.replaceFragment(getActivity(), R.id.content, new HomeFragment());
+                // getsuppo
                 getActivity().onBackPressed();
             }
         });
@@ -110,7 +110,7 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
         String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerName");
         String CustomerCode = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerCode");
-        binding.tvCustomername.setText("Customer : " + Customername+"  -  "+CustomerCode);
+        binding.tvCustomername.setText("Customer : " + Customername + "  -  " + CustomerCode);
         binding.tvCustomercode.setText("Customer Code : " + CustomerCode);
         addtoFavoritesViewModel = new ViewModelProvider(this).get(AddtoFavoritesViewModel.class);
         GuestCustomerID = LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
@@ -245,13 +245,13 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
 
     private void LoadFirstPage() {
         showProgressDialog();
-        adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this,CatalogueFragment.this);
+        adapter = new CatalogItemsAdapter(getActivity(), CatalogueFragment.this, CatalogueFragment.this);
         binding.recyvcatalog.setAdapter(adapter);
-            vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
-            vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
-            vaKaratID = FilterPreference.retrieveStringPreferences(getContext(), "karatid");
-            vaCatID = FilterPreference.retrieveStringPreferences(getActivity(), "catid");
-            vaWeight = FilterPreference.retrieveStringPreferences(getActivity(), "weightid");
+        vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
+        vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
+        vaKaratID = FilterPreference.retrieveStringPreferences(getContext(), "karatid");
+        vaCatID = FilterPreference.retrieveStringPreferences(getActivity(), "catid");
+        vaWeight = FilterPreference.retrieveStringPreferences(getActivity(), "weightid");
         vaPriceMin = FilterPreference.retrieveStringPreferences(getActivity(), "MinValue");
         vapriceMax = FilterPreference.retrieveStringPreferences(getActivity(), "MaxValue");
         Log.d(TAG, "LoadFirstPage: " + vaSubCatID);
@@ -429,8 +429,8 @@ public class CatalogueFragment extends BaseFragment implements CatalogItemsAdapt
     }
 
     @Override
-    public void addtofav(String id,String serialno) {
-        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, id, "add", "",serialno);
+    public void addtofav(String id, String serialno) {
+        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, GuestCustomerID, UserId, id, "add", "", serialno);
 
     }
 }

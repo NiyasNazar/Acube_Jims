@@ -57,8 +57,8 @@ public class LoginActivity extends BaseActivity {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         viewModel.init();
 
-        binding.edEmail.setText("Admin");
-        binding.edPassword.setText("Admin@acube");
+        binding.edEmail.setText("admin@jawhara.ae");
+        binding.edPassword.setText("admin@jawhara.ae");
 
         Log.d("onCreate", "onCreate: " + getMacAddr());
 

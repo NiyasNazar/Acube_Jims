@@ -97,6 +97,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         binding.tvgoldrate.setText("Gold Rate "+LocalPreferences.retrieveStringPreferences(getActivity(),"GoldRate"));
 
         binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), getList(), HomeFragment.this::replaceFragment));
+
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
 
       /*  mViewModel.init();

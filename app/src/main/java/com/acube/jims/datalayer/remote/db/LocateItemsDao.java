@@ -5,7 +5,6 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.acube.jims.Presentation.ScanItems.ResponseItems;
 import com.acube.jims.datalayer.models.LocateProduct.LocateItem;
 
 import java.util.List;

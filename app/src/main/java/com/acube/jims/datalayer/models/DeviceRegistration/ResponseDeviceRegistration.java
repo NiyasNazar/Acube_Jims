@@ -7,6 +7,12 @@ public class ResponseDeviceRegistration {
     @SerializedName("key")
     @Expose
     private String key;
+    @SerializedName("trayName")
+    @Expose
+    private String trayName;
+    @SerializedName("trayMacAddress")
+    @Expose
+    private String trayMacAddress;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -16,18 +22,18 @@ public class ResponseDeviceRegistration {
     @SerializedName("macAddress")
     @Expose
     private String macAddress;
-    @SerializedName("trayName")
+    @SerializedName("trayID")
     @Expose
-    private String trayName;
+    private Integer trayID;
     @SerializedName("companyID")
     @Expose
-    private String companyID;
+    private Object companyID;
     @SerializedName("isDeleted")
     @Expose
     private Boolean isDeleted;
     @SerializedName("createdBy")
     @Expose
-    private String createdBy;
+    private Object createdBy;
     @SerializedName("createdDate")
     @Expose
     private String createdDate;
@@ -44,6 +50,22 @@ public class ResponseDeviceRegistration {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    public String getTrayName() {
+        return trayName;
+    }
+
+    public void setTrayName(String trayName) {
+        this.trayName = trayName;
+    }
+
+    public String getTrayMacAddress() {
+        return trayMacAddress;
+    }
+
+    public void setTrayMacAddress(String trayMacAddress) {
+        this.trayMacAddress = trayMacAddress;
     }
 
     public Integer getId() {
@@ -70,19 +92,19 @@ public class ResponseDeviceRegistration {
         this.macAddress = macAddress;
     }
 
-    public String getTrayName() {
-        return trayName;
+    public Integer getTrayID() {
+        return trayID;
     }
 
-    public void setTrayName(String trayName) {
-        this.trayName = trayName;
+    public void setTrayID(Integer trayID) {
+        this.trayID = trayID;
     }
 
-    public String getCompanyID() {
+    public Object getCompanyID() {
         return companyID;
     }
 
-    public void setCompanyID(String companyID) {
+    public void setCompanyID(Object companyID) {
         this.companyID = companyID;
     }
 
@@ -94,11 +116,11 @@ public class ResponseDeviceRegistration {
         this.isDeleted = isDeleted;
     }
 
-    public String getCreatedBy() {
+    public Object getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(Object createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -125,5 +147,4 @@ public class ResponseDeviceRegistration {
     public void setModifiedDate(Object modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
-
 }

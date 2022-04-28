@@ -23,10 +23,10 @@ public class CustomerHistoryRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void CustomerHistory(String Token, String  customerID) {
+    public void CustomerHistory(String Token, int  customerID) {
 
         RestApiService restApiService = RetrofitInstance.getApiService();
-        Call<ResponseCustomerHistory> call = restApiService.FetchCustomerHistory(Token, customerID);
+        Call<ResponseCustomerHistory> call = restApiService.FetchCustomerHistory(Token, String.valueOf(customerID));
         call.enqueue(new Callback<ResponseCustomerHistory>() {
             @Override
             public void onResponse(Call<ResponseCustomerHistory> call, Response<ResponseCustomerHistory> response) {

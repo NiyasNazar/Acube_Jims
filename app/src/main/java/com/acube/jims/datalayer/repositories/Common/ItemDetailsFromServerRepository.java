@@ -5,10 +5,9 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.acube.jims.Presentation.ScanItems.ResponseItems;
+import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.datalayer.api.RestApiService;
 import com.acube.jims.datalayer.api.RetrofitInstance;
-import com.acube.jims.datalayer.models.Compare.ResponseCompare;
 import com.google.gson.JsonObject;
 
 import java.util.List;

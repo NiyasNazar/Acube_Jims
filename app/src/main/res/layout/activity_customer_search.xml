@@ -13,7 +13,7 @@
 
         android:background="#FFF"
         android:orientation="vertical"
-        tools:context=".Presentation.CustomerManagment.View.AddCustomerFragment">
+        tools:context=".presentation.CustomerManagment.View.AddCustomerFragment">
 
         <ImageView
             android:id="@+id/imvback"

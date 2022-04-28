@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="#000"
+
+        android:layout_height="match_parent">
+
+        <include
+            layout="@layout/layout_toolbar"
+            android:id="@+id/toolbar_app">
+
+        </include>
+
+        <com.sung2063.sliders.slideshow.SlideshowView
+            android:id="@+id/slideshow_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:showIndicator="false"
+
+            app:delayTimePeriod="5"
+            app:showSlideNumber="true" />
+    </LinearLayout>
+</layout>

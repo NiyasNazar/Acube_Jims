@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-        tools:context=".Presentation.Catalogue.View.CatalogueFragment">
+        tools:context=".presentation.Catalogue.View.CatalogueFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -120,7 +120,7 @@
                 </androidx.appcompat.widget.AppCompatSpinner>
 
                 <include
-                    android:id="@+id/toolbar"
+                    android:id="@+id/toolbar_app"
                     layout="@layout/back_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

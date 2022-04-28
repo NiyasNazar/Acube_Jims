@@ -8,11 +8,11 @@
     </data>
 
     <FrameLayout
-        android:layout_width="match_parent"
         android:id="@+id/parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-        tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
+        tools:context=".presentation.ProductDetails.View.ProductDetailsFragment">
 
         <RelativeLayout
 
@@ -21,68 +21,38 @@
 
 
             <include
-                android:id="@+id/toolbar"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp">
+                android:id="@+id/toolbars"
+                layout="@layout/layout_toolbar">
 
             </include>
 
             <RelativeLayout
-                android:id="@+id/nestedscrollview"
+                android:id="@+id/parentRelative"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/bottomlayt"
-                android:layout_below="@id/toolbar"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/item_border_detailspage">
 
-                <RelativeLayout
+                android:layout_above="@id/bottomlayt"
+                android:layout_below="@id/toolbars"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycartitems"
 
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="15dp">
 
-                    android:layout_marginLeft="2dp"
-
-                    android:layout_marginRight="2dp"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:id="@+id/tvcarttext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:gravity="center_horizontal"
-                        android:letterSpacing="0.01"
-                        android:text="CART PAGE"
-                        android:textColor="@color/headercolor"
-                        android:textSize="15sp"
-                        android:textStyle="normal" />
+                </androidx.recyclerview.widget.RecyclerView>
 
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycartitems"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvcarttext"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="8dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginBottom="15dp">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-
-                </RelativeLayout>
             </RelativeLayout>
 
             <LinearLayout
@@ -101,28 +71,32 @@
                     android:id="@+id/btnback"
                     style="@style/Widget.AppCompat.Button.Borderless"
 
-
                     android:layout_width="90dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rec_button"
+                    android:background="@drawable/oval_btn_signin"
+                    android:fontFamily="@font/jtmedium"
                     android:text="Go Back"
-                    android:textColor="@color/white">
+
+
+                    android:textColor="@color/white"
+                    android:textSize="13sp">
 
                 </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
 
-                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:id="@+id/btn_next"
+                    style="@style/Widget.AppCompat.Button.Borderless"
 
                     android:layout_width="180dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="@drawable/rec_button"
-                    android:backgroundTint="#3699ff"
+                    android:background="@drawable/oval_btn_signin"
                     android:text="Next"
-                    android:textColor="@color/white">
+                    android:textColor="@color/white"
+
+                    android:textSize="13sp">
 
                 </androidx.appcompat.widget.AppCompatButton>
             </LinearLayout>
@@ -133,24 +107,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/bottomlayt"
-                android:layout_below="@id/toolbar"
-                android:visibility="gone"
-
+                android:layout_below="@id/toolbars"
                 android:layout_centerInParent="true"
+
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/item_border_detailspage"
-                android:backgroundTint="#FFF">
+                android:backgroundTint="#FFF"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="NO RECORDS FOUND"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/textcolor"
                     android:layout_gravity="center"
-                    >
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="NO RECORDS FOUND"
+                    android:textColor="@color/textcolor">
 
                 </TextView>
             </FrameLayout>

@@ -216,6 +216,6 @@ public class ResponseWareHouse {
 
     @Override
     public String toString() {
-        return regionName;
+        return warehouseName;
     }
 }

@@ -8,8 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
-import com.acube.jims.Presentation.Quotation.adapter.DiscountItem;
-import com.acube.jims.datalayer.models.HomePage.HomeData;
+import com.acube.jims.presentation.Quotation.adapter.DiscountItem;
 
 import java.util.List;
 

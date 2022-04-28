@@ -1,21 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Base application theme. -->
+    <!--  Base application theme.  -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+        <!--  Customize your theme here.  -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="colorOnPrimary">@color/white</item>
 
     </style>
-
+    <style name="AppTheme2" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/appmaincolor</item>
+        <item name="colorPrimaryDark">@color/appmaincolor</item>
+        <item name="colorAccent">@color/appmaincolor</item>
+    </style>
     <style name="Checkboxstyle" parent="Base.Theme.AppCompat">
-        <item name="colorAccent">#BF8F3A</item> <!-- for uncheck state -->
-        <item name="android:textColorSecondary">#BF8F3A
-        </item> <!-- for check state -->
+        <item name="colorAccent">#BF8F3A</item>
+        <!--  for uncheck state  -->
+        <item name="android:textColorSecondary">#BF8F3A </item>
+        <!--  for check state  -->
     </style>
 
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="fontFamily">@font/jtmarniebold</item>
+    </style>
+
+    <style name="circle">
+        <item name="cornerSize">10%</item>
+    </style>
+
+    <style name="AnimDialogStyle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowEnterAnimation">@anim/slide_in_start</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_end</item>
+        <item name="android:windowFrame">@null</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
+    </style>
+
+
 </resources>
-
-

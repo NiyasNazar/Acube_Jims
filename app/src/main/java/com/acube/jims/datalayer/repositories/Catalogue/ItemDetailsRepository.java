@@ -46,6 +46,28 @@ public class ItemDetailsRepository {
         });
 
     }
+    public void FetchoutofsctockItemDetails(String Auth, String ID) {
+        RestApiService restApiService = RetrofitInstance.getApiService();
+        Call<ResponseCatalogDetails> call = restApiService.getItemDetailsoutofstock(Auth,ID);
+        call.enqueue(new Callback<ResponseCatalogDetails>() {
+            @Override
+            public void onResponse(Call<ResponseCatalogDetails> call, Response<ResponseCatalogDetails> response) {
+                if (response.body() != null && response.code() == 200 || response.code() == 201) {
+                    dataset.setValue(response.body());
+                } else {
+
+                    dataset.setValue(null);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseCatalogDetails> call, Throwable t) {
+                dataset.setValue(null);
+            }
+        });
+
+    }
 
     public LiveData<ResponseCatalogDetails> getResponseLiveData() {
         return dataset;

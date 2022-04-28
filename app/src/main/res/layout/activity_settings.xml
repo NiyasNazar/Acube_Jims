@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layoutDirection="ltr"
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/signinpagebg"
+        tools:context=".Presentation.Login.View.LoginActivity">
+
+        <include
+            android:id="@+id/toolbarlayt"
+            layout="@layout/layout_toolbar">
+
+        </include>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="20dp"
+
+
+            android:layout_marginRight="20dp"
+            android:elevation="5dp"
+            app:cardCornerRadius="25dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#F5F5F5">
+
+
+                <TextView
+                    android:id="@+id/tvsubtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/karla_bold"
+                    android:textAllCaps="true"
+                    android:textColor="#2d2d2d"
+                    android:textSize="14sp"></TextView>
+
+                <EditText
+                    android:id="@+id/ed_url"
+
+                    android:textDirection="ltr"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/tvsubtitle"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="13dp"
+                    android:background="@drawable/ed_border"
+                    android:hint="Enter url"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="10dp"
+                    android:textSize="14sp">
+
+                </EditText>
+
+
+                <RadioGroup
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:id="@+id/radiogrplanguage"
+                    android:layout_below="@id/ed_url"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_marginRight="20dp"
+                        android:text="Language"
+                        android:layout_height="wrap_content">
+
+                    </TextView>
+
+                    <RadioButton
+                        android:id="@+id/rdenglish"
+                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="English"></RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rdarabic"
+                        android:layout_margin="5dp"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="arabic"></RadioButton>
+                </RadioGroup>
+
+                <LinearLayout
+                    android:id="@+id/btn_save"
+                    android:layout_width="139dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/radiogrplanguage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="57dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/oval_btn_signin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Save"
+                        android:textColor="#FFFFFF">
+
+                    </TextView>
+
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+</layout>

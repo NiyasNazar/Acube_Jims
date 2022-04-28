@@ -12,62 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-        tools:context=".Presentation.Catalogue.View.CatalogueFragment">
+        tools:context=".presentation.Catalogue.View.CatalogueFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
 
-            <TextView
-                android:id="@+id/tv_customercode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/_12sdp"
-                android:layout_marginTop="5dp"
-                android:fontFamily="@font/montserratsemibold"
-                android:textColor="#c4224a"
-                android:textSize="@dimen/_7ssp"
-                android:visibility="gone">
 
-            </TextView>
+            <include
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar"
+               >
 
-            <RelativeLayout
-                android:id="@+id/header"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tv_customercode"
-                android:layout_marginTop="10dp">
-
-                <TextView
-                    android:fontFamily="@font/poppins_semibold"
-                    android:id="@+id/tvloggeduserdetails"
-                    android:textColor="@color/textcolor"
-                    android:layout_marginLeft="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </TextView>
-
-                <include
-                    android:id="@+id/toolbar"
-                    layout="@layout/back_layout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
-
-                </include>
-            </RelativeLayout>
-
+            </include>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyvvieweditems"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/header"
-                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_below="@+id/toolbar_app"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="@dimen/_12sdp">
+                android:layout_marginRight="5dp">
 
             </androidx.recyclerview.widget.RecyclerView>
         </RelativeLayout>

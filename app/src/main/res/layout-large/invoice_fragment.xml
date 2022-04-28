@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-        tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
+        tools:context=".presentation.ProductDetails.View.ProductDetailsFragment">
 
         <RelativeLayout
 
@@ -20,13 +20,9 @@
 
 
             <include
-                android:id="@+id/toolbar"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp">
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar"
+                >
 
             </include>
 
@@ -34,9 +30,9 @@
                 android:id="@+id/nestedscrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/toolbar"
+                android:layout_below="@id/toolbar_app"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/item_border_detailspage">
@@ -58,20 +54,22 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/jtmarniebold"
                         android:gravity="center_horizontal"
                         android:letterSpacing="0.01"
                         android:text="PROFORMA INVOICE"
-                        android:textColor="@color/headercolor"
-                        android:textSize="20.7sp"
+                        android:textColor="@color/appmaincolor"
+                        android:textSize="19sp"
                         android:textStyle="normal" />
 
                     <TextView
                         android:id="@+id/tvcustomername"
+                        android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
+                        android:text="customr name"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvcarttext"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/textcolor"
                         android:textSize="15sp">
 
@@ -82,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvcustomername"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/textcolor"
                         android:textSize="15sp">
 
@@ -94,169 +92,294 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tvcarttext"
                         android:layout_alignParentRight="true"
-                        android:fontFamily="@font/poppins_semibold"
+                        android:fontFamily="@font/roboto_medium"
                         android:textColor="@color/textcolor"
                         android:textSize="15sp">
 
                     </TextView>
 
-                    <TableRow
-                        android:id="@+id/header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvcustomercontactnumber"
-                        android:layout_marginLeft="6dp"
+                    <HorizontalScrollView
+                        android:id="@+id/horizontal_scroll_view"
                         android:layout_marginTop="10dp"
-                        android:layout_marginRight="6dp"
-                        android:orientation="horizontal">
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/tvcustomercontactnumber"
+                        android:visibility="visible">
 
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
+                            <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/table"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:visibility="visible">
 
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Item"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
 
-                        </TextView>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
+                                    <TableRow
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:padding="4dp">
 
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
 
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Karat"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                            android:gravity="center"
+                                            android:minHeight="40dp">
 
-                        </TextView>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Serial No"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Item"
+                                                android:textColor="@color/textColor" />
 
-                        </TextView>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Stone Weight(g)"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
 
-                        </TextView>
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Gold Weight(g)"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
+                                            android:gravity="center"
 
-                        </TextView>
+                                            android:minHeight="40dp">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Making Charge"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Karat"
+                                                android:textAllCaps="false"
+                                                android:textColor="#666666" />
 
-                        </TextView>
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
+                                                />
+                                        </LinearLayout>
 
-                            android:text="Discount %"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
 
-                        </TextView>
+                                            android:gravity="center"
+                                            android:minHeight="40dp">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:minLines="2"
-                            android:text="Price"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                            <TextView
 
-                        </TextView>
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Serial No"
+                                                android:textAllCaps="false"
+                                                android:textColor="#666666">
 
-                        <TextView
-                            android:layout_width="0dp"
+                                            </TextView>
 
-                            android:layout_height="50dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:minLines="2"
-                            android:text="Price with tax"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
 
-                        </TextView>
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
 
+                                            android:gravity="center"
+                                            android:minHeight="40dp">
 
-                    </TableRow>
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Stone Weight(g)"
+                                                android:textAllCaps="false"
+                                                android:textColor="#666666">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyvinvoiceitems"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/header"
-                        android:layout_marginLeft="6dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="6dp"
-                        android:layout_marginBottom="15dp">
+                                            </TextView>
 
-                    </androidx.recyclerview.widget.RecyclerView>
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
+
+                                            android:gravity="center"
+                                            android:minHeight="40dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Gold Weight(g)"
+                                                android:textAllCaps="false"
+                                                android:textColor="#666666">
+
+                                            </TextView>
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
+
+                                            android:gravity="center"
+                                            android:minHeight="40dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Making Charge"
+                                                android:textAllCaps="false"
+                                                android:textColor="#666666">
+
+                                            </TextView>
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
+
+                                            android:gravity="center"
+                                            android:minHeight="40dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Discount %"
+                                                android:textAllCaps="false"
+                                                android:textColor="#666666">
+
+                                            </TextView>
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
+
+                                            android:gravity="center"
+                                            android:minHeight="40dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Price"
+                                                android:textAllCaps="false"
+                                                android:textColor="#666666">
+
+                                            </TextView>
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
+
+                                        <LinearLayout
+                                            android:layout_width="130dp"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center"
+                                            android:background="@drawable/table_border"
+
+                                            android:gravity="center"
+                                            android:minHeight="40dp">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:gravity="center"
+                                                android:text="Price with tax"
+                                                android:textAllCaps="false"
+                                                android:textColor="#666666">
+
+                                            </TextView>
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content" />
+                                        </LinearLayout>
+
+                                    </TableRow>
+                                </LinearLayout>
+                            </TableLayout>
+
+                            <View
+                                android:id="@+id/view"
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:background="@color/appmaincolor" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyvinvoiceitems"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@id/header"
+                                android:layout_marginLeft="6dp"
+                                android:layout_marginTop="2dp"
+                                android:layout_marginRight="6dp"
+                                android:layout_marginBottom="15dp">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
 
                 </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/summarylayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
                     android:layout_above="@id/bottomlayt"
                     android:layout_alignParentRight="true"
+                    android:orientation="vertical">
 
-                    android:orientation="vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
                     <TextView
                         android:id="@+id/tvsalesamount"
                         android:layout_width="wrap_content"
@@ -284,6 +407,7 @@
                         android:textColor="@color/headercolor">
 
                     </TextView>
+
                     <TextView
                         android:id="@+id/tvtax"
                         android:layout_width="wrap_content"
@@ -330,11 +454,12 @@
                         android:id="@+id/btnback"
                         style="@style/Widget.AppCompat.Button.Borderless"
 
+                        android:fontFamily="@font/jtmarniebold"
 
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:background="@drawable/rec_button"
+                        android:background="@drawable/oval_btn_signin"
                         android:text="Cancel"
                         android:textColor="@color/white">
 
@@ -348,8 +473,9 @@
                         android:layout_width="180dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:background="@drawable/rec_button"
-                        android:backgroundTint="#3699ff"
+
+                        android:fontFamily="@font/jtmarniebold"
+                        android:background="@drawable/oval_btn_signin"
                         android:text="Generate"
                         android:textColor="@color/white">
 
@@ -357,13 +483,12 @@
                 </LinearLayout>
             </RelativeLayout>
 
-
             <FrameLayout
                 android:id="@+id/emptycart"
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/toolbar"
+                android:layout_below="@id/toolbar_app"
                 android:layout_centerInParent="true"
 
                 android:layout_marginLeft="15dp"

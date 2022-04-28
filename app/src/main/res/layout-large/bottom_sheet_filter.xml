@@ -44,7 +44,7 @@
                     android:layout_toRightOf="@+id/back_arrow"
                     android:text=" Filter"
                     android:textColor="#000"
-                    android:textSize="19sp">
+                    android:textSize="15sp">
 
                 </TextView>
 
@@ -84,7 +84,7 @@
                     android:id="@+id/fragment1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight=".6"
                     android:background="#F0F4F7">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -99,15 +99,15 @@
                 <FrameLayout
                     android:id="@+id/fragment2"
 
-                    android:layout_width="0px"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.4"
                     android:background="#FFF" />
 
                 <FrameLayout
                     android:id="@+id/fragment3"
 
-                    android:layout_width="0px"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="#F0F4F7" />
@@ -137,7 +137,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/rec_button"
+                    android:background="@drawable/oval_btn_signin"
                     android:gravity="center">
 
                     <TextView
@@ -158,9 +158,8 @@
                     android:layout_height="match_parent"
                     android:layout_margin="8dp"
                     android:layout_weight="2"
-                    android:background="@drawable/rec_button"
+                    android:background="@drawable/oval_btn_signin"
 
-                    android:backgroundTint="#3699ff"
 
                     android:gravity="center">
 

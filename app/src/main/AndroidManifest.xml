@@ -22,42 +22,69 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".presentation.DeviceRegistration.View.DeviceRegistrationFragment"></activity>
         <activity
-            android:name=".Presentation.PdfGeneration.ShareItemsScreen"
+            android:name=".presentation.ItemRequest.view.ItemRequestPickListDetailsActivity"
             android:exported="true" />
         <activity
-            android:name=".Presentation.Quotation.SaleSuccessActivity"
+            android:name=".presentation.ItemRequest.view.SalesmanItemRequestActivity"
             android:exported="true" />
         <activity
-            android:name=".Presentation.Report.View.reports.FoundReportActivity"
+            android:name=".presentation.SettingsActivity"
             android:exported="true" />
+        <activity android:name=".presentation.Compare.CompareFragment" />
+        <activity android:name=".presentation.CustomerManagment.View.CustomerViewedItemsFragment" />
         <activity
-            android:name=".Presentation.Quotation.PdfViewerExampleActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Presentation.Quotation.MainActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Presentation.Quotation.PdfCreatorExampleActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Presentation.CustomerManagment.View.CustomerSearch"
-            android:exported="true" />
-        <activity android:name=".Presentation.Catalogue.View.CatalogueActivity" />
-        <activity android:name=".Presentation.HomePage.View.HomePageActivity" />
-        <activity android:name=".Presentation.Login.View.GuestLoginActivity" />
-        <activity android:name=".Presentation.GuestHomePage.GuestHomePageActivity" />
-        <activity android:name=".Presentation.Report.View.reports.TotalStockReport" />
-        <activity android:name=".Presentation.PdfGeneration.ShareScannedItems"></activity>
-        <activity android:name=".Presentation.Login.View.LoginActivity">
+            android:name=".presentation.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Presentation.Report.View.reports.MisiingReport" />
-        <activity android:name=".Presentation.Report.View.reports.LocationMistmatchReport" />
+        <activity
+            android:name=".presentation.Audit.AuditScanActivity"
+            android:exported="true" />
+        <activity android:name=".presentation.Favorites.View.Favorites" />
+        <activity android:name=".presentation.Analytics.AnalyticsActivity" />
+        <activity android:name=".presentation.Catalogue.View.CatalogueSummaryActivity" />
+        <activity android:name=".presentation.CartManagment.View.CartViewFragment" />
+        <activity android:name=".presentation.ScanItems.ScanItemsActivity" />
+        <activity android:name=".presentation.CustomerManagment.View.CustomerBottomSheetFragment" />
+        <activity android:name=".presentation.CustomerManagment.View.CustomerViewfragment" />
+        <activity
+            android:name=".presentation.PdfGeneration.ShareItemsScreen"
+            android:exported="true" />
+        <activity android:name=".presentation.ItemRequest.ItemRequestActivity" />
+        <activity android:name=".presentation.ItemRequest.view.ItemRequestDetailActivity" />
+        <activity
+            android:name=".presentation.Quotation.SaleSuccessActivity"
+            android:exported="true" />
+        <activity android:name=".presentation.DashBoard.DashBoardActivity" />
+        <activity
+            android:name=".presentation.Report.View.reports.FoundReportActivity"
+            android:exported="true" />
+        <activity android:name=".presentation.ProductDetails.View.ProductDetailsFragment" />
+        <activity
+            android:name=".presentation.Quotation.PdfViewerExampleActivity"
+            android:exported="true" />
+
+        <activity
+            android:name=".presentation.Quotation.PdfCreatorExampleActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.CustomerManagment.View.CustomerSearch"
+            android:exported="true" />
+        <activity android:name=".presentation.Catalogue.View.CatalogueActivity" />
+        <activity android:name=".presentation.HomePage.View.HomePageActivity" />
+        <activity android:name=".presentation.Login.View.GuestLoginActivity" />
+        <activity android:name=".presentation.GuestHomePage.GuestHomePageActivity" />
+        <activity android:name=".presentation.Report.View.reports.TotalStockReport" />
+        <activity android:name=".presentation.PdfGeneration.ShareScannedItems" />
+        <activity android:name=".presentation.Login.View.LoginActivity" />
+        <activity android:name=".presentation.Report.View.reports.MisiingReport" />
+        <activity android:name=".presentation.Report.View.reports.LocationMistmatchReport" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -70,6 +97,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <activity android:name=".presentation.ImageGallery.ImageGalleryActivity" />
+        <activity android:name=".presentation.CustomerManagment.View.AddCustomerFragment" />
     </application>
 
 </manifest>

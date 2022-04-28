@@ -10,9 +10,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Presentation.PdfGeneration.ShareItemsScreen">
+        tools:context=".presentation.PdfGeneration.ShareItemsScreen">
+        <include
+            android:id="@+id/toolbar_app"
+            layout="@layout/layout_toolbar">
+
+        </include>
 
         <androidx.core.widget.NestedScrollView
+            android:layout_below="@id/toolbar_app"
+            android:background="@drawable/homepagebg"
+
             android:id="@+id/scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -22,94 +30,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
-                android:layout_marginLeft="14dp"
 
-                android:layout_marginRight="14dp"
                 android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:id="@+id/tvcarttext"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:fontFamily="@font/montserratsemibold"
-                    android:gravity="center_horizontal"
-                    android:letterSpacing="0.01"
 
-                    android:textColor="@color/headercolor"
-                    android:textSize="26.7sp"
-                    android:textStyle="normal" />
-
-                <LinearLayout
-                    android:id="@+id/header"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/tvcarttext"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="15dp"
-                    android:orientation="horizontal">
-
-                    <View
-                        android:visibility="gone"
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_weight=".6"
-                        android:background="@drawable/table_border"></View>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_weight="2"
-                        android:background="@drawable/table_border"
-
-
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Item Name"
-                        android:textAllCaps="false"
-                        android:textColor="#666666">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/table_border"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Serial Number"
-                        android:textAllCaps="false"
-                        android:textColor="#666666">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="42dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/table_border"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Price"
-                        android:textAllCaps="false"
-                        android:textColor="#666666">
-
-                    </TextView>
-
-
-                </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycartitems"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/header"
-                    android:layout_marginLeft="15dp"
+
                     android:layout_marginTop="2dp"
-                    android:layout_marginRight="15dp"
                     android:layout_marginBottom="15dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -119,11 +50,13 @@
         </androidx.core.widget.NestedScrollView>
         <Button
             android:onClick="share"
+
+            android:background="@color/appmaincolor"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="25dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="50dp"
-            android:layout_width="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/jtmedium"
+
+            android:layout_width="match_parent"
             android:text="share"
             android:layout_height="wrap_content">
 

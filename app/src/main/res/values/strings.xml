@@ -17,6 +17,7 @@
     <string name="sort_by">Sort by :</string>
     <string name="filter">FILTER</string>
     <string name="hint_search">Enter Name or Mobile</string>
+    <string name="settings">Settings</string>
 
     <string-array name="rangeSliderValues">
         <item>1000</item>

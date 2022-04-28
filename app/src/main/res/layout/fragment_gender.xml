@@ -1,67 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
-        <RadioGroup
-            android:id="@+id/rdgroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <RadioButton
-                android:id="@+id/checkboxmen"
+        android:layout_height="match_parent"
+        tools:context=".presentation.Filters.View.CategoryFilterFragment">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+            <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:paddingLeft="5dp"
-                android:text="Men"
+                android:text="Filter by Gender"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/myriad_pro_regular"
+                android:textColor="@color/appmaincolor"
+                android:textStyle="bold"
+                android:layout_height="wrap_content">
 
-                android:textColor="#2d2d2d"
-                android:textSize="@dimen/_10ssp"
+            </TextView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:id="@+id/recysubcategory"
+                android:layout_height="wrap_content">
 
-                android:theme="@style/Checkboxstyle"
+            </androidx.recyclerview.widget.RecyclerView>
 
-                >
-
-            </RadioButton>
-            <RadioButton
-                android:id="@+id/checkboxwomen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:paddingLeft="5dp"
-                android:text="Women"
-
-                android:textColor="#2d2d2d"
-                android:textSize="@dimen/_10ssp"
-
-                android:theme="@style/Checkboxstyle"
-
-                >
-
-            </RadioButton>
-            <RadioButton
-                android:id="@+id/checkboxunisex"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/_8sdp"
-                android:paddingLeft="5dp"
-                android:text="Unisex"
-
-                android:textColor="#2d2d2d"
-                android:textSize="@dimen/_10ssp"
-
-                android:theme="@style/Checkboxstyle"
-
-                >
-
-            </RadioButton>
-        </RadioGroup>
+        </LinearLayout>
 
 
-    </LinearLayout>
-
-</FrameLayout>
+    </FrameLayout>
+</layout>

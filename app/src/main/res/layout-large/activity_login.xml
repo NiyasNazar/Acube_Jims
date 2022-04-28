@@ -3,34 +3,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
+    </data>
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/signinpagebg"
-        tools:context=".Presentation.Login.View.LoginActivity">
+        tools:context=".presentation.Login.View.LoginActivity">
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
             android:layout_centerInParent="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+
+
             android:elevation="5dp"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="25dp">
 
             <RelativeLayout
-                android:background="#F5F5F5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+                android:background="@color/white"
+                android:padding="30dp">
 
                 <ImageView
                     android:id="@+id/imvlogo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/logo">
@@ -43,11 +48,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/imvlogo"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="8dp"
                     android:fontFamily="@font/karla_bold"
                     android:text="@string/acube"
                     android:textColor="#BF8F3A"
-                    android:textSize="70.48sp"></TextView>
+                    android:textSize="24sp"></TextView>
 
                 <TextView
                     android:id="@+id/tvsubtitle"
@@ -69,11 +74,11 @@
                     android:layout_below="@+id/tvsubtitle"
                     android:layout_centerHorizontal="true"
 
-                    android:layout_marginLeft="57dp"
                     android:layout_marginTop="13dp"
-                    android:layout_marginRight="57dp"
                     android:background="@drawable/ed_border"
+
                     android:hint="@string/hint_email_id"
+
                     android:inputType="textEmailAddress"
                     android:paddingLeft="24dp"
                     android:paddingRight="10dp"
@@ -86,11 +91,11 @@
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_below="@+id/ed_email"
-                    android:inputType="textPassword"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="12dp"
                     android:background="@drawable/ed_border"
                     android:hint="@string/hint_password"
+                    android:inputType="textPassword"
                     android:paddingLeft="24dp"
                     android:paddingRight="10dp"
                     android:textSize="14sp">
@@ -123,19 +128,20 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tvguestlogin"
+                    android:id="@+id/tvsettings"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/ed_password"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="20dp"
-                    android:visibility="gone"
-                    android:layout_marginTop="29dp"
-                    android:layout_toRightOf="@id/btn_signin"
-                    android:fontFamily="@font/karla_normal"
-                    android:text="@string/loginasguest"
-                    android:textColor="#4D32403B"
-                    android:textSize="19.48sp"></TextView>
+                    android:layout_height="50dp"
+                    android:layout_below="@id/btn_signin"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp"
+                    android:drawableLeft="@drawable/ic_settings_svgrepo_com"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:gravity="center"
+                    android:text="@string/settings"
+                    android:textColor="@color/black">
+
+                </TextView>
             </RelativeLayout>
 
         </androidx.cardview.widget.CardView>

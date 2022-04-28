@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-        tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
+        tools:context=".presentation.ProductDetails.View.ProductDetailsFragment">
 
         <RelativeLayout
 
@@ -20,32 +20,29 @@
 
 
             <include
-                android:id="@+id/toolbar"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp">
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar">
 
             </include>
 
 
             <androidx.core.widget.NestedScrollView
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/bottomlayt"
-                android:layout_below="@id/toolbar"
-                android:layout_marginTop="2dp"
+                android:layout_below="@id/toolbar_app"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:fillViewport="true">
 
                 <LinearLayout
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="14dp"
+                    android:layout_marginLeft="7dp"
 
-                    android:layout_marginRight="14dp"
+                    android:layout_marginRight="7dp"
 
                     android:layout_marginBottom="16dp"
                     android:background="@drawable/item_border_detailspage"
@@ -61,11 +58,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:text="Customer Name"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
+                            android:textSize="14sp">
 
                         </TextView>
 
@@ -75,12 +72,10 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -94,13 +89,11 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:text="Customer Code"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
 
                         <TextView
                             android:id="@+id/tvcustomercode"
@@ -108,12 +101,10 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -127,13 +118,11 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:text="Email ID"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
 
                         <TextView
                             android:id="@+id/tvcustomeremail"
@@ -141,12 +130,10 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -160,13 +147,11 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:text="Contact Number"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
 
                         <TextView
                             android:id="@+id/tvcustomercontact"
@@ -174,12 +159,10 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -193,13 +176,11 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:text="Total Visit"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
 
                         <TextView
                             android:id="@+id/tvtotalvisit"
@@ -207,12 +188,10 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -226,13 +205,11 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:text="Last Visit"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
 
                         <TextView
                             android:id="@+id/tvlastvisit"
@@ -240,12 +217,10 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
                     </LinearLayout>
 
                     <LinearLayout
@@ -259,13 +234,11 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:text="Total Pucrhases"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
 
                         <TextView
                             android:id="@+id/tvtoalpurchase"
@@ -273,12 +246,10 @@
                             android:layout_height="wrap_content"
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/poppins_regular"
+                            android:fontFamily="@font/popins_medium"
                             android:paddingLeft="15dp"
                             android:textColor="@color/textcolor"
-                            android:textSize="18sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
                     </LinearLayout>
 
                     <RelativeLayout
@@ -289,13 +260,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/roboto_bold"
                             android:paddingLeft="15dp"
                             android:text="Last viewed items"
                             android:textColor="@color/headercolor"
-                            android:textSize="23sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
 
                         <TextView
                             android:id="@+id/viewAll"
@@ -304,22 +273,20 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginTop="20dp"
                             android:layout_marginRight="18dp"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/roboto_bold"
                             android:paddingLeft="15dp"
                             android:text="View all"
                             android:textColor="@color/headercolor"
-                            android:textSize="23sp">
-
-                        </TextView>
+                            android:textSize="14sp"></TextView>
                     </RelativeLayout>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyvvieweditems"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="20dp">
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="8dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
 
@@ -333,11 +300,11 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/roboto_bold"
                             android:paddingLeft="15dp"
                             android:text="Sales History"
                             android:textColor="@color/headercolor"
-                            android:textSize="23sp">
+                            android:textSize="14sp">
 
                         </TextView>
 
@@ -348,22 +315,23 @@
                             android:layout_alignParentRight="true"
                             android:layout_marginTop="20dp"
                             android:layout_marginRight="18dp"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/roboto_bold"
                             android:paddingLeft="15dp"
                             android:text="View all"
                             android:textColor="@color/headercolor"
-                            android:textSize="23sp">
+                            android:textSize="14sp">
 
                         </TextView>
 
                     </RelativeLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginLeft="15dp"
                         android:id="@+id/recyvsaleshistory"
-                        android:layout_height="wrap_content">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="8dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
@@ -373,27 +341,44 @@
             <LinearLayout
                 android:id="@+id/bottomlayt"
                 android:layout_width="match_parent"
+                android:layout_height="50dp"
 
-                android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:background="@color/appmaincolor"
 
 
                 android:gravity="center_horizontal">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <TextView
+                    android:id="@+id/btn_logout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+
+                    android:fontFamily="@font/jtmarniebold"
+                    android:gravity="center"
+                    android:text="Logout"
+                    android:textColor="@color/white">
+
+                </TextView>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"></View>
+
+                <TextView
                     android:id="@+id/btn_selectCustomer"
-                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
 
-                    android:backgroundTint="@color/appmaincolor"
-
-                    android:layout_width="180dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rec_button"
+                    android:fontFamily="@font/jtmarniebold"
+                    android:gravity="center"
                     android:text="Select Customer"
                     android:textColor="@color/white">
 
-                </androidx.appcompat.widget.AppCompatButton>
+                </TextView>
 
 
             </LinearLayout>

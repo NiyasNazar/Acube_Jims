@@ -14,18 +14,18 @@
         app:cpv_autoTextSize="false"
         app:cpv_barColor="@color/appmaincolor"
         app:cpv_barWidth="10dp"
-        app:cpv_rimColor="@android:color/darker_gray"
+        app:cpv_rimColor="@color/white"
         app:cpv_rimWidth="10dp"
         app:cpv_showUnit="true"
-        app:cpv_spinColor="@color/lighblack"
-        app:cpv_textColor="@color/lighblack"
+        app:cpv_spinColor="@color/black"
+        app:cpv_textColor="@color/black"
         app:cpv_textScale="1"
-        app:cpv_textSize="10sp"
+        app:cpv_textSize="13sp"
         app:cpv_unit="%"
         app:cpv_unitColor="@color/textcolor"
         app:cpv_unitPosition="right_top"
         app:cpv_unitScale="1"
-        app:cpv_unitSize="10sp" />
+        app:cpv_unitSize="13sp" />
 
     <TextView
         android:id="@+id/tvcount"
@@ -34,15 +34,14 @@
         android:layout_below="@id/circleView"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/popins_medium"
         android:text=""
-        android:textSize="10sp"
-        android:textColor="@color/textcolor">
+        android:textSize="12sp"
+        android:textColor="@color/black">
 
     </TextView>
     <TextView
-        android:textSize="10sp"
+        android:textSize="12sp"
         android:id="@+id/tvemployeename"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,9 +49,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="1dp"
         android:layout_marginBottom="2dp"
-        android:fontFamily="@font/poppins_regular"
+        android:fontFamily="@font/popins_medium"
         android:text=""
-        android:textColor="@color/textcolor">
+        android:textColor="@color/black">
 
     </TextView>
 </RelativeLayout>

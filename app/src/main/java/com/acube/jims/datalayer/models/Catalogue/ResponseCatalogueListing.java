@@ -35,7 +35,7 @@ public class ResponseCatalogueListing {
     private String serialNumber;
     @SerializedName("inventoryStatus")
     @Expose
-    private String  inventoryStatus;
+    private String inventoryStatus;
 
     @SerializedName("categoryID")
     @Expose
@@ -120,6 +120,17 @@ public class ResponseCatalogueListing {
     @Expose
     private Integer totalCount;
 
+    @SerializedName("availableQty")
+    @Expose
+    private Integer availableQty;
+
+    @SerializedName("isItemRequested")
+    @Expose
+    private boolean isItemRequested;
+
+    @SerializedName("isFavourite")
+    @Expose
+    private boolean isFavourite;
 
 
     public Integer getId() {
@@ -416,5 +427,29 @@ public class ResponseCatalogueListing {
 
     public void setInventoryStatus(String inventoryStatus) {
         this.inventoryStatus = inventoryStatus;
+    }
+
+    public Integer getAvailableQty() {
+        return availableQty;
+    }
+
+    public void setAvailableQty(Integer availableQty) {
+        this.availableQty = availableQty;
+    }
+
+    public boolean isItemRequested() {
+        return isItemRequested;
+    }
+
+    public void setItemRequested(boolean itemRequested) {
+        isItemRequested = itemRequested;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 }

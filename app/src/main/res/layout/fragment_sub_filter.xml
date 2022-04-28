@@ -9,13 +9,30 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Presentation.Filters.View.CategoryFilterFragment">
+        tools:context=".presentation.Filters.View.CategoryFilterFragment">
         <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="vertical"
             android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="Filter by Sub Category"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textSize="16sp"
+                android:fontFamily="@font/myriad_pro_regular"
+                android:textColor="@color/appmaincolor"
+                android:textStyle="bold"
+                android:layout_height="wrap_content">
+
+            </TextView>
             <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_width="match_parent"
                 android:id="@+id/recysubcategory"
+                android:layout_marginTop="5dp"
+
                 android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>

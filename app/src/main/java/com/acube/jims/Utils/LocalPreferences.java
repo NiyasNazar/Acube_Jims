@@ -22,7 +22,15 @@ public class LocalPreferences {
         editor.putString(key, value);
         editor.apply();
     }
-
+    public static void setbaseUrl(Context context, String value) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putString("BaseUrl", value);
+        editor.apply();
+    }
+    public static String getBaseUrl(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getString("BaseUrl", DEFAULT_STRING);
+    }
     public static void storeAuthenticationToken(Context context, String value) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString("Token", value);

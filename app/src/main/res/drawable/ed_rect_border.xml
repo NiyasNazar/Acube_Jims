@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
     <solid
-        android:color="#FAFAFA"/>
+        android:color="#FFFF"/>
 
     <corners
 
-        android:radius="10dp"
+        android:radius="2dp"
         />
     <stroke
-        android:color="#EBF0FF"
+        android:color="@color/appmaincolor"
         android:width="1px"/>
 </shape>

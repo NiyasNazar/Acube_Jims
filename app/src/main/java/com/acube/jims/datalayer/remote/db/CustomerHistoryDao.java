@@ -6,8 +6,6 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.acube.jims.Presentation.ScanItems.ResponseItems;
-import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.remote.dbmodel.CustomerHistory;
 
 import java.util.List;

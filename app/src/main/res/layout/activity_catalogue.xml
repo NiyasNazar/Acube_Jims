@@ -1,18 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    android:layout_height="match_parent"
-    >
+    <data>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_centerInParent="true"
-        android:onClick="launch"
-        android:layout_height="wrap_content">
+    </data>
+    <!--  android:background="@drawable/homepagebg"
+            android:foreground="@drawable/shape_window_dim"-->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:orientation="vertical"
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg">
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true"
+            >
 
-    </Button>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_app"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/appmaincolor"
+                android:elevation="0dp"
+                android:gravity="center"
+                app:buttonGravity="center_vertical"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_gravity="end|center"
 
-</RelativeLayout>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imvfilter"
+                    android:tint="@color/white"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ic_filter_svgrepo_com"
+                    android:visibility="visible">
+
+                </ImageView>
+                <ImageView
+                    android:id="@+id/imvcart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:tint="@color/white"
+                    android:src="@drawable/ic___cart_shopping_icon"
+                    android:visibility="visible">
+
+                </ImageView>
+
+
+            </LinearLayout>
+
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_customercode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:textSize="@dimen/_7ssp"
+                android:textColor="#c4224a">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/header"
+                android:visibility="gone"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_customercode"
+                android:layout_marginTop="10dp">
+
+
+                <TextView
+
+                    android:id="@+id/tv_customername"
+                    android:layout_toRightOf="@id/laytfilter"
+                    android:layout_marginLeft="@dimen/_12sdp"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:layout_centerVertical="true"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_7ssp"
+                    android:textColor="@color/headercolor">
+
+                </TextView>
+
+
+
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyvcatalog"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/header"
+                android:layout_above="@id/bottomlayt"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+            <RelativeLayout
+                android:id="@+id/bottomlayt"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_alignParentBottom="true"
+                android:background="#BF8F3A">
+
+                <LinearLayout
+                    android:id="@+id/layout_smarttool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:layout_marginBottom="5dp"
+                        android:drawableTop="@drawable/ic_magic"
+                        android:fontFamily="@font/jtmarniebold"
+                        android:text="Smart Tool"
+                        android:textColor="#FFF"
+                        android:textSize="15sp">
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

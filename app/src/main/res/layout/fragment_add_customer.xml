@@ -14,18 +14,13 @@
 
         android:background="@drawable/homepagebg"
         android:orientation="vertical"
-        tools:context=".Presentation.CustomerManagment.View.AddCustomerFragment">
+        tools:context=".presentation.CustomerManagment.View.AddCustomerFragment">
 
-        <ImageView
-            android:id="@+id/imvback"
-            android:layout_width="@dimen/_20sdp"
-            android:layout_height="@dimen/_20sdp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/icon_back"
+        <include
+            layout="@layout/layout_toolbar"
+            android:id="@+id/toolbar_app">
 
-            android:visibility="invisible">
-
-        </ImageView>
+        </include>
 
 
         <androidx.cardview.widget.CardView
@@ -34,29 +29,21 @@
             android:layout_height="wrap_content"
 
             android:layout_centerInParent="true"
-            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginLeft="20dp"
 
 
-            android:layout_marginRight="@dimen/_20sdp"
+            android:layout_marginRight="20dp"
             android:elevation="5dp"
             app:cardCornerRadius="25dp">
 
             <LinearLayout
                 android:background="#F5F5F5"
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="25dp"
 
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="Add Customer"
-                    android:textColor="#666666"
-                    android:textSize="@dimen/_13ssp"></TextView>
 
                 <EditText
 
@@ -139,15 +126,14 @@
                         android:id="@+id/btn_cancel"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
-                        android:layout_height="40dp"
+                        android:layout_height="45dp"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rec_button"
+                        android:background="@drawable/oval_btn_signin"
 
-                        android:backgroundTint="#BF8F3A"
                         android:text="cancel"
                         android:textColor="@color/white"
-                        android:textSize="12sp">
+                        android:textSize="13sp">
 
                     </androidx.appcompat.widget.AppCompatButton>
 
@@ -155,15 +141,15 @@
                         android:id="@+id/btn_Save"
                         style="@style/Widget.AppCompat.Button.Borderless"
                         android:layout_width="0dp"
-                        android:layout_height="40dp"
+                        android:layout_height="45dp"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:background="@drawable/rec_button"
+                        android:background="@drawable/oval_btn_signin"
                         android:backgroundTint="#BF8F3A"
                         android:text="Save"
                         android:textColor="@color/white"
 
-                        android:textSize="12sp"></androidx.appcompat.widget.AppCompatButton>
+                        android:textSize="13sp"></androidx.appcompat.widget.AppCompatButton>
 
 
                 </LinearLayout>

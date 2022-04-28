@@ -43,6 +43,9 @@ public class SubCategory {
     @Expose
     private Object modifiedDate;
 
+    private boolean isSelected;
+
+
     public Object getCategory() {
         return category;
     }
@@ -139,4 +142,11 @@ public class SubCategory {
         this.modifiedDate = modifiedDate;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }

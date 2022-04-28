@@ -13,7 +13,7 @@
         android:background="@drawable/homepagebg">
 
         <include
-            android:id="@+id/toolbar"
+            android:id="@+id/toolbar_app"
             layout="@layout/secondarytoolbar">
 
         </include>
@@ -23,7 +23,7 @@
             layout="@layout/back_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/toolbar"
+            android:layout_below="@id/toolbar_app"
             android:layout_alignParentRight="true"
             android:layout_gravity="end"
             android:layout_marginTop="10dp">
@@ -40,7 +40,7 @@
             android:layout_marginBottom="15dp"
             android:background="@drawable/item_border_detailspage"
             android:orientation="vertical"
-            tools:context=".Presentation.Report.View.FoundFragment">
+            tools:context=".presentation.Report.View.FoundFragment">
 
             <TextView
                 android:id="@+id/tv_totaldata"

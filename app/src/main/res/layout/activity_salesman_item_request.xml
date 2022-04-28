@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+    <!--  android:background="@drawable/homepagebg"
+            android:foreground="@drawable/shape_window_dim"-->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:fitsSystemWindows="true">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar_app"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/appmaincolor"
+                android:elevation="0dp"
+                android:gravity="center"
+                app:buttonGravity="center_vertical"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
+
+
+
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <TextView
+                android:id="@+id/tv_customercode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/_12sdp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/montserratsemibold"
+                android:textColor="#c4224a"
+                android:textSize="@dimen/_7ssp"
+                android:visibility="gone">
+
+            </TextView>
+
+            <RelativeLayout
+                android:id="@+id/header"
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_customercode"
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
+
+
+                <TextView
+
+                    android:id="@+id/tv_customername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_12sdp"
+
+                    android:fontFamily="@font/montserratsemibold"
+                    android:textColor="@color/headercolor"
+                    android:textSize="@dimen/_7ssp">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyvpicklist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/header"
+                android:layout_marginTop="5dp"
+              >
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </RelativeLayout>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

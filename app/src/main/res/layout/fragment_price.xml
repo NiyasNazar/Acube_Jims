@@ -1,56 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:rsb="http://schemas.android.com/tools">
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:text="Filter By Price Range"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="16sp"
+        android:fontFamily="@font/myriad_pro_regular"
+        android:textColor="@color/appmaincolor"
+        android:textStyle="bold"
+        android:layout_height="wrap_content">
 
+    </TextView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/ed_pricemin"
+            android:layout_marginBottom="30dp"
 
-        android:orientation="vertical">
+            android:layout_width="180dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ed_rect_border"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="horizontal">
+            android:layout_marginTop="10dp"
 
-            <TextView
-                android:id="@+id/tvpricemin"
-                android:layout_width="wrap_content"
-                android:fontFamily="@font/montserratsemibold"
+            android:hint="Min"
 
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+            android:inputType="numberDecimal"
 
-                android:textColor="#666666"
-                android:textSize="16sp">
+            android:textSize="13sp">
 
-            </TextView>
+        </EditText>
+        <EditText
+            android:id="@+id/ed_pricemax"
+            android:layout_marginBottom="30dp"
 
-            <TextView
-                android:id="@+id/tvpricemax"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
-                android:fontFamily="@font/montserratsemibold"
-                android:textColor="#666666"
-                android:textSize="16sp">
+            android:layout_width="180dp"
+            android:gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ed_rect_border"
+            android:layout_height="50dp"
 
-            </TextView>
-        </RelativeLayout>
+            android:layout_marginTop="10dp"
 
+            android:hint="Max"
 
+            android:inputType="numberDecimal"
+            android:textSize="13sp">
 
-        <com.yahoo.mobile.client.android.util.rangeseekbar.RangeSeekBar
-            android:id="@+id/rangeSeekbar"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            rsb:absoluteMaxValue="100"
-            rsb:absoluteMinValue="100000" />
+        </EditText>
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

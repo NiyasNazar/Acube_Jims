@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".presentation.Audit.AuditFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar_app"
+                layout="@layout/back_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="10dp">
+
+            </include>
+
+            <LinearLayout
+                android:orientation="vertical"
+
+                android:id="@+id/nestedscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:layout_below="@id/toolbar_app"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_border_detailspage">
+
+
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinlocations"
+
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:layout_below="@id/layout_count"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/table_item_border"
+                    android:clickable="false"
+
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none"
+                    android:textColor="#2d2d2d"
+                    app:hintText="Select Location" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyvaduditlocations"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+
+                <LinearLayout
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/btn_scan"
+                    android:layout_width="139dp"
+                    android:layout_height="50dp"
+                    android:layout_centerHorizontal="true"
+
+                    android:layout_marginTop="20dp"
+
+
+                    android:layout_marginBottom="36dp"
+                    android:background="@drawable/oval_btn_signin"
+                    android:gravity="center">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SCAN"
+                        android:textColor="#FFFFFF">
+
+                    </TextView>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+
+                    android:id="@+id/layout_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tvtotalstock"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Total"
+                        android:textColor="#000000">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvfound"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Found"
+                        android:textColor="#000000">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvmissing"
+                        android:layout_width="0dp"
+
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Missing"
+                        android:textColor="#000000">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvunknown"
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Unknown"
+                        android:textColor="#000000">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tvlocationmismatch"
+
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="Loc mismatch"
+                        android:textColor="#000000">
+
+                    </TextView>
+                </LinearLayout>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

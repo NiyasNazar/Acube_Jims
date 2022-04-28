@@ -11,7 +11,7 @@
         android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".Presentation.DeviceRegistration.View.DeviceRegistrationFragment">
+        tools:context=".presentation.DeviceRegistration.View.DeviceRegistrationFragment">
 
 
         <RelativeLayout
@@ -19,18 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/homepagebg"
-            tools:context=".Presentation.Login.View.LoginActivity">
+            tools:context=".presentation.Login.View.LoginActivity">
 
             <include
-                android:id="@+id/toolbar"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true">
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar"
+             >
 
             </include>
 
             <androidx.cardview.widget.CardView
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -46,38 +46,16 @@
                     android:background="#F5F5F5">
 
 
-                    <TextView
-                        android:id="@+id/tvsubtitle"
-
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="18dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:text="Device Settings"
-                        android:textAllCaps="true"
-                        android:textColor="@color/headercolor"
-                        android:textSize="@dimen/_10ssp"></TextView>
-
                     <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                         android:id="@+id/ed_macaddress"
                         android:layout_width="350dp"
-
                         android:layout_height="50dp"
-                        android:layout_below="@+id/tvsubtitle"
                         android:layout_centerHorizontal="true"
                         android:layout_marginLeft="57dp"
                         android:layout_marginTop="55dp"
-
                         android:layout_marginRight="57dp"
-
-
                         android:background="@drawable/ed_rect_border"
-                        android:editable="false"
-
                         android:inputType="none"
-
                         android:paddingRight="10dp"
                         android:textSize="14sp"
                         app:hintText="Mac Address">
@@ -93,16 +71,16 @@
 
                         android:layout_marginLeft="57dp"
                         android:layout_marginTop="12dp"
-                        android:textColorHint="#000"
-
                         android:layout_marginRight="57dp"
-                        android:background="@drawable/ed_rect_border"
 
+                        android:background="@drawable/ed_rect_border"
                         android:hint="Device ID"
 
                         android:inputType="textEmailAddress"
-                        android:paddingLeft="24dp"
+
+                        android:paddingLeft="20dp"
                         android:paddingRight="10dp"
+                        android:textColorHint="#000"
                         android:textSize="14sp">
 
                     </EditText>

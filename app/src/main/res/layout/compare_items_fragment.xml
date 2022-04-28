@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Presentation.CompareItems.View.CompareItemsFragment">
+    tools:context=".presentation.CompareItems.View.CompareItemsFragment">
 
     <TextView
         android:layout_width="match_parent"

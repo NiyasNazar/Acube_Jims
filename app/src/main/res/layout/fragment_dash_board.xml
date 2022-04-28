@@ -11,33 +11,27 @@
     <RelativeLayout
 
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/homepagebg">
 
 
         <include
-            android:id="@+id/toolbar"
-            layout="@layout/back_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="end"
-            android:layout_marginTop="10dp">
+            android:id="@+id/toolbar_app"
+            layout="@layout/layout_toolbar">
 
         </include>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_below="@id/toolbar_app"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/item_border_detailspage"
             android:orientation="vertical">
 
 
             <androidx.core.widget.NestedScrollView
+                android:visibility="visible"
 
                 android:id="@+id/nestedscrollview"
                 android:layout_width="match_parent"
@@ -63,7 +57,7 @@
                         android:background="@drawable/shapebg_1">
 
 
-                        <Spinner
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                             android:id="@+id/ed_storeselection"
                             android:layout_width="150dp"
                             android:layout_height="40dp"
@@ -71,11 +65,13 @@
                             android:dropDownSelector="@color/headercolor"
                             android:gravity="center"
                             android:inputType="none"
+
                             android:paddingRight="10dp"
                             android:textSize="13sp"
-                            app:hintText="Select Store/Warehouse">
+                            >
 
-                        </Spinner>                    </LinearLayout>
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/laytperiodr"
@@ -100,257 +96,226 @@
                         </Spinner>
                     </LinearLayout>
 
-                    <WebView
-                        android:id="@+id/webview"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="15dp"
-                        android:visibility="gone" />
 
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tvheadersummary"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/laytspinner"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/popins_medium"
+                        android:text="General Summary"
+                        android:textColor="@color/black"
+                        android:textSize="15sp">
+
+                    </TextView>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/mainheader"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/laytspinner"
-                        android:layout_marginTop="15dp"
+                        android:layout_below="@id/tvheadersummary"
+
+                        android:layout_marginTop="10dp"
                         android:orientation="horizontal">
 
-                        <androidx.cardview.widget.CardView
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_margin="3dp"
-
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="#17A2B8">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@drawable/gradcircleone">
 
-                                <TextView
-                                    android:id="@+id/label"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="30dp"
-                                    android:background="#1591A5"
-                                    android:gravity="center"
-                                    android:text="Total Inventory"
-                                    android:textColor="#FFF"
-                                    android:textSize="8sp">>
+                                <ImageView
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_monitor">
 
-                                </TextView>
+                                </ImageView>
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_below="@id/label">
-
-                                    <TextView
-                                        android:id="@+id/tvinverntory"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_gravity="center"
-                                        android:text="0"
-                                        android:layout_centerInParent="true"
-                                        android:textColor="#FFF"
-                                        android:textSize="13sp">
-
-                                    </TextView>
-
-                                    <ImageView
-                                        android:visibility="gone"
-                                        android:layout_width="18dp"
-                                        android:layout_height="38dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="10dp"
-                                        android:src="@drawable/necklace">
-
-                                    </ImageView>
-                                </RelativeLayout>
                             </RelativeLayout>
 
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/popins_medium"
+                                android:gravity="center"
+                                android:minLines="2"
+                                android:textSize="12sp"
 
-                        </androidx.cardview.widget.CardView>
+                                android:text="Total Inventory"
+                                android:textColor="@color/black">
 
-                        <androidx.cardview.widget.CardView
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/tvinverntory"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="10"
+                                android:textColor="@color/black">
+
+                            </TextView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="0dp"
-                            android:layout_height="80dp"
-                            android:layout_margin="3dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="#28A745">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@drawable/gradcircletwo">
 
-                                <TextView
-                                    android:id="@+id/label2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="30dp"
-                                    android:background="#24963E"
-                                    android:gravity="center"
-                                    android:text="Total No.of Sales"
-                                    android:textColor="#FFF"
-                                    android:textSize="8sp">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_shopping_cart_menu">
 
-                                </TextView>
+                                </ImageView>
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_below="@id/label2">
-
-                                    <TextView
-                                        android:id="@+id/tvnoofsales"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_gravity="center"
-                                        android:layout_centerInParent="true"                                        android:text="0"
-                                        android:textColor="#FFF"
-                                        android:textSize="13sp">
-
-                                    </TextView>
-
-                                    <ImageView
-                                        android:visibility="gone"
-                                        android:layout_width="18dp"
-                                        android:layout_height="38dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="10dp"
-                                        android:src="@drawable/notviewed">
-
-                                    </ImageView>
-                                </RelativeLayout>
                             </RelativeLayout>
 
-                        </androidx.cardview.widget.CardView>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/popins_medium"
+                                android:gravity="center"
+                                android:minLines="2"
+                                android:textSize="12sp"
 
-                        <androidx.cardview.widget.CardView
+                                android:text="Total No. of Sales"
+                                android:textColor="@color/black">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/tvnoofsales"
+
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="10"
+                                android:textColor="@color/black">
+
+                            </TextView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="0dp"
-
-                            android:layout_height="80dp"
-                            android:layout_margin="3dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="#FFC107">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@drawable/gradcirclethree">
 
-                                <TextView
-                                    android:id="@+id/label3"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="30dp"
-                                    android:background="#E5AD06"
-                                    android:gravity="center"
-                                    android:text="Total Sales"
-                                    android:textColor="#FFF"
-                                    android:textSize="8sp">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_sales_connect_svgrepo_com">
 
-                                </TextView>
+                                </ImageView>
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_below="@id/label3">
-
-                                    <TextView
-                                        android:id="@+id/tvtotalsales"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_gravity="center"
-                                        android:layout_centerInParent="true"                                        android:text="0"
-                                        android:textColor="#FFF"
-                                        android:textSize="13sp">
-
-                                    </TextView>
-
-                                    <ImageView
-                                        android:visibility="gone"
-                                        android:layout_width="18dp"
-                                        android:layout_height="38dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="10dp"
-                                        android:src="@drawable/customer_insight">
-
-                                    </ImageView>
-                                </RelativeLayout>
                             </RelativeLayout>
-                        </androidx.cardview.widget.CardView>
 
-                        <androidx.cardview.widget.CardView
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/popins_medium"
+                                android:gravity="center"
+                                android:minLines="2"
+                                android:textSize="12sp"
+                                android:text="Total Sales"
+                                android:textColor="@color/black">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/tvtotalsales"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:text="10"
+                                android:textColor="@color/black">
+
+                            </TextView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="0dp"
-
-                            android:layout_height="80dp"
-                            android:layout_margin="3dp"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            app:cardBackgroundColor="#DC3545">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <RelativeLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="vertical">
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@drawable/gradcircleone">
 
-                                <TextView
-                                    android:id="@+id/label4"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="30dp"
-                                    android:background="#C6303E"
-                                    android:gravity="center"
-                                    android:text="Products Sold"
-                                    android:textColor="#FFF"
-                                    android:textSize="8sp">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:src="@drawable/ic_icon_jewelry">
 
-                                </TextView>
+                                </ImageView>
 
-                                <RelativeLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:layout_below="@id/label4">
-
-                                    <TextView
-                                        android:id="@+id/tvproductssold"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
-                                        android:layout_gravity="center"
-                                        android:layout_centerInParent="true"                                        android:text="0"
-                                        android:textColor="#FFF"
-                                        android:textSize="13sp">
-
-                                    </TextView>
-
-                                    <ImageView
-                                        android:visibility="gone"
-                                        android:layout_width="18dp"
-                                        android:layout_height="38dp"
-                                        android:layout_alignParentRight="true"
-                                        android:layout_centerVertical="true"
-                                        android:layout_marginRight="10dp"
-                                        android:src="@drawable/customer_insight">
-
-                                    </ImageView>
-                                </RelativeLayout>
                             </RelativeLayout>
-                        </androidx.cardview.widget.CardView>
-                    </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/popins_medium"
+                                android:gravity="center"
+                                android:minLines="2"
+                                android:textSize="12sp"
+
+                                android:text="Products Sold"
+                                android:textColor="@color/black">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/tvproductssold"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+
+                                android:text="10"
+                                android:textColor="@color/black">
+
+                            </TextView>
+
+                        </LinearLayout>
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
                     <LinearLayout
                         android:id="@+id/catlayout"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@id/mainheader"
-                        android:background="#9C7C38"
+                        android:layout_marginTop="15dp"
                         android:gravity="center">
 
                         <TextView
@@ -359,12 +324,12 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/roboto"
-                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:fontFamily="@font/popins_medium"
+                            android:gravity="start"
                             android:text="Sales"
-                            android:textColor="#fff"
-                            android:textSize="13sp">
+                            android:textColor="@color/black"
+                            android:textSize="15sp">
 
                         </TextView>
 
@@ -375,8 +340,8 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="15dp"
-                            android:layout_marginRight="10dp"
-                            android:layout_weight="1"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight=".8"
 
                             android:background="@drawable/shapebg_1">
 
@@ -397,12 +362,12 @@
                         </LinearLayout>
                     </LinearLayout>
 
+
                     <com.github.mikephil.charting.charts.BarChart
                         android:id="@+id/chart1"
                         android:layout_width="match_parent"
                         android:layout_height="300dp"
                         android:layout_below="@id/catlayout" />
-
 
 
                     <LinearLayout
@@ -411,20 +376,17 @@
                         android:layout_height="50dp"
                         android:layout_below="@id/chart1"
                         android:layout_marginTop="5dp"
-                        android:background="#9C7C38"
                         android:gravity="center">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/roboto"
-                            android:gravity="center"
-                            android:text="Top 5 Employees - Customer Served"
-                            android:textColor="#fff"
-                            android:textSize="13sp">
+                            android:layout_weight="2"
+                            android:fontFamily="@font/popins_medium"
+                            android:text="Top 5 Employees"
+                            android:textColor="@color/black"
+                            android:textSize="15sp">
 
                         </TextView>
 
@@ -432,10 +394,12 @@
                             android:id="@+id/layservedfilter"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="15dp"
-                            android:layout_weight="1"
+                            android:layout_marginRight="5dp"
+                            android:layout_weight=".8"
 
                             android:background="@drawable/shapebg_1">
 
@@ -459,17 +423,28 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyvcustomerserved"
                         android:layout_width="match_parent"
+
                         android:layout_height="300dp"
                         android:layout_below="@id/custlayout"
                         android:layout_marginTop="5dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
+
+                    <include
+                        android:id="@+id/no_item_layout1"
+                        layout="@layout/no_item"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="300dp"
+                        android:layout_below="@id/custlayout">
+
+                    </include>
+
                     <LinearLayout
                         android:id="@+id/itemwiselayout"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_below="@id/recyvcustomerserved"
-                        android:background="#9C7C38"
                         android:gravity="center">
 
                         <TextView
@@ -477,12 +452,11 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/roboto"
-                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:fontFamily="@font/popins_medium"
                             android:text="Top 10 Sold Products"
-                            android:textColor="#fff"
-                            android:textSize="13sp">
+                            android:textColor="@color/black"
+                            android:textSize="15sp">
 
                         </TextView>
 
@@ -493,7 +467,9 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
+                            android:layout_marginRight="5dp"
+
+                            android:layout_weight=".8"
 
                             android:background="@drawable/shapebg_1">
 
@@ -528,15 +504,16 @@
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_weight="2"
+                            android:backgroundTint="@color/appmaincolor"
                             android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/popins_medium"
 
 
                             android:gravity="center"
                             android:text="Product"
                             android:textAllCaps="false"
-                            android:textColor="#666666"
-                            android:textSize="13sp">
+                            android:textColor="@color/white"
+                            android:textSize="11sp">
 
                         </TextView>
 
@@ -545,27 +522,31 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/popins_medium"
+                            android:backgroundTint="@color/appmaincolor"
 
                             android:gravity="center"
                             android:text="Value"
                             android:textAllCaps="false"
-                            android:textColor="#666666"
-                            android:textSize="13sp">
+                            android:textColor="@color/white"
+                            android:textSize="11sp">
 
                         </TextView>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_weight="1"
+                            android:backgroundTint="@color/appmaincolor"
+
                             android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/popins_medium"
 
                             android:gravity="center"
                             android:text="Sold"
                             android:textAllCaps="false"
-                            android:textColor="#666666"
-                            android:textSize="13sp">
+                            android:textColor="@color/white"
+                            android:textSize="11sp">
 
                         </TextView>
 
@@ -575,12 +556,22 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyvitemwisefilter"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
+                        android:layout_height="wrap_content"
 
                         android:layout_below="@id/header"
                         android:layout_marginTop="5dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
+
+                    <include
+                        android:id="@+id/no_item_layout2"
+                        layout="@layout/no_item"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="300dp"
+                        android:layout_below="@id/header">
+
+                    </include>
 
                     <LinearLayout
                         android:id="@+id/categorylayout"
@@ -588,20 +579,17 @@
                         android:layout_height="50dp"
 
                         android:layout_below="@id/recyvitemwisefilter"
-                        android:background="#9C7C38"
                         android:gravity="center">
 
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/roboto"
-                            android:gravity="center"
+                            android:layout_weight="2"
+                            android:fontFamily="@font/popins_medium"
                             android:text="Top Sold Category"
-                            android:textColor="#fff"
-                            android:textSize="13sp">
+                            android:textColor="@color/black"
+                            android:textSize="15sp">
 
                         </TextView>
 
@@ -612,7 +600,7 @@
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="5dp"
-                            android:layout_weight="1"
+                            android:layout_weight=".8"
 
                             android:background="@drawable/shapebg_1">
 
@@ -633,6 +621,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <TableRow
                         android:id="@+id/headercategory"
                         android:layout_width="match_parent"
@@ -647,15 +636,16 @@
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_weight="1"
+                            android:backgroundTint="@color/appmaincolor"
                             android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/popins_medium"
 
 
                             android:gravity="center"
                             android:text="Category"
                             android:textAllCaps="false"
-                            android:textColor="#666666"
-                            android:textSize="10sp">
+                            android:textColor="@color/white"
+                            android:textSize="11sp">
 
                         </TextView>
 
@@ -664,41 +654,46 @@
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/popins_medium"
+                            android:backgroundTint="@color/appmaincolor"
 
                             android:gravity="center"
                             android:text="Sub-Category"
                             android:textAllCaps="false"
-                            android:textColor="#666666"
-                            android:textSize="10sp">
+                            android:textColor="@color/white"
+                            android:textSize="11sp">
 
                         </TextView>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/popins_medium"
+                            android:backgroundTint="@color/appmaincolor"
 
                             android:gravity="center"
                             android:text="Price"
                             android:textAllCaps="false"
-                            android:textColor="#666666"
-                            android:textSize="10sp">
+                            android:textColor="@color/white"
+                            android:textSize="11sp">
 
                         </TextView>
+
                         <TextView
                             android:layout_width="0dp"
                             android:layout_height="40dp"
                             android:layout_weight="1"
                             android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
+                            android:fontFamily="@font/popins_medium"
+                            android:backgroundTint="@color/appmaincolor"
 
                             android:gravity="center"
                             android:text="Sold"
                             android:textAllCaps="false"
-                            android:textColor="#666666"
-                            android:textSize="10sp">
+                            android:textColor="@color/white"
+                            android:textSize="11sp">
 
                         </TextView>
 
@@ -712,7 +707,15 @@
                         android:layout_marginTop="5dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
+                    <include
+                        android:layout_below="@id/headercategory"
+                        android:id="@+id/no_item_layout3"
+                        android:layout_width="match_parent"
 
+                        android:layout_height="300dp"
+                        layout="@layout/no_item">
+
+                    </include>
                 </RelativeLayout>
 
             </androidx.core.widget.NestedScrollView>

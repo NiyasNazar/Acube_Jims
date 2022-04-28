@@ -29,7 +29,7 @@
                 android:paddingBottom="@dimen/_2sdp"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
-                android:textSize="@dimen/_7ssp"
+                android:textSize="11sp"
                 android:textStyle="normal" />
 
             <ImageView
@@ -60,10 +60,10 @@
                 android:letterSpacing="0.01"
                 android:paddingTop="@dimen/_2sdp"
                 android:paddingBottom="@dimen/_2sdp"
-                android:text=" Home"
+                android:text="Home"
                 android:textAllCaps="true"
                 android:textColor="#c4224a"
-                android:textSize="@dimen/_7ssp"
+                android:textSize="11sp"
                 android:textStyle="normal" />
 
 

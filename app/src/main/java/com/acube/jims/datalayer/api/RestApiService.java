@@ -1,6 +1,10 @@
 package com.acube.jims.datalayer.api;
 
-import com.acube.jims.Presentation.ScanItems.ResponseItems;
+import com.acube.jims.datalayer.models.ItemRequest.ResponseCreateItemrequest;
+import com.acube.jims.datalayer.models.ItemRequest.ResponseFetchPickList;
+import com.acube.jims.datalayer.models.ItemRequest.ResponseItemRequestDetails;
+import com.acube.jims.datalayer.remote.dbmodel.ItemRequestEntry;
+import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.datalayer.models.Analytics.ResponseAnalyticsGraph;
 import com.acube.jims.datalayer.models.Analytics.ResponseAnalyticsSummary;
 import com.acube.jims.datalayer.models.Analytics.ResponseCustomerServed;
@@ -40,7 +44,6 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -79,11 +82,20 @@ public interface RestApiService {
     @POST("ItemCatalog/GetAllDetails")
     Call<List<ResponseCatalogueListing>> getCatalogueItems(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
+
+    @POST("ItemCatalog/GetAllSummary")
+    Call<List<ResponseCatalogueListing>> getCatalogueSummary(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+
     @GET("ItemCatalog/GetItemFilter")
     Call<List<ResponseFetchFilters>> getFilters(@Header("Authorization") String Auth);
 
     @GET("ItemCatalog/GetSingle/{id}")
     Call<ResponseCatalogDetails> getItemDetails(@Header("Authorization") String Auth, @Path("id") String id);
+
+    @GET("ItemCatalog/GetSingleItemDetails/{ItemID}")
+    Call<ResponseCatalogDetails> getItemDetailsoutofstock(@Header("Authorization") String Auth, @Path("ItemID") String ItemID);
+
 
     @GET("CustomerRegistration/GetCustomerList/{FilterText}")
     Call<List<ResponseCustomerListing>> getCustomer(@Header("Authorization") String Auth, @Path("FilterText") String FilterText);
@@ -120,8 +132,9 @@ public interface RestApiService {
     @POST("Sale/GetQuoteDetails")
     Call<List<ResponseInvoiceList>> InvoiceItems(@Header("Authorization") String Auth, @Body String[] data);
 
-    @POST("Audit/GetAuditHeadMobile")
+    @POST("Audit/GetDocumentForMobile")
     Call<List<ResponseAudit>> AuditDetails(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
 
     @POST("Audit/GetAuditCandidateList")
     Call<List<ResponseLocationList>> AuditLocationList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
@@ -144,6 +157,7 @@ public interface RestApiService {
 
     @POST("AnalyticsReport/GetAnalyticsSummary")
     Call<ResponseAnalyticsSummary> getAnalyticsSummary(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
     @POST("AnalyticsReport/GetItemWiseAnalytics")
     Call<ResponseItemWiseAnalytics> getGetItemWiseAnalytics(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
@@ -152,11 +166,13 @@ public interface RestApiService {
 
     @POST("AnalyticsReport/GetCategoryWiseAnalytics")
     Call<ResponseAnalyticsGraph> getAnalyticsGraph(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
     @GET("warehouse")
     Call<List<ResponseWareHouse>> Fetchwarehouse(@Header("Authorization") String Auth);
 
-   @POST("DashboardReport/GetDashboardSummary")
+    @POST("DashboardReport/GetDashboardSummary")
     Call<ResponseDashboardSummary> getDashboardSummary(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
     @POST("DashboardReport/GetDashboardGraph")
     Call<ResponseDashBoardGraph> getDashboardGraph(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
@@ -170,4 +186,22 @@ public interface RestApiService {
 
     @POST("DashboardReport/GetDashboardCategoryWiseSummary")
     Call<ResponseTopCategory> getTopSoldCategory(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("ItemRequest/CreateItemRequest")
+    Call<List<ItemRequestEntry>> CreateItemRequest(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("ItemRequest/UpdateItemRequest")
+    Call<List<ItemRequestEntry>> UpdateItemRequest(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+
+    @GET("ItemRequest/GetItemRequestHeader")
+    Call<List<ResponseFetchPickList>> FetchPickList(@Header("Authorization") String Auth);
+
+
+    @GET("ItemRequest/GetItemRequestDetails/{RequestNo}/{CustomerID}")
+    Call<List<ResponseItemRequestDetails>> GetItemRequestDetailsbyRequestNo(@Header("Authorization") String Auth, @Path("RequestNo") String RequestNo, @Path("CustomerID") String CustomerID);
+
+    @POST("ItemRequest/CloseItemRequest")
+    Call<JsonObject> markpicklistCompleted(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
 }

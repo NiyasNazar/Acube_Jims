@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
 
     <TableRow
         android:id="@+id/tableRow4"
@@ -24,6 +27,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#666666"
             android:textSize="12sp"></TextView>
+
         <TextView
             android:id="@+id/tv_itemkarat"
             android:layout_width="0dp"
@@ -39,6 +43,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#666666"
             android:textSize="12sp"></TextView>
+
         <TextView
             android:id="@+id/tv_serialnumber"
             android:layout_width="0dp"
@@ -55,6 +60,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#666666"
             android:textSize="12sp"></TextView>
+
         <TextView
             android:id="@+id/tv_stoneweight"
             android:layout_width="0dp"
@@ -71,6 +77,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="#666666"
             android:textSize="12sp"></TextView>
+
         <EditText
             android:id="@+id/tv_goldweight"
             android:layout_width="0dp"
@@ -268,6 +275,4 @@
                 android:textStyle="normal" />
         </RelativeLayout>
     </LinearLayout>
-
-
 </RelativeLayout>

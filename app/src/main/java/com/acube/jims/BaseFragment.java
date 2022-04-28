@@ -21,7 +21,8 @@ import com.google.android.material.snackbar.Snackbar;
 public abstract class BaseFragment extends Fragment {
     protected static final String TAG = BaseFragment.class.getSimpleName();
     protected ProgressDialog mProgressDialog;
-    Dialog dialog ;
+    Dialog dialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +32,9 @@ public abstract class BaseFragment extends Fragment {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_loader);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
         if (new AppUtility(getActivity()).isTablet(getActivity())) {
-            getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+          //  getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         } else {
             getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -42,16 +44,18 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void showProgressDialog() {
-       // dialog.show();
-   if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
-        mProgressDialog = ProgressDialog.show(getActivity(), "", "Please wait...");
+        // dialog.show();
+      /*  if (mProgressDialog != null&&mProgressDialog.isShowing()) {
+
+        } else {
+            mProgressDialog = ProgressDialog.show(requireActivity(), "", "Please wait...");
+        }*/
+
     }
 
     protected void hideProgressDialog() {
 
-      //  dialog.dismiss();
+        //  dialog.dismiss();
         if (mProgressDialog != null && mProgressDialog.isShowing()) {
             mProgressDialog.dismiss();
             mProgressDialog = null;

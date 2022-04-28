@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/appmaincolor"
+        android:fitsSystemWindows="true"
+
+        >
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="0dp"
+            android:gravity="center"
+            app:buttonGravity="center_vertical"
+            app:titleTextAppearance="@style/Toolbar.TitleText" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:src="@drawable/logo"
+            android:layout_height="wrap_content"></ImageView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_gravity="end|center"
+
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imvcart"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic___cart_shopping_icon"
+                android:visibility="visible">
+
+            </ImageView>
+
+            <ImageView
+
+                android:id="@+id/favorites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center"
+                android:layout_marginRight="10dp"
+                android:clickable="false"
+                android:gravity="center"
+
+                android:src="@drawable/ic_baseline_favorite_24"
+                android:textSize="11sp"
+
+
+                android:visibility="visible" />
+            <ImageView
+
+                android:id="@+id/pricetag"
+                android:tint="@color/white"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center"
+                android:layout_marginRight="10dp"
+                android:clickable="false"
+                android:gravity="center"
+
+                android:src="@drawable/ic_price_tag_svgrepo_com"
+                android:textSize="11sp"
+
+
+                android:visibility="visible" />
+        </LinearLayout>
+
+
+    </FrameLayout>
+</layout>

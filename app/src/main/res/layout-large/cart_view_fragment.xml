@@ -8,139 +8,51 @@
     </data>
 
     <FrameLayout
-        android:layout_width="match_parent"
         android:id="@+id/parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
-        tools:context=".Presentation.ProductDetails.View.ProductDetailsFragment">
+        tools:context=".presentation.ProductDetails.View.ProductDetailsFragment">
 
         <RelativeLayout
+
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
 
             <include
-                android:id="@+id/toolbar"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp">
+                android:id="@+id/toolbars"
+                layout="@layout/layout_toolbar">
 
             </include>
 
             <RelativeLayout
-                android:id="@+id/nestedscrollview"
+                android:id="@+id/parentRelative"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@id/bottomlayt"
-                android:layout_below="@id/toolbar"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/item_border_detailspage">
 
-                <RelativeLayout
+                android:layout_above="@id/bottomlayt"
+                android:layout_below="@id/toolbars"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycartitems"
 
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="15dp">
 
-                    android:layout_marginLeft="14dp"
-
-                    android:layout_marginRight="14dp"
-                    android:layout_marginBottom="16dp">
-
-                    <TextView
-                        android:id="@+id/tvcarttext"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:gravity="center_horizontal"
-                        android:letterSpacing="0.01"
-                        android:text="CART PAGE"
-                        android:textColor="@color/headercolor"
-                        android:textSize="26.7sp"
-                        android:textStyle="normal" />
-
-                    <LinearLayout
-                        android:id="@+id/header"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tvcarttext"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginRight="15dp"
-                        android:orientation="horizontal">
-
-                        <View
-                            android:layout_width="0dp"
-                            android:layout_height="42dp"
-                            android:layout_weight=".6"
-                            android:background="@drawable/table_border"></View>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="42dp"
-                            android:layout_weight="2"
-                            android:background="@drawable/table_border"
+                </androidx.recyclerview.widget.RecyclerView>
 
 
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Item Name"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="42dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Serial Number"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="42dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/table_border"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:gravity="center"
-                            android:text="Price"
-                            android:textAllCaps="false"
-                            android:textColor="#666666">
-
-                        </TextView>
-
-
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recycartitems"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/header"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginTop="2dp"
-                        android:layout_marginRight="15dp"
-                        android:layout_marginBottom="15dp">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-
-                </RelativeLayout>
             </RelativeLayout>
 
             <LinearLayout
@@ -150,37 +62,46 @@
                 android:layout_alignParentRight="true"
 
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="13dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="32dp"
+                android:layout_marginBottom="10dp"
 
                 android:gravity="center_horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:layout_marginRight="10dp"
                     android:id="@+id/btnback"
                     style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="wrap_content"
 
-
-                    android:layout_width="90dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rec_button"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/oval_btn_signin"
+                    android:fontFamily="@font/jtmarniebold"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+
                     android:text="Go Back"
-                    android:textColor="@color/white">
+
+                    android:textColor="@color/white"
+                    android:textSize="13sp">
 
                 </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
-
-                    style="@style/Widget.AppCompat.Button.Borderless"
                     android:id="@+id/btn_next"
 
-                    android:layout_width="180dp"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/rec_button"
-                    android:backgroundTint="#3699ff"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/oval_btn_signin"
+                    android:fontFamily="@font/jtmarniebold"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="50dp"
                     android:text="Next"
-                    android:textColor="@color/white">
+                    android:textColor="@color/white"
+                    android:textSize="13sp">
 
                 </androidx.appcompat.widget.AppCompatButton>
             </LinearLayout>
@@ -191,24 +112,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/bottomlayt"
-                android:layout_below="@id/toolbar"
-                android:visibility="gone"
-
+                android:layout_below="@id/toolbars"
                 android:layout_centerInParent="true"
+
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/item_border_detailspage"
-                android:backgroundTint="#FFF">
+                android:backgroundTint="#FFF"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:text="NO RECORDS FOUND"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="@color/textcolor"
                     android:layout_gravity="center"
-                    >
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="NO RECORDS FOUND"
+                    android:textColor="@color/textcolor">
 
                 </TextView>
             </FrameLayout>

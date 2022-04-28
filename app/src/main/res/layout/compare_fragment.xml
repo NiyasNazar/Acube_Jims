@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg"
 
-        tools:context=".Presentation.Compare.CompareFragment">
+        tools:context=".presentation.Compare.CompareFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -20,20 +20,16 @@
 
 
             <include
-                android:id="@+id/toolbar"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp">
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar"
+             >
 
             </include>
 
             <ImageView
                 android:id="@+id/left_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
 
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
@@ -44,7 +40,7 @@
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/toolbar"
+                android:layout_below="@id/toolbar_app"
                 android:layout_toLeftOf="@id/right_arrow"
                 android:layout_toRightOf="@id/left_arrow"
                 android:fillViewport="true">
@@ -75,8 +71,8 @@
 
             <ImageView
                 android:id="@+id/right_arrow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
 
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"

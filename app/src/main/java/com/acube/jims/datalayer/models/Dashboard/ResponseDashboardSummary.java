@@ -6,19 +6,19 @@ import com.google.gson.annotations.SerializedName;
 public class ResponseDashboardSummary {
     @SerializedName("totalInventory")
     @Expose
-    private Integer totalInventory;
+    private Double totalInventory;
     @SerializedName("todaySales")
     @Expose
-    private Integer todaySales;
+    private Double todaySales;
     @SerializedName("todayTotalSales")
     @Expose
-    private Integer todayTotalSales;
+    private Double todayTotalSales;
     @SerializedName("totalProductSold")
     @Expose
-    private Integer totalProductSold;
+    private Double totalProductSold;
     @SerializedName("customerCount")
     @Expose
-    private Integer customerCount;
+    private Double customerCount;
     @SerializedName("dashboardDataSingleBar")
     @Expose
     private Object dashboardDataSingleBar;
@@ -38,43 +38,43 @@ public class ResponseDashboardSummary {
     @Expose
     private Object dashboardEmployeeAnalytics;
 
-    public Integer getTotalInventory() {
+    public Double getTotalInventory() {
         return totalInventory;
     }
 
-    public void setTotalInventory(Integer totalInventory) {
+    public void setTotalInventory(Double totalInventory) {
         this.totalInventory = totalInventory;
     }
 
-    public Integer getTodaySales() {
+    public Double getTodaySales() {
         return todaySales;
     }
 
-    public void setTodaySales(Integer todaySales) {
+    public void setTodaySales(Double todaySales) {
         this.todaySales = todaySales;
     }
 
-    public Integer getTodayTotalSales() {
+    public Double getTodayTotalSales() {
         return todayTotalSales;
     }
 
-    public void setTodayTotalSales(Integer todayTotalSales) {
+    public void setTodayTotalSales(Double todayTotalSales) {
         this.todayTotalSales = todayTotalSales;
     }
 
-    public Integer getTotalProductSold() {
+    public Double getTotalProductSold() {
         return totalProductSold;
     }
 
-    public void setTotalProductSold(Integer totalProductSold) {
+    public void setTotalProductSold(Double totalProductSold) {
         this.totalProductSold = totalProductSold;
     }
 
-    public Integer getCustomerCount() {
+    public Double getCustomerCount() {
         return customerCount;
     }
 
-    public void setCustomerCount(Integer customerCount) {
+    public void setCustomerCount(Double customerCount) {
         this.customerCount = customerCount;
     }
 

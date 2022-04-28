@@ -9,56 +9,25 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <include
-            android:id="@+id/toolbar"
-            layout="@layout/custom_toolbar">
+            android:id="@+id/toolbar_app"
+            layout="@layout/layout_toolbar_home">
 
         </include>
 
-        <androidx.drawerlayout.widget.DrawerLayout
-            android:id="@+id/drawer_layout"
+
+        <include
+            android:id="@+id/content"
+
+            layout="@layout/content_homepage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/toolbar"
-            android:fitsSystemWindows="true"
-            tools:openDrawer="end">
+            android:layout_below="@id/toolbar_app" />
 
 
-            <include
 
-                android:id="@+id/content"
-                layout="@layout/content_homepage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <com.google.android.material.navigation.NavigationView
-
-
-                android:id="@+id/nav_view"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-                android:layout_gravity="end"
-                android:fitsSystemWindows="true"
-                app:headerLayout="@layout/nav_header_main">
-
-                <ExpandableListView
-                    android:id="@+id/expandableListView"
-
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_40sdp"
-                    android:background="@android:color/white"
-                    android:divider="@null"
-
-                    android:dividerHeight="0dp"
-
-                    android:groupIndicator="@null" />
-
-            </com.google.android.material.navigation.NavigationView>
-
-        </androidx.drawerlayout.widget.DrawerLayout>
     </RelativeLayout>
 </layout>

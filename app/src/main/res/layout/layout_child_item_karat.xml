@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="horizontal"
 
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    android:layout_height="wrap_content">
+    <data>
 
-    <CheckBox
-        android:id="@+id/checkbox"
-        android:layout_width="wrap_content"
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/btn_cat_filter"
+        android:layout_width="match_parent"
+        app:cardUseCompatPadding="true"
+        android:elevation="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/_8sdp"
-        android:paddingLeft="5dp"
-        android:fontFamily="@font/poppins_regular"
+        app:cardBackgroundColor="@color/appmaincolor"
+        app:cardCornerRadius="10dp">
 
-        android:textColor="#2d2d2d"
-        android:textSize="@dimen/_8ssp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
 
-        android:theme="@style/Checkboxstyle"
-
-        >
-
-    </CheckBox>
+            >
 
 
+            <TextView
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:id="@+id/tv_item_name"
+                android:textAllCaps="true"
+                android:layout_width="wrap_content"
+                android:textSize="13sp"
 
-</LinearLayout>
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/popins_medium"
+                android:text="textdata"
+                android:textColor="#FFFFFF"></TextView>
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

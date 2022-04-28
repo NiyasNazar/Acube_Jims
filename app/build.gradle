@@ -104,6 +104,10 @@ dependencies {
     implementation 'io.github.ParkSangGwon:tedpermission-normal:3.2.3'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation 'com.github.jakob-grabner:Circle-Progress-View:1.4'
+    implementation 'com.github.skydoves:elasticviews:2.0.8'
+    implementation 'com.muddzdev:styleabletoast:2.2.4'
+    implementation 'com.github.sung2063:AndroidSliderViewsLibrary:1.8'
+
 
 }
 apply plugin: 'com.google.gms.google-services'

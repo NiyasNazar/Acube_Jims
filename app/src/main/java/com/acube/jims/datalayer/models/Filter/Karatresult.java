@@ -34,6 +34,7 @@ public class Karatresult {
     @SerializedName("modifiedDate")
     @Expose
     private Object modifiedDate;
+    private boolean isSelected;
 
     public Integer getId() {
         return id;
@@ -107,4 +108,11 @@ public class Karatresult {
         this.modifiedDate = modifiedDate;
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 }

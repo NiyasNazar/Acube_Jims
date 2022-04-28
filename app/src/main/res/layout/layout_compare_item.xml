@@ -73,12 +73,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Brand Name"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -87,11 +87,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -107,12 +107,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Description"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -123,11 +123,11 @@
 
 
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -144,12 +144,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Serial Number"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -158,11 +158,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -177,12 +177,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Gender"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -191,11 +191,11 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -212,12 +212,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Making Charge(min)"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -226,11 +226,11 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -246,12 +246,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Making Charge (max)"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -260,11 +260,11 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -280,12 +280,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Karat"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -294,12 +294,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text=""
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -314,12 +314,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Color"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -328,11 +328,11 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -349,12 +349,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Group Name"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -363,12 +363,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text=""
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -383,12 +383,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Gross Weight"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -397,12 +397,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text=""
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -419,12 +419,13 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
+
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Category"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -433,11 +434,11 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>
@@ -452,12 +453,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text="Sub-Category"
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
 
@@ -466,12 +467,12 @@
                             android:layout_width="0dp"
                             android:layout_height="26dp"
                             android:layout_weight="1"
-                            android:fontFamily="@font/montserratsemibold"
+                            android:fontFamily="@font/jtmedium"
                             android:gravity="start|center"
                             android:letterSpacing="0.01"
                             android:paddingLeft="10dp"
                             android:text=""
-                            android:textColor="#666666"
+                            android:textColor="@color/black"
                             android:textSize="12sp"
                             android:textStyle="normal" />
                     </LinearLayout>

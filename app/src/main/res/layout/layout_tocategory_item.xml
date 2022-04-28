@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/itemwiselayout"
         android:layout_marginLeft="6dp"
-        android:layout_marginTop="8dp"
         android:layout_marginRight="6dp"
         android:orientation="horizontal">
 
@@ -19,65 +18,61 @@
 
             android:id="@+id/tvproductname"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@drawable/table_border"
-            android:textSize="10sp"
+            android:textSize="12sp"
 
 
             android:fontFamily="@font/poppins_regular"
             android:gravity="center"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="#666666">
+            android:textColor="@color/textColor">
 
         </TextView>
         <TextView
 
             android:id="@+id/tvsubcategory"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@drawable/table_border"
-            android:textSize="10sp"
+            android:textSize="12sp"
 
 
             android:fontFamily="@font/poppins_regular"
             android:gravity="center"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="#666666">
+            android:textColor="@color/textColor">
 
         </TextView>
         <TextView
             android:id="@+id/tvamount"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@drawable/table_border"
-            android:textSize="10sp"
+            android:textSize="12sp"
 
             android:fontFamily="@font/poppins_regular"
             android:gravity="center"
             android:text=""
             android:textAllCaps="false"
-            android:textColor="#666666">
+            android:textColor="@color/textColor">
 
         </TextView>
 
         <TextView
             android:id="@+id/tvcount"
             android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
-            android:background="@drawable/table_border"
 
             android:fontFamily="@font/poppins_regular"
             android:gravity="center"
             android:text=""
-            android:textSize="10sp"
+            android:textSize="12sp"
             android:textAllCaps="false"
-            android:textColor="#666666">
+            android:textColor="@color/textColor">
 
         </TextView>
     </TableRow>

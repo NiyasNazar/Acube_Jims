@@ -7,6 +7,10 @@ public class ResponseDeviceUpdation {
     @SerializedName("id")
     @Expose
     private Integer id;
+
+
+    private Integer trayID;
+
     @SerializedName("deviceID")
     @Expose
     private String deviceID;
@@ -113,5 +117,13 @@ public class ResponseDeviceUpdation {
 
     public void setModifiedDate(String modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public void setTrayID(Integer trayID) {
+        this.trayID = trayID;
+    }
+
+    public Integer getTrayID() {
+        return trayID;
     }
 }

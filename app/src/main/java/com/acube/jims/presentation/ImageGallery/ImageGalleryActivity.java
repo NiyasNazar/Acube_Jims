@@ -1,18 +1,16 @@
 package com.acube.jims.presentation.ImageGallery;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityImageGalleryBinding;
 import com.acube.jims.datalayer.models.Catalogue.ItemSub;
 import com.google.gson.Gson;

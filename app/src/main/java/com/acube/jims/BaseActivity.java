@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
 
-import com.acube.jims.Utils.AppUtility;
+import com.acube.jims.utils.AppUtility;
 import com.acube.jims.presentation.CartManagment.View.CartViewFragment;
 import com.acube.jims.presentation.Favorites.View.Favorites;
 import com.google.android.material.snackbar.Snackbar;

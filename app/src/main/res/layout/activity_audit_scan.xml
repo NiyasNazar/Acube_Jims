@@ -22,49 +22,68 @@
 
             <include
                 android:id="@+id/toolbar_app"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp">
+                layout="@layout/layout_toolbar">
 
             </include>
 
             <LinearLayout
-                android:orientation="vertical"
-
                 android:id="@+id/nestedscrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:layout_below="@id/toolbar_app"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="2dp"
-                android:gravity="center"
+                android:layout_marginTop="5dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
-                android:background="@drawable/item_border_detailspage">
+                android:background="@drawable/item_border_detailspage"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/laytspinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shapebg_1">
 
 
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spinlocations"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
 
-                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                    android:id="@+id/spinlocations"
+                        android:dropDownSelector="@color/headercolor"
+                        android:gravity="center"
+                        app:hintText="Select Location"
+                        android:inputType="none"
 
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_below="@id/layout_count"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/table_item_border"
-                    android:clickable="false"
+                        android:paddingRight="10dp"
+                        android:textSize="13sp">
 
-                    android:cursorVisible="false"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:inputType="none"
-                    android:textColor="#2d2d2d"
-                    app:hintText="Select Location" />
+                    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/laytspinnercat"
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shapebg_1">
+
+
+                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                        android:id="@+id/spincategory"
+                        android:layout_width="300dp"
+                        android:layout_height="40dp"
+
+                        android:dropDownSelector="@color/headercolor"
+                        android:gravity="center"
+                        android:inputType="none"
+
+                        android:paddingRight="10dp"
+                        android:textSize="13sp">
+
+                    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyvaduditlocations"
@@ -77,10 +96,10 @@
 
 
                 <LinearLayout
-                    android:layout_alignParentBottom="true"
                     android:id="@+id/btn_scan"
                     android:layout_width="139dp"
                     android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
 
                     android:layout_marginTop="20dp"
@@ -100,14 +119,15 @@
 
 
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
 
+                <LinearLayout
                     android:id="@+id/layout_count"
                     android:layout_width="match_parent"
+
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="15dp"
+                    android:layout_marginRight="5dp"
                     android:gravity="center">
 
                     <TextView

@@ -1,4 +1,4 @@
-package com.acube.jims.Utils;
+package com.acube.jims.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -7,11 +7,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,7 +16,6 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.CartManagment.ViewModel.CartViewModel;
 import com.acube.jims.presentation.CustomerManagment.ViewModel.CustomerHistoryViewModel;
 import com.acube.jims.presentation.CustomerManagment.ViewModel.CustomerLogoutViewModel;
@@ -29,8 +25,8 @@ import com.acube.jims.presentation.HomePage.ViewModel.CustomerViewModel;
 import com.acube.jims.presentation.CustomerManagment.adapter.CustomerListAdapter;
 import com.acube.jims.presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.FragmentHelper;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.BottomSheetCustomerBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
@@ -96,8 +92,7 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
         Starttime = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CustomerSessionStartTime");
 
         customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID);
-
-
+        initToolBar(binding.toolbarApp.toolbar,Customername,true);
 
 
         customerLogoutViewModel.getCustomerLiveData().observe(this, new Observer<JsonObject>() {
@@ -128,9 +123,8 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
                 if (responseCreateCustomer != null) {
                     LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerName", responseCreateCustomer.getCustomerName());
                     LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerCode", responseCreateCustomer.getCustomerCode());
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "GuestCustomerID",responseCreateCustomer.getId());
-                    FragmentHelper.replaceFragment(CustomerBottomSheetFragment.this, R.id.content, new HomeFragment(), "");
-
+                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "GuestCustomerID", responseCreateCustomer.getId());
+                    startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
                 } else {
 
 
@@ -143,7 +137,7 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
                 LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerName", "");
                 LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerCode", "");
                 LocalPreferences.storeIntegerPreference(getApplicationContext(), "GuestCustomerID", 0);
-                startActivity(new Intent(getApplicationContext(),HomePageActivity.class));
+                startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
 
 
             }
@@ -346,7 +340,7 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
                     customerLogoutViewModel.CustomerLogout(LocalPreferences.getToken(CustomerBottomSheetFragment.this), gsonObject);
                     LocalPreferences.removePreferences(CustomerBottomSheetFragment.this, "GuestCustomerName");
                     LocalPreferences.removePreferences(CustomerBottomSheetFragment.this, "GuestCustomerCode");
-                    LocalPreferences.storeIntegerPreference(CustomerBottomSheetFragment.this, "GuestCustomerID",0);
+                    LocalPreferences.storeIntegerPreference(CustomerBottomSheetFragment.this, "GuestCustomerID", 0);
 
                 } catch (JSONException e) {
                     e.printStackTrace();

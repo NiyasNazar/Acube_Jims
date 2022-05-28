@@ -1,7 +1,5 @@
 package com.acube.jims.presentation.ScanItems;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.databinding.DataBindingUtil;
@@ -18,11 +16,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.CartManagment.View.CartViewFragment;
 import com.acube.jims.presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.presentation.Catalogue.adapter.CatalogItemAdapter;
@@ -30,8 +25,7 @@ import com.acube.jims.presentation.Compare.CompareFragment;
 import com.acube.jims.presentation.PdfGeneration.ShareScannedItems;
 import com.acube.jims.presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityScanItemsBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;

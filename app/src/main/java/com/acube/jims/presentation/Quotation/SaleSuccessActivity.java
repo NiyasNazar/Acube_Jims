@@ -9,7 +9,7 @@ import android.view.View;
 import com.acube.jims.BaseActivity;
 import com.acube.jims.presentation.HomePage.View.HomePageActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivitySaleSuccessBinding;
 import com.acube.jims.datalayer.api.RestApiService;
 import com.acube.jims.datalayer.api.RetrofitInstance;

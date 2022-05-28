@@ -11,8 +11,8 @@ import android.widget.ImageView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.RefreshSelection;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.Weight;
 import com.google.gson.Gson;
 

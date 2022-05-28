@@ -1,12 +1,9 @@
 package com.acube.jims.presentation.Analytics;
 
-import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -15,20 +12,18 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.Analytics.ViewModel.AnalyticsViewModel;
 import com.acube.jims.presentation.Analytics.ViewModel.WarehouseViewModel;
 import com.acube.jims.presentation.Analytics.adapter.ItemwiseAnalyticsadapter;
 import com.acube.jims.presentation.Analytics.adapter.PieChartadapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentAnalyticsBinding;
 import com.acube.jims.datalayer.models.Analytics.AnalyticsCustomersServed;
 import com.acube.jims.datalayer.models.Analytics.AnalyticsDataSingleBar;
@@ -41,7 +36,6 @@ import com.acube.jims.datalayer.models.Analytics.ResponseItemWiseAnalytics;
 import com.acube.jims.datalayer.models.warehouse.ResponseWareHouse;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -107,6 +101,8 @@ public class AnalyticsActivity extends BaseActivity {
         binding.edServrdfilter.setAdapter(arrayAdapter);
         binding.edItemfilter.setAdapter(arrayAdapter);
         fetchItemWiseSummary();
+        binding.edStoreselection.setTitle("Select Store");
+
         binding.edPeriod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -21,7 +21,7 @@ import com.acube.jims.presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.presentation.HomePage.adapter.ExpandableListAdapter;
 import com.acube.jims.presentation.Login.View.LoginActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FragmentHelper;
+import com.acube.jims.utils.FragmentHelper;
 import com.acube.jims.databinding.ActivityHomePageBinding;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.models.HomePage.NavMenuModel;

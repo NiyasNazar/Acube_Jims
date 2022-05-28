@@ -26,7 +26,7 @@ import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.Quotation.adapter.DiscountItem;
 import com.acube.jims.presentation.Quotation.adapter.InvoiceAdapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.InvoiceFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Cart.CartDetail;

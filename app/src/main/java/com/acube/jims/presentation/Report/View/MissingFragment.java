@@ -21,7 +21,7 @@ import com.acube.jims.presentation.Report.adapter.ItemHistoryadapter;
 import com.acube.jims.presentation.Report.adapter.MissingadapterforFragment;
 import com.acube.jims.presentation.ScanHistory.ItemHistoryViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.MissingFragmentBinding;
 import com.acube.jims.datalayer.models.Audit.Missing;
 import com.acube.jims.datalayer.models.ScanHistory.ResponseScanHistory;

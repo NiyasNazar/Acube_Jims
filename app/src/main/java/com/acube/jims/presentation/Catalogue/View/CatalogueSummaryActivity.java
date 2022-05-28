@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.LocalPreferences;
-import com.acube.jims.Utils.PaginationScrollListener;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.LocalPreferences;
+import com.acube.jims.utils.PaginationScrollListener;
 import com.acube.jims.databinding.ActivityCatalogueBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
@@ -31,7 +31,6 @@ import com.acube.jims.presentation.CartManagment.View.CartViewFragment;
 import com.acube.jims.presentation.Catalogue.ViewModel.CatalogViewModel;
 import com.acube.jims.presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.presentation.Catalogue.ViewModel.FilterViewModel;
-import com.acube.jims.presentation.Catalogue.adapter.CatalogItemsAdapter;
 import com.acube.jims.presentation.Catalogue.adapter.CatalogSummaryItemsAdapter;
 import com.acube.jims.presentation.Catalogue.adapter.FilterListAdapter;
 import com.acube.jims.presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
@@ -178,12 +177,11 @@ public class CatalogueSummaryActivity extends BaseActivity implements CatalogSum
 
             }
         });
-        catalogViewModelNextPage.getLiveDataSummary().observe(this, new Observer<List<ResponseCatalogueListing>>() {
+       catalogViewModelNextPage.getLiveDataSummary().observe(this, new Observer<List<ResponseCatalogueListing>>() {
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
                 hideProgressDialog();
                 if (responseCatalogueListings != null && responseCatalogueListings.size() != 0) {
-                    /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     adapter.removeLoadingFooter();
                     isLoading = false;
                     Log.d("getLiveDatanewPage", "onChanged: " + TOTAL_PAGES);

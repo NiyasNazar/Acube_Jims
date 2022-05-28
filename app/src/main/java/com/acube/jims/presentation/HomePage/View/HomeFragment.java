@@ -51,9 +51,8 @@ import com.acube.jims.presentation.ItemRequest.ItemRequestActivity;
 import com.acube.jims.presentation.ItemRequest.view.SalesmanItemRequestActivity;
 import com.acube.jims.presentation.ScanItems.ScanItemsActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.HomeFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
@@ -98,19 +97,19 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         binding.recyvhomemenu.setHasFixedSize(true);
         binding.tvgoldrate.setText("Gold Rate " + LocalPreferences.retrieveStringPreferences(getActivity(), "GoldRate"));
 
-        binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), getList(), HomeFragment.this::replaceFragment));
+        DatabaseClient.getInstance(getActivity()).getAppDatabase().homeMenuDao().getAll().observe(requireActivity(), new Observer<List<HomeData>>() {
+            @Override
+            public void onChanged(List<HomeData> homeData) {
+                if (homeData!=null){
+                    binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
+
+                }
+            }
+        });
 
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
 
-      /*  mViewModel.init();
-        mViewModel.getHomeMenu(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token), AppConstants.HomeMenuAppName, LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserRole));
-        mViewModel.getLiveData().observe(getActivity(), new Observer<List<HomeData>>() {
-            @Override
-            public void onChanged(List<HomeData> homeData) {
-                if (homeData != null)
-                   // binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
-            }
-        });*/
+
 
         return binding.getRoot();
 
@@ -144,8 +143,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
         } else if (value.equalsIgnoreCase("InventoryAudit")) {
             //  startActivity(new Intent(getActivity(),));
-            FragmentHelper.replaceFragment(getActivity(), R.id.content, new AuditMenuFragment());
-
+            startActivity(new Intent(getActivity(), AuditMenuFragment.class));
 
         } else if (value.equalsIgnoreCase("AndroidDashboard")) {
             startActivity(new Intent(getActivity(), DashBoardActivity.class));
@@ -156,7 +154,6 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
         } else if (value.equalsIgnoreCase("ItemRequest")) {
             FilterPreference.clearPreferences(requireActivity());
-
             int customerid = LocalPreferences.retrieveIntegerPreferences(getActivity(), "GuestCustomerID");
             if (customerid == 0) {
                 startActivity(new Intent(getActivity(), SalesmanItemRequestActivity.class));
@@ -165,7 +162,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
             }
 
-        }else if(value.equalsIgnoreCase("deviceregistration")){
+        } else if (value.equalsIgnoreCase("deviceregistration")) {
             startActivity(new Intent(getActivity(), DeviceRegistrationFragment.class));
 
         }
@@ -194,16 +191,20 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                 try {
                     Log.d("TrayMacAddress", "onPostExecute: " + TrayMacAddress);
                     Intent res = new Intent();
-                 //   String mPackage = "com.acube.smarttray";// package name
-                 //   String mClass = ".SmartTrayReading";//the activity name which return results*/
-                    String mPackage = "com.example.acubetest";// package name
-                    String mClass = ".MainActivity";//the activity name which return results
+                       String mPackage = "com.acube.smarttray";// package name
+                     String mClass = ".SmartTrayReading";//the activity name which return results*/
+                  //  String mPackage = "com.example.acubetest";// package name
+                  //  String mClass = ".MainActivity";//the activity name which return results
                     res.putExtra("token", LocalPreferences.getToken(getActivity()));
+                    res.putExtra("type", "SCAN");
                     res.putExtra("url", AppConstants.BASE_URL);
                     res.putExtra("macAddress", TrayMacAddress);
                     res.putExtra("jsonSerialNo", "json");
                     res.setComponent(new ComponentName(mPackage, mPackage + mClass));
                     someActivityResultLauncher.launch(res);
+
+
+
 
                 } catch (Exception e) {
 

@@ -48,17 +48,18 @@
 
             </RelativeLayout>
         </androidx.core.widget.NestedScrollView>
+
         <Button
-            android:onClick="share"
-
-            android:background="@color/appmaincolor"
-            android:layout_alignParentBottom="true"
-            android:textColor="@color/white"
-            android:fontFamily="@font/jtmedium"
-
             android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/appmaincolor"
+            android:fontFamily="@font/jtmarniebold"
+
+            android:onClick="share"
             android:text="share"
-            android:layout_height="wrap_content">
+            android:textColor="@color/white">
 
         </Button>
 

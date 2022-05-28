@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
+import com.acube.jims.utils.FilterPreference;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -88,13 +88,12 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
                 final CatalogVH catalogVH = (CatalogVH) holder;
                 ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
                 String myString = responseCatalogueListing.getItemName();
-                String upperString = myString.substring(0, 1).toUpperCase() + myString.substring(1).toLowerCase();
 
                 catalogVH.textViewItemName.setText(myString);
-                int stock = responseCatalogueListing.getAvailableQty();
+            //    int stock = responseCatalogueListing.getAvailableQty();
                 catalogVH.textViewKarat.setText(responseCatalogueListing.getCategoryName());
 
-                if (stock > 0) {
+               /* if (stock > 0) {
                     catalogVH.textViewStock.setText("In Stock");
                     catalogVH.textViewStock.setTextColor(Color.parseColor("#BF8F3A"));
 
@@ -102,7 +101,7 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
                     catalogVH.textViewStock.setText("Stock Not Available");
                     catalogVH.textViewStock.setTextColor(Color.parseColor("#FF0000"));
 
-                }
+                }*/
 
 
                 //  catalogVH.textViewKarat.setText("" + responseCatalogueListing.getKaratName());
@@ -110,7 +109,7 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
                 // holder.imageView.setImageResource(homeData.getImage());
-                if (responseCatalogueListing.getItemSubList().size() > 0) {
+                if (responseCatalogueListing.getItemSubList() !=null&&responseCatalogueListing.getItemSubList().size()!= 0) {
                     Glide.with(context)
                             .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
                             .placeholder(R.drawable.jwimage)

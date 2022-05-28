@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Cart.CartDetail;
-import com.acube.jims.datalayer.models.Compare.ResponseCompare;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -28,18 +27,18 @@ public class CartItemAdapterForSharing extends RecyclerView.Adapter<CartItemAdap
 
     private Context mCtx;
     int itemquantity = 1;
-    List<ResponseCompare> dataset;
+    List<CartDetail> dataset;
     UpdateQuantity updateQuantity;
     DeleteProduct deleteProduct;
 
-    public CartItemAdapterForSharing(Context mCtx, List<ResponseCompare> dataset, UpdateQuantity updateQuantity, DeleteProduct deleteProduct) {
+    public CartItemAdapterForSharing(Context mCtx, List<CartDetail> dataset, UpdateQuantity updateQuantity, DeleteProduct deleteProduct) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         this.updateQuantity = updateQuantity;
         this.deleteProduct = deleteProduct;
     }
 
-    public CartItemAdapterForSharing(Context mCtx, List<ResponseCompare> dataset) {
+    public CartItemAdapterForSharing(Context mCtx, List<CartDetail> dataset) {
         this.mCtx = mCtx;
         this.dataset = dataset;
     }
@@ -54,11 +53,11 @@ public class CartItemAdapterForSharing extends RecyclerView.Adapter<CartItemAdap
 
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
-        ResponseCompare cartDetail = dataset.get(position);
+        CartDetail cartDetail = dataset.get(position);
         holder.textViewitemName.setText(cartDetail.getItemName());
 
         holder.textViewSerialno.setText(cartDetail.getSerialNumber());
-        holder.textViewPrice.setText("SAR "+Math.round(cartDetail.getMrp()));
+        holder.textViewPrice.setText("SAR "+Math.round(cartDetail.getFinalAmount()));
 
         Glide.with(mCtx)
                 .load(cartDetail.getImagePath())

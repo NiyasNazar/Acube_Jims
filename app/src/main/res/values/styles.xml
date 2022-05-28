@@ -1,14 +1,25 @@
 <resources>
     <!--  Base application theme.  -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!--  Customize your theme here.  -->
+        <item name="colorPrimary">@color/appmaincolor</item>
+        <item name="colorPrimaryVariant">@color/appmaincolor</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
+        <item name="android:fontFamily">@font/poppins_regular</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorAccent">@color/appmaincolor</item>
+
+    </style>
+
+  <!--  <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        &lt;!&ndash;  Customize your theme here.  &ndash;&gt;
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="android:fontFamily">@font/poppins_regular</item>
         <item name="colorOnPrimary">@color/white</item>
 
-    </style>
+    </style>-->
     <style name="AppTheme2" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/appmaincolor</item>
@@ -28,6 +39,32 @@
         <item name="fontFamily">@font/jtmarniebold</item>
     </style>
 
+    <style name="MyDenseOutlined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="materialThemeOverlay">@style/MyThemeOverlayOutlinedDense</item>
+        <item name="hintTextColor">@color/appmaincolor</item>
+        <item name="boxStrokeColor">@color/appmaincolor</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="android:textColorHint">@color/appmaincolor</item>
+    </style>
+
+    <style name="MyThemeOverlayOutlinedDense">
+        <item name="editTextStyle">@style/MyTextInputEditText_outlinedBox_dense_h
+        </item>
+    </style>
+    <style name="MyTextInputEditText_outlinedBox_dense_h" parent="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense">
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="colorAccent">@color/appmaincolor</item>
+        <item name="android:textSize">15sp</item>
+
+        <item name="hintTextColor">#000000</item>
+        <item name="boxStrokeColor">@color/appmaincolor</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/appmaincolor</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
     <style name="circle">
         <item name="cornerSize">10%</item>
     </style>

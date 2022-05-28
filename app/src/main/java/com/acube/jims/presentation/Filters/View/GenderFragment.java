@@ -1,6 +1,5 @@
 package com.acube.jims.presentation.Filters.View;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +10,11 @@ import android.widget.RadioGroup;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.databinding.FragmentGenderBinding;
 import com.acube.jims.presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
+import com.acube.jims.utils.FilterPreference;
 import com.acube.jims.datalayer.models.Filter.Weight;
 import com.acube.jims.presentation.Catalogue.adapter.GenderAdapter;
 import com.acube.jims.presentation.Catalogue.adapter.Genderesult;

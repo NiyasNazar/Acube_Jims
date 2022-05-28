@@ -76,7 +76,7 @@ public class LastViewedAdapterAll extends RecyclerView.Adapter<LastViewedAdapter
         holder.textViewName.setText(responseListing.getItemName());
         DecimalFormat format = new DecimalFormat("0.#");
 
-        holder.textViewWeight.setText("" + format.format(Double.parseDouble(responseListing.getGoldWeight())) + " gm");
+       // holder.textViewWeight.setText("" + format.format(Double.parseDouble(responseListing.getGoldWeight())) + " gm");
 
     }
 

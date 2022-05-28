@@ -1,4 +1,4 @@
-package com.acube.jims.Utils;
+package com.acube.jims.utils;
 
 import android.content.Context;
 import android.util.AttributeSet;

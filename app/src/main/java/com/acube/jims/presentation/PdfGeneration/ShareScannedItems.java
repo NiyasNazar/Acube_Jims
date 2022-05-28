@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.acube.jims.BaseActivity;
 import com.acube.jims.presentation.Compare.CompareViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityShareItemsScreenBinding;
 import com.acube.jims.datalayer.models.Compare.ResponseCompare;
 import com.gkemon.XMLtoPDF.PdfGenerator;
@@ -68,7 +68,7 @@ public class ShareScannedItems extends BaseActivity {
             public void onChanged(List<ResponseCompare> responseCompares) {
                 hideProgressDialog();
                 if (responseCompares!=null){
-                    binding.recycartitems.setAdapter(new ScannedAdapterForSharing(getApplicationContext(),responseCompares));
+                 binding.recycartitems.setAdapter(new ScannedAdapterForSharing(getApplicationContext(),responseCompares));
                 }
             }
         });

@@ -1,57 +1,42 @@
 package com.acube.jims.presentation.Audit;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import com.acube.jims.BaseActivity;
 import com.acube.jims.presentation.Audit.adapter.AuditMenuAdapter;
 import com.acube.jims.presentation.LocateProduct.View.LocateProduct;
 import com.acube.jims.presentation.Report.ReportFragment;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ReportMenuBinding;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuditMenuFragment extends Fragment implements AuditMenuAdapter.FragmentTransition {
+public class AuditMenuFragment extends BaseActivity implements AuditMenuAdapter.FragmentTransition {
 
     private ReportViewModel mViewModel;
 
-    public static AuditMenuFragment newInstance() {
-        return new AuditMenuFragment();
-    }
 
     ReportMenuBinding binding;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.report_menu, container, false);
-        binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.report_menu);
+        initToolBar(binding.toolbarApp.toolbar, "Inventory Audit", true);
+        binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
         binding.recyvhomemenu.setHasFixedSize(true);
-        binding.recyvhomemenu.setAdapter(new AuditMenuAdapter(getActivity(), getList(), AuditMenuFragment.this));
-
-
-
-
+        binding.recyvhomemenu.setAdapter(new AuditMenuAdapter(getApplicationContext(), getList(), AuditMenuFragment.this));
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
 
-
-        return binding.getRoot();
 
     }
 
@@ -59,18 +44,19 @@ public class AuditMenuFragment extends Fragment implements AuditMenuAdapter.Frag
     @Override
     public void replaceFragment(String menuname) {
         if (menuname.equalsIgnoreCase("Audit")) {
-            FragmentHelper.replaceFragment(getActivity(), R.id.content, new AuditFragment());
-            LocalPreferences.storeIntegerPreference(getActivity(), "totalstock", 0);
-            LocalPreferences.storeIntegerPreference(getActivity(), "missing", 0);
-            LocalPreferences.storeIntegerPreference(getActivity(), "found", 0);
-            LocalPreferences.storeIntegerPreference(getActivity(), "locationmismatch", 0);
-            LocalPreferences.storeStringPreference(getActivity(), "auditID", "");
+            startActivity(new Intent(getApplicationContext(), AuditFragment.class));
+            LocalPreferences.storeIntegerPreference(getApplicationContext(), "totalstock", 0);
+            LocalPreferences.storeIntegerPreference(getApplicationContext(), "missing", 0);
+            LocalPreferences.storeIntegerPreference(getApplicationContext(), "found", 0);
+            LocalPreferences.storeIntegerPreference(getApplicationContext(), "locationmismatch", 0);
+            LocalPreferences.storeStringPreference(getApplicationContext(), "auditID", "");
 
         } else if (menuname.equalsIgnoreCase("Report")) {
-            FragmentHelper.replaceFragment(getActivity(), R.id.content, new ReportFragment());
-            FilterPreference.clearPreferences(getActivity());
-        }else if (menuname.equalsIgnoreCase("Locate Product")) {
-            FragmentHelper.replaceFragment(getActivity(), R.id.content, new LocateProduct());
+            startActivity(new Intent(getApplicationContext(), ReportFragment.class));
+            // FilterPreference.clearPreferences(getActivity());
+        } else if (menuname.equalsIgnoreCase("Locate Product")) {
+            // FragmentHelper.replaceFragment(getActivity(), R.id.content, new LocateProduct());
+            startActivity(new Intent(getApplicationContext(), LocateProduct.class));
 
         }
     }

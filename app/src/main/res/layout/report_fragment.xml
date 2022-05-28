@@ -23,6 +23,7 @@
 
             <RelativeLayout
                 android:id="@+id/tablayout"
+                android:layout_below="@id/toolbar_app"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
@@ -121,14 +122,12 @@
 
 
             </RelativeLayout>
-            <include
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="20dp"
 
+            <include
                 android:id="@+id/toolbar_app"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                layout="@layout/layout_toolbar"
+
+               >
 
             </include>
             <RelativeLayout

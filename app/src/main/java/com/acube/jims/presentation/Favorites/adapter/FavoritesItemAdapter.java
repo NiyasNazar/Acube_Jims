@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -36,7 +36,7 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
     DeleteProduct deleteProduct;
     List<String> comparelist;
     Comaparelist comaparelist;
-    boolean isSelectedAll;
+    boolean isSelectedAll=false;
     public FavoritesItemAdapter(Context mCtx, List<ResponseFavorites> dataset, DeleteProduct deleteProduct,Comaparelist comaparelist) {
         this.mCtx = mCtx;
         this.dataset = dataset;
@@ -45,10 +45,7 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
         this.comaparelist=comaparelist;
     }
 
-    public FavoritesItemAdapter(Context mCtx) {
-        this.mCtx = mCtx;
 
-    }
 
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -63,8 +60,6 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
         ResponseFavorites cartDetail = dataset.get(position);
         holder.textViewitemName.setText(cartDetail.getItemName());
         holder.textViewSerialnos.setText(cartDetail.getSerialNumber());
-
-
         Glide.with(mCtx)
                 .load(cartDetail.getImagePath())
                 //  .placeholder(R.drawable.placeholder)
@@ -96,10 +91,11 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
             holder.textViewWeight.setText("Stone Weight: N/A");
         }
         if (!isSelectedAll){
+            Log.d("TAG", "onClick: "+"selectclick");
             holder.comparecheckbox.setChecked(false);
             comparelist=new ArrayList<>();
-        }
-        else {
+        } else if(isSelectedAll) {
+            Log.d("TAG", "onClick: "+"selectclick");
             holder.comparecheckbox.setChecked(true);
             comparelist.add(String.valueOf(dataset.get(position).getSerialNumber()));
         }

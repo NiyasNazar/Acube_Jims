@@ -18,8 +18,8 @@ import com.acube.jims.presentation.CustomerManagment.ViewModel.CheckCustomerView
 import com.acube.jims.presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.presentation.CustomerManagment.ViewModel.UpdateCustomerViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityGuestLoginBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseCheckCustomer;

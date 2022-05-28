@@ -12,7 +12,7 @@ import com.acube.jims.BaseActivity;
 import com.acube.jims.presentation.CartManagment.ViewModel.CartViewModel;
 import com.acube.jims.presentation.CartManagment.adapter.CartItemAdapterForSharing;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityShareItemsScreenBinding;
 import com.acube.jims.datalayer.models.Cart.CartDetail;
 import com.acube.jims.datalayer.models.Cart.ResponseCart;
@@ -32,9 +32,9 @@ public class ShareItemsScreen extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_share_items_screen);
         showProgressDialog();
+        initToolBar(binding.toolbarApp.toolbar, "Share", true);
         int customerId = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
         binding.recycartitems.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-
 
 
         mViewModel = new ViewModelProvider(this).get(CartViewModel.class);
@@ -45,9 +45,8 @@ public class ShareItemsScreen extends BaseActivity {
             public void onChanged(ResponseCart responseCart) {
                 if (responseCart != null) {
                     hideProgressDialog();
-                    List<CartDetail>     dataset = responseCart.getCartDetails();
-                  //  binding.recycartitems.setAdapter(new CartItemAdapterForSharing(getApplicationContext(),dataset));
-
+                    List<CartDetail> dataset = responseCart.getCartDetails();
+                    binding.recycartitems.setAdapter(new CartItemAdapterForSharing(getApplicationContext(), dataset));
 
 
                 }

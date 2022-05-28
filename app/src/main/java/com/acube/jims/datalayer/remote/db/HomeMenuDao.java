@@ -18,7 +18,7 @@ import java.util.List;
 @Dao
 public interface HomeMenuDao {
     @Query("SELECT * FROM HomeData")
-    List<HomeData> getAll();
+    LiveData<List<HomeData> >getAll();
 
     @Query("SELECT * FROM KaratPrice")
     LiveData<List<KaratPrice>> getGoldRate();

@@ -12,8 +12,8 @@ import com.acube.jims.BaseActivity;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.presentation.Report.adapter.LocationMismatchAdapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityReportLocationmismatchBinding;
 import com.acube.jims.datalayer.models.Audit.LocationMismatch;
 import com.acube.jims.datalayer.models.Audit.ResponseReport;
@@ -39,17 +39,11 @@ public class LocationMistmatchReport extends BaseActivity {
 
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         mViewModel.init();
-        binding.backlayout.parentlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+
         String locationid = getIntent().getStringExtra("locationid");
         String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
         String warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
         String AuditID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "auditID");
-        binding.backlayout.tvFragname.setText("Location Mismatch");
         showProgressDialog();
 
         JsonObject jsonObject = new JsonObject();

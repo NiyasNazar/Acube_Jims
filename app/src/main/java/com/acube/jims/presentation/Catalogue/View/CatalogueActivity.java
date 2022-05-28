@@ -20,23 +20,21 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.Utils.FragmentHelper;
 import com.acube.jims.presentation.CartManagment.View.CartViewFragment;
 import com.acube.jims.presentation.Catalogue.ViewModel.CatalogViewModel;
 import com.acube.jims.presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.presentation.Catalogue.ViewModel.FilterViewModel;
 import com.acube.jims.presentation.Catalogue.adapter.CatalogItemsAdapter;
 import com.acube.jims.presentation.Catalogue.adapter.FilterListAdapter;
-import com.acube.jims.presentation.Compare.CompareFragment;
 import com.acube.jims.presentation.Favorites.View.Favorites;
 import com.acube.jims.presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
 import com.acube.jims.presentation.PdfGeneration.ShareScannedItems;
 import com.acube.jims.presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.LocalPreferences;
-import com.acube.jims.Utils.PaginationScrollListener;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.LocalPreferences;
+import com.acube.jims.utils.PaginationScrollListener;
 import com.acube.jims.databinding.ActivityCatalogueBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
@@ -44,12 +42,8 @@ import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.acube.jims.datalayer.models.Filter.Colorresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
-import com.acube.jims.presentation.ScanItems.ScanItemsActivity;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -375,6 +369,7 @@ public class CatalogueActivity extends BaseActivity implements CatalogItemsAdapt
                 }
                 setList("compare", comparelist);
                 dialog.dismiss();*/
+                dialog.dismiss();
                 startActivity(new Intent(getApplicationContext(), Favorites.class));
 
             }

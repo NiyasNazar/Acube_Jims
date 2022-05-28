@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.acube.jims.datalayer.models.Audit.AuditReportItems;
 import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Audit.Found;
@@ -26,12 +27,12 @@ public class Foundadapter extends RecyclerView.Adapter<Foundadapter.ProductViewH
     private Context mCtx;
     int row_index = -1;
 
-    private final List<Found> dataset;
+    private final List<AuditReportItems> dataset;
 
     PassId passId;
 
 
-    public Foundadapter(Context mCtx, List<Found> dataset) {
+    public Foundadapter(Context mCtx, List<AuditReportItems> dataset) {
         this.mCtx = mCtx;
         this.dataset = dataset;
 
@@ -50,7 +51,7 @@ public class Foundadapter extends RecyclerView.Adapter<Foundadapter.ProductViewH
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
 
-        Found found = dataset.get(position);
+        AuditReportItems found = dataset.get(position);
         holder.tvlocationname.setText("System Location : " + found.getSystemLocationName());
         holder.textViewItemName.setText("Item : " + found.getItemName());
         holder.textViewLoccode.setText("Scanned Location : " + found.getScanLocationName());

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.acube.jims.datalayer.models.Audit.AuditResults;
 import com.acube.jims.datalayer.models.Audit.ResponseAudit;
 import com.acube.jims.datalayer.repositories.Audit.AuditRepository;
 import com.google.gson.JsonObject;
@@ -16,22 +17,30 @@ import java.util.List;
 
 public class AuditViewModel extends AndroidViewModel {
     public AuditRepository repository;
+    private LiveData<List<ResponseAudit>> liveDataheader;
     private LiveData<List<ResponseAudit>> liveData;
 
     public AuditViewModel(@NonNull @NotNull Application application) {
         super(application);
     }
 
-    public void Audit(String Auth, JsonObject jsonObject) {
+    public void AuditHeader(String Auth, JsonObject jsonObject) {
+        repository.AuditHeader(Auth,jsonObject);
+    }
+    public void AuditDetails(String Auth, JsonObject jsonObject) {
         repository.AuditDetails(Auth,jsonObject);
     }
 
     public void init() {
         repository = new AuditRepository();
-        liveData = repository.getResponseLiveData();
+        liveDataheader = repository.getResponseLiveData();
+        liveData = repository.getResponseLiveDataDetails();
     }
 
 
+    public LiveData<List<ResponseAudit>> getLiveDataHeader() {
+        return liveDataheader;
+    }
     public LiveData<List<ResponseAudit>> getLiveData() {
         return liveData;
     }

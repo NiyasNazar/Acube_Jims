@@ -58,7 +58,7 @@ public class MissingadapterforFragment extends RecyclerView.Adapter<Missingadapt
         try {
             DecimalFormat format = new DecimalFormat("0.#");
 
-            holder.tvkarat.setText("Karat: " + format.format(missing.getKaratCode()));
+         //   holder.tvkarat.setText("Karat: " + format.format(missing.getKaratCode()));
         } catch (NumberFormatException e) {
 
         }

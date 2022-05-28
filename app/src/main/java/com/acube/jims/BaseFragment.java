@@ -4,18 +4,14 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
-import com.acube.jims.Utils.AppUtility;
+import com.acube.jims.utils.AppUtility;
 import com.google.android.material.snackbar.Snackbar;
 
 public abstract class BaseFragment extends Fragment {

@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityShareItemsScreenBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Compare.ResponseCompare;
-import com.acube.jims.presentation.CartManagment.adapter.CartItemAdapterForSharing;
 import com.acube.jims.presentation.Compare.CompareViewModel;
 import com.gkemon.XMLtoPDF.PdfGenerator;
 import com.gkemon.XMLtoPDF.PdfGeneratorListener;
@@ -75,7 +74,7 @@ public class ShareItemsScreenbcp extends BaseActivity {
             @Override
             public void onChanged(List<ResponseCompare> responseCompares) {
                 if (responseCompares != null) {
-                    binding.recycartitems.setAdapter(new CartItemAdapterForSharing(getApplicationContext(),responseCompares));
+                   // binding.recycartitems.setAdapter(new CartItemAdapterForSharing(getApplicationContext(),responseCompares));
                 }
 
             }

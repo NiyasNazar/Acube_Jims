@@ -1,6 +1,5 @@
 package com.acube.jims.presentation;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
@@ -12,7 +11,7 @@ import android.widget.Toast;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivitySettingsBinding;
 import com.acube.jims.presentation.Login.View.LoginActivity;
 

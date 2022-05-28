@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -14,8 +13,8 @@ import android.view.ViewGroup;
 import com.acube.jims.presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.presentation.Catalogue.adapter.FilterKaratAdapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.RefreshSelection;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;

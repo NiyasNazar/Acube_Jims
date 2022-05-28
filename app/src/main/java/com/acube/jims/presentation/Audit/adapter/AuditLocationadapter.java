@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.datalayer.models.Audit.ResponseLocationList;
 
 import java.util.List;

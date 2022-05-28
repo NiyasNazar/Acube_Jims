@@ -1,8 +1,7 @@
-package com.acube.jims.Utils;
+package com.acube.jims.utils;
 
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 
 public class MyValueFormatter implements IValueFormatter {

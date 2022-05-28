@@ -1,6 +1,8 @@
 package com.acube.jims.presentation.Report.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,18 @@ import android.widget.RelativeLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.acube.jims.datalayer.models.Audit.AuditReportItems;
 import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Audit.Missing;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -28,19 +36,26 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     private Context mCtx;
     int row_index = -1;
     boolean isSelectedAll;
-    private final List<Missing> dataset;
+    private final List<AuditReportItems> dataset;
     List<String> datalist;
     PassId passId;
+    boolean visibility=true;
 
 
-    public Missingadapter(Context mCtx, List<Missing> dataset, PassId passId) {
+    public Missingadapter(Context mCtx, List<AuditReportItems> dataset, PassId passId) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         this.passId = passId;
         datalist = new ArrayList<>();
 
     }
+    public Missingadapter(Context mCtx, List<AuditReportItems> dataset,boolean visibility) {
+        this.mCtx = mCtx;
+        this.dataset = dataset;
+        this.visibility=visibility;
 
+
+    }
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -52,22 +67,38 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
-        Missing missing = dataset.get(position);
+        AuditReportItems missing = dataset.get(position);
         holder.tvlocationname.setText("System Location : " + missing.getSystemLocationName());
         holder.textViewItemName.setText("Item : " + missing.getItemName());
-        holder.textViewLoccode.setText("Scanned Location : " + missing.getScanLocationName());
-        holder.textViewSerialNo.setText("Sl No. : " + missing.getSerialNumber());
-        try {
-            DecimalFormat format = new DecimalFormat("0.#");
+        if (missing.getScanLocationName() == null) {
+            holder.textViewLoccode.setText("Scanned Location : " + "N/A");
 
-            holder.tvkarat.setText("Karat: " + format.format(missing.getKaratCode()));
-        } catch (NumberFormatException e) {
+        } else {
+            holder.textViewLoccode.setText("Scanned Location : " + missing.getScanLocationName());
 
         }
+        holder.textViewSerialNo.setText("Sl No. : " + missing.getSerialNumber());
 
-        holder.tvcategory.setText("Category : " + missing.getCategoryName());
-        Glide.with(mCtx).load(missing.getItemImagePath()).into(holder.imageView);
 
+//        holder.tvcategory.setText("Category : " + missing.getCategoryName());
+        Glide.with(mCtx)
+                .load(missing.getItemImagePath())
+                .placeholder(R.drawable.jwimage)
+                .error(R.drawable.jwimage)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        // log exception
+                        Log.e("TAG", "Error loading image", e);
+                        return false; // important to return false so the error placeholder can be placed
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(holder.imageView);
 
         if (!isSelectedAll) {
             holder.locatecheckbox.setChecked(false);
@@ -89,7 +120,8 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName, textViewLoccode, textViewSerialNo, tvlocationname, tvkarat, tvcategory;        ImageView imageView;
+        TextView textViewItemName, textViewLoccode, textViewSerialNo, tvlocationname, tvkarat, tvcategory;
+        ImageView imageView;
         CheckBox locatecheckbox;
         ResponseItems responseItems;
         RelativeLayout selection;
@@ -101,8 +133,15 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
             tvkarat = itemView.findViewById(R.id.tvkarat);
             tvcategory = itemView.findViewById(R.id.tvcategory);
             textViewItemName = itemView.findViewById(R.id.tvitemname);
-            selection = itemView.findViewById(R.id.layoutparent);
+            //     selection = itemView.findViewById(R.id.layoutparent);
             imageView = itemView.findViewById(R.id.imvitemimage);
+            selection = itemView.findViewById(R.id.checkboxlayt);
+            if (visibility){
+                selection.setVisibility(View.VISIBLE);
+            }else{
+                selection.setVisibility(View.GONE);
+            }
+
 
             textViewLoccode = itemView.findViewById(R.id.tvlocationcode);
             textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);

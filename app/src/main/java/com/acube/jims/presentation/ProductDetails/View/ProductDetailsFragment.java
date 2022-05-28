@@ -43,7 +43,7 @@ import com.acube.jims.presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
 import com.acube.jims.presentation.ImageGallery.ImageGalleryActivity;
 import com.acube.jims.presentation.ProductDetails.ViewModel.ItemDetailsViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ProductDetailsFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Cart.ResponseAddtoCart;

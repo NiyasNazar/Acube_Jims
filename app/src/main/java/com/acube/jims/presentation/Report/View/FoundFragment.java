@@ -46,19 +46,14 @@ public class FoundFragment extends Fragment {
                 inflater, R.layout.found_fragment, container, false);
         binding.recyvfound.setLayoutManager(new GridLayoutManager(getActivity(),2));
         binding.tvTotaldata.setText("Total Items Found : "+dataset.size());
-        binding.recyvfound.setAdapter(new Foundadapter(getActivity(), dataset));
+     //   binding.recyvfound.setAdapter(new Foundadapter(getActivity(), dataset));
 
 
 
         return binding.getRoot();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(FoundViewModel.class);
-        // TODO: Use the ViewModel
-    }
+
 
 
 }

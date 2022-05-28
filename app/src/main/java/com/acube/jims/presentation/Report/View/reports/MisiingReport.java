@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -15,28 +14,32 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.acube.jims.BaseActivity;
+import com.acube.jims.datalayer.models.Audit.AuditReportItems;
+import com.acube.jims.datalayer.models.Audit.TemDataSerial;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Audit.ViewModel.AuditUploadViewModel;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.presentation.Report.adapter.Missingadapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityReportViewbycatBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
-import com.acube.jims.datalayer.models.Audit.AuditScanUpload;
-import com.acube.jims.datalayer.models.Audit.Missing;
-import com.acube.jims.datalayer.models.Audit.ResponseReport;
-import com.google.gson.JsonArray;
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,11 +47,11 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
     ActivityReportViewbycatBinding binding;
     private ReportViewModel mViewModel;
     Missingadapter reportadapter;
-    String locationid, companyID, warehouseID, AuditID, Employeename;
+    String  companyID, warehouseID, AuditID, Employeename;
     AuditUploadViewModel auditUploadViewModel;
     List<String> compareitemlist;
     String commaseparatedlist;
-
+    int locationid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,32 +60,25 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
         if (new AppUtility(MisiingReport.this).isTablet(MisiingReport.this)){
             binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         }else{
-            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),1));
+            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         }
-        mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
-        mViewModel.init();
-        auditUploadViewModel = new ViewModelProvider(this).get(AuditUploadViewModel.class);
-        auditUploadViewModel.init();
-        binding.backlayout.parentlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-        locationid = getIntent().getStringExtra("locationid");
+        AuditID=getIntent().getStringExtra("auditID");
+        initToolBar(binding.toolbarApp.toolbar,"Missing",true);
+
+
+
+        locationid = getIntent().getIntExtra("locationid",0);
         companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
         warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
-        AuditID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "auditID");
         Employeename = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "EmployeeName");
-
-        binding.backlayout.tvFragname.setText("Missing");
+        Log.d("AuditID", "onCreate: "+AuditID);
         showProgressDialog();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("auditID", AuditID);
         jsonObject.addProperty("companyID", companyID);
         jsonObject.addProperty("warehouseID", warehouseID);
-        jsonObject.addProperty("locationID", Integer.parseInt(locationid));
+        jsonObject.addProperty("locationID", locationid);
 
         binding.cdvlocate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,39 +104,25 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
             }
         });
 
-
-        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
-        mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getMissing(AuditID,0,0).observe(this, new Observer<List<AuditReportItems>>() {
             @Override
-            public void onChanged(ResponseReport responseReport) {
+            public void onChanged(List<AuditReportItems> auditReportItems) {
                 hideProgressDialog();
-                if (responseReport != null) {
-                    List<Missing> datsetfound = responseReport.getMissing();
-                    binding.tvTotaldata.setText("Total Items : " + datsetfound.size());
-                    reportadapter = new Missingadapter(getApplicationContext(), datsetfound, MisiingReport.this);
+                if (auditReportItems != null) {
+                    binding.tvTotaldata.setText("Total Items : " + auditReportItems.size());
+                    reportadapter = new Missingadapter(getApplicationContext(), auditReportItems, MisiingReport.this);
                     binding.recyvfound.setAdapter(reportadapter);
                     if (reportadapter.getItemCount() == 0) {
                         binding.tvNotfound.setVisibility(View.VISIBLE);
                     } else {
-
                         binding.tvNotfound.setVisibility(View.GONE);
                     }
                 }
             }
         });
-        auditUploadViewModel.getLiveData().observe(this, new Observer<AuditScanUpload>() {
-            @Override
-            public void onChanged(AuditScanUpload auditScanUpload) {
-                hideProgressDialog();
-                if (auditScanUpload != null) {
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "totalstock", auditScanUpload.getTotalStock());
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "missing", auditScanUpload.getMissing());
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "found", auditScanUpload.getFound());
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "locationmismatch", auditScanUpload.getLocationMismatch());
-                    finish();
-                }
-            }
-        });
+
+
+
     }
 
     @Override
@@ -176,68 +158,115 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
 
         try {
             Intent res = new Intent();
-           String mPackage = "com.acube.smarttray";// package name
-            String mClass = ".MissingAuditActivity";//the activity name which return results*/
-          //  String mPackage = "com.example.acubetest";// package name
-          //  String mClass = ".Audit";//the activity name which return results
+            String mPackage = "com.acube.smarttray";// package name
+            String mClass = ".SmartTrayReading";//the activity name which return results*/
+            //   String mPackage = "com.example.acubetest";// package name
+            //    String mClass = ".Audit";//the activity name which return results
+            res.putExtra("type", "MISSING");
             res.putExtra("url", AppConstants.BASE_URL);
             res.putExtra("macAddress", TrayMacAddress);
-            res.putExtra("jsonSerialNo", commaseparatedlist);
+            res.putExtra("jsonSerialNo", "json");
             res.setComponent(new ComponentName(mPackage, mPackage + mClass));
             someActivityResultLauncher.launch(res);
         } catch (Exception e) {
             Log.d("TAG", "replaceFragment: ");
         }
     }
-
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        showProgressDialog();
-                        // Here, no request code
-                        Intent data = result.getData();
-                        if (data != null) {
-                            String json = data.getStringExtra("jsonSerialNo");
-                            Toast.makeText(getApplicationContext(), "" + json, Toast.LENGTH_LONG).show();
-
-                            JsonObject itemsobject = null;
-                            JsonArray itemsarray = new JsonArray();
-                            JsonObject body = new JsonObject();
-
-                            try {
-                                JSONArray jsonArray = new JSONArray(json);
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject explrObject = jsonArray.getJSONObject(i);
 
 
-                                    String serialno = explrObject.getString("SerialNo");
-                                    itemsobject = new JsonObject();
-                                    itemsobject.addProperty("serialNo", serialno);
-                                    Log.d("onActivityResult", "onActivityResult: " + serialno);
-                                    itemsarray.add(itemsobject);
+                        new Thread(() -> {
+                            Intent data = result.getData();
+                            if (data != null) {
+                                //    String filepath = data.getStringExtra("jsonSerialNo");
+                                //  Log.d("ResponseFile", "onActivityResult: " + filepath);
+
+                                String filepath = "/storage/emulated/0/Download/AcubeJimsLocate.json";
+                                File file = new File(filepath);
+                                if (file.exists()) {
+                                    FileReader fileReader = null;
+                                    try {
+                                        fileReader = new FileReader(filepath);
+                                        BufferedReader bufferedReader = new BufferedReader(fileReader);
+                                        StringBuilder stringBuilder = new StringBuilder();
+                                        String line = bufferedReader.readLine();
+                                        while (line != null) {
+                                            stringBuilder.append(line).append("\n");
+                                            line = bufferedReader.readLine();
+                                        }
+                                        bufferedReader.close();
+                                        String response = stringBuilder.toString();
+                                        //    AppDatabase.getInstance(getApplicationContext()).auditDownloadDao().inserdummy(tempSerials);
+                                        JSONArray obj = new JSONArray(response);
+                                        ArrayList<TemDataSerial> dataset = new Gson().fromJson(obj.toString(), new TypeToken<List<TemDataSerial>>() {
+                                        }.getType());
+                                        CheckSerialnumExist(dataset);
+                                        Log.d("TAG", "onActivityResult: " + dataset.size());
+
+                                    } catch (FileNotFoundException e) {
+                                        Log.d("TAG", "filenotexist: " + e.getMessage());
+
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        Log.d("TAG", "filenotexist: " + e.getMessage());
+
+                                        e.printStackTrace();
+                                    } catch (JSONException e) {
+                                        Log.d("TAG", "filenotexist: " + e.getMessage());
+
+
+                                        e.printStackTrace();
+                                    }
+
+                                } else {
+
+
                                 }
-                                body.addProperty("auditID", AuditID);
-                                body.addProperty("warehouseID", warehouseID);
-                                body.addProperty("locationID", locationid);
-                                body.addProperty("scannedBy", Employeename);
-                                body.add("items", itemsarray);
-                                Log.d("onActivityResult", "onActivityResult: " + body.toString());
-                                auditUploadViewModel.Audit(LocalPreferences.getToken(getApplicationContext()), body);
+                                Log.d("aspdata", "onActivityResult: " + data.getStringExtra("jsonSerialNo"));
 
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
                             }
 
 
-                        }
-                        Log.d("onActivityResult", "onActivityResult: " + data.getStringExtra("jsonSerialNo"));
-                        //doSomeOperations();
+                            runOnUiThread(() -> {
+                                hideProgressDialog();
+
+
+                            });
+                        }).start();
+                        // Here, no request code
+
+
                     }
                 }
             });
+    private void CheckSerialnumExist(ArrayList<TemDataSerial> dataset) {
+
+
+        new Thread(() -> {
+            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertTemporarySerialNos(dataset);
+            runOnUiThread(() -> {
+                checkexists();
+            });
+        }).start();
+
+    }
+    private void checkexists() {
+        int systemID = 0;
+        new Thread(() -> {
+            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().checkauditscan(AuditID, locationid);
+
+
+            runOnUiThread(() -> {
+                hideProgressDialog();
+            });
+        }).start();
+    }
+
 
 }

@@ -1,6 +1,5 @@
 package com.acube.jims.presentation.ItemRequest.view;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,8 +11,8 @@ import android.view.View;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityItemRequestPickListDetailsBinding;
 import com.acube.jims.datalayer.api.RetrofitInstance;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseItemRequestDetails;

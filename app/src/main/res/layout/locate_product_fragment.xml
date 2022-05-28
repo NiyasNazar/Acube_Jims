@@ -22,12 +22,8 @@
 
             <include
                 android:id="@+id/toolbar_app"
-                layout="@layout/back_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp">
+                layout="@layout/layout_toolbar"
+               >
 
             </include>
 
@@ -37,7 +33,7 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/toolbar_app"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/item_border_detailspage">
@@ -50,19 +46,7 @@
                     android:layout_marginRight="14dp"
                     android:layout_marginBottom="16dp">
 
-                    <TextView
-                        android:id="@+id/tvheader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/montserratsemibold"
-                        android:gravity="center_horizontal"
-                        android:letterSpacing="0.01"
-                        android:text="Locate Product"
-                        android:textColor="@color/headercolor"
-                        android:textSize="18sp"
-                        android:textStyle="normal" />
+
 
                     <EditText
                         android:id="@+id/ed_locate"
@@ -83,7 +67,6 @@
                     <LinearLayout
                         android:id="@+id/btn_add"
                         android:layout_width="139dp"
-
                         android:layout_height="50dp"
                         android:layout_below="@+id/tvheader"
                         android:layout_marginLeft="5dp"

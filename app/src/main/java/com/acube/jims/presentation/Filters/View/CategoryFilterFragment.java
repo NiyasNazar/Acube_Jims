@@ -3,9 +3,7 @@ package com.acube.jims.presentation.Filters.View;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -15,8 +13,8 @@ import android.view.ViewGroup;
 import com.acube.jims.presentation.Catalogue.View.FilterScreen;
 import com.acube.jims.presentation.Catalogue.adapter.CategoryAdapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
-import com.acube.jims.Utils.RefreshSelection;
+import com.acube.jims.utils.LocalPreferences;
+import com.acube.jims.utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;

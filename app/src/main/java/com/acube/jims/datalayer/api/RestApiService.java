@@ -1,5 +1,6 @@
 package com.acube.jims.datalayer.api;
 
+import com.acube.jims.datalayer.models.Audit.AuditResults;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseCreateItemrequest;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseFetchPickList;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseItemRequestDetails;
@@ -121,10 +122,8 @@ public interface RestApiService {
     @GET("TrayMaster")
     Call<List<ResponseTrayMaster>> FetchTrayMaster(@Header("Authorization") String Auth);
 
-
     @POST("CustomerRegistration/CustomerLogout")
     Call<JsonObject> CustomerLogout(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
-
 
     @GET("CustomerRegistration/GetCustomerHistory/{CustomerID}")
     Call<ResponseCustomerHistory> FetchCustomerHistory(@Header("Authorization") String Auth, @Path("CustomerID") String CustomerID);
@@ -135,6 +134,8 @@ public interface RestApiService {
     @POST("Audit/GetDocumentForMobile")
     Call<List<ResponseAudit>> AuditDetails(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
+    @POST("Audit/GetDocumentForMobile")
+    Call<List<ResponseAudit>> AuditHeader(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
     @POST("Audit/GetAuditCandidateList")
     Call<List<ResponseLocationList>> AuditLocationList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
@@ -153,7 +154,6 @@ public interface RestApiService {
 
     @POST("CatalogCart/ClearCart/{CustomerID}")
     Call<JsonObject> ClearCart(@Header("Authorization") String Auth, @Path("CustomerID") String CustomerID);
-
 
     @POST("AnalyticsReport/GetAnalyticsSummary")
     Call<ResponseAnalyticsSummary> getAnalyticsSummary(@Header("Authorization") String Auth, @Body JsonObject jsonObject);

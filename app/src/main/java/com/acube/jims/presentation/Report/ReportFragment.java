@@ -9,17 +9,13 @@ import androidx.lifecycle.ViewModelProvider;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 
+import com.acube.jims.BaseActivity;
 import com.acube.jims.presentation.Audit.ViewModel.AuditViewModel;
 import com.acube.jims.presentation.Report.View.ExtraFragment;
 import com.acube.jims.presentation.Report.View.FoundFragment;
@@ -29,8 +25,8 @@ import com.acube.jims.presentation.Report.View.ReportFilterBottomSheetFragment;
 import com.acube.jims.presentation.Report.View.reports.MissmatchApprovedFragment;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ReportFragmentBinding;
 import com.acube.jims.datalayer.models.Audit.Found;
 import com.acube.jims.datalayer.models.Audit.LocationMismatch;
@@ -45,7 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class ReportFragment extends Fragment implements ReportFilterBottomSheetFragment.ApplyFilter {
+public class ReportFragment extends BaseActivity implements ReportFilterBottomSheetFragment.ApplyFilter {
 
     private ReportViewModel mViewModel;
     private AuditViewModel auditViewModel;
@@ -66,10 +62,11 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
     String dbfromdate, dbtodate, mAuditId,companyID,warehouseID;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.report_fragment, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.report_fragment);
+        initToolBar(binding.toolbarApp.toolbar,"Audit Report",true);
+
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
         auditViewModel = new ViewModelProvider(this).get(AuditViewModel.class);
         mViewModel.init();
@@ -79,25 +76,16 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
         datsetmissing = new ArrayList<>();
         datasetlocationapproved = new ArrayList<>();
         datasetlocationmismatch = new ArrayList<>();
-         companyID = LocalPreferences.retrieveStringPreferences(getActivity(), "CompanyID");
-         warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
+         companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
+         warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
         //String auditID = LocalPreferences.retrieveStringPreferences(getActivity(), "auditID");
 
-        auditViewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseAudit>>() {
-            @Override
-            public void onChanged(List<ResponseAudit> responseAudits) {
-                if (responseAudits != null) {
-                    datasetaudits = responseAudits;
-                    ArrayAdapter<ResponseAudit> arrayAdapter = new ArrayAdapter<ResponseAudit>(getActivity(), android.R.layout.simple_spinner_item, responseAudits);
-                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    binding.edAuditid.setAdapter(arrayAdapter);
-                }
-            }
-        });
+
+
         binding.edAuditid.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LocalPreferences.storeStringPreference(getActivity(), "AuditID", String.valueOf(parent.getItemAtPosition(position)));
+                LocalPreferences.storeStringPreference(getApplicationContext(), "AuditID", String.valueOf(parent.getItemAtPosition(position)));
                 mAuditId = String.valueOf(parent.getItemAtPosition(position));
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("auditID", mAuditId);
@@ -109,7 +97,7 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
                 jsonObject.addProperty("karatID", 0);
                 jsonObject.addProperty("tabType", "");
                 jsonObject.addProperty("serialNo", "");
-                mViewModel.FetchReports(LocalPreferences.getToken(getContext()), jsonObject);
+                mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
             }
 
             @Override
@@ -129,7 +117,7 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
                 jsonObject.addProperty("locationID", 0);
                 jsonObject.addProperty("fromDate", "");
                 jsonObject.addProperty("toDate", "");
-                auditViewModel.Audit(LocalPreferences.getToken(getActivity()), jsonObject);
+            //    auditViewModel.Audit(LocalPreferences.getToken(getApplicationContext()), jsonObject);
                 binding.auditlayt.setVisibility(View.VISIBLE);
             }
         });
@@ -144,7 +132,7 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Dialog,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ReportFragment.this, android.R.style.Theme_Holo_Dialog,
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -158,11 +146,11 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
                 datePickerDialog.show();
             }
         });
-        binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
-        binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-        binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-        binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-        binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+        binding.tabfound.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border));
+        binding.tabmissing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+        binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+        binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+        binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
 
         binding.enddatebtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +162,7 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
                 mDay = c.get(Calendar.DAY_OF_MONTH);
 
 
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), android.R.style.Theme_Holo_Dialog,
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ReportFragment.this, android.R.style.Theme_Holo_Dialog,
                         new DatePickerDialog.OnDateSetListener() {
 
                             @Override
@@ -195,12 +183,12 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
             public void onClick(View v) {
                 ReportFilterBottomSheetFragment bottomSheet = new ReportFilterBottomSheetFragment(ReportFragment.this::applyfilter);
 
-                bottomSheet.show(getActivity().getSupportFragmentManager(),
+                bottomSheet.show(getSupportFragmentManager(),
                         "ModalBottomSheet");
             }
         });
 
-        mViewModel.getLiveData().observe(getActivity(), new Observer<ResponseReport>() {
+        mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
             @Override
             public void onChanged(ResponseReport responseReport) {
                 if (responseReport != null) {
@@ -222,11 +210,11 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
         binding.tabfound.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
-                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
 
                 replace(FoundFragment.newInstance(datsetfound));
             }
@@ -235,12 +223,12 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
         binding.tabmissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
 
-                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
-                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
 
 
                 replace(new MissingFragment(datsetmissing));
@@ -249,12 +237,12 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
         binding.tabextra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
 
-                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
-                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
                 //   replace(new FoundFragment());
 
             }
@@ -262,23 +250,23 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
         binding.tablocationmismatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
 
-                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border));
                 replace(LocationMismatchFragment.newInstance(datasetlocationmismatch));
             }
         });
         binding.tabextra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border));
                 replace(ExtraFragment.newInstance());
             }
         });
@@ -286,39 +274,38 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
         binding.tabLocationApproved.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabmissing.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabextra.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border_unselected));
-                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));
+                binding.tabfound.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabmissing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
+                binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border));
                 replace(MissmatchApprovedFragment.newInstance(datasetlocationapproved));
 
             }
         });
 
-        return binding.getRoot();
 
 
     }
 
     public void replace(Fragment fragment) {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.container, fragment).commit();
     }
 
     public <T> void setList(String key, List<T> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
-        LocalPreferences.storeStringPreference(getActivity(), key, json);
+        LocalPreferences.storeStringPreference(getApplicationContext(), key, json);
     }
 
     @Override
     public void applyfilter() {
-        vaSubCatID = FilterPreference.retrieveStringPreferences(getActivity(), "subcatid");
-        vaColorID = FilterPreference.retrieveStringPreferences(getContext(), "colorid");
-        vaKaratID = FilterPreference.retrieveStringPreferences(getContext(), "karatid");
-        vaCatID = FilterPreference.retrieveStringPreferences(getActivity(), "catid");
-        vaWeight = FilterPreference.retrieveStringPreferences(getActivity(), "weightid");
+        vaSubCatID = FilterPreference.retrieveStringPreferences(getApplicationContext(), "subcatid");
+        vaColorID = FilterPreference.retrieveStringPreferences(getApplicationContext(), "colorid");
+        vaKaratID = FilterPreference.retrieveStringPreferences(getApplicationContext(), "karatid");
+        vaCatID = FilterPreference.retrieveStringPreferences(getApplicationContext(), "catid");
+        vaWeight = FilterPreference.retrieveStringPreferences(getApplicationContext(), "weightid");
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("auditID", mAuditId);
@@ -330,6 +317,6 @@ public class ReportFragment extends Fragment implements ReportFilterBottomSheetF
         jsonObject.addProperty("karatID", vaKaratID);
         jsonObject.addProperty("tabType", "Found");
         jsonObject.addProperty("serialNo", "");
-        mViewModel.FetchReports(LocalPreferences.getToken(getContext()), jsonObject);
+        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
     }
 }

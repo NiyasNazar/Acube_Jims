@@ -21,7 +21,7 @@ import com.acube.jims.presentation.Filters.View.CategoryFilterFragment;
 import com.acube.jims.presentation.Filters.View.ColorFilterFragment;
 import com.acube.jims.presentation.Filters.View.KaratFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.BottomSheetFilterBinding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;

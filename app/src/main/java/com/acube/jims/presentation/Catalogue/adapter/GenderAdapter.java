@@ -12,9 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.RefreshSelection;
-import com.acube.jims.datalayer.models.Filter.Colorresult;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
 import com.google.gson.Gson;
 

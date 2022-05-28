@@ -26,7 +26,7 @@ import com.acube.jims.presentation.Filters.View.PriceFragment;
 import com.acube.jims.presentation.Filters.View.SubCatFilterFragment;
 import com.acube.jims.presentation.Filters.View.WeightFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
+import com.acube.jims.utils.FilterPreference;
 import com.acube.jims.databinding.BottomSheetFilterBinding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;

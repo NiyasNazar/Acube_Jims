@@ -27,6 +27,8 @@
                 android:layout_height="match_parent"
                 android:background="@color/appmaincolor"
                 android:elevation="0dp"
+                app:titleTextColor="@color/white"
+
                 android:gravity="center"
                 app:buttonGravity="center_vertical"
                 app:titleTextAppearance="@style/Toolbar.TitleText" />

@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Catalogue;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -60,6 +61,7 @@ public class CatalogueRepository {
             @Override
             public void onFailure(Call<List<ResponseCatalogueListing>> call, Throwable t) {
                 datasetsummary.setValue(null);
+                Log.d("TAG", "onFailure: "+t.getMessage());
             }
         });
 

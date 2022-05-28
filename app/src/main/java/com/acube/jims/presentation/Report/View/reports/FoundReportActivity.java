@@ -2,69 +2,60 @@ package com.acube.jims.presentation.Report.View.reports;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.acube.jims.BaseActivity;
+import com.acube.jims.datalayer.models.Audit.AuditReportItems;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
-import com.acube.jims.presentation.Report.adapter.Foundadapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityFoundreportBinding;
-import com.acube.jims.datalayer.models.Audit.Found;
-import com.acube.jims.datalayer.models.Audit.ResponseReport;
-import com.google.gson.JsonObject;
+import com.acube.jims.presentation.Report.adapter.Missingadapter;
 
 import java.util.List;
 
 public class FoundReportActivity extends BaseActivity {
     ActivityFoundreportBinding binding;
     private ReportViewModel mViewModel;
-    Foundadapter reportadapter;
+    Missingadapter  reportadapter;
+    int flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_foundreport);
-        binding.recyvfound.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
-        mViewModel.init();
+        binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        initToolBar(binding.toolbarApp.toolbar, "Found", true);
+        flag = getIntent().getIntExtra("flag", -1);
         binding.tvNotfound.setVisibility(View.GONE);
-        binding.backlayout.parentlayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        if (flag==1){
+            initToolBar(binding.toolbarApp.toolbar, "Found", true);
+
+        }else{
+            initToolBar(binding.toolbarApp.toolbar, "Unknown", true);
+
+        }
 
         showProgressDialog();
         String locationid = getIntent().getStringExtra("locationid");
         String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
         String warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
-        String AuditID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "auditID");
-        binding.backlayout.tvFragname.setText("Found");
-
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("auditID", AuditID);
-        jsonObject.addProperty("companyID", companyID);
-        jsonObject.addProperty("warehouseID", warehouseID);
-        jsonObject.addProperty("locationID", Integer.parseInt(locationid));
+        String AuditID = getIntent().getStringExtra("auditID");
 
 
-        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
-        mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getMissing(AuditID, flag, 0).observe(this, new Observer<List<AuditReportItems>>() {
             @Override
-            public void onChanged(ResponseReport responseReport) {
+            public void onChanged(List<AuditReportItems> responseReport) {
                 hideProgressDialog();
                 if (responseReport != null) {
-                    List<Found> datsetfound = responseReport.getFound();
-                    binding.tvTotaldata.setText("Total Items : " + datsetfound.size());
+                    binding.tvTotaldata.setText("Total Items : " + responseReport.size());
 
-                    reportadapter = new Foundadapter(getApplicationContext(), datsetfound);
+                    reportadapter = new Missingadapter(getApplicationContext(), responseReport,false);
                     binding.recyvfound.setAdapter(reportadapter);
                     if (reportadapter.getItemCount() == 0) {
                         binding.tvNotfound.setVisibility(View.VISIBLE);

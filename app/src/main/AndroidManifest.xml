@@ -32,6 +32,12 @@
         <activity
             android:name=".presentation.SettingsActivity"
             android:exported="true" />
+        <activity android:name=".presentation.CustomerManagment.View.CustomerSalesHistoryFragment"></activity>
+        <activity android:name=".presentation.Audit.AuditFragment"></activity>
+        <activity android:name=".presentation.Audit.AuditMenuFragment"></activity>
+        <activity android:name=".presentation.Report.ReportFragment"></activity>
+        <activity android:name=".presentation.LocateProduct.View.LocateProduct"></activity>
+
         <activity android:name=".presentation.Compare.CompareFragment" />
         <activity android:name=".presentation.CustomerManagment.View.CustomerViewedItemsFragment" />
         <activity

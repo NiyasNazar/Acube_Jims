@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.presentation.Login.View.LoginActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
+
+    //found=1,Unknown=3,Locmismatch=2
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

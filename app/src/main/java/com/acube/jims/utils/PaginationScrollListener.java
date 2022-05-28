@@ -1,4 +1,4 @@
-package com.acube.jims.Utils;
+package com.acube.jims.utils;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;

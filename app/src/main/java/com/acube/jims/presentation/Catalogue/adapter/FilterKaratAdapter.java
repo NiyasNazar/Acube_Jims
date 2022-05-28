@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,8 +14,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.RefreshSelection;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
 import com.google.gson.Gson;

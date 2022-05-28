@@ -10,20 +10,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.presentation.Catalogue.View.FilterBottomSheetFragment;
-import com.acube.jims.presentation.Catalogue.adapter.FilterWeightAdapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.RefreshSelection;
-import com.acube.jims.datalayer.models.Filter.Weight;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-
-import java.lang.reflect.Type;
-import java.util.List;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.RefreshSelection;
 
 /**
  * A simple {@link Fragment} subclass.

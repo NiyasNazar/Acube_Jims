@@ -1,33 +1,46 @@
 package com.acube.jims.presentation.LocateProduct.View;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.os.Environment;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.acube.jims.BaseActivity;
+import com.acube.jims.utils.LocalPreferences;
+import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.presentation.LocateProduct.adapter.LocateItemAdapter;
 import com.acube.jims.R;
 import com.acube.jims.databinding.LocateProductFragmentBinding;
 import com.acube.jims.datalayer.models.LocateProduct.LocateItem;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class LocateProduct extends Fragment {
+public class LocateProduct extends BaseActivity {
 
     private LocateProductViewModel mViewModel;
 
@@ -36,47 +49,50 @@ public class LocateProduct extends Fragment {
     }
 
     LocateProductFragmentBinding binding;
+    JSONObject jsonObjectserials;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.locate_product_fragment, container, false);
-        binding.recylocateitems.setLayoutManager(new LinearLayoutManager(getActivity()));
+        binding = DataBindingUtil.setContentView(this, R.layout.locate_product_fragment);
+        binding.recylocateitems.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        binding.btnLocate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocateItems();
+            }
+        });
+        initToolBar(binding.toolbarApp.toolbar, "Locate Item", true);
+
+        Context context = new ContextThemeWrapper(LocateProduct.this, R.style.AppTheme2);
 
         binding.btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new MaterialAlertDialogBuilder(context)
 
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-
-                // set title
-                alertDialogBuilder.setTitle("Clear All Data?");
-
-                // set dialog message
-                alertDialogBuilder
+                        .setTitle("Clear Data")
                         .setMessage("Are you sure you want to clear all data?")
-                        .setCancelable(false)
-                        .setPositiveButton("Clear", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                        .setPositiveButton("CLEAR", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
                                 DeleteAll();
+
 
                             }
                         })
                         .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
 
-
-                                dialog.cancel();
                             }
-                        });
+                        })
+                        .show();
 
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
 
-                // show it
-                alertDialog.show();
+
             }
         });
         binding.btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +118,6 @@ public class LocateProduct extends Fragment {
             }
         });
 
-        return binding.getRoot();
     }
 
     private void getItems() {
@@ -111,7 +126,7 @@ public class LocateProduct extends Fragment {
             @Override
             protected List<LocateItem> doInBackground(Void... voids) {
                 List<LocateItem> taskList = DatabaseClient
-                        .getInstance(getActivity())
+                        .getInstance(getApplicationContext())
                         .getAppDatabase()
                         .locateItemsDao().getAll();
                 return taskList;
@@ -121,7 +136,63 @@ public class LocateProduct extends Fragment {
             protected void onPostExecute(List<LocateItem> responseItems) {
                 super.onPostExecute(responseItems);
                 Log.d("markItemSale", "markItemSale: " + responseItems.size());
-                binding.recylocateitems.setAdapter(new LocateItemAdapter(getActivity(), responseItems));
+                binding.recylocateitems.setAdapter(new LocateItemAdapter(getApplicationContext(), responseItems));
+
+
+            }
+        }
+
+        GetTasks gt = new GetTasks();
+        gt.execute();
+    }
+
+    private void LocateItems() {
+        class GetTasks extends AsyncTask<Void, Void, List<LocateItem>> {
+
+            @Override
+            protected List<LocateItem> doInBackground(Void... voids) {
+                List<LocateItem> taskList = DatabaseClient
+                        .getInstance(getApplicationContext())
+                        .getAppDatabase()
+                        .locateItemsDao().getAll();
+                return taskList;
+            }
+
+            @Override
+            protected void onPostExecute(List<LocateItem> locateItems) {
+                super.onPostExecute(locateItems);
+                String TrayMacAddress = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "TrayMacAddress");
+                JSONArray jsonArray = new JSONArray();
+
+                try {
+                    for (int i = 0; i < locateItems.size(); i++) {
+                        jsonObjectserials = new JSONObject();
+                        String serialNumber = locateItems.get(i).getSerialnumber();
+                        jsonObjectserials.put("SerialNo", serialNumber);
+                        jsonArray.put(jsonObjectserials);
+                    }
+                    String filepath = save(getApplicationContext(), jsonArray.toString());
+                    if (filepath == null) {
+                        /*/storage/emulated/0/Android/data/com.acube.jms/files/Missing.json*/
+                    } else {
+
+                        Log.d("TrayMacAddress", "onPostExecute: " + TrayMacAddress);
+                        Intent res = new Intent();
+                        String mPackage = "com.acube.smarttray";// package name
+                        String mClass = ".SmartTrayReading";//the activity name which return results*/
+                        //  String mPackage = "com.example.acubetest";// package name
+                        //  String mClass = ".MainActivity";//the activity name which return results
+                        res.putExtra("token", LocalPreferences.getToken(getApplicationContext()));
+                        res.putExtra("type", "LOCATE");
+                        res.putExtra("url", AppConstants.BASE_URL);
+                        res.putExtra("macAddress", TrayMacAddress);
+                        res.putExtra("jsonSerialNo", filepath);
+                        res.setComponent(new ComponentName(mPackage, mPackage + mClass));
+                        someActivityResultLauncher.launch(res);
+                    }
+                } catch (Exception e) {
+
+                }
 
 
             }
@@ -137,7 +208,7 @@ public class LocateProduct extends Fragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 DatabaseClient
-                        .getInstance(getActivity())
+                        .getInstance(getApplicationContext())
                         .getAppDatabase()
                         .locateItemsDao()
                         .deleteall();
@@ -162,7 +233,7 @@ public class LocateProduct extends Fragment {
             @Override
             protected Void doInBackground(Void... voids) {
                 DatabaseClient
-                        .getInstance(getActivity())
+                        .getInstance(getApplicationContext())
                         .getAppDatabase()
                         .locateItemsDao()
                         .insert(items);
@@ -172,6 +243,7 @@ public class LocateProduct extends Fragment {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                binding.edLocate.setText("");
                 getItems();
 
             }
@@ -181,11 +253,40 @@ public class LocateProduct extends Fragment {
         st.execute();
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(LocateProductViewModel.class);
-        // TODO: Use the ViewModel
-    }
 
+    ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Here, no request code
+                        Intent data = result.getData();
+                        if (data != null) {
+                        }
+                        Log.d("onActivityResult", "onActivityResult: " + data.getStringExtra("jsonSerialNo"));
+                        //doSomeOperations();
+                    }
+                }
+            });
+
+
+    public String save(Context context, String jsonString) throws IOException {
+
+      /*  String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/folder");
+        myDir.mkdirs();
+        String fname = "file";
+        File file = new File (myDir, fname);*/
+        String filepath = null;
+
+        File rootFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        File jsonFile = new File(rootFolder, "AcubeJimsLocate.json");
+        Log.d("Savedata", "save: " + jsonFile.getPath());
+        FileWriter writer = new FileWriter(jsonFile);
+        writer.write(jsonString);
+        writer.close();
+        //or IOUtils.closeQuietly(writer);
+        return jsonFile.getAbsolutePath();
+    }
 }

@@ -16,7 +16,6 @@
 
         <RelativeLayout
 
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -29,6 +28,7 @@
 
             <RelativeLayout
                 android:id="@+id/parentRelative"
+
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
 
@@ -37,7 +37,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginBottom="10dp">
 
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -57,54 +57,63 @@
 
             <LinearLayout
                 android:id="@+id/bottomlayt"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="32dp"
-                android:layout_marginBottom="10dp"
+                android:background="@color/appmaincolor"
+
 
                 android:gravity="center_horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:layout_marginRight="10dp"
-                    android:id="@+id/btnback"
+                    android:visibility="gone"
+
+                    android:id="@+id/btn_selectall"
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="wrap_content"
-
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:background="@drawable/oval_btn_signin"
+
+
+                    android:backgroundTint="@color/appmaincolor"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/white"
                     android:fontFamily="@font/jtmarniebold"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-
-                    android:text="Go Back"
-
+                    android:text="Select All"
                     android:textColor="@color/white"
                     android:textSize="13sp">
 
                 </androidx.appcompat.widget.AppCompatButton>
+                <View
+                    android:layout_width="1.5dp"
+                    android:background="@color/white"
+                    android:layout_height="match_parent"></View>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_next"
-
                     style="@style/Widget.AppCompat.Button.Borderless"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
                     android:background="@drawable/oval_btn_signin"
+                    android:backgroundTint="@color/appmaincolor"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/white"
+
                     android:fontFamily="@font/jtmarniebold"
-                    android:paddingLeft="50dp"
-                    android:paddingRight="50dp"
+
+
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
                     android:text="Next"
+
                     android:textColor="@color/white"
                     android:textSize="13sp">
 
                 </androidx.appcompat.widget.AppCompatButton>
             </LinearLayout>
+
 
             <FrameLayout
                 android:id="@+id/emptycart"

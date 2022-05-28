@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.datalayer.models.Invoice.KaratPrice;
 import com.acube.jims.datalayer.models.Invoice.ResponseInvoiceList;
 import com.google.common.reflect.TypeToken;

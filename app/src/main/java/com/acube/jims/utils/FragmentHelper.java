@@ -1,4 +1,4 @@
-package com.acube.jims.Utils;
+package com.acube.jims.utils;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;

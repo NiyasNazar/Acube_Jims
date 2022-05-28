@@ -5,32 +5,21 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.Activity;
-import android.app.admin.DeviceAdminReceiver;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import android.provider.Settings;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.DeviceRegistration.ViewModel.AddDeviceViewModel;
 import com.acube.jims.presentation.DeviceRegistration.ViewModel.DeviceRegistrationViewModel;
 import com.acube.jims.presentation.DeviceRegistration.ViewModel.TrayMasterViewModel;
 import com.acube.jims.presentation.DeviceRegistration.ViewModel.UpdateDeviceViewModel;
-import com.acube.jims.presentation.HomePage.View.HomeFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.DeviceRegistrationFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.DeviceRegistration.ResponseDeviceRegistration;

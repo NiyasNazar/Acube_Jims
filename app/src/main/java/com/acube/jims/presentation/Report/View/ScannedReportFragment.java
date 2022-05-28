@@ -19,7 +19,7 @@ import com.acube.jims.presentation.Audit.ViewModel.AuditViewModel;
 import com.acube.jims.presentation.Report.View.reports.MissmatchApprovedFragment;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ScannedReportFragmentBinding;
 import com.acube.jims.datalayer.models.Audit.Found;
 import com.acube.jims.datalayer.models.Audit.LocationMismatch;

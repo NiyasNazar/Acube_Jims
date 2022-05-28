@@ -1,29 +1,21 @@
 package com.acube.jims.presentation.CustomerManagment.View;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
-import com.acube.jims.presentation.HomePage.View.HomeFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentAddCustomerBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.constants.BackHandler;
@@ -54,6 +46,13 @@ public class AddCustomerFragment extends BaseActivity {
         initToolBar(binding.toolbarApp.toolbar,"Add Customer",true);
         createCustomerViewModel = ViewModelProviders.of(this).get(CreateCustomerViewModel.class);
         createCustomerViewModel.init();
+
+        binding.btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
 
         binding.btnSave.setOnClickListener(new View.OnClickListener() {

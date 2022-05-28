@@ -31,10 +31,10 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
     private final List<HomeData> homemenuList;
     FragmentTransition fragmenttransition;
 
-    public HomeAdapter(Context mCtx, List<HomeData> homemenuList,FragmentTransition fragmenttransition) {
+    public HomeAdapter(Context mCtx, List<HomeData> homemenuList, FragmentTransition fragmenttransition) {
         this.mCtx = mCtx;
         this.homemenuList = homemenuList;
-        this.fragmenttransition=fragmenttransition;
+        this.fragmenttransition = fragmenttransition;
 
     }
 
@@ -53,24 +53,35 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
         HomeData homeData = homemenuList.get(position);
         holder.textViewTitle.setText(homeData.getMenuText());
         // holder.imageView.setImageResource(homeData.getImage());
-        Glide.with(mCtx)
-                .load(homeData.getMenuIconName())
-                //  .placeholder(R.drawable.placeholder)
-                //  .error(R.drawable.imagenotfound)
-                .listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        // log exception
-                        Log.e("TAG", "Error loading image", e);
-                        return false; // important to return false so the error placeholder can be placed
-                    }
+        if (homeData.getMenuName().equalsIgnoreCase("Dashboard")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.dashboard);
 
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        return false;
-                    }
-                })
-                .into(holder.imageView);
+        } else if (homeData.getMenuName().equalsIgnoreCase("Analytics")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.analytics);
+
+
+        } else if (homeData.getMenuName().equalsIgnoreCase("ItemRequest")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.itemreq);
+
+        } else if (homeData.getMenuName().equalsIgnoreCase("ItemCatalog")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.catalogue);
+
+        } else if (homeData.getMenuName().equalsIgnoreCase("Scan")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.scan);
+
+        } else if (homeData.getMenuName().equalsIgnoreCase("AndroidReports")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.graph_report_gold);
+
+        } else if (homeData.getMenuName().equalsIgnoreCase("Customer")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.itemreq);
+
+        } else if (homeData.getMenuName().equalsIgnoreCase("InventoryAudit")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.audit);
+
+        }else if (homeData.getMenuName().equalsIgnoreCase("deviceregistration")) {
+            ((ProductViewHolder) holder).bindImage(holder.imageView, R.drawable.auditic);
+
+        }
 
     }
 
@@ -100,10 +111,32 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.ProductViewHol
                 }
             });
         }
+
+        private void bindImage(ImageView imageView, int imagepath) {
+            Glide.with(mCtx)
+                    .load(imagepath)
+                    //  .placeholder(R.drawable.placeholder)
+                    //  .error(R.drawable.imagenotfound)
+                    .listener(new RequestListener<Drawable>() {
+                        @Override
+                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                            // log exception
+                            Log.e("TAG", "Error loading image", e);
+                            return false; // important to return false so the error placeholder can be placed
+                        }
+
+                        @Override
+                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                            return false;
+                        }
+                    })
+                    .into(imageView);
+
+        }
     }
 
     public interface FragmentTransition {
-        void replaceFragment(String  menuname);
+        void replaceFragment(String menuname);
 
     }
 }

@@ -4,25 +4,20 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.os.Trace;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.DashBoard.adapter.DashBoardPieChartadapter;
 import com.acube.jims.presentation.DashBoard.adapter.ToptenSoldAdapter;
 import com.acube.jims.presentation.DashBoard.adapter.ToptenSoldCategoryAdapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentDashBoardBinding;
 import com.acube.jims.datalayer.api.RestApiService;
 import com.acube.jims.datalayer.api.RetrofitInstance;
@@ -42,11 +37,10 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.JsonObject;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -108,6 +102,7 @@ public class DashBoardActivity extends BaseActivity {
         datasetperiod3.add(new FilterPeriod(1, "Last week"));
         datasetperiod3.add(new FilterPeriod(2, "Last 30 days"));
         datasetperiod3.add(new FilterPeriod(3, "This Year"));
+        binding.edStoreselection.setTitle("Select Store");
 
 
         ArrayAdapter<FilterPeriod> arrayAdapter = new ArrayAdapter<FilterPeriod>(getApplicationContext(), android.R.layout.simple_spinner_item, datasetperiod);
@@ -324,6 +319,9 @@ public class DashBoardActivity extends BaseActivity {
         binding.chart1.getDescription().setEnabled(false);
         binding.chart1.setPinchZoom(false);
         binding.chart1.setDrawGridBackground(false);
+        BarChartCustomRenderer barChartCustomRenderer = new BarChartCustomRenderer( binding.chart1,  binding.chart1.getAnimator(),    binding.chart1.getViewPortHandler());
+        binding.chart1.setRenderer(barChartCustomRenderer);
+
         // empty labels so that the names are spread evenly
         List<String> labels = new ArrayList<>();
         for (int i = 0; i < dataset.size(); i++) {
@@ -334,7 +332,8 @@ public class DashBoardActivity extends BaseActivity {
         xAxis.setCenterAxisLabels(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
-        xAxis.setGranularity(1f); // only intervals of 1 day
+        xAxis.setGranularity(0.5f);
+        xAxis.setGranularityEnabled(true);
         xAxis.setTextColor(Color.BLACK);
         xAxis.setTextSize(12);
         xAxis.setAxisLineColor(Color.BLACK);
@@ -347,15 +346,8 @@ public class DashBoardActivity extends BaseActivity {
         leftAxis.setAxisLineColor(Color.BLACK);
         leftAxis.setDrawGridLines(false);
         leftAxis.setEnabled(false);//for enabling twosides
-        leftAxis.setGranularity(2);
-
-        // leftAxis.setLabelCount(8, true);
 
 
-        //  binding.chart1.getAxisRight().setEnabled(false);
-        //  binding.chart1.getLegend().setEnabled(false);
-
-        float[] valOne = {10, 20, 30, 40, 50};
 
 
         ArrayList<BarEntry> barOne = new ArrayList<>();
@@ -367,14 +359,12 @@ public class DashBoardActivity extends BaseActivity {
 
         BarDataSet barDataSet = new BarDataSet(barOne, "");
         barDataSet.setColor(Color.parseColor("#BF8F3A"));
-
+        barDataSet.setDrawValues(true);
 
         BarData data = new BarData(barDataSet);
+        data.setValueTextSize(10f);
+        data.setValueTextColor(Color.BLACK);
         data.setBarWidth(0.5f);
-        float groupSpace = 0.4f;
-        float barSpace = 0f;
-        float barWidth = 0.3f;
-        // (barSpace + barWidth) * 2 + groupSpace = 1
 
 
         binding.chart1.setData(data);
@@ -470,10 +460,10 @@ public class DashBoardActivity extends BaseActivity {
             public void onResponse(Call<ResponseDashboardSummary> call, Response<ResponseDashboardSummary> response) {
                 hideProgressDialog();
                 if (response.body() != null && response.code() == 200) {
-                    binding.tvinverntory.setText(String.valueOf(response.body().getTotalInventory()));
-                    binding.tvtotalsales.setText(String.valueOf(response.body().getTodayTotalSales()));
-                    binding.tvproductssold.setText(String.valueOf(response.body().getTotalProductSold()));
-                    binding.tvnoofsales.setText(String.valueOf(response.body().getTodaySales()));
+                    binding.tvinverntory.setText(String.valueOf(new DecimalFormat("#").format(response.body().getTotalInventory())));
+                    binding.tvtotalsales.setText(String.valueOf(response.body().getTodaySales()));
+                    binding.tvproductssold.setText(String.valueOf(new DecimalFormat("#").format(response.body().getTotalProductSold())));
+                    binding.tvnoofsales.setText(String.valueOf(new DecimalFormat("#").format(response.body().getTodayTotalSales())));
 
                 }
             }

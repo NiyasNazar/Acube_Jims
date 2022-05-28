@@ -46,7 +46,6 @@ public class PieChartadapter extends RecyclerView.Adapter<PieChartadapter.Produc
     }
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
         LayoutInflater inflater = LayoutInflater.from(mCtx);
         View view = inflater.inflate(R.layout.layout_piechart,parent, false);
         return new ProductViewHolder(view);
@@ -57,6 +56,8 @@ public class PieChartadapter extends RecyclerView.Adapter<PieChartadapter.Produc
         AnalyticsCustomersServed analyticsCustomersServed=dataset.get(position);
         holder.circleProgressView.setValue(analyticsCustomersServed.getPerformancePercentage());
         holder.textViewCount.setText("Total "+analyticsCustomersServed.getTotalCount());
+        holder.tvemployeename.setText(analyticsCustomersServed.getEmployeeName());
+
 
 
     }
@@ -70,7 +71,7 @@ public class PieChartadapter extends RecyclerView.Adapter<PieChartadapter.Produc
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewCount, textViewLoccode, textViewDate;
+        TextView textViewCount, tvemployeename, textViewDate;
         ImageView imageView;
         CheckBox comparecheckbox;
         ResponseItems responseItems;
@@ -83,7 +84,7 @@ public class PieChartadapter extends RecyclerView.Adapter<PieChartadapter.Produc
 
             circleProgressView = itemView.findViewById(R.id.circleView);
             textViewCount = itemView.findViewById(R.id.tvcount);
-
+            tvemployeename = itemView.findViewById(R.id.tvemployeename);
 
 
         }

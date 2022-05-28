@@ -9,31 +9,28 @@ import androidx.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.datalayer.remote.db.AppDatabase;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
-import com.acube.jims.presentation.CustomerManagment.View.AddCustomerFragment;
 import com.acube.jims.presentation.CustomerManagment.View.CustomerBottomSheetFragment;
 import com.acube.jims.presentation.CustomerManagment.View.CustomerViewfragment;
-import com.acube.jims.presentation.HomePage.View.HomePageActivity;
 import com.acube.jims.presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.presentation.Login.ViewModel.LoginViewModel;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityLoginBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Authentication.ResponseLogin;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.models.Invoice.KaratPrice;
 import com.acube.jims.presentation.SettingsActivity;
-import com.bumptech.glide.Glide;
-import com.google.firebase.crashlytics.internal.model.CrashlyticsReport;
+import com.acube.jims.utils.OnSingleClickListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -66,6 +63,25 @@ public class LoginActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
             }
         });
+
+        binding.showPassBtn.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                if (binding.edPassword.getTransformationMethod().equals(PasswordTransformationMethod.getInstance())) {
+                    ((ImageView) (v)).setImageResource(R.drawable.ic_baseline_visibility_24);
+
+                    //Show Password
+                    binding.edPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    ((ImageView) (v)).setImageResource(R.drawable.ic_baseline_visibility_off_24);
+
+                    //Hide Password
+                    binding.edPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
+
         binding.btnSignin.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
@@ -97,22 +113,30 @@ public class LoginActivity extends BaseActivity {
             public void onChanged(List<HomeData> homeData) {
                 hideProgressDialog();
                 if (homeData != null) {
-                    setList("HomeMenu", homeData);
-                 /*   DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
-                         .homeMenuDao()
-                          .insert(homeData);*/
-                    String CustomerCode = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "GuestCustomerCode");
-                    if (CustomerCode.equalsIgnoreCase("")) {
-                        startActivity(new Intent(getApplicationContext(), CustomerBottomSheetFragment.class));
-                        finish();
-                    } else {
-                        startActivity(new Intent(getApplicationContext(), CustomerViewfragment.class));
-                        finish();
-                    }
+                    new Thread(() -> {
+                        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                                .homeMenuDao()
+                                .insert(homeData);
+
+                        runOnUiThread(this::doLogin);
+                    }).start();
+
+
 
 
                 }
+                String CustomerCode = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "GuestCustomerCode");
+                if (CustomerCode.equalsIgnoreCase("")) {
+                    startActivity(new Intent(getApplicationContext(), CustomerBottomSheetFragment.class));
+                    finish();
+                } else {
+                    startActivity(new Intent(getApplicationContext(), CustomerViewfragment.class));
+                    finish();
+                }
                 // binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
+            }
+
+            private void doLogin() {
             }
         });
         viewModel.getLiveData().observe(this, new Observer<ResponseLogin>() {

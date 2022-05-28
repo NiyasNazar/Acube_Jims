@@ -6,19 +6,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.datalayer.remote.dbmodel.CustomerHistory;
@@ -26,12 +22,11 @@ import com.acube.jims.presentation.CustomerManagment.ViewModel.CustomerHistoryVi
 import com.acube.jims.presentation.CustomerManagment.ViewModel.CustomerLogoutViewModel;
 import com.acube.jims.presentation.CustomerManagment.adapter.LastViewedAdapter;
 import com.acube.jims.presentation.CustomerManagment.adapter.SalesHistoryAdapter;
-import com.acube.jims.presentation.HomePage.View.HomeFragment;
 import com.acube.jims.presentation.HomePage.View.HomePageActivity;
 import com.acube.jims.presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.FragmentHelper;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentCustomerViewfragmentBinding;
 import com.acube.jims.datalayer.models.CustomerManagment.ItemViewHistory;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerHistory;
@@ -153,7 +148,7 @@ public class CustomerViewfragment extends BaseActivity implements LastViewedAdap
         binding.viewAllsales.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentHelper.replaceFragment(CustomerViewfragment.this, R.id.content, new CustomerSalesHistoryFragment());
+                startActivity(new Intent(getApplicationContext(),CustomerSalesHistoryFragment.class));
             }
         });
 

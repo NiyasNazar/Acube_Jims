@@ -3,6 +3,7 @@ package com.acube.jims.datalayer.models.HomePage;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -10,7 +11,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-@Entity
+@Entity(tableName = "HomeData", indices = @Index(value = {"menuText"}, unique = true))
+
 public class HomeData implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;

@@ -18,12 +18,9 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.R;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.LocalPreferences;
-import com.acube.jims.databinding.BottomSheetFilterBinding;
+import com.acube.jims.utils.FilterPreference;
 import com.acube.jims.databinding.FilterscreenBinding;
 import com.acube.jims.presentation.Catalogue.adapter.FilterMasterAdapter;
-import com.acube.jims.presentation.Filters.View.AppliedFilterFragment;
 import com.acube.jims.presentation.Filters.View.CategoryFilterFragment;
 import com.acube.jims.presentation.Filters.View.ColorFilterFragment;
 import com.acube.jims.presentation.Filters.View.GenderFragment;

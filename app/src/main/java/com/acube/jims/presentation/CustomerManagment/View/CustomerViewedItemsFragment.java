@@ -4,22 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.CustomerManagment.ViewModel.CustomerHistoryViewModel;
 import com.acube.jims.presentation.CustomerManagment.adapter.LastViewedAdapterAll;
 import com.acube.jims.presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.FragmentCustomerViewedItemsBinding;
 import com.acube.jims.datalayer.models.CustomerManagment.ItemViewHistory;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerHistory;

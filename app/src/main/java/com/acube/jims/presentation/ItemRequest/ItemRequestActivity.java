@@ -16,11 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.FilterPreference;
-import com.acube.jims.Utils.LocalPreferences;
-import com.acube.jims.Utils.PaginationScrollListener;
-import com.acube.jims.databinding.ActivityCatalogueBinding;
+import com.acube.jims.datalayer.api.RestApiService;
+import com.acube.jims.datalayer.api.RetrofitInstance;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.LocalPreferences;
+import com.acube.jims.utils.PaginationScrollListener;
 import com.acube.jims.databinding.ActivityItemRequestBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogueListing;
@@ -28,8 +29,6 @@ import com.acube.jims.datalayer.models.Filter.Catresult;
 import com.acube.jims.datalayer.models.Filter.Colorresult;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
-import com.acube.jims.presentation.CartManagment.View.CartViewFragment;
-import com.acube.jims.presentation.Catalogue.View.CatalogueActivity;
 import com.acube.jims.presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.presentation.Catalogue.View.FilterScreen;
 import com.acube.jims.presentation.Catalogue.ViewModel.CatalogViewModel;
@@ -37,14 +36,18 @@ import com.acube.jims.presentation.Catalogue.ViewModel.CatalogViewModelNextPage;
 import com.acube.jims.presentation.Catalogue.ViewModel.FilterViewModel;
 import com.acube.jims.presentation.Catalogue.adapter.CatalogSummaryItemsAdapter;
 import com.acube.jims.presentation.Catalogue.adapter.FilterListAdapter;
-import com.acube.jims.presentation.CustomerManagment.View.CustomerBottomSheetFragment;
 import com.acube.jims.presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
 import com.acube.jims.presentation.ItemRequest.view.ItemRequestDetailActivity;
 import com.acube.jims.presentation.ProductDetails.View.ProductDetailsFragment;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ItemRequestActivity extends BaseActivity implements CatalogSummaryItemsAdapter.replaceFregment, FilterBottomSheetFragment.ApplyFilter, CatalogSummaryItemsAdapter.AddtoFavorites {
 
@@ -66,7 +69,7 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
     private static final int PAGE_START = 1;
     private boolean isLoading = false;
     private boolean isLastPage = false;
-    private int TOTAL_PAGES = 5;
+    private int TOTAL_PAGES ;
     private int currentPage = PAGE_START;
     AddtoFavoritesViewModel addtoFavoritesViewModel;
 
@@ -138,7 +141,7 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
 
                         loadNextPage();
                     }
-                }, 1000);
+                }, 500);
             }
 
             @Override
@@ -167,9 +170,13 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
                     /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
                     TOTAL_PAGES = getTotalPagesFromTotalResult(responseCatalogueListings.get(0).getTotalCount(), AppConstants.Pagesize);
                     Log.d("onChanged", "onChanged: " + TOTAL_PAGES);
+                    Log.d("onChanged", "onChanged: " + currentPage);
                     adapter.addAll(responseCatalogueListings);
-                    if (currentPage < TOTAL_PAGES) adapter.addLoadingFooter();
-                    else isLastPage = true;
+                    if (currentPage < TOTAL_PAGES) {
+                        adapter.addLoadingFooter();
+                    } else {
+                        isLastPage = true;
+                    }
 
                 }
 
@@ -179,16 +186,10 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
             @Override
             public void onChanged(List<ResponseCatalogueListing> responseCatalogueListings) {
                 hideProgressDialog();
-                if (responseCatalogueListings != null && responseCatalogueListings.size() != 0) {
-                    /* binding.recyvcatalog.setAdapter(new CatalogItemAdapter(getActivity(), responseCatalogueListings));*/
-                    adapter.removeLoadingFooter();
-                    isLoading = false;
-                    Log.d("getLiveDatanewPage", "onChanged: " + TOTAL_PAGES);
-                    adapter.addAll(responseCatalogueListings);
-                    if (currentPage != TOTAL_PAGES) adapter.addLoadingFooter();
-                    else isLastPage = true;
 
-                }
+
+
+
 
             }
         });
@@ -251,6 +252,7 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
     }
 
     private void loadNextPage() {
+        Log.d("loadNextPage", "loadNextPage: ");
         vaCatID = FilterPreference.retrieveStringPreferences(getApplicationContext(), "catid");
         vaSubCatID = FilterPreference.retrieveStringPreferences(getApplicationContext(), "subcatid");
         vaColorID = FilterPreference.retrieveStringPreferences(getApplicationContext(), "colorid");
@@ -261,7 +263,59 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
         vapriceMax = FilterPreference.retrieveStringPreferences(getApplicationContext(), "MaxValue");
         vagender = FilterPreference.retrieveStringPreferences(getApplicationContext(), "gender");
 
-        catalogViewModelNextPage.FetchCatalogCatalogueSummary(AppConstants.Authorization + AuthToken, currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, GuestCustomerID);
+      //  catalogViewModelNextPage.FetchCatalogCatalogueSummary(AppConstants.Authorization + AuthToken, currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, GuestCustomerID);
+        FetchCatalogueSummary(AppConstants.Authorization + AuthToken, currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, GuestCustomerID);
+    }
+    public void FetchCatalogueSummary(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode,String MinWeight,String MaxWeight,String priceMin,String priceMax,String gender,int customerID) {
+        RestApiService restApiService = RetrofitInstance.getApiService();
+        JsonObject jsonObject=new JsonObject();
+
+        jsonObject.addProperty("pageNo",PageNum);
+        jsonObject.addProperty("pageSize",PageSize);
+        jsonObject.addProperty("categoryCode",CatID);
+        jsonObject.addProperty("subCategoryCode",SubCatID);
+        jsonObject.addProperty("karatCode",KaratCode);
+        jsonObject.addProperty("colorCode",ColorCode);
+        jsonObject.addProperty("minWeight",MinWeight);
+        jsonObject.addProperty("maxWeight",MaxWeight);
+
+        jsonObject.addProperty("minPrice",priceMin);
+        jsonObject.addProperty("maxPrice",priceMax);
+        jsonObject.addProperty("gender",gender);
+        jsonObject.addProperty("customerID",customerID);
+
+        Call<List<ResponseCatalogueListing>> call = restApiService.getCatalogueSummary(Auth,jsonObject);
+        call.enqueue(new Callback<List<ResponseCatalogueListing>>() {
+            @Override
+            public void onResponse(Call<List<ResponseCatalogueListing>> call, Response<List<ResponseCatalogueListing>> response) {
+                if (response.body() != null && response.code() == 200 || response.code() == 201) {
+                    adapter.removeLoadingFooter();
+
+                    isLoading = false;
+                   List< ResponseCatalogueListing> responseCatalogueListings=response.body();
+                    Log.d("getLiveDatanewPage", "onChanged: " + responseCatalogueListings.size());
+                    if (responseCatalogueListings.size()!=0){
+                        adapter.addAll(responseCatalogueListings);
+                        if (currentPage != TOTAL_PAGES){
+                            adapter.addLoadingFooter();
+                        }else{
+                            isLastPage = true;
+                        }
+
+
+                    }
+
+                } else {
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseCatalogueListing>> call, Throwable t) {
+                Log.d("TAG", "onFailure: "+t.getMessage());
+            }
+        });
 
     }
 

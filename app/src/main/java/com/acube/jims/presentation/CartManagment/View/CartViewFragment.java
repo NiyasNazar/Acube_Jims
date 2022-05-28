@@ -6,35 +6,29 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.acube.jims.BaseActivity;
-import com.acube.jims.BaseFragment;
 import com.acube.jims.presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.presentation.CartManagment.ViewModel.CartViewModel;
 import com.acube.jims.presentation.CartManagment.adapter.CartItemAdapter;
-import com.acube.jims.presentation.HomePage.View.HomeFragment;
 import com.acube.jims.presentation.PdfGeneration.ShareItemsScreen;
 import com.acube.jims.presentation.Quotation.InvoiceFragment;
 import com.acube.jims.presentation.Quotation.SaleFragment;
 import com.acube.jims.R;
-import com.acube.jims.Utils.FragmentHelper;
-import com.acube.jims.Utils.LocalPreferences;
+import com.acube.jims.utils.FragmentHelper;
+import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.CartViewFragmentBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Cart.CartDetail;
@@ -74,12 +68,7 @@ public class CartViewFragment extends BaseActivity implements CartItemAdapter.Up
         Delete();
         mViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         mViewModel.init();
-        binding.btnback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              onBackPressed();
-            }
-        });
+
 
         AuthToken = LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token);
         int customerId = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");

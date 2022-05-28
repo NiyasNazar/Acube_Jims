@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.presentation.Filters.adapter.AppliedSubcategoryAdapter;
 import com.acube.jims.R;
-import com.acube.jims.Utils.AppUtility;
-import com.acube.jims.Utils.FilterPreference;
+import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.FilterPreference;
 import com.acube.jims.databinding.FragmentAppliedfilterBinding;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;

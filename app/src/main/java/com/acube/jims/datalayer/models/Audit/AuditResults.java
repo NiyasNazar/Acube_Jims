@@ -35,7 +35,7 @@ public class AuditResults {
     private Object warehouseName;
     @SerializedName("systemLocationID")
     @Expose
-    private Integer systemLocationID;
+    private int systemLocationID;
     @SerializedName("systemLocationCode")
     @Expose
     @Ignore
@@ -189,11 +189,11 @@ public class AuditResults {
         this.warehouseName = warehouseName;
     }
 
-    public Integer getSystemLocationID() {
+    public int getSystemLocationID() {
         return systemLocationID;
     }
 
-    public void setSystemLocationID(Integer systemLocationID) {
+    public void setSystemLocationID(int systemLocationID) {
         this.systemLocationID = systemLocationID;
     }
 

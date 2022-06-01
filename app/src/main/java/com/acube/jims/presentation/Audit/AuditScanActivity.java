@@ -345,10 +345,10 @@ public class AuditScanActivity extends BaseActivity {
                         new Thread(() -> {
                             Intent data = result.getData();
                             if (data != null) {
-                                //    String filepath = data.getStringExtra("jsonSerialNo");
+                                   String filepath = data.getStringExtra("jsonSerialNo");
                                 //  Log.d("ResponseFile", "onActivityResult: " + filepath);
 
-                                String filepath = "/storage/emulated/0/Download/AcubeJimsLocate.json";
+                             //   String filepath = "/storage/emulated/0/Download/AcubeJimsLocate.json";
                                 File file = new File(filepath);
                                 if (file.exists()) {
                                     FileReader fileReader = null;
@@ -424,15 +424,15 @@ public class AuditScanActivity extends BaseActivity {
     private void checkexists() {
         int systemID = 0;
         new Thread(() -> {
-            if (categoryId == 0) {
-                Log.d("TAG", "checkexists: ");
+            if (categoryId != 0) {
+                Log.d("TAG", "checkexistswithoucat: ");
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().checkauditscanwithcat(auditID, systemLocationID, categoryId);
 
             } else {
                 Log.d("TAG", "checkexistscat: ");
 
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().checkauditscan(auditID, systemLocationID);
-                String query = "INSERT INTO InventoryAudit (auditID, systemLocationID,serialNumber,status,categoryID) Select '" + auditID + "','" + systemID + "'," + "SerialNo,'2','0' from TemDataSerial where SerialNo NOT IN(Select serialNumber from InventoryAudit where auditID ='" + auditID + "')";
+                String query = "INSERT INTO InventoryAudit (auditID,systemLocationID, scanLocationID,serialNumber,status,categoryID) Select '" + auditID + "','"+systemLocationID+"','" + systemLocationID + "'," + "SerialNo,'2','0' from TemDataSerial where SerialNo NOT IN(Select serialNumber from InventoryAudit where auditID ='" + auditID + "')";
                 Boolean insert = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().unkwowninsert((new SimpleSQLiteQuery(query)));
 
             }

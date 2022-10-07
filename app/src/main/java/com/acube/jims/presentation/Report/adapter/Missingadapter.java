@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.datalayer.models.Audit.AuditReportItems;
+import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
 import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Audit.Missing;
@@ -36,20 +37,20 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     private Context mCtx;
     int row_index = -1;
     boolean isSelectedAll;
-    private final List<AuditReportItems> dataset;
+    private final List<AuditSnapShot> dataset;
     List<String> datalist;
     PassId passId;
     boolean visibility=true;
 
 
-    public Missingadapter(Context mCtx, List<AuditReportItems> dataset, PassId passId) {
+    public Missingadapter(Context mCtx, List<AuditSnapShot> dataset, PassId passId) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         this.passId = passId;
         datalist = new ArrayList<>();
 
     }
-    public Missingadapter(Context mCtx, List<AuditReportItems> dataset,boolean visibility) {
+    public Missingadapter(Context mCtx, List<AuditSnapShot> dataset,boolean visibility) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         this.visibility=visibility;
@@ -67,14 +68,14 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
-        AuditReportItems missing = dataset.get(position);
+        AuditSnapShot missing = dataset.get(position);
         holder.tvlocationname.setText("System Location : " + missing.getSystemLocationName());
-        holder.textViewItemName.setText("Item : " + missing.getItemName());
-        if (missing.getScanLocationName() == null) {
+        holder.textViewItemName.setText("Item : " + missing.getItemCode());
+        if (missing.getLocationCode() == null) {
             holder.textViewLoccode.setText("Scanned Location : " + "N/A");
 
         } else {
-            holder.textViewLoccode.setText("Scanned Location : " + missing.getScanLocationName());
+            holder.textViewLoccode.setText("Scanned Location : " + missing.getLocationName());
 
         }
         holder.textViewSerialNo.setText("Sl No. : " + missing.getSerialNumber());
@@ -82,7 +83,7 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
 
 //        holder.tvcategory.setText("Category : " + missing.getCategoryName());
         Glide.with(mCtx)
-                .load(missing.getItemImagePath())
+                .load(missing.getImageUrl())
                 .placeholder(R.drawable.jwimage)
                 .error(R.drawable.jwimage)
                 .listener(new RequestListener<Drawable>() {
@@ -158,12 +159,12 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if (isChecked) {
                         datalist.add(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber()));
-                        passId.compareitems(datalist);
+                        passId.compareitems(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber(),isChecked);
 
 
                     } else if (!isChecked) {
                         datalist.remove(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber()));
-                        passId.compareitems(datalist);
+                        passId.compareitems(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber(),isChecked);
                     }
                 }
             });
@@ -173,7 +174,7 @@ public class Missingadapter extends RecyclerView.Adapter<Missingadapter.ProductV
     public interface PassId {
         void passid(String id, Integer locid);
 
-        void compareitems(List<String> comparelist);
+        void compareitems(String serial,boolean checked);
     }
 
     public void selectAll() {

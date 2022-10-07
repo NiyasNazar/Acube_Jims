@@ -80,7 +80,7 @@ public class ScanItemsActivity extends BaseActivity implements CatalogItemAdapte
             JSONArray jsonArray = new JSONArray(jsonSerialNo);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject explrObject = jsonArray.getJSONObject(i);
-                status = explrObject.getString("Status");
+                status = "1";
                 serialno = explrObject.getString("SerialNo");
                 result.append(serialno);
                 result.append(",");
@@ -125,7 +125,7 @@ public class ScanItemsActivity extends BaseActivity implements CatalogItemAdapte
                         JSONArray jsonArray = new JSONArray(jsonSerialNo);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject explrObject = jsonArray.getJSONObject(i);
-                            status = explrObject.getString("Status");
+                            status = "1";
                             serialno = explrObject.getString("SerialNo");
                             UpdateStatus(serialno, status);
                         }
@@ -286,7 +286,7 @@ public class ScanItemsActivity extends BaseActivity implements CatalogItemAdapte
         cdvshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dataset!=null&&dataset.size()!=0) {
+                if (dataset != null && dataset.size() != 0) {
                     comparelist = new ArrayList<>();
                     for (int i = 0; i < dataset.size(); i++) {
                         comparelist.add(dataset.get(i).getSerialNumber());

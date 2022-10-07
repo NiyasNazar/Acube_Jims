@@ -92,6 +92,8 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 catalogVH.textViewSerialnumber.setText("" + responseCatalogueListing.getSerialNumber());
                 catalogVH.textViewKarat.setText("" + responseCatalogueListing.getKaratName());
                 catalogVH.textViewPrice.setText("SAR " + responseCatalogueListing.getMrp());
+                catalogVH.textviewDesc.setText(responseCatalogueListing.getItemDesc());
+                catalogVH.textViewCode.setText(responseCatalogueListing.getItemCode());
 
                 //  catalogVH.textViewKarat.setText("" + responseCatalogueListing.getKaratName());
                 // catalogVH.textViewStock.setText(""+responseCatalogueListing.getr);
@@ -101,8 +103,8 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (responseCatalogueListing.getItemSubList().size() > 0) {
                     Glide.with(context)
                             .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
-                       .placeholder(R.drawable.jwimage)
-                         .error(R.drawable.jwimage)
+                            .placeholder(R.drawable.jwimage)
+                            .error(R.drawable.jwimage)
                             .listener(new RequestListener<Drawable>() {
                                 @Override
                                 public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -209,23 +211,25 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     protected class CatalogVH extends RecyclerView.ViewHolder {
         TextView textViewItemName, textViewStoneWeight,
                 textViewGrossWeight, textViewSerialnumber, textViewPrice,
-                textViewKarat, textViewStock;
+                textViewKarat, textViewStock, textViewCode, textviewDesc;
         ImageView imageView;
         LikeButton mlikebtn;
 
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
-            textViewStock = itemView.findViewById(R.id.tvstock);
+         //   textViewStock = itemView.findViewById(R.id.tvstock);
             mlikebtn = itemView.findViewById(R.id.fav_button);
 
+            textViewCode = itemView.findViewById(R.id.tv_item_code);
             textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);
             textViewGrossWeight = itemView.findViewById(R.id.tvgrossweight);
             textViewPrice = itemView.findViewById(R.id.tvprice);
 
+            textviewDesc = itemView.findViewById(R.id.tv_description);
             textViewKarat = itemView.findViewById(R.id.tvkarat);
 
-
+            textviewDesc = itemView.findViewById(R.id.tv_description);
             imageView = itemView.findViewById(R.id.imageView);
             mlikebtn.setOnLikeListener(new OnLikeListener() {
                 @Override

@@ -43,7 +43,7 @@ public class AddCustomerFragment extends BaseActivity {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.setContentView(
                 this, R.layout.fragment_add_customer);
-        initToolBar(binding.toolbarApp.toolbar,"Add Customer",true);
+        initToolBar(binding.toolbarApp.toolbar, "Add Customer", true);
         createCustomerViewModel = ViewModelProviders.of(this).get(CreateCustomerViewModel.class);
         createCustomerViewModel.init();
 
@@ -87,15 +87,19 @@ public class AddCustomerFragment extends BaseActivity {
             public void onChanged(ResponseCreateCustomer responseCreateCustomer) {
                 hideProgressDialog();
                 if (responseCreateCustomer != null) {
-                    LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerName", responseCreateCustomer.getCustomerName());
-                    LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerCode", responseCreateCustomer.getCustomerCode());
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "GuestCustomerID",responseCreateCustomer.getId());
-                    Date todaysdate = new Date();
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    String starttime = format.format(todaysdate);
-                    LocalPreferences.storeStringPreference(getApplicationContext(), "CustomerSessionStartTime", starttime);
+                    if (responseCreateCustomer.getMessage().equalsIgnoreCase("Contact number already exist")) {
+                        showerror(responseCreateCustomer.getMessage());
+                    } else {
+                        LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerName", responseCreateCustomer.getCustomerName());
+                        LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerCode", responseCreateCustomer.getCustomerCode());
+                        LocalPreferences.storeIntegerPreference(getApplicationContext(), "GuestCustomerID", responseCreateCustomer.getId());
+                        Date todaysdate = new Date();
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String starttime = format.format(todaysdate);
+                        LocalPreferences.storeStringPreference(getApplicationContext(), "CustomerSessionStartTime", starttime);
+                        startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
+                    }
 
-                    startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
                 } else {
 
 

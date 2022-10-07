@@ -120,7 +120,7 @@ public class PicklistDetailsAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
-            textViewStock = itemView.findViewById(R.id.tvstock);
+       //     textViewStock = itemView.findViewById(R.id.tvstock);
             mlikebtn = itemView.findViewById(R.id.fav_button);
 
             textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);

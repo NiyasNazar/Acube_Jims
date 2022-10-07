@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.datalayer.models.Audit.AuditReportItems;
+import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
@@ -23,7 +24,8 @@ public class FoundReportActivity extends BaseActivity {
     private ReportViewModel mViewModel;
     Missingadapter  reportadapter;
     int flag;
-
+    String AuditID;
+    int systemLocationID, storeID, categoryId, itemID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,17 +42,19 @@ public class FoundReportActivity extends BaseActivity {
             initToolBar(binding.toolbarApp.toolbar, "Unknown", true);
 
         }
+        AuditID = getIntent().getStringExtra("auditID");
+        systemLocationID = getIntent().getIntExtra("systemLocationID", 0);
+        storeID = getIntent().getIntExtra("storeID", 0);
+        categoryId = getIntent().getIntExtra("categoryId", 0);
+        itemID = getIntent().getIntExtra("itemID", 0);
 
         showProgressDialog();
-        String locationid = getIntent().getStringExtra("locationid");
-        String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
-        String warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
-        String AuditID = getIntent().getStringExtra("auditID");
 
 
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getMissing(AuditID, flag, 0).observe(this, new Observer<List<AuditReportItems>>() {
+
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getMissing(AuditID, 1, systemLocationID,categoryId,itemID,storeID).observe(this, new Observer<List<AuditSnapShot>>() {
             @Override
-            public void onChanged(List<AuditReportItems> responseReport) {
+            public void onChanged(List<AuditSnapShot> responseReport) {
                 hideProgressDialog();
                 if (responseReport != null) {
                     binding.tvTotaldata.setText("Total Items : " + responseReport.size());

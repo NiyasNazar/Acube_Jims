@@ -228,7 +228,7 @@ public class ItemRequestAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
-            textViewStock = itemView.findViewById(R.id.tvstock);
+        //    textViewStock = itemView.findViewById(R.id.tvstock);
             selectcheckbox = itemView.findViewById(R.id.select_checkbox);
             checkboxlayout = itemView.findViewById(R.id.checkboxlayt);
             textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);

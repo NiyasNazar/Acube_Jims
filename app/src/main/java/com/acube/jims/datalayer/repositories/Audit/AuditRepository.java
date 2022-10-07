@@ -9,6 +9,7 @@ import com.acube.jims.datalayer.api.RestApiService;
 import com.acube.jims.datalayer.api.RetrofitInstance;
 import com.acube.jims.datalayer.models.Audit.AuditResults;
 import com.acube.jims.datalayer.models.Audit.ResponseAudit;
+import com.acube.jims.datalayer.models.Audit.ResponseErpAuditDownload;
 import com.acube.jims.datalayer.models.Authentication.ResponseCheckCustomer;
 import com.google.gson.JsonObject;
 
@@ -21,7 +22,7 @@ import retrofit2.Response;
 public class AuditRepository {
     private Application application;
     private final MutableLiveData<List<ResponseAudit> >dataset;
-    private final MutableLiveData<List<ResponseAudit> >datasetresults;
+    private final MutableLiveData<ResponseErpAuditDownload> datasetresults;
 
     public AuditRepository() {
         dataset = new MutableLiveData<>();
@@ -30,7 +31,7 @@ public class AuditRepository {
     public void AuditHeader(String header, JsonObject jsonObject) {
 
         RestApiService restApiService = RetrofitInstance.getApiService();
-        Call<List<ResponseAudit>> call = restApiService.AuditHeader(header, jsonObject);
+        Call<List<ResponseAudit>> call = restApiService.AuditHeader(header,jsonObject);
         call.enqueue(new Callback<List<ResponseAudit>>() {
             @Override
             public void onResponse(Call<List<ResponseAudit>> call, Response<List<ResponseAudit>> response) {
@@ -53,10 +54,10 @@ public class AuditRepository {
     public void AuditDetails(String header, JsonObject jsonObject) {
 
         RestApiService restApiService = RetrofitInstance.getApiService();
-        Call<List<ResponseAudit>> call = restApiService.AuditDetails(header, jsonObject);
-        call.enqueue(new Callback<List<ResponseAudit>>() {
+        Call<ResponseErpAuditDownload> call = restApiService.AuditDetails(header, jsonObject);
+        call.enqueue(new Callback<ResponseErpAuditDownload>() {
             @Override
-            public void onResponse(Call<List<ResponseAudit>> call, Response<List<ResponseAudit>> response) {
+            public void onResponse(Call<ResponseErpAuditDownload> call, Response<ResponseErpAuditDownload> response) {
                 if (response.body() != null && response.code() == 200) {
                     datasetresults.setValue(response.body());
                 } else {
@@ -66,7 +67,7 @@ public class AuditRepository {
             }
 
             @Override
-            public void onFailure(Call<List<ResponseAudit>> call, Throwable t) {
+            public void onFailure(Call<ResponseErpAuditDownload> call, Throwable t) {
                 datasetresults.setValue(null);
 
             }
@@ -78,7 +79,7 @@ public class AuditRepository {
         return dataset;
     }
 
-    public LiveData<List<ResponseAudit>> getResponseLiveDataDetails() {
+    public LiveData<ResponseErpAuditDownload> getResponseLiveDataDetails() {
         return datasetresults;
     }
 }

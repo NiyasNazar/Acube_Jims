@@ -34,6 +34,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.acube.jims.BaseFragment;
+import com.acube.jims.datalayer.models.Audit.TemDataSerial;
 import com.acube.jims.presentation.Analytics.AnalyticsActivity;
 import com.acube.jims.presentation.Audit.AuditMenuFragment;
 import com.acube.jims.presentation.Catalogue.View.CatalogueActivity;
@@ -63,7 +64,16 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTransition, CustomerListAdapter.ReplaceFragment {
@@ -100,7 +110,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         DatabaseClient.getInstance(getActivity()).getAppDatabase().homeMenuDao().getAll().observe(requireActivity(), new Observer<List<HomeData>>() {
             @Override
             public void onChanged(List<HomeData> homeData) {
-                if (homeData!=null){
+                if (homeData != null) {
                     binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
 
                 }
@@ -108,7 +118,6 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         });
 
         AuthToken = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token);
-
 
 
         return binding.getRoot();
@@ -146,11 +155,18 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
             startActivity(new Intent(getActivity(), AuditMenuFragment.class));
 
         } else if (value.equalsIgnoreCase("AndroidDashboard")) {
-            startActivity(new Intent(getActivity(), DashBoardActivity.class));
+            // startActivity(new Intent(getActivity(), DashBoardActivity.class));
+            startActivity(new Intent(getActivity(), AnalyticsActivity.class)
+                    .putExtra("url", "http://acuberfid.fortiddns.com:4480/jmswebdev/maindashboardmobile/16")
+                    .putExtra("title", "Dashboard"));
 
 
         } else if (value.equalsIgnoreCase("Analytics")) {
-            startActivity(new Intent(getActivity(), AnalyticsActivity.class));
+
+            startActivity(new Intent(getActivity(), AnalyticsActivity.class)
+                    .putExtra("url", "http://acuberfid.fortiddns.com:4480/jmswebdev/dataanalyticsmobile/16")
+                    .putExtra("title", "Analytics"));
+
 
         } else if (value.equalsIgnoreCase("ItemRequest")) {
             FilterPreference.clearPreferences(requireActivity());
@@ -191,10 +207,10 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                 try {
                     Log.d("TrayMacAddress", "onPostExecute: " + TrayMacAddress);
                     Intent res = new Intent();
-                       String mPackage = "com.acube.smarttray";// package name
-                     String mClass = ".SmartTrayReading";//the activity name which return results*/
-                  //  String mPackage = "com.example.acubetest";// package name
-                  //  String mClass = ".MainActivity";//the activity name which return results
+                    String mPackage = "com.acube.smarttray";// package name
+                    String mClass = ".SmartTrayReading";//the activity name which return results*/
+                    //  String mPackage = "com.example.acubetest";// package name
+                    //  String mClass = ".MainActivity";//the activity name which return results
                     res.putExtra("token", LocalPreferences.getToken(getActivity()));
                     res.putExtra("type", "SCAN");
                     res.putExtra("url", AppConstants.BASE_URL);
@@ -202,8 +218,6 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                     res.putExtra("jsonSerialNo", "json");
                     res.setComponent(new ComponentName(mPackage, mPackage + mClass));
                     someActivityResultLauncher.launch(res);
-
-
 
 
                 } catch (Exception e) {
@@ -328,13 +342,69 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
+
+                        new Thread(() -> {
+                            Intent data = result.getData();
+                            if (data != null) {
+                                String filepath = data.getStringExtra("jsonSerialNo");
+                                //  Log.d("ResponseFile", "onActivityResult: " + filepath);
+
+                                //   String filepath = "/storage/emulated/0/Download/AcubeJimsLocate.json";
+                                File file = new File(filepath);
+                                if (file.exists()) {
+                                    FileReader fileReader = null;
+                                    try {
+                                        fileReader = new FileReader(filepath);
+                                        BufferedReader bufferedReader = new BufferedReader(fileReader);
+                                        StringBuilder stringBuilder = new StringBuilder();
+                                        String line = bufferedReader.readLine();
+                                        while (line != null) {
+                                            stringBuilder.append(line).append("\n");
+                                            line = bufferedReader.readLine();
+                                        }
+                                        bufferedReader.close();
+                                        String response = stringBuilder.toString();
+                                        //    AppDatabase.getInstance(getApplicationContext()).auditDownloadDao().inserdummy(tempSerials);
+                                        JSONArray obj = new JSONArray(response);
+                                        startActivity(new Intent(getActivity(), ScanItemsActivity.class).putExtra("jsonSerialNo", obj.toString()));
+
+                                    } catch (FileNotFoundException e) {
+                                        Log.d("TAG", "filenotexist: " + e.getMessage());
+
+                                        e.printStackTrace();
+                                    } catch (IOException e) {
+                                        Log.d("TAG", "filenotexist: " + e.getMessage());
+
+                                        e.printStackTrace();
+                                    } catch (JSONException e) {
+                                        Log.d("TAG", "filenotexist: " + e.getMessage());
+
+
+                                        e.printStackTrace();
+                                    }
+
+                                } else {
+
+
+                                }
+                                Log.d("aspdata", "onActivityResult: " + data.getStringExtra("jsonSerialNo"));
+
+
+                            }
+
+
+                        }).start();
+
+
                         // Here, no request code
-                        Intent data = result.getData();
+                       /* Intent data = result.getData();
                         if (data != null) {
                             String json = data.getStringExtra("jsonSerialNo");
-                            startActivity(new Intent(getActivity(), ScanItemsActivity.class).putExtra("jsonSerialNo", json));
-                        }
-                        Log.d("onActivityResult", "onActivityResult: " + data.getStringExtra("jsonSerialNo"));
+
+                            Log.d("onActivityResult", "onActivityResult: " + data.getStringExtra("jsonSerialNo"));
+
+
+                        }*/
                         //doSomeOperations();
                     }
                 }

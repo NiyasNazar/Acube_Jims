@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.api;
 
 import com.acube.jims.datalayer.models.Audit.AuditResults;
+import com.acube.jims.datalayer.models.Audit.ResponseErpAuditDownload;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseCreateItemrequest;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseFetchPickList;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseItemRequestDetails;
@@ -131,11 +132,11 @@ public interface RestApiService {
     @POST("Sale/GetQuoteDetails")
     Call<List<ResponseInvoiceList>> InvoiceItems(@Header("Authorization") String Auth, @Body String[] data);
 
-    @POST("Audit/GetDocumentForMobile")
-    Call<List<ResponseAudit>> AuditDetails(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+    @POST("ERPAudit/DownloadAuditData")
+    Call<ResponseErpAuditDownload> AuditDetails(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
-    @POST("Audit/GetDocumentForMobile")
-    Call<List<ResponseAudit>> AuditHeader(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+    @POST("ERPAudit/GetAuditHeadMobile")
+    Call<List<ResponseAudit>> AuditHeader(@Header("Authorization") String Auth,@Body JsonObject jsonObject);
 
     @POST("Audit/GetAuditCandidateList")
     Call<List<ResponseLocationList>> AuditLocationList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);

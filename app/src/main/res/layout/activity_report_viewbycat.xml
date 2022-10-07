@@ -84,15 +84,29 @@
                 android:layout_marginBottom="15dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+            <Button
+                android:id="@+id/btnfound"
+                android:layout_toLeftOf="@id/cdvlocate"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/oval_btn_signin"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Mark as found"
+                android:textColor="@color/white">
+
+
+            </Button>
 
             <Button
                 android:id="@+id/cdvlocate"
                 android:layout_width="120dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="20dp"
-
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/oval_btn_signin"
                 android:fontFamily="@font/poppins_semibold"

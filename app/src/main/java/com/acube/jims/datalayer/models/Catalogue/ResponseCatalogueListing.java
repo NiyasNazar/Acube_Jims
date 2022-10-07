@@ -14,7 +14,7 @@ public class ResponseCatalogueListing {
     private String itemName;
     @SerializedName("itemDesc")
     @Expose
-    private Object itemDesc;
+    private String itemDesc;
     @SerializedName("itemCode")
     @Expose
     private String itemCode;
@@ -149,11 +149,11 @@ public class ResponseCatalogueListing {
         this.itemName = itemName;
     }
 
-    public Object getItemDesc() {
+    public String getItemDesc() {
         return itemDesc;
     }
 
-    public void setItemDesc(Object itemDesc) {
+    public void setItemDesc(String itemDesc) {
         this.itemDesc = itemDesc;
     }
 

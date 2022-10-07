@@ -50,8 +50,8 @@ public class LoginActivity extends BaseActivity {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         viewModel.init();
 
-        binding.edEmail.setText("ashiq@jawhara.ae");
-        binding.edPassword.setText("Ashiq@2022");
+        binding.edEmail.setText("admin@suntech003.ae");
+        binding.edPassword.setText("@dminSuntech2022");
         Log.d("onCreate", "onCreate: " + getMacAddr());
 
 

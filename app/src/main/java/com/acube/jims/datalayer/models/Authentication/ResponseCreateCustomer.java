@@ -55,6 +55,10 @@ public class ResponseCreateCustomer {
     @SerializedName("modifiedDate")
     @Expose
     private Object modifiedDate;
+    @SerializedName("message")
+    @Expose
+    private String message;
+
 
     public String getKey() {
         return key;
@@ -190,5 +194,13 @@ public class ResponseCreateCustomer {
 
     public void setModifiedDate(Object modifiedDate) {
         this.modifiedDate = modifiedDate;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

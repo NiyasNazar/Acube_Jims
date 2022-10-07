@@ -3,6 +3,7 @@
     package="com.acube.jims">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -11,7 +12,13 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
-
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +29,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".presentation.DeviceRegistration.View.DeviceRegistrationFragment"></activity>
+        <activity
+            android:name=".presentation.Audit.AuditReadingActivity"
+            android:exported="false" />
+        <activity android:name=".presentation.DeviceRegistration.View.DeviceRegistrationFragment" />
         <activity
             android:name=".presentation.ItemRequest.view.ItemRequestPickListDetailsActivity"
             android:exported="true" />
@@ -32,12 +42,12 @@
         <activity
             android:name=".presentation.SettingsActivity"
             android:exported="true" />
-        <activity android:name=".presentation.CustomerManagment.View.CustomerSalesHistoryFragment"></activity>
-        <activity android:name=".presentation.Audit.AuditFragment"></activity>
-        <activity android:name=".presentation.Audit.AuditMenuFragment"></activity>
-        <activity android:name=".presentation.Report.ReportFragment"></activity>
-        <activity android:name=".presentation.LocateProduct.View.LocateProduct"></activity>
-
+        <activity android:name=".presentation.reading.FindMissingReadingActivity"></activity>
+        <activity android:name=".presentation.CustomerManagment.View.CustomerSalesHistoryFragment" />
+        <activity android:name=".presentation.Audit.AuditFragment" />
+        <activity android:name=".presentation.Audit.AuditMenuFragment" />
+        <activity android:name=".presentation.Report.ReportFragment" />
+        <activity android:name=".presentation.LocateProduct.View.LocateProduct" />
         <activity android:name=".presentation.Compare.CompareFragment" />
         <activity android:name=".presentation.CustomerManagment.View.CustomerViewedItemsFragment" />
         <activity
@@ -75,7 +85,6 @@
         <activity
             android:name=".presentation.Quotation.PdfViewerExampleActivity"
             android:exported="true" />
-
         <activity
             android:name=".presentation.Quotation.PdfCreatorExampleActivity"
             android:exported="true" />

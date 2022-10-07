@@ -26,169 +26,282 @@
 
             </include>
 
-            <LinearLayout
-                android:id="@+id/nestedscrollview"
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/toolbar_app"
-                android:layout_marginLeft="15dp"
+
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/item_border_detailspage"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:fillViewport="true">
 
                 <LinearLayout
-                    android:id="@+id/laytspinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shapebg_1">
-
-
-                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/spinlocations"
-                        android:layout_width="300dp"
-                        android:layout_height="40dp"
-
-                        android:dropDownSelector="@color/headercolor"
-                        android:gravity="center"
-                        app:hintText="Select Location"
-                        android:inputType="none"
-
-                        android:paddingRight="10dp"
-                        android:textSize="13sp">
-
-                    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/laytspinnercat"
-                    android:layout_width="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shapebg_1">
-
-
-                    <com.toptoche.searchablespinnerlibrary.SearchableSpinner
-                        android:id="@+id/spincategory"
-                        android:layout_width="300dp"
-                        android:layout_height="40dp"
-
-                        android:dropDownSelector="@color/headercolor"
-                        android:gravity="center"
-                        android:inputType="none"
-
-                        android:paddingRight="10dp"
-                        android:textSize="13sp">
-
-                    </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
-                </LinearLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyvaduditlocations"
+                    android:id="@+id/nestedscrollview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:visibility="gone">
-
-                </androidx.recyclerview.widget.RecyclerView>
-
-
-                <LinearLayout
-                    android:id="@+id/btn_scan"
-                    android:layout_width="139dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-
-                    android:layout_marginTop="20dp"
-
-
-                    android:layout_marginBottom="36dp"
-                    android:background="@drawable/oval_btn_signin"
-                    android:gravity="center">
+                    android:layout_marginLeft="15dp"
+                    android:gravity="center_horizontal"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/item_border_detailspage"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SCAN"
-                        android:textColor="#FFFFFF">
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Store"
+                        android:textColor="@color/black">
 
                     </TextView>
 
+                    <LinearLayout
+                        android:layout_width="wrap_content"
 
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/shapebg_1"
+                        android:orientation="vertical">
+
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spinstore"
+                            android:layout_width="300dp"
+                            android:layout_height="40dp"
+
+                            android:dropDownSelector="@color/headercolor"
+                            android:gravity="center"
+                            android:inputType="none"
+
+                            android:paddingRight="10dp"
+                            android:textSize="13sp">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Location/Zone"
+                        android:textColor="@color/black">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:id="@+id/laytspinner"
+
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/shapebg_1"
+                        android:orientation="vertical">
+
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spinlocations"
+                            android:layout_width="300dp"
+                            android:layout_height="40dp"
+
+                            android:dropDownSelector="@color/headercolor"
+                            android:gravity="center"
+                            android:inputType="none"
+
+                            android:paddingRight="10dp"
+                            android:textSize="13sp">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Sub Category"
+                        android:textColor="@color/black">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:id="@+id/laytspinnercat"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/shapebg_1">
+
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spincategory"
+                            android:layout_width="300dp"
+                            android:layout_height="40dp"
+
+                            android:dropDownSelector="@color/headercolor"
+                            android:gravity="center"
+                            android:inputType="none"
+
+                            android:paddingRight="10dp"
+                            android:textSize="13sp">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Item"
+                        android:textColor="@color/black">
+
+                    </TextView>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/shapebg_1">
+
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/spinitem"
+                            android:layout_width="300dp"
+                            android:layout_height="40dp"
+
+                            android:dropDownSelector="@color/headercolor"
+                            android:gravity="center"
+                            android:inputType="none"
+
+                            android:paddingRight="10dp"
+                            android:textSize="13sp">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyvaduditlocations"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+
+
+                    <LinearLayout
+                        android:id="@+id/btn_scan"
+                        android:layout_width="139dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_horizontal"
+
+                        android:layout_marginTop="20dp"
+
+
+                        android:layout_marginBottom="36dp"
+                        android:background="@drawable/oval_btn_signin"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="SCAN"
+                            android:textColor="#FFFFFF">
+
+                        </TextView>
+
+
+                    </LinearLayout>
+
+                    <com.github.mikephil.charting.charts.PieChart
+                        android:id="@+id/statuspiechart"
+                        android:layout_width="match_parent"
+                        android:layout_height="250dp"
+                        android:layout_marginTop="20dp" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tvtotalstock"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Total"
+                            android:textColor="#000000">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/tvfound"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Found"
+                            android:textColor="#000000">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/tvmissing"
+                            android:layout_width="0dp"
+
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Missing"
+                            android:textColor="#000000">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/tvunknown"
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Unknown"
+                            android:textColor="#000000">
+
+                        </TextView>
+
+                        <TextView
+                            android:id="@+id/tvlocationmismatch"
+
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Loc mismatch"
+                            android:textColor="#000000">
+
+                        </TextView>
+                    </LinearLayout>
                 </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
 
-                <LinearLayout
-                    android:id="@+id/layout_count"
-                    android:layout_width="match_parent"
 
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginRight="5dp"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/tvtotalstock"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Total"
-                        android:textColor="#000000">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/tvfound"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Found"
-                        android:textColor="#000000">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/tvmissing"
-                        android:layout_width="0dp"
-
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Missing"
-                        android:textColor="#000000">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/tvunknown"
-
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Unknown"
-                        android:textColor="#000000">
-
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/tvlocationmismatch"
-
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Loc mismatch"
-                        android:textColor="#000000">
-
-                    </TextView>
-                </LinearLayout>
-            </LinearLayout>
 
         </RelativeLayout>
 

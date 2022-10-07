@@ -182,7 +182,6 @@ public class ReportFragment extends BaseActivity implements ReportFilterBottomSh
             @Override
             public void onClick(View v) {
                 ReportFilterBottomSheetFragment bottomSheet = new ReportFilterBottomSheetFragment(ReportFragment.this::applyfilter);
-
                 bottomSheet.show(getSupportFragmentManager(),
                         "ModalBottomSheet");
             }
@@ -215,7 +214,6 @@ public class ReportFragment extends BaseActivity implements ReportFilterBottomSh
                 binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
                 binding.tablocationmismatch.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
                 binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
-
                 replace(FoundFragment.newInstance(datsetfound));
             }
         });
@@ -224,7 +222,6 @@ public class ReportFragment extends BaseActivity implements ReportFilterBottomSh
             @Override
             public void onClick(View v) {
                 binding.tabLocationApproved.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
-
                 binding.tabfound.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));
                 binding.tabmissing.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border));
                 binding.tabextra.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.tab_border_unselected));

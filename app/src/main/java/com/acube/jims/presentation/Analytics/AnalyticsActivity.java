@@ -1,9 +1,16 @@
 package com.acube.jims.presentation.Analytics;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.ConsoleMessage;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.AdapterView;
@@ -11,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -64,6 +72,7 @@ public class AnalyticsActivity extends BaseActivity {
     List<FilterPeriod> datasetperiod;
     int parentfilter = 0, categoryfilter = 0, servedfilter = 0, warehouseid = 0, itemfilter = 0;
     List<ResponseWareHouse> responseWareHouses;
+    String url, title;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,12 +82,60 @@ public class AnalyticsActivity extends BaseActivity {
 
         binding = DataBindingUtil.setContentView(
                 this, R.layout.fragment_analytics);
-        initToolBar(binding.toolbarApp.toolbar, "Analytics", true);
         analyticsViewModel = new ViewModelProvider(this).get(AnalyticsViewModel.class);
         analyticsViewModel.init();
+        url = getIntent().getStringExtra("url");
+        title = getIntent().getStringExtra("title");
+        initToolBar(binding.toolbarApp.toolbar, title, true);
 
         showProgressDialog();
+        //loads the WebView completely zoomed out
+        binding.webview.getSettings().setLoadWithOverviewMode(true);
 
+        //true makes the Webview have a normal viewport such as a normal desktop browser
+        //when false the webview will have a viewport constrained to it's own dimensions
+        binding.webview.getSettings().setUseWideViewPort(false);
+
+
+        //override the web client to open all links in the same webview
+        // binding.webview.setWebViewClient(new MyWebViewClient());
+        //  binding.webview.setWebChromeClient(new MyWebChromeClient());
+        //Injects the supplied Java object into this WebView. The object is injected into the
+        //JavaScript context of the main frame, using the supplied name. This allows the
+        //Java object's public methods to be accessed from JavaScript.
+        // binding.webview.addJavascriptInterface(new JavaScriptInterface(this), "Android");
+
+        binding.webview.getSettings().setJavaScriptEnabled(true);
+
+        //load the home page URL
+
+        binding.webview.getSettings().setDomStorageEnabled(true);
+        binding.webview.getSettings().setAppCacheEnabled(false);
+        binding.webview.loadUrl(url);
+        binding.webview.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                Log.e("Error", description);
+            }
+
+        });
         warehouseViewModel = new ViewModelProvider(this).get(WarehouseViewModel.class);
         warehouseViewModel.init();
 
@@ -100,7 +157,7 @@ public class AnalyticsActivity extends BaseActivity {
         binding.edCategroyfilter.setAdapter(arrayAdapter);
         binding.edServrdfilter.setAdapter(arrayAdapter);
         binding.edItemfilter.setAdapter(arrayAdapter);
-        fetchItemWiseSummary();
+        //    fetchItemWiseSummary();
         binding.edStoreselection.setTitle("Select Store");
 
         binding.edPeriod.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -121,7 +178,6 @@ public class AnalyticsActivity extends BaseActivity {
         binding.edItemfilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                 itemfilter = datasetperiod.get(position).getId();
                 fetchItemWiseSummary();
             }
@@ -233,7 +289,7 @@ public class AnalyticsActivity extends BaseActivity {
 
             }
         });
-        fetchCustomerServedData();
+        // fetchCustomerServedData();
 
 
         analyticsViewModel.getGraphLiveData().observe(this, new Observer<ResponseAnalyticsGraph>() {
@@ -260,10 +316,10 @@ public class AnalyticsActivity extends BaseActivity {
                     hideProgressDialog();
                     List<AnalyticsCustomersServed> dataset = responseCustomerServed.getAnalyticsCustomersServed();
 
-                    if (dataset.size()!=0){
+                    if (dataset.size() != 0) {
                         binding.noItemLayout3.layoutnoitem.setVisibility(View.GONE);
                         binding.recyvcustomerserved.setAdapter(new PieChartadapter(getApplicationContext(), dataset));
-                    }else{
+                    } else {
                         binding.noItemLayout3.layoutnoitem.setVisibility(View.VISIBLE);
 
                     }
@@ -273,7 +329,8 @@ public class AnalyticsActivity extends BaseActivity {
             }
         });
 
-        binding.webview.setWebViewClient(new WebViewClient() {
+
+   /*     binding.webview.setWebViewClient(new WebViewClient() {
             @SuppressWarnings("deprecation")
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
@@ -288,7 +345,7 @@ public class AnalyticsActivity extends BaseActivity {
                 }
 
             }
-        });
+        });*/
     }
 
     private void fetchGraphData() {
@@ -309,7 +366,6 @@ public class AnalyticsActivity extends BaseActivity {
         jsonObject.addProperty("itemPeriodFilter", 0);
         jsonObject.addProperty("employeePeriodFilter", 0);
         //jsonObject.addProperty("companyID");
-
         analyticsViewModel.AnalyticSummary(LocalPreferences.getToken(getApplicationContext()), jsonObject);
     }
 
@@ -440,6 +496,54 @@ public class AnalyticsActivity extends BaseActivity {
 
     }
 
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            Log.d("Loading", "shouldOverrideUrlLoading: " + url);
+           /* if (Uri.parse(url).getHost().equals("demo.mysamplecode.com")) {
+                return false;
+            }*/
+            view.loadUrl(url);
+            return true;
+        }
+    }
+
+    private class MyWebChromeClient extends WebChromeClient {
+
+        //display alert message in Web View
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            new AlertDialog.Builder(view.getContext())
+                    .setMessage(message).setCancelable(true).show();
+            result.confirm();
+            return true;
+        }
+
+    }
+
+    public class JavaScriptInterface {
+        Context mContext;
+
+        // Instantiate the interface and set the context
+        JavaScriptInterface(Context c) {
+            mContext = c;
+        }
+
+        //using Javascript to call the finish activity
+        public void closeMyActivity() {
+            finish();
+        }
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && binding.webview.canGoBack()) {
+            binding.webview.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
 
 

@@ -19,13 +19,14 @@ public class SettingsActivity extends BaseActivity {
     ActivitySettingsBinding binding;
     boolean languageUpdated;
     String locale;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 
         binding.edUrl.setText(LocalPreferences.getBaseUrl(getApplicationContext()));
-  binding.edUrl.setText("http://jmsapi.acubeinfotech.ae/jwl/");
+        binding.edUrl.setText("http://jmsapi.acubeinfotech.ae/jwl/");
         languageUpdated = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "langUpdated");
         if (!languageUpdated) {
             binding.rdenglish.setChecked(true);
@@ -64,6 +65,31 @@ public class SettingsActivity extends BaseActivity {
 
 
         });
+
+
+        binding.deviceconfig.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int id) {
+                switch (id) {
+
+                    case R.id.rdhandheld:
+                        LocalPreferences.storeBooleanPreference(getApplicationContext(), "handheld", true);
+
+                        break;
+                    case R.id.rdbluetooth:
+                        LocalPreferences.storeBooleanPreference(getApplicationContext(), "handheld", false);
+
+                        break;
+
+
+                }
+            }
+
+
+        });
+
+
+
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

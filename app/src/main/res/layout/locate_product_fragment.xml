@@ -47,7 +47,6 @@
                     android:layout_marginBottom="16dp">
 
 
-
                     <EditText
                         android:id="@+id/ed_locate"
                         android:layout_width="300dp"

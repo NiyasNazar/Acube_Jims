@@ -2,32 +2,39 @@ package com.acube.jims.presentation.Report.View.reports;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.datalayer.models.Audit.AuditReportItems;
+import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
 import com.acube.jims.datalayer.models.Audit.TemDataSerial;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Audit.ViewModel.AuditUploadViewModel;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.presentation.Report.adapter.Missingadapter;
 import com.acube.jims.R;
+import com.acube.jims.presentation.reading.FindMissingReadingActivity;
 import com.acube.jims.utils.AppUtility;
 import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityReportViewbycatBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
+import com.acube.jims.utils.OnSingleClickListener;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
@@ -47,43 +54,61 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
     ActivityReportViewbycatBinding binding;
     private ReportViewModel mViewModel;
     Missingadapter reportadapter;
-    String  companyID, warehouseID, AuditID, Employeename;
+    String companyID, warehouseID, AuditID, Employeename;
     AuditUploadViewModel auditUploadViewModel;
     List<String> compareitemlist;
     String commaseparatedlist;
-    int locationid;
+    int systemLocationID, storeID, categoryId, itemID;
+    String remark = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_report_viewbycat);
-        if (new AppUtility(MisiingReport.this).isTablet(MisiingReport.this)){
-            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
-        }else{
-            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        if (new AppUtility(MisiingReport.this).isTablet(MisiingReport.this)) {
+            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
+        } else {
+            binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         }
-        AuditID=getIntent().getStringExtra("auditID");
-        initToolBar(binding.toolbarApp.toolbar,"Missing",true);
+        AuditID = getIntent().getStringExtra("auditID");
+        systemLocationID = getIntent().getIntExtra("systemLocationID", 0);
+        storeID = getIntent().getIntExtra("storeID", 0);
+        categoryId = getIntent().getIntExtra("categoryId", 0);
+        itemID = getIntent().getIntExtra("itemID", 0);
+
+        initToolBar(binding.toolbarApp.toolbar, "Missing", true);
 
 
-
-        locationid = getIntent().getIntExtra("locationid",0);
         companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
         warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
         Employeename = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "EmployeeName");
-        Log.d("AuditID", "onCreate: "+AuditID);
+        Log.d("AuditID", "onCreate: " + AuditID);
         showProgressDialog();
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("auditID", AuditID);
         jsonObject.addProperty("companyID", companyID);
         jsonObject.addProperty("warehouseID", warehouseID);
-        jsonObject.addProperty("locationID", locationid);
+        jsonObject.addProperty("locationID", systemLocationID);
+        binding.btnfound.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                showAlert();
+            }
+        });
 
         binding.cdvlocate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PerformScan();
+                startActivity(new Intent(getApplicationContext(), FindMissingReadingActivity.class)
+                        .putExtra("systemLocationID", systemLocationID)
+                        .putExtra("storeID", storeID)
+                        .putExtra("categoryId", categoryId)
+                        .putExtra("itemID", itemID)
+                        .putExtra("url", AppConstants.BASE_URL)
+
+                        .putExtra("auditID", AuditID));
 
             }
         });
@@ -104,9 +129,9 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
             }
         });
 
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getMissing(AuditID,0,0).observe(this, new Observer<List<AuditReportItems>>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getMissing(AuditID, 0, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<List<AuditSnapShot>>() {
             @Override
-            public void onChanged(List<AuditReportItems> auditReportItems) {
+            public void onChanged(List<AuditSnapShot> auditReportItems) {
                 hideProgressDialog();
                 if (auditReportItems != null) {
                     binding.tvTotaldata.setText("Total Items : " + auditReportItems.size());
@@ -117,10 +142,51 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
                     } else {
                         binding.tvNotfound.setVisibility(View.GONE);
                     }
+
+
                 }
             }
         });
 
+
+    }
+
+    private void showAlert() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(MisiingReport.this);
+        builder.setTitle("Mark as found");
+        builder.setMessage("Do you want to move the selectected items to found?");
+
+// Set up the input
+        final EditText input = new EditText(this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+// Set up the buttons
+        builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                remark = input.getText().toString();
+                updateRemark(remark);
+            }
+
+            private void updateRemark(String remark) {
+
+                new Thread(() -> {
+                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().markasFound(AuditID, systemLocationID, categoryId, itemID, storeID,remark);
+
+                }).start();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
 
 
     }
@@ -131,14 +197,20 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
     }
 
     @Override
-    public void compareitems(List<String> comparelist) {
-        compareitemlist = new ArrayList<>();
-        if (comparelist.size() > 1) {
-            //   binding.bottomlayt.setVisibility(View.VISIBLE);
-        } else {
-            // binding.bottomlayt.setVisibility(View.GONE);
-        }
-        compareitemlist = comparelist;
+    public void compareitems(String serial, boolean ischecked) {
+        new Thread(() -> {
+            if (ischecked) {
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertTemporarySerialNosAudit(new TemDataSerial(serial, ""));
+
+            } else {
+                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().DeleteTemporarySerialNosAudit(new TemDataSerial(serial, ""));
+
+            }
+
+
+        }).start();
+
+
     }
 
     private void PerformScan() {
@@ -172,6 +244,7 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
             Log.d("TAG", "replaceFragment: ");
         }
     }
+
     ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
@@ -245,26 +318,24 @@ public class MisiingReport extends BaseActivity implements Missingadapter.PassId
                     }
                 }
             });
+
     private void CheckSerialnumExist(ArrayList<TemDataSerial> dataset) {
 
 
         new Thread(() -> {
             DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertTemporarySerialNos(dataset);
-            runOnUiThread(() -> {
-                checkexists();
-            });
+            runOnUiThread(this::checkexists);
         }).start();
 
     }
+
     private void checkexists() {
         int systemID = 0;
         new Thread(() -> {
-            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().checkauditscan(AuditID, locationid);
+            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().checkauditscan(AuditID, systemLocationID);
 
 
-            runOnUiThread(() -> {
-                hideProgressDialog();
-            });
+            runOnUiThread(this::hideProgressDialog);
         }).start();
     }
 

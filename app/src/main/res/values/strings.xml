@@ -18,6 +18,8 @@
     <string name="filter">FILTER</string>
     <string name="hint_search">Enter Name or Mobile</string>
     <string name="settings">Settings</string>
+    <string name="get_location_permission">Get location permission</string>
+    <string name="tips_open_the_ocation_permission">Do you enter the settings interface to open the location permission?</string>
 
     <string-array name="rangeSliderValues">
         <item>1000</item>

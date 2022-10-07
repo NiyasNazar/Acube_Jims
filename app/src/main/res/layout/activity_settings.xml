@@ -69,43 +69,80 @@
 
 
                 <RadioGroup
-                    android:gravity="center"
-                    android:layout_marginTop="5dp"
                     android:id="@+id/radiogrplanguage"
-                    android:layout_below="@id/ed_url"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/ed_url"
+
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:text="Language"
-                        android:layout_height="wrap_content">
+                        android:text="Language">
 
                     </TextView>
 
                     <RadioButton
                         android:id="@+id/rdenglish"
-                        android:layout_margin="5dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
                         android:text="English"></RadioButton>
 
                     <RadioButton
                         android:id="@+id/rdarabic"
-                        android:layout_margin="5dp"
+                        android:layout_width="wrap_content"
 
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Arabic"></RadioButton>
+                </RadioGroup>
+
+                <RadioGroup
+                    android:id="@+id/deviceconfig"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/radiogrplanguage"
+
+                    android:layout_marginTop="5dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="arabic"></RadioButton>
+                        android:layout_marginRight="20dp"
+                        android:text="Language">
+
+                    </TextView>
+
+                    <RadioButton
+                        android:id="@+id/rdhandheld"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Handheld"></RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/rdbluetooth"
+                        android:layout_width="wrap_content"
+
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="Bluetooth"></RadioButton>
                 </RadioGroup>
+
+
 
                 <LinearLayout
                     android:id="@+id/btn_save"
                     android:layout_width="139dp"
                     android:layout_height="50dp"
-                    android:layout_below="@id/radiogrplanguage"
+                    android:layout_below="@id/deviceconfig"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="57dp"
                     android:layout_marginTop="20dp"

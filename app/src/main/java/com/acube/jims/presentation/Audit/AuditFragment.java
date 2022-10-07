@@ -14,6 +14,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.acube.jims.BaseActivity;
+import com.acube.jims.datalayer.models.Audit.AuditItem;
+import com.acube.jims.datalayer.models.Audit.AuditLocation;
+import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
+import com.acube.jims.datalayer.models.Audit.AuditSubCategory;
+import com.acube.jims.datalayer.models.Audit.ResponseErpAuditDownload;
+import com.acube.jims.datalayer.models.Audit.Store;
 import com.acube.jims.presentation.Audit.ViewModel.AuditLocationDetailsModel;
 import com.acube.jims.presentation.Audit.ViewModel.AuditLocationViewModel;
 import com.acube.jims.presentation.Audit.ViewModel.AuditUploadViewModel;
@@ -78,7 +84,7 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
             String Employeename = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "EmployeeName");
             JsonObject jsonObject = new JsonObject();
 
-            jsonObject.addProperty("warehouseID", warehouseID);
+            jsonObject.addProperty("auditID", "");
             binding.editTlocation.setOnClickListener(new OnSingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
@@ -86,7 +92,6 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
 
                 }
             });
-
 
 
             binding.recyvaduditlocations.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -105,18 +110,26 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
                 }
             });
 
-            mViewModel.getLiveData().observe(this, new Observer<List<ResponseAudit>>() {
+            mViewModel.getLiveData().observe(this, new Observer<ResponseErpAuditDownload>() {
                 @Override
-                public void onChanged(List<ResponseAudit> responseAudits) {
+                public void onChanged(ResponseErpAuditDownload responseAudits) {
                     hideProgressDialog();
                     if (responseAudits != null) {
-                        List<AuditResults>dataset=responseAudits.get(0).getAuditResultsList();
+                        List<AuditItem> dataset = responseAudits.getItems();
+                        List<AuditSubCategory> datasetAuditSubCategory = responseAudits.getSubCategories();
+                        List<Store> datasetStore = responseAudits.getStores();
+                        List<AuditLocation> datasetAuditLocation = responseAudits.getLocations();
+                        List<AuditSnapShot> datasetAuditSnapShot = responseAudits.getAuditSnapShot();
                         Executor executor = Executors.newSingleThreadExecutor();
                         executor.execute(new Runnable() {
                             @Override
                             public void run() {
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertItem(dataset);
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertSubCategory(datasetAuditSubCategory);
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertLocation(datasetAuditLocation);
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertSnapShot(datasetAuditSnapShot);
+                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertStore(datasetStore);
 
-                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insert(dataset);
                             }
                         });
                     }
@@ -152,14 +165,7 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
                     } else {
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty("auditID", auditid);
-                        jsonObject.addProperty("companyID", "");
-                        jsonObject.addProperty("warehouseID", "");
-                        jsonObject.addProperty("locationID", 0);
-                        jsonObject.addProperty("categoryID", 0);
-                        jsonObject.addProperty("subCategoryID", 0);
-                        jsonObject.addProperty("karatID", 0);
-                        jsonObject.addProperty("tabType", "");
-                        jsonObject.addProperty("serialNo", "");
+
                         mViewModel.AuditDetails(LocalPreferences.getToken(getApplicationContext()), jsonObject);
 
 

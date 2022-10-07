@@ -88,10 +88,15 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
                 final CatalogVH catalogVH = (CatalogVH) holder;
                 ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
                 String myString = responseCatalogueListing.getItemName();
-
                 catalogVH.textViewItemName.setText(myString);
-            //    int stock = responseCatalogueListing.getAvailableQty();
-                catalogVH.textViewKarat.setText(responseCatalogueListing.getCategoryName());
+                catalogVH.textViewKarat.setText("" + responseCatalogueListing.getKaratName());
+                catalogVH.textViewPrice.setText("SAR " + responseCatalogueListing.getMrp());
+                catalogVH.textviewDesc.setText(responseCatalogueListing.getItemDesc());
+                catalogVH.textViewCode.setText(responseCatalogueListing.getItemCode());
+
+                //catalogVH.textViewItemName.setText(myString);
+                //    int stock = responseCatalogueListing.getAvailableQty();
+                //catalogVH.textViewKarat.setText(responseCatalogueListing.getCategoryName());
 
                /* if (stock > 0) {
                     catalogVH.textViewStock.setText("In Stock");
@@ -109,7 +114,7 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
 
 
                 // holder.imageView.setImageResource(homeData.getImage());
-                if (responseCatalogueListing.getItemSubList() !=null&&responseCatalogueListing.getItemSubList().size()!= 0) {
+                if (responseCatalogueListing.getItemSubList() != null && responseCatalogueListing.getItemSubList().size() != 0) {
                     Glide.with(context)
                             .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
                             .placeholder(R.drawable.jwimage)
@@ -220,18 +225,20 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
     protected class CatalogVH extends RecyclerView.ViewHolder {
         TextView textViewItemName, textViewStoneWeight,
                 textViewGrossWeight, textViewSerialnumber, textViewPrice,
-                textViewKarat, textViewStock;
+                textViewKarat, textViewStock, textviewDesc, textViewCode;
         ImageView imageView;
         LikeButton mlikebtn;
 
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
-            textViewStock = itemView.findViewById(R.id.tvstock);
+            //  textViewStock = itemView.findViewById(R.id.tvstock);
             mlikebtn = itemView.findViewById(R.id.fav_button);
-
+            textviewDesc = itemView.findViewById(R.id.tv_description);
             textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);
             textViewGrossWeight = itemView.findViewById(R.id.tvgrossweight);
+            textViewCode = itemView.findViewById(R.id.tv_item_code);
+            textViewPrice = itemView.findViewById(R.id.tvprice);
 
             textViewKarat = itemView.findViewById(R.id.tvkarat);
 
@@ -253,14 +260,14 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
                 @Override
                 public void onClick(View v) {
                     int pos = getBindingAdapterPosition();
-                    int availablestock=dataset.get(pos).getAvailableQty();
-                    FilterPreference.storeIntegerPreference(context,"tempcat",dataset.get(pos).getCategoryID());
+                    int availablestock = dataset.get(pos).getAvailableQty();
+                    FilterPreference.storeIntegerPreference(context, "tempcat", dataset.get(pos).getCategoryID());
 
-                    FilterPreference.storeIntegerPreference(context,"tempsubcat",dataset.get(pos).getSubCategoryID());
-                    if (availablestock==0){
+                    FilterPreference.storeIntegerPreference(context, "tempsubcat", dataset.get(pos).getSubCategoryID());
+                    if (availablestock == 0) {
                         String ID = String.valueOf(dataset.get(pos).getId());
                         replaceFregment.replacestockout(ID);
-                    }else{
+                    } else {
                         Integer ID = dataset.get(pos).getId();
                         replaceFregment.replace(ID);
 
@@ -281,6 +288,7 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public interface replaceFregment {
         void replace(int Id);
+
         void replacestockout(String Id);
     }
 

@@ -59,8 +59,10 @@ public class ResponseItems {
     @Expose
     @ColumnInfo
     private int customerID;
-
-
+    @SerializedName("itemCode")
+    @Expose
+    @ColumnInfo
+    private String itemCode;
     @SerializedName("mrp")
     @Expose
     @ColumnInfo
@@ -189,5 +191,13 @@ public class ResponseItems {
                 ", customerID=" + customerID +
                 ", mrp=" + mrp +
                 '}';
+    }
+
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
     }
 }

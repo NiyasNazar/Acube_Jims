@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.utils.LocalPreferences;
@@ -48,6 +49,7 @@ public class LocateProduct extends BaseActivity {
         return new LocateProduct();
     }
 
+    String serialNumber;
     LocateProductFragmentBinding binding;
     JSONObject jsonObjectserials;
 
@@ -90,7 +92,6 @@ public class LocateProduct extends BaseActivity {
                             }
                         })
                         .show();
-
 
 
             }
@@ -167,30 +168,31 @@ public class LocateProduct extends BaseActivity {
                 try {
                     for (int i = 0; i < locateItems.size(); i++) {
                         jsonObjectserials = new JSONObject();
-                        String serialNumber = locateItems.get(i).getSerialnumber();
+                        serialNumber = locateItems.get(i).getSerialnumber();
                         jsonObjectserials.put("SerialNo", serialNumber);
                         jsonArray.put(jsonObjectserials);
                     }
                     String filepath = save(getApplicationContext(), jsonArray.toString());
-                    if (filepath == null) {
-                        /*/storage/emulated/0/Android/data/com.acube.jms/files/Missing.json*/
-                    } else {
+                    /*    if (filepath == null) {SINGLELOCATE
+                     *//*//*storage/emulated/0/Android/data/com.acube.jms/files/Missing.json*//*
+                    } else {*/
 
-                        Log.d("TrayMacAddress", "onPostExecute: " + TrayMacAddress);
-                        Intent res = new Intent();
-                        String mPackage = "com.acube.smarttray";// package name
-                        String mClass = ".SmartTrayReading";//the activity name which return results*/
-                        //  String mPackage = "com.example.acubetest";// package name
-                        //  String mClass = ".MainActivity";//the activity name which return results
-                        res.putExtra("token", LocalPreferences.getToken(getApplicationContext()));
-                        res.putExtra("type", "LOCATE");
-                        res.putExtra("url", AppConstants.BASE_URL);
-                        res.putExtra("macAddress", TrayMacAddress);
-                        res.putExtra("jsonSerialNo", filepath);
-                        res.setComponent(new ComponentName(mPackage, mPackage + mClass));
-                        someActivityResultLauncher.launch(res);
-                    }
+                    Log.d("TrayMacAddress", "onPostExecute: " + TrayMacAddress);
+                    Intent res = new Intent();
+                    String mPackage = "com.acube.smarttray";// package name
+                    String mClass = ".SmartTrayReading";//the activity name which return results*/
+                    //  String mPackage = "com.example.acubetest";// package name
+                    //  String mClass = ".MainActivity";//the activity name which return results
+                    res.putExtra("token", LocalPreferences.getToken(getApplicationContext()));
+                    res.putExtra("type", "SINGLELOCATE");
+                    res.putExtra("url", AppConstants.BASE_URL);
+                    res.putExtra("macAddress", TrayMacAddress);
+                    res.putExtra("jsonSerialNo", serialNumber);
+                    res.setComponent(new ComponentName(mPackage, mPackage + mClass));
+                    someActivityResultLauncher.launch(res);
+                    //   }
                 } catch (Exception e) {
+                    Toast.makeText(LocateProduct.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                 }
 

@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.acube.jims.datalayer.models.Audit.AuditResults;
 import com.acube.jims.datalayer.models.Audit.ResponseAudit;
+import com.acube.jims.datalayer.models.Audit.ResponseErpAuditDownload;
 import com.acube.jims.datalayer.repositories.Audit.AuditRepository;
 import com.google.gson.JsonObject;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public class AuditViewModel extends AndroidViewModel {
     public AuditRepository repository;
     private LiveData<List<ResponseAudit>> liveDataheader;
-    private LiveData<List<ResponseAudit>> liveData;
+    private LiveData<ResponseErpAuditDownload>liveData;
 
     public AuditViewModel(@NonNull @NotNull Application application) {
         super(application);
@@ -41,7 +42,7 @@ public class AuditViewModel extends AndroidViewModel {
     public LiveData<List<ResponseAudit>> getLiveDataHeader() {
         return liveDataheader;
     }
-    public LiveData<List<ResponseAudit>> getLiveData() {
+    public LiveData<ResponseErpAuditDownload> getLiveData() {
         return liveData;
     }
 }

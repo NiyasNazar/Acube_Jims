@@ -1,5 +1,6 @@
 package com.acube.jims.datalayer.models.Audit;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
@@ -7,21 +8,20 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "TemDataSerial", indices = @Index(value = {"SerialNo"}, unique = true))
 
 public class TemDataSerial {
-    @PrimaryKey(autoGenerate = true)
-    private int ID;
+
+    @PrimaryKey(autoGenerate = false)
+    @NonNull
     private String SerialNo;
     private String auditId;
     private int status;
     private String branch;
 
-
-    public int getID() {
-        return ID;
+    public TemDataSerial(String SerialNo,String auditId) {
+        this.SerialNo = SerialNo;
+        this.auditId = auditId;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
+
 
     public String getSerialNo() {
         return SerialNo;

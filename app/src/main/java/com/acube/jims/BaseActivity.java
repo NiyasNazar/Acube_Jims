@@ -136,4 +136,24 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void openCart(){
         startActivity(new Intent(getApplicationContext(), CartViewFragment.class));
     }
+    public String ConvertToString(String hexString) {
+        String result = "";
+     /*   if (IsValid(hexString)) {*/
+            result += padLeftZeros(hexToDecimal(hexString.substring(0, 2)), 2);
+            result += padLeftZeros(hexToDecimal(hexString.substring(2, 4)), 3);
+            result += padLeftZeros(hexToDecimal(hexString.substring(4, 10)), 7);
+            result += padLeftZeros(hexToDecimal(hexString.substring(10, 16)), 6);
+            result += padLeftZeros(hexToDecimal(hexString.substring(16, 22)), 7);
+            result += padLeftZeros(hexToDecimal(hexString.substring(22, 24)), 2);
+       // }
+        return result;
+    }
+    public static String padLeftZeros(String str, int length) {
+        return String.format("%1$" + length + "s", str).replace(' ', '0');
+    }
+    public String hexToDecimal(String hexnum) {
+        int num = Integer.parseInt(hexnum, 16);
+        String dec = String.valueOf(num);
+        return dec;
+    }
 }

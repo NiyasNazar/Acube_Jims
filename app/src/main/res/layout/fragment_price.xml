@@ -5,7 +5,8 @@
     android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
-        android:text="Filter By Price Range"
+        android:text="Enter Minimum and Maximum weight"
+
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:textSize="16sp"
@@ -16,8 +17,9 @@
 
     </TextView>
     <LinearLayout
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_height="wrap_content">
         <EditText
             android:id="@+id/ed_pricemin"

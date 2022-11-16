@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.DeviceRegistration;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -25,8 +26,8 @@ public class FetchTrayMasterRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void TrayMaster(String Token) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void TrayMaster(String Token, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<List<ResponseTrayMaster>> call = restApiService.FetchTrayMaster(Token);
         call.enqueue(new Callback<List<ResponseTrayMaster>>() {
             @Override

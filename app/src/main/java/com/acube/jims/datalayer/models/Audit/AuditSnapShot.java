@@ -7,17 +7,24 @@ import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.rscja.team.qcom.deviceapi.S;
 
-@Entity(tableName = "AuditSnapShot", indices = @Index(value = {"serialNumber"}, unique = true))
+@Entity(tableName = "AuditSnapShot", indices = @Index(value = {"serialNumber", "auditID"}, unique = true))
 
 public class AuditSnapShot {
     @PrimaryKey(autoGenerate = true)
     private int ID;
 
+
+    @SerializedName("weight")
+    @Expose
+    private Double weight;
     @SerializedName("imageUrl")
     @Expose
-    @Ignore
-    private Object imageUrl;
+    private String imageUrl;
+    @SerializedName("imageName")
+    @Expose
+    private String imageName;
     @SerializedName("auditID")
     @Expose
     private String auditID;
@@ -30,32 +37,36 @@ public class AuditSnapShot {
     @SerializedName("subCategoryId")
     @Expose
     private Integer subCategoryId;
+    @SerializedName("categoryId")
+    @Expose
+    private Integer categoryId;
+    @SerializedName("categoryName")
+    @Expose
+    private String categoryName;
+    @SerializedName("categoryCode")
+    @Expose
+    private String categoryCode;
     @SerializedName("serialNumber")
     @Expose
     private String serialNumber;
     @SerializedName("scannedLocationId")
     @Expose
-    @Ignore
-    private Object scannedLocationId;
+    private Integer scannedLocationId;
     @SerializedName("warehouseId")
     @Expose
     private Integer warehouseId;
     @SerializedName("systemLocationName")
     @Expose
-    @Ignore
-    private Object systemLocationName;
+    private String systemLocationName;
     @SerializedName("systemLocationCode")
     @Expose
-    @Ignore
-    private Object systemLocationCode;
+    private String systemLocationCode;
     @SerializedName("scannedLocationName")
     @Expose
-    @Ignore
-    private Object scannedLocationName;
+    private String scannedLocationName;
     @SerializedName("scannedLocationCode")
     @Expose
-    @Ignore
-    private Object scannedLocationCode;
+    private String scannedLocationCode;
     @SerializedName("warehouseCode")
     @Expose
     private String warehouseCode;
@@ -86,36 +97,52 @@ public class AuditSnapShot {
     @SerializedName("remark")
     @Expose
     private String remark;
-    @SerializedName("items")
+
+    @SerializedName("categories")
     @Expose
-    @Ignore
-    private Object items;
+    private String categories;
     @SerializedName("subCategories")
     @Expose
-    @Ignore
-    private Object subCategories;
+    private String subCategories;
     @SerializedName("locations")
     @Expose
-    @Ignore
-    private Object locations;
+    private String locations;
     @SerializedName("stores")
     @Expose
-    @Ignore
-    private Object stores;
+    private String stores;
     @SerializedName("auditSnapShot")
     @Expose
-    @Ignore
-    private Object auditSnapShot;
+    private String auditSnapShot;
+
     private int status;
     private int scanLocationID;
     private String Remarks;
 
-    public Object getImageUrl() {
+    private String scannedBy;
+    private String scannedDate;
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(Object imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
+
+    public void setImageName(String imageName) {
+        this.imageName = imageName;
     }
 
     public String getAuditID() {
@@ -150,6 +177,30 @@ public class AuditSnapShot {
         this.subCategoryId = subCategoryId;
     }
 
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    public String getCategoryCode() {
+        return categoryCode;
+    }
+
+    public void setCategoryCode(String categoryCode) {
+        this.categoryCode = categoryCode;
+    }
+
     public String getSerialNumber() {
         return serialNumber;
     }
@@ -158,11 +209,11 @@ public class AuditSnapShot {
         this.serialNumber = serialNumber;
     }
 
-    public Object getScannedLocationId() {
+    public Integer getScannedLocationId() {
         return scannedLocationId;
     }
 
-    public void setScannedLocationId(Object scannedLocationId) {
+    public void setScannedLocationId(Integer scannedLocationId) {
         this.scannedLocationId = scannedLocationId;
     }
 
@@ -174,35 +225,35 @@ public class AuditSnapShot {
         this.warehouseId = warehouseId;
     }
 
-    public Object getSystemLocationName() {
+    public String getSystemLocationName() {
         return systemLocationName;
     }
 
-    public void setSystemLocationName(Object systemLocationName) {
+    public void setSystemLocationName(String systemLocationName) {
         this.systemLocationName = systemLocationName;
     }
 
-    public Object getSystemLocationCode() {
+    public String getSystemLocationCode() {
         return systemLocationCode;
     }
 
-    public void setSystemLocationCode(Object systemLocationCode) {
+    public void setSystemLocationCode(String systemLocationCode) {
         this.systemLocationCode = systemLocationCode;
     }
 
-    public Object getScannedLocationName() {
+    public String getScannedLocationName() {
         return scannedLocationName;
     }
 
-    public void setScannedLocationName(Object scannedLocationName) {
+    public void setScannedLocationName(String scannedLocationName) {
         this.scannedLocationName = scannedLocationName;
     }
 
-    public Object getScannedLocationCode() {
+    public String getScannedLocationCode() {
         return scannedLocationCode;
     }
 
-    public void setScannedLocationCode(Object scannedLocationCode) {
+    public void setScannedLocationCode(String scannedLocationCode) {
         this.scannedLocationCode = scannedLocationCode;
     }
 
@@ -286,43 +337,46 @@ public class AuditSnapShot {
         this.remark = remark;
     }
 
-    public Object getItems() {
-        return items;
+
+
+
+    public String getCategories() {
+        return categories;
     }
 
-    public void setItems(Object items) {
-        this.items = items;
+    public void setCategories(String categories) {
+        this.categories = categories;
     }
 
-    public Object getSubCategories() {
+    public String getSubCategories() {
         return subCategories;
     }
 
-    public void setSubCategories(Object subCategories) {
+    public void setSubCategories(String subCategories) {
         this.subCategories = subCategories;
     }
 
-    public Object getLocations() {
+    public String getLocations() {
         return locations;
     }
 
-    public void setLocations(Object locations) {
+    public void setLocations(String locations) {
         this.locations = locations;
     }
 
-    public Object getStores() {
+    public String getStores() {
         return stores;
     }
 
-    public void setStores(Object stores) {
+    public void setStores(String stores) {
         this.stores = stores;
     }
 
-    public Object getAuditSnapShot() {
+    public String getAuditSnapShot() {
         return auditSnapShot;
     }
 
-    public void setAuditSnapShot(Object auditSnapShot) {
+    public void setAuditSnapShot(String auditSnapShot) {
         this.auditSnapShot = auditSnapShot;
     }
 
@@ -357,4 +411,21 @@ public class AuditSnapShot {
     public void setRemarks(String remarks) {
         Remarks = remarks;
     }
+
+    public String getScannedBy() {
+        return scannedBy;
+    }
+
+    public void setScannedBy(String scannedBy) {
+        this.scannedBy = scannedBy;
+    }
+
+    public String getScannedDate() {
+        return scannedDate;
+    }
+
+    public void setScannedDate(String scannedDate) {
+        this.scannedDate = scannedDate;
+    }
+
 }

@@ -61,10 +61,11 @@ public class GenderAdapter extends RecyclerView.Adapter<GenderAdapter.ProductVie
 
         holder.textViewItemName.setText(dataset.get(position).getGendername());
         if (lastSelectedPosition == position) {
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#18477F"));
+            holder.textViewItemName.setChecked(true);
 
         } else {
-            holder.cardView.setCardBackgroundColor(Color.parseColor("#BF8F3A"));
+            holder.textViewItemName.setChecked(false);
+
         }
 
 
@@ -79,14 +80,13 @@ public class GenderAdapter extends RecyclerView.Adapter<GenderAdapter.ProductVie
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewItemName;
-        CardView cardView;
+        CheckBox textViewItemName;
         RecyclerView recyclerView;
         CheckBox mcolor;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.btn_cat_filter);
+
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

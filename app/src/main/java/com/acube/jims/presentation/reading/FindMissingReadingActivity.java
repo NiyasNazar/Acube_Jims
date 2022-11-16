@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +40,12 @@ import com.acube.jims.databinding.ActivityAuditReadingBinding;
 import com.acube.jims.databinding.ActivityFindmissingReadingBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.datalayer.models.Audit.TemDataSerial;
+import com.acube.jims.datalayer.models.SelectionHolder;
 import com.acube.jims.datalayer.remote.db.AppDatabase;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.acube.jims.presentation.Audit.AuditReadingActivity;
+import com.acube.jims.presentation.DeviceRegistration.View.DeviceRegistrationFragment;
+import com.acube.jims.presentation.ReadingRangeSettings;
 import com.acube.jims.presentation.Report.View.reports.FoundReportActivity;
 import com.acube.jims.presentation.Report.View.reports.MisiingReport;
 import com.acube.jims.presentation.Report.View.reports.TotalStockReport;
@@ -47,6 +53,7 @@ import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.utils.OnSingleClickListener;
 import com.acube.jims.utils.ReaderUtils;
 import com.acube.jims.utils.Utils;
+import com.acube.jims.utils.ViewDialog;
 import com.rscja.deviceapi.RFIDWithUHFBLE;
 import com.rscja.deviceapi.RFIDWithUHFUART;
 import com.rscja.deviceapi.entity.UHFTAGInfo;
@@ -55,9 +62,11 @@ import com.rscja.deviceapi.interfaces.ConnectionStatusCallback;
 import com.rscja.deviceapi.interfaces.ScanBTCallback;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 public class FindMissingReadingActivity extends BaseActivity {
     ActivityFindmissingReadingBinding binding;
@@ -82,10 +91,10 @@ public class FindMissingReadingActivity extends BaseActivity {
         }
     };
     private boolean mScanning;
-    List<TemDataSerial> temDataSerials;
-    List<TemDataSerial> temDataScanned;
+    List<SelectionHolder> temDataSerials;
+    List<SelectionHolder> temDataScanned;
     private static final long SCAN_PERIOD = 30000; //10 seconds
-
+    float blevalue, handheldvalue;
     ArrayList<TemDataSerial> dataset;
     public BluetoothAdapter mBtAdapter = null;
     private static final int ACCESS_FINE_LOCATION_PERMISSION_REQUEST = 100;
@@ -93,9 +102,12 @@ public class FindMissingReadingActivity extends BaseActivity {
     private static final int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST = 102;
     private static final int REQUEST_ACTION_LOCATION_SETTINGS = 3;
     private Handler mBlHandler = new Handler();
-
+    ViewDialog alert;
+    boolean DeviceReg;
     HashSet<String> hashSet;
     private ScanAdapter adapter;
+    String epcCode;
+    String username, date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,11 +116,16 @@ public class FindMissingReadingActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_findmissing_reading);
         initToolBar(binding.toolbarApp.toolbar, "Inventory Scan", true);
         auditID = getIntent().getStringExtra("auditID");
-        macAddress = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "TrayMacAddress");
+        alert = new ViewDialog();
+        username = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "EmployeeName");
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        }
 
         url = getIntent().getStringExtra("url");
         temDataSerials = new ArrayList<>();
         temDataScanned = new ArrayList<>();
+        DeviceReg = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "DeviceReg");
 
         systemLocationID = getIntent().getIntExtra("systemLocationID", 0);
         storeID = getIntent().getIntExtra("storeID", 0);
@@ -116,7 +133,13 @@ public class FindMissingReadingActivity extends BaseActivity {
         itemID = getIntent().getIntExtra("itemID", 0);
         handheld = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "handheld");
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-
+        binding.toolbarApp.settings.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ReadingRangeSettings.class));
+            }
+        });
+        DeleteTemp();
         if (handheld) {
             ReaderInit();
         } else {
@@ -126,11 +149,13 @@ public class FindMissingReadingActivity extends BaseActivity {
         adapter = new ScanAdapter(FindMissingReadingActivity.this);
         binding.LvTags.setAdapter(adapter);
         ReaderUtils.initSound(FindMissingReadingActivity.this);
-        DatabaseClient.getInstance(FindMissingReadingActivity.this).getAppDatabase().auditDownloadDao().getTempSerials().observe(this, new Observer<List<TemDataSerial>>() {
+        DatabaseClient.getInstance(FindMissingReadingActivity.this).getAppDatabase().auditDownloadDao().getTempSerials().observe(this, new Observer<List<SelectionHolder>>() {
             @Override
-            public void onChanged(List<TemDataSerial> dataSerials) {
+            public void onChanged(List<SelectionHolder> dataSerials) {
                 if (dataSerials != null) {
                     temDataSerials = dataSerials;
+                    temDataScanned = dataSerials;
+                    adapter.notifyDataSetChanged();
                     Log.d("Tempserials", "onChanged: " + temDataSerials.size());
 
 
@@ -145,25 +170,30 @@ public class FindMissingReadingActivity extends BaseActivity {
                 if (handheld) {
                     startThread();
                 } else {
+                    if (DeviceReg) {
+                        if (uhf.getConnectStatus() == ConnectionStatus.CONNECTED) {
 
-                    if (checkLocationEnable()) {
-                        showBluetoothDevice(false);
+                            readBlutoothTags();
+                        } else {
+                            alert.showDialog(FindMissingReadingActivity.this, "Connecting to " + macAddress);
+
+
+                            if (checkLocationEnable()) {
+                                showBluetoothDevice(false);
+                            }
+                        }
+                    } else {
+                        startActivity(new Intent(getApplicationContext(), DeviceRegistrationFragment.class));
                     }
 
 
-                   /* if (!mBtAdapter.isEnabled()) {
-                        Log.i(TAG, "onClick - BT not enabled yet");
-                        Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        bluetoothrequest.launch(enableIntent);
-                    } else {
 
-                            mDevice = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(macAddress);
-                            connect(macAddress);
 
-                    }*/
+
 
 
                 }
+
 
             }
         });
@@ -255,7 +285,8 @@ public class FindMissingReadingActivity extends BaseActivity {
 
     public void connect(String deviceAddress) {
         if (uhf.getConnectStatus() == ConnectionStatus.CONNECTED) {
-            readBlutoothTags();
+            alert.dismiss();
+
 
         } else if (uhf.getConnectStatus() == ConnectionStatus.CONNECTING) {
             showsuccess("Connecting" + macAddress);
@@ -265,7 +296,7 @@ public class FindMissingReadingActivity extends BaseActivity {
     }
 
     private void readBlutoothTags() {
-        uhf.setPower((int) 30.0);
+        uhf.setPower((int) blevalue);
         if (uhf.startInventoryTag()) {
             dataset = new ArrayList<>();
 
@@ -370,7 +401,7 @@ public class FindMissingReadingActivity extends BaseActivity {
 
     public void startThread() {
 
-        mReader.setPower((int) 30.0);
+        mReader.setPower((int) handheldvalue);
         if (mReader.startInventoryTag()) {
             dataset = new ArrayList<>();
 
@@ -435,7 +466,7 @@ public class FindMissingReadingActivity extends BaseActivity {
                         msg = handler.obtainMessage();
                         msg.obj = uhftagInfo;
                         handler.sendMessage(msg);
-                        ReaderUtils.playSound(1);
+
                     }
 
 
@@ -446,23 +477,23 @@ public class FindMissingReadingActivity extends BaseActivity {
 
     private void addDataToList(String epc) {
         Log.d("addDataToList", "addDataToList: " + epc);
-        String convertedEpc = HexToString(epc);
+        epcCode = "";
+        epcCode = HexToString(epc);
 
+        if (epcCode.startsWith(getPrefix()) && epcCode.endsWith(getSuffix())) {
+            epcCode = epcCode.substring(1, epcCode.lastIndexOf(getSuffix()));
 
-        for (int i = 0; i < temDataSerials.size(); i++) {
-            if (temDataSerials.get(i).getSerialNo().equalsIgnoreCase(convertedEpc)) {
+            new Thread(() -> {
+                int status = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().updateFindmissing(auditID, systemLocationID, categoryId, itemID, storeID, epcCode, date, username);
+                Log.d("UpdateStatus", "addDataToList: " + status + epcCode);
+                if (status == 1) {
+                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().updateSelectionHolder(epcCode);
+                    ReaderUtils.playSound(1);
 
-                new Thread(() -> {
-                    DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().updateFindmissing(auditID, systemLocationID, categoryId, itemID, storeID,convertedEpc);
-                    Log.d("NotFoundMissing", "addDataToList: "+convertedEpc);
+                }
 
-                }).start();
-
-                temDataScanned.add(new TemDataSerial(convertedEpc, ""));
-            } else {
-                Log.d("NotFoundMissing", "addDataToList: ");
-            }
-
+            }).start();
+            adapter.notifyDataSetChanged();
 
         }
 
@@ -524,8 +555,8 @@ public class FindMissingReadingActivity extends BaseActivity {
                     if (connectionStatus == ConnectionStatus.CONNECTED) {
                         remoteBTName = device.getName();
                         remoteBTAdd = device.getAddress();
-                        showsuccess("remoteBT" + remoteBTName);
-
+                        showsuccess("Bluetooth Connected Succesfully");
+                        alert.dismiss();
 
                     } else if (connectionStatus == ConnectionStatus.DISCONNECTED) {
 
@@ -574,7 +605,7 @@ public class FindMissingReadingActivity extends BaseActivity {
                         msg = handler.obtainMessage();
                         msg.obj = uhftagInfo;
                         handler.sendMessage(msg);
-                        ReaderUtils.playSound(1);
+
                     }
 
 
@@ -608,7 +639,7 @@ public class FindMissingReadingActivity extends BaseActivity {
         public final class ViewHolder {
             public TextView tvEPCTID;
             public TextView tvTagCount;
-            public TextView tvTagRssi;
+            public ImageView tvTagRssi;
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
@@ -618,13 +649,19 @@ public class FindMissingReadingActivity extends BaseActivity {
                 convertView = mInflater.inflate(R.layout.scan_items, null);
                 holder.tvEPCTID = (TextView) convertView.findViewById(R.id.TvTagUii);
                 holder.tvTagCount = (TextView) convertView.findViewById(R.id.TvTagCount);
-                holder.tvTagRssi = (TextView) convertView.findViewById(R.id.TvTagRssi);
+                holder.tvTagRssi = (ImageView) convertView.findViewById(R.id.TvTagRssi);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
+            if (temDataScanned.get(position).getStatus() == 0) {
+                holder.tvTagRssi.setVisibility(View.GONE);
+            } else {
+                holder.tvTagRssi.setVisibility(View.VISIBLE);
 
-            holder.tvEPCTID.setText((String) temDataScanned.get(position).getSerialNo());
+            }
+
+            holder.tvEPCTID.setText((String) temDataScanned.get(position).getSerialNumber());
 
          /*   double val = Math.abs(Double.parseDouble(rssi));
 
@@ -651,5 +688,12 @@ public class FindMissingReadingActivity extends BaseActivity {
         }
 
     }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DeviceReg = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "DeviceReg");
+        macAddress = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "TrayMacAddress");
+        blevalue = LocalPreferences.retrieveReadFloatPreferences(getApplicationContext(), "handheldble");
+        handheldvalue = LocalPreferences.retrieveReadFloatPreferences(getApplicationContext(), "handheldvalue");
+    }
 }

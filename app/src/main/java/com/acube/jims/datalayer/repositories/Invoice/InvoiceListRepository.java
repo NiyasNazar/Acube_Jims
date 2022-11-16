@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Invoice;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -25,8 +26,8 @@ public class InvoiceListRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void InvoiceList(String Auth, String [] array) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void InvoiceList(String Auth, String [] array, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
 
 
 

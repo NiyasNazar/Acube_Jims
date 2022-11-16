@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Catalogue.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -22,16 +23,16 @@ public class CatalogViewModelNextPage extends AndroidViewModel {
         super(application);
     }
 
-    public void FetchCatalog(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode,String MinWeight,String MaxWeight,String priceMin,String priceMax,String gender,int itemID,int customerID) {
-        repository.FetchCatalogueItems(Auth,PageNum, PageSize, CatID, SubCatID,ColorCode,KaratCode,MinWeight,MaxWeight,priceMin,priceMax,gender,itemID,customerID);
+    public void FetchCatalog(String Auth, int PageNum, int PageSize, String CatID, String SubCatID, String ColorCode, String KaratCode, String MinWeight, String MaxWeight, String priceMin, String priceMax, String gender, int itemID, int customerID, int warehouseId, Context context) {
+        repository.FetchCatalogueItems(Auth,PageNum, PageSize, CatID, SubCatID,ColorCode,KaratCode,MinWeight,MaxWeight,priceMin,priceMax,gender,itemID,customerID,warehouseId,context);
     }
-    public void FetchCatalogCatalogueSummary(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode,String MinWeight,String MaxWeight,String priceMin,String priceMax,String gender,int customerID) {
-        repository.FetchCatalogueSummary(Auth,PageNum, PageSize, CatID, SubCatID,ColorCode,KaratCode,MinWeight,MaxWeight,priceMin,priceMax,gender,customerID);
+    public void FetchCatalogCatalogueSummary(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode,String MinWeight,String MaxWeight,String priceMin,String priceMax,String gender,int customerID,Context context) {
+        repository.FetchCatalogueSummary(Auth,PageNum, PageSize, CatID, SubCatID,ColorCode,KaratCode,MinWeight,MaxWeight,priceMin,priceMax,gender,customerID,context);
     }
     public void init() {
         repository = new CatalogueRepository();
         liveData = repository.getResponseLiveData();
-        liveDataSummary = repository.getResponseLiveData();
+        liveDataSummary = repository.getResponseLiveDataSummary();
     }
 
 

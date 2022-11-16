@@ -8,6 +8,8 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/parent"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/homepagebg">
@@ -20,6 +22,8 @@
         </include>
 
         <RelativeLayout
+            android:id="@+id/container"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/toolbar_app"
@@ -30,6 +34,9 @@
             android:background="@drawable/item_border_detailspage"
             android:orientation="vertical"
             tools:context=".presentation.Report.View.FoundFragment">
+
+
+
 
             <TextView
 
@@ -84,14 +91,15 @@
                 android:layout_marginBottom="15dp">
 
             </androidx.recyclerview.widget.RecyclerView>
+
             <Button
                 android:id="@+id/btnfound"
-                android:layout_toLeftOf="@id/cdvlocate"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
+                android:layout_toLeftOf="@id/cdvlocate"
                 android:background="@drawable/oval_btn_signin"
                 android:fontFamily="@font/poppins_semibold"
                 android:text="Mark as found"
@@ -126,5 +134,15 @@
             android:text="No Records Found">
 
         </TextView>
+        <ImageView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/dummy_item_image" />
     </RelativeLayout>
 </layout>

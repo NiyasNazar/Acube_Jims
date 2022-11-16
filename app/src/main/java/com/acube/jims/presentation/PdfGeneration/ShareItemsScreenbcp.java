@@ -68,7 +68,7 @@ public class ShareItemsScreenbcp extends BaseActivity {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("serialNumber", commaseparatedlist);
-        mViewModel.getcompareItems(AppConstants.Authorization + AuthToken, jsonObject);
+        mViewModel.getcompareItems(AppConstants.Authorization + AuthToken, jsonObject,getApplicationContext());
 
         mViewModel.getLiveData().observe(this, new Observer<List<ResponseCompare>>() {
             @Override

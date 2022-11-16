@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.ScanItems;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -20,8 +21,8 @@ public class ScanItemsViewModel  extends AndroidViewModel {
     }
 
 
-    public void getcompareItems(String Token, JsonObject jsonObject) {
-        repository.ResponseItems(Token, jsonObject);
+    public void getcompareItems(String Token, JsonObject jsonObject, Context context) {
+        repository.ResponseItems(Token, jsonObject,context);
 
     }
 

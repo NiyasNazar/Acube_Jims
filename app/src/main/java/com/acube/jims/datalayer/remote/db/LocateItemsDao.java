@@ -1,5 +1,6 @@
 package com.acube.jims.datalayer.remote.db;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
@@ -23,7 +24,7 @@ public interface LocateItemsDao {
     void update(String status, String serialnumber);*/
 
     @Query("SELECT * FROM `LocateItem` ")
-    List<LocateItem> getAll();
+    LiveData<List<LocateItem> > getAll();
 
     @Query("DELETE  FROM `LocateItem` ")
     void deleteall();

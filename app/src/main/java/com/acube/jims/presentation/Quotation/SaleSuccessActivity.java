@@ -31,7 +31,7 @@ public class SaleSuccessActivity extends BaseActivity {
         invoicedate = getIntent().getStringExtra("date");
         binding.tvreferenceno.setText("Invoice No. " + invoicenumber);
         int GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(getApplicationContext());
         restApiService.ClearCart(LocalPreferences.getToken(getApplicationContext()), String.valueOf(GuestCustomerID)).enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

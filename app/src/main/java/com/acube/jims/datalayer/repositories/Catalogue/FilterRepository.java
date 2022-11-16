@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Catalogue;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,8 +25,8 @@ public class FilterRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void FetchFilterItems(  String Auth) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void FetchFilterItems(String Auth, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<List<ResponseFetchFilters> > call = restApiService.getFilters(Auth);
         call.enqueue(new Callback<List<ResponseFetchFilters> >() {
             @Override

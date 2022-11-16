@@ -224,7 +224,7 @@ int GuestCustomerID;
                 }
             }
         });*/
-        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
+        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken,requireActivity());
         //setPopUpWindow();
         return binding.getRoot();
 
@@ -401,6 +401,11 @@ int GuestCustomerID;
 
     }
 
+    @Override
+    public void compareitems(String ID, String serial, boolean checked) {
+
+    }
+
     public <T> void setList(String key, List<T> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
@@ -410,7 +415,7 @@ int GuestCustomerID;
     @Override
     public void applyfilter() {
         Toast.makeText(getActivity(), "FilterApplied", Toast.LENGTH_SHORT).show();
-        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
+        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken,requireActivity());
 
         LoadFirstPage();
 
@@ -418,7 +423,7 @@ int GuestCustomerID;
 
     @Override
     public void addtofav(String id, String serialno) {
-        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, String.valueOf(GuestCustomerID), UserId, id, "add", "", serialno);
+        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, String.valueOf(GuestCustomerID), UserId, id, "add", "", serialno,requireActivity());
 
     }
 }

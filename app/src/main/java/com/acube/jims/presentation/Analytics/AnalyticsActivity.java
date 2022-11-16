@@ -95,7 +95,7 @@ public class AnalyticsActivity extends BaseActivity {
         //true makes the Webview have a normal viewport such as a normal desktop browser
         //when false the webview will have a viewport constrained to it's own dimensions
         binding.webview.getSettings().setUseWideViewPort(false);
-
+        Log.d("TAG", "URL: "+url);
 
         //override the web client to open all links in the same webview
         // binding.webview.setWebViewClient(new MyWebViewClient());
@@ -247,7 +247,7 @@ public class AnalyticsActivity extends BaseActivity {
         });
 
 
-        warehouseViewModel.FetchWareHouses(LocalPreferences.getToken(getApplicationContext()));
+        warehouseViewModel.FetchWareHouses(LocalPreferences.getToken(getApplicationContext()),getApplicationContext());
         warehouseViewModel.getLiveData().observe(this, new Observer<List<ResponseWareHouse>>() {
             @Override
             public void onChanged(List<ResponseWareHouse> dataset) {
@@ -366,7 +366,7 @@ public class AnalyticsActivity extends BaseActivity {
         jsonObject.addProperty("itemPeriodFilter", 0);
         jsonObject.addProperty("employeePeriodFilter", 0);
         //jsonObject.addProperty("companyID");
-        analyticsViewModel.AnalyticSummary(LocalPreferences.getToken(getApplicationContext()), jsonObject);
+        analyticsViewModel.AnalyticSummary(LocalPreferences.getToken(getApplicationContext()), jsonObject,AnalyticsActivity.this);
     }
 
     private void fetchItemWiseSummary() {
@@ -378,7 +378,7 @@ public class AnalyticsActivity extends BaseActivity {
         jsonObject.addProperty("employeePeriodFilter", 0);
         //jsonObject.addProperty("companyID");
 
-        analyticsViewModel.ItemWiseAnalytics(LocalPreferences.getToken(getApplicationContext()), jsonObject);
+        analyticsViewModel.ItemWiseAnalytics(LocalPreferences.getToken(getApplicationContext()), jsonObject,AnalyticsActivity.this);
     }
 
     private void fetchCustomerServedData() {

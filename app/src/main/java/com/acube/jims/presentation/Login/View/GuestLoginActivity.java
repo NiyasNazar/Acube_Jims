@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -71,7 +72,7 @@ public class GuestLoginActivity extends BaseActivity {
                 } else if (vaguestname.equalsIgnoreCase("")) {
                     binding.edGuestname.setError("Field Empty");
                 } else if (vauserExists) {
-                    updateGuestCustomer(UserId, vamobile, vaemail, vaguestname);
+                    updateGuestCustomer(UserId, vamobile, vaemail, vaguestname,getApplicationContext());
 
 
                 } else if (new AppUtility(GuestLoginActivity.this).checkInternet()) {
@@ -96,7 +97,7 @@ public class GuestLoginActivity extends BaseActivity {
                         Log.d("onFocusChange", "onFocusChange: ");
                         String vaphone = binding.edMobile.getText().toString();
                         if (!vaphone.equalsIgnoreCase("")) {
-                            viewModel.CheckUserExists(vaphone);
+                            viewModel.CheckUserExists(vaphone,getApplicationContext());
                             showProgressDialog();
                         }
 
@@ -157,11 +158,11 @@ public class GuestLoginActivity extends BaseActivity {
         jsonObject.addProperty("emailID", vaemail);
         jsonObject.addProperty("contactNumber", vamobile);
         jsonObject.addProperty("companyID", AppConstants.applicationID);
-        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token),jsonObject);
+        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token),jsonObject,getApplicationContext());
 
     }
 
-    private void updateGuestCustomer(int ID, String vamobile, String vaemail, String vaguestname) {
+    private void updateGuestCustomer(int ID, String vamobile, String vaemail, String vaguestname, Context context) {
         showProgressDialog();
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("customerName", vaguestname);
@@ -169,7 +170,7 @@ public class GuestLoginActivity extends BaseActivity {
         jsonObject.addProperty("contactNumber", vamobile);
         jsonObject.addProperty("companyID", AppConstants.applicationID);
         jsonObject.addProperty("id", ID);
-        updateCustomerViewModel.UpdateCustomer(ID, jsonObject);
+        updateCustomerViewModel.UpdateCustomer(ID, jsonObject,context);
 
     }
 

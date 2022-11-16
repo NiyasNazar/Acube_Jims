@@ -4,22 +4,27 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.acube.jims.BaseActivity;
+import com.acube.jims.datalayer.api.RetrofitInstance;
 import com.acube.jims.datalayer.models.Audit.AuditItem;
 import com.acube.jims.datalayer.models.Audit.AuditLocation;
 import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
 import com.acube.jims.datalayer.models.Audit.AuditSubCategory;
 import com.acube.jims.datalayer.models.Audit.ResponseErpAuditDownload;
 import com.acube.jims.datalayer.models.Audit.Store;
+import com.acube.jims.datalayer.models.LocateProduct.LocateItem;
 import com.acube.jims.presentation.Audit.ViewModel.AuditLocationDetailsModel;
 import com.acube.jims.presentation.Audit.ViewModel.AuditLocationViewModel;
 import com.acube.jims.presentation.Audit.ViewModel.AuditUploadViewModel;
@@ -34,12 +39,20 @@ import com.acube.jims.datalayer.models.Audit.ResponseAudit;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.datalayer.remote.db.LocalAudit;
 import com.acube.jims.utils.OnSingleClickListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.rscja.team.qcom.deviceapi.J;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AuditFragment extends BaseActivity implements AuditLocationadapter.PassId, AuditAdapter.FragmentTransition {
 
@@ -65,7 +78,6 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         {
-
             binding = DataBindingUtil.setContentView(this, R.layout.audit_fragment);
             initToolBar(binding.toolbarApp.toolbar, "Inventory Audit", true);
 
@@ -78,6 +90,7 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
             mViewModel.init();
             auditLocationViewModedetails.init();
             showProgressDialog();
+            binding.editaudit.setTitle("Select Audit");
 
             String companyID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CompanyID");
             String warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
@@ -85,16 +98,23 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
             JsonObject jsonObject = new JsonObject();
 
             jsonObject.addProperty("auditID", "");
-            binding.editTlocation.setOnClickListener(new OnSingleClickListener() {
-                @Override
-                public void onSingleClick(View v) {
-                    binding.editaudit.show();
 
-                }
-            });
 
 
             binding.recyvaduditlocations.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            binding.closeAudit.setOnClickListener(new OnSingleClickListener() {
+                @Override
+                public void onSingleClick(View v) {
+                    if (auditid.equalsIgnoreCase("")) {
+                        showerror("Please select an audit");
+
+                    } else {
+                        showalert();
+                    }
+
+
+                }
+            });
             mViewModel.AuditHeader(LocalPreferences.getToken(getApplicationContext()), jsonObject);
             mViewModel.getLiveDataHeader().observe(this, new Observer<List<ResponseAudit>>() {
                 @Override
@@ -118,20 +138,16 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
                         List<AuditItem> dataset = responseAudits.getItems();
                         List<AuditSubCategory> datasetAuditSubCategory = responseAudits.getSubCategories();
                         List<Store> datasetStore = responseAudits.getStores();
-                        List<AuditLocation> datasetAuditLocation = responseAudits.getLocations();
                         List<AuditSnapShot> datasetAuditSnapShot = responseAudits.getAuditSnapShot();
                         Executor executor = Executors.newSingleThreadExecutor();
                         executor.execute(new Runnable() {
                             @Override
                             public void run() {
-                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertItem(dataset);
-                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertSubCategory(datasetAuditSubCategory);
-                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertLocation(datasetAuditLocation);
                                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertSnapShot(datasetAuditSnapShot);
-                                DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().insertStore(datasetStore);
 
                             }
                         });
+                        hideProgressDialog();
                     }
                 }
             });
@@ -149,7 +165,7 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                     auditid = dataset.get(position).getAuditID();
-                    binding.editTlocation.setText(auditid);
+
                 }
 
                 @Override
@@ -160,9 +176,12 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
             binding.downloadButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     if (auditid.equalsIgnoreCase("")) {
+                        showerror("Please select an audit");
 
                     } else {
+                        showProgressDialog();
                         JsonObject jsonObject = new JsonObject();
                         jsonObject.addProperty("auditID", auditid);
 
@@ -198,12 +217,57 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
                     });
 */
 
-                    hideProgressDialog();
+
                 }
             });
 
 
         }
+    }
+
+    private void showalert() {
+        new MaterialAlertDialogBuilder(AuditFragment.this)
+                .setTitle("Close Audit")
+                .setMessage("Are you sure you want to close this audit?")
+                .setPositiveButton("PROCEED", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        closeAudit(auditid);
+
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
+    }
+
+    private void closeAudit(String auditid) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("auditID", auditid);
+        RetrofitInstance.getApiService(getApplicationContext()).closeanaudit(LocalPreferences.getToken(AuditFragment.this), jsonObject)
+                .enqueue(new Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+
+                    }
+                });
+
+        new Thread(() -> {
+            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().closeAudit(auditid);
+
+        }).start();
+
+        mViewModel.AuditHeader(LocalPreferences.getToken(getApplicationContext()), jsonObject);
+
     }
 
 
@@ -218,7 +282,89 @@ public class AuditFragment extends BaseActivity implements AuditLocationadapter.
     }
 
     @Override
-    public void passlist(List<Integer> dataset) {
+    public void passlist(String auditid) {
+        new MaterialAlertDialogBuilder(AuditFragment.this)
+                .setTitle("Upload Audit")
+                .setMessage("Are you sure you want to upload this audit?")
+                .setPositiveButton("PROCEED", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        UploadAudit(auditid);
+
+                    }
+                })
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .show();
+    }
+
+
+    private void UploadAudit(String auditid) {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getallauditforupload(auditid).observe(this, new Observer<List<AuditSnapShot>>() {
+            @Override
+            public void onChanged(List<AuditSnapShot> locateItems) {
+                JsonObject body = new JsonObject();
+                JsonArray jsonArray = new JsonArray();
+                if (locateItems != null && locateItems.size() != 0) {
+                    for (int i = 0; i < locateItems.size(); i++) {
+                        JsonObject jsonObject = new JsonObject();
+                        body.addProperty("auditID", locateItems.get(i).getAuditID());
+                        body.addProperty("scannedBy", locateItems.get(i).getScannedBy());
+                        body.addProperty("totalTimeTaken", 0);
+                        jsonObject.addProperty("serialNo", locateItems.get(i).getSerialNumber());
+                        jsonObject.addProperty("remark", locateItems.get(i).getRemarks());
+                        jsonObject.addProperty("locationId", locateItems.get(i).getLocationId());
+                        jsonObject.addProperty("auditId", locateItems.get(i).getAuditID());
+                        jsonArray.add(jsonObject);
+
+
+                    }
+                    body.add("items", jsonArray);
+                    Log.d("UploadArray", "onChanged: ");
+                    postAuditData(body, auditid);
+
+                } else {
+
+                }
+
+            }
+        });
+    }
+
+    private void postAuditData(JsonObject body, String auditid) {
+        showProgressDialog();
+        RetrofitInstance.getApiService(getApplicationContext()).UploadAuditData(LocalPreferences.getToken(getApplicationContext()), body).enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                hideProgressDialog();
+                if (response.body() != null) {
+                    deleteAudit(auditid);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                hideProgressDialog();
+
+            }
+        });
+    }
+
+    private void deleteAudit(String auditid) {
+        new Thread(() -> {
+            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().deleteaudit(auditid);
+
+            runOnUiThread(() -> {
+
+
+            });
+        }).start();
 
     }
 

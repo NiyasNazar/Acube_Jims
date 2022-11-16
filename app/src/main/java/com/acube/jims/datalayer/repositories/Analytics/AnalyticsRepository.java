@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Analytics;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -35,8 +36,8 @@ public class AnalyticsRepository {
         responseItemWiseAnalyticsMutableLiveData = new MutableLiveData<>();
     }
 
-    public void ItemWiseAnalytics(String Auth, JsonObject jsonObject) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void ItemWiseAnalytics(String Auth, JsonObject jsonObject, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
 
 
         Call<ResponseItemWiseAnalytics> call = restApiService.getGetItemWiseAnalytics(Auth, jsonObject);
@@ -59,8 +60,8 @@ public class AnalyticsRepository {
     }
 
 
-    public void AnalyticsSummary(String Auth, JsonObject jsonObject) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void AnalyticsSummary(String Auth, JsonObject jsonObject,Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
 
 
         Call<ResponseAnalyticsSummary> call = restApiService.getAnalyticsSummary(Auth, jsonObject);

@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffffff"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/macaddress"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="#DA5F6A"
+        android:gravity="center"
+
+        android:src="@drawable/dialog_cross"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/text_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/macaddress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
+        android:text="Bluetooth connectivity in progress please wait..."
+        android:textColor="#ff000000"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btn_dialog"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_below="@+id/text_dialog"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/oval_btn_signin"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="OK"
+        android:textColor="#ffffffff" />
+
+</RelativeLayout>

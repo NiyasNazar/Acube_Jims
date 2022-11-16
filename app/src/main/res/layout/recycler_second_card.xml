@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="160dp"
+        android:layout_weight="5"
+        android:layout_height="0dp">
+
+
+        <RelativeLayout
+            android:id="@+id/laytimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+
+            <ImageView
+                android:id="@+id/item_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/jwimage">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/likelayout"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/halfcut">
+
+                <CheckBox
+                    android:id="@+id/comparecheckbox"
+                    android:layout_width="28dp"
+
+
+                    android:layout_height="28dp"
+                    android:layout_centerInParent="true"
+                    android:buttonTint="@color/white"
+
+
+                    />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imvdelete"
+                android:layout_marginTop="10dp"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_below="@id/likelayout"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/ic_delete">
+
+            </ImageView>
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/conetentlayt"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/laytimage"
+            android:background="#bd9b16"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:visibility="gone"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Item"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_itemname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Code"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_item_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Sl.No.#"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_serialnumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Weight"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Desc"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Price"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tvprice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Karat"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tvkarat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+</LinearLayout>
+</androidx.cardview.widget.CardView>

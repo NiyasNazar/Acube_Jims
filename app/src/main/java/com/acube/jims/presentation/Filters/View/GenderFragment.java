@@ -10,6 +10,7 @@ import android.widget.RadioGroup;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.acube.jims.databinding.FragmentGenderBinding;
 import com.acube.jims.presentation.Catalogue.View.FilterBottomSheetFragment;
@@ -96,7 +97,7 @@ public class GenderFragment extends Fragment {
         dataset.add(genderesult3);
 
         String gendervalue = FilterPreference.retrieveStringPreferences(getActivity(), "gender");
-        binding.recysubcategory.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        binding.recysubcategory.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.recysubcategory.setAdapter(new GenderAdapter(getActivity(),dataset));
         return binding.getRoot();
     }

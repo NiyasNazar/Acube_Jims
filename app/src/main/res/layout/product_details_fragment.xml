@@ -148,13 +148,13 @@
                                                 android:gravity="start|center"
                                                 android:letterSpacing="0.01"
                                                 android:paddingLeft="10dp"
-                                                android:text="Brand Name"
+                                                android:text="Item Name"
                                                 android:textColor="#666666"
                                                 android:textSize="12sp"
                                                 android:textStyle="normal" />
 
                                             <TextView
-                                                android:id="@+id/tvbrandname"
+                                                android:id="@+id/tvitemname"
                                                 android:layout_width="0dp"
                                                 android:layout_height="26dp"
                                                 android:layout_weight="1"
@@ -432,13 +432,13 @@
                                                 android:gravity="start|center"
                                                 android:letterSpacing="0.01"
                                                 android:paddingLeft="10dp"
-                                                android:text="Group Name"
+                                                android:text="UOM"
                                                 android:textColor="#666666"
                                                 android:textSize="12sp"
                                                 android:textStyle="normal" />
 
                                             <TextView
-                                                android:id="@+id/tvgroupname"
+                                                android:id="@+id/tvuom"
                                                 android:layout_width="0dp"
                                                 android:layout_height="26dp"
                                                 android:layout_weight="1"

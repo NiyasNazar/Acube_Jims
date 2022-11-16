@@ -1,2 +1,4 @@
 rootProject.name = "Acube Jims"
 include ':app'
+include ':serialportlibrary'
+include ':cmdlibrary'

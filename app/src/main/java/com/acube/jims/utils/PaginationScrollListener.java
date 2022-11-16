@@ -25,12 +25,12 @@ public  abstract class PaginationScrollListener extends RecyclerView.OnScrollLis
         int firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition();
 
         if (!isLoading() && !isLastPage()) {
-            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount
-                    && firstVisibleItemPosition >= 0
-                    && totalItemCount >= getTotalPageCount()) {
+            if ((visibleItemCount + firstVisibleItemPosition) >=
+                    totalItemCount && firstVisibleItemPosition >= 0) {
                 loadMoreItems();
             }
         }
+
 
     }
 

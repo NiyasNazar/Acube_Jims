@@ -8,15 +8,14 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:background="#000"
-
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/black"
+        android:orientation="vertical">
 
         <include
-            layout="@layout/layout_toolbar"
-            android:id="@+id/toolbar_app">
+            android:id="@+id/toolbar_app"
+            layout="@layout/layout_toolbar">
 
         </include>
 
@@ -24,9 +23,9 @@
             android:id="@+id/slideshow_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:showIndicator="false"
-
             app:delayTimePeriod="5"
+
+            app:showIndicator="false"
             app:showSlideNumber="true" />
     </LinearLayout>
 </layout>

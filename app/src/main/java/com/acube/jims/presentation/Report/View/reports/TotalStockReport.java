@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.acube.jims.BaseActivity;
 import com.acube.jims.datalayer.models.Audit.AuditReportItems;
 import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
+import com.acube.jims.datalayer.models.SelectionHolder;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.R;
 import com.acube.jims.utils.LocalPreferences;
@@ -18,7 +19,7 @@ import com.acube.jims.presentation.Report.adapter.Missingadapter;
 
 import java.util.List;
 
-public class TotalStockReport extends BaseActivity {
+public class TotalStockReport extends BaseActivity implements Missingadapter.PassId {
     ActivityReportLocationmismatchBinding binding;
     Missingadapter reportadapter;
     String AuditID;
@@ -41,13 +42,13 @@ public class TotalStockReport extends BaseActivity {
 
         showProgressDialog();
 
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().gettotalstock(AuditID, 0, 1, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<List<AuditSnapShot>>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().gettotalstock(AuditID, 0, 1, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<List<SelectionHolder>>() {
             @Override
-            public void onChanged(List<AuditSnapShot> auditReportItems) {
+            public void onChanged(List<SelectionHolder> auditReportItems) {
                 hideProgressDialog();
                 if (auditReportItems != null) {
                     binding.tvTotaldata.setText("Total Items : " + auditReportItems.size());
-                    reportadapter = new Missingadapter(getApplicationContext(), auditReportItems, false);
+                    reportadapter = new Missingadapter(getApplicationContext(), auditReportItems, false, TotalStockReport.this);
                     binding.recyvfound.setAdapter(reportadapter);
                     if (reportadapter.getItemCount() == 0) {
                         binding.tvNotfound.setVisibility(View.VISIBLE);
@@ -61,5 +62,23 @@ public class TotalStockReport extends BaseActivity {
 
     }
 
+
+    @Override
+    public void passid(String id, Integer locid) {
+
+    }
+
+    @Override
+    public void enlargeImage(View view, String imageUrl) {
+        showDialog(imageUrl, TotalStockReport.this);
+
+    }
+
+    @Override
+    public void compareitems(String serial, boolean checked) {
+
+    }
+
+    
 
 }

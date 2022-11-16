@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/parent"
+
+        android:layout_marginLeft="7dp"
+
+        android:layout_marginRight="7dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/laytserial"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".8"
+            android:background="@drawable/table_border"
+            android:gravity="center"
+
+            android:minHeight="40dp">
+
+
+
+            <TextView
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:id="@+id/tvserial"
+                android:layout_height="wrap_content"
+
+                />
+        </LinearLayout>
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_weight="2"
+            android:layout_toRightOf="@id/laytserial"
+            android:id="@+id/recyvcomp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+        <TableLayout
+
+            android:id="@+id/table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="4dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/table_border"
+                        android:gravity="center"
+                        android:minHeight="40dp">
+
+                        <TextView
+                            android:id="@+id/tvItem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textColor="@color/textColor" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/table_border"
+                        android:gravity="center"
+
+                        android:minHeight="40dp">
+
+                        <ImageView
+                            android:id="@+id/tvdate1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColor" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/table_border"
+
+                        android:gravity="center"
+                        android:minHeight="40dp">
+
+                        <ImageView
+
+                            android:id="@+id/tvdate2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColor">
+
+                        </ImageView>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/table_border"
+
+                        android:gravity="center"
+                        android:minHeight="40dp">
+
+                        <ImageView
+                            android:id="@+id/tvdate3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColor">
+
+                        </ImageView>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/table_border"
+
+                        android:gravity="center"
+                        android:minHeight="40dp">
+
+                        <ImageView
+                            android:id="@+id/tvdate4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColor">
+
+                        </ImageView>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:background="@drawable/table_border"
+
+                        android:gravity="center"
+                        android:minHeight="40dp">
+
+                        <ImageView
+                            android:id="@+id/tvdate5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+
+                            android:textAllCaps="false"
+                            android:textColor="@color/textColor">
+
+                        </ImageView>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+
+
+                </TableRow>
+            </LinearLayout>
+        </TableLayout>
+
+
+    </LinearLayout>
+</layout>

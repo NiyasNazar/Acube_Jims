@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Analytics.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -11,6 +12,7 @@ import com.acube.jims.datalayer.models.Analytics.ResponseAnalyticsSummary;
 import com.acube.jims.datalayer.models.Analytics.ResponseCustomerServed;
 import com.acube.jims.datalayer.models.Analytics.ResponseItemWiseAnalytics;
 import com.acube.jims.datalayer.repositories.Analytics.AnalyticsRepository;
+import com.acube.jims.presentation.Analytics.AnalyticsActivity;
 import com.google.gson.JsonObject;
 
 import org.jetbrains.annotations.NotNull;
@@ -26,8 +28,8 @@ public class AnalyticsViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void AnalyticSummary(String Auth, JsonObject jsonObject) {
-        repository.AnalyticsSummary(Auth, jsonObject);
+    public void AnalyticSummary(String Auth, JsonObject jsonObject,Context context) {
+        repository.AnalyticsSummary(Auth, jsonObject,context);
     }
 
     public void AnalyticGraph(String Auth, JsonObject jsonObject) {
@@ -38,8 +40,8 @@ public class AnalyticsViewModel extends AndroidViewModel {
         repository.CustomersServed(Auth, jsonObject);
     }
 
-    public void ItemWiseAnalytics(String Auth, JsonObject jsonObject) {
-        repository.ItemWiseAnalytics(Auth, jsonObject);
+    public void ItemWiseAnalytics(String Auth, JsonObject jsonObject, Context context) {
+        repository.ItemWiseAnalytics(Auth, jsonObject,context);
     }
 
     public void init() {

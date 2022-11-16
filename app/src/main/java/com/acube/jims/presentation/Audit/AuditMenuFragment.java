@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import com.acube.jims.BaseActivity;
 import com.acube.jims.presentation.Audit.adapter.AuditMenuAdapter;
 import com.acube.jims.presentation.LocateProduct.View.LocateProduct;
+import com.acube.jims.presentation.Report.ReportActivity;
 import com.acube.jims.presentation.Report.ReportFragment;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
@@ -52,11 +53,15 @@ public class AuditMenuFragment extends BaseActivity implements AuditMenuAdapter.
             LocalPreferences.storeStringPreference(getApplicationContext(), "auditID", "");
 
         } else if (menuname.equalsIgnoreCase("Report")) {
-            startActivity(new Intent(getApplicationContext(), ReportFragment.class));
+            startActivity(new Intent(getApplicationContext(), ReportActivity.class));
             // FilterPreference.clearPreferences(getActivity());
         } else if (menuname.equalsIgnoreCase("Locate Product")) {
             // FragmentHelper.replaceFragment(getActivity(), R.id.content, new LocateProduct());
             startActivity(new Intent(getApplicationContext(), LocateProduct.class));
+
+        } else if (menuname.equalsIgnoreCase("Assign Zone")) {
+            // FragmentHelper.replaceFragment(getActivity(), R.id.content, new LocateProduct());
+            startActivity(new Intent(getApplicationContext(), ZoneAssigning.class));
 
         }
     }
@@ -72,10 +77,13 @@ public class AuditMenuFragment extends BaseActivity implements AuditMenuAdapter.
         HomeData homeData3 = new HomeData();
         homeData3.setMenuText("Locate Product");
         homeData3.setMenuicon(R.drawable.locateproduct);
+        HomeData homeData4 = new HomeData();
+        homeData4.setMenuText("Assign Zone");
+        homeData4.setMenuicon(R.drawable.audit);
         mMainCategory.add(homeData);
         mMainCategory.add(homeData2);
         mMainCategory.add(homeData3);
-
+        mMainCategory.add(homeData4);
         return mMainCategory;
     }
 }

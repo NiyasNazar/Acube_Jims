@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/imvhomeicon"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerHorizontal="true"
         android:scaleType="fitXY"
         android:src="@drawable/ic_dashboard">
@@ -18,7 +18,9 @@
 
     <TextView
         android:id="@+id/tvhomemenu"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+
+        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_below="@+id/imvhomeicon"
         android:layout_centerHorizontal="true"
@@ -27,7 +29,7 @@
 
         android:textAllCaps="true"
         android:textColor="#ab7e2f"
-        android:textSize="14sp">
+        android:textSize="10sp">
 
     </TextView>
 

@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.CustomerManagment.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -18,8 +19,8 @@ public class CustomerHistoryViewModel extends AndroidViewModel {
 
     }
 
-    public void CustomerHistory(String token, int customerID) {
-        repository.CustomerHistory(token, customerID);
+    public void CustomerHistory(String token, int customerID, Context context) {
+        repository.CustomerHistory(token, customerID,context);
     }
 
     public void init() {

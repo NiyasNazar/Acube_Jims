@@ -39,100 +39,158 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/item_border_detailspage">
+
                 <TextView
                     android:id="@+id/tvheader"
-                    android:textSize="15sp"
-                    android:textColor="@color/textColor"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="25dp"
-                    android:fontFamily="@font/medium"
-                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/popins_medium"
                     android:text="Choose an audit from below to continue"
-                    android:layout_height="wrap_content">
+                    android:textAllCaps="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="13sp">
 
                 </TextView>
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_below="@id/tvheader"
-                    android:id="@+id/layoutaudit"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+
+                    android:id="@+id/layoutaudit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tvheader"
                     android:layout_centerHorizontal="true"
 
+                    android:layout_marginLeft="10dp"
+
                     android:layout_marginTop="15dp"
-                    android:orientation="horizontal">
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/TextInputLayoutStyle"
+                    android:orientation="vertical">
 
-                        android:layout_width="0dp"
-                        android:id="@+id/textinputlocation"
+
+                    <TextView
+                        android:id="@+id/tvhint"
+
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Audit"
 
-                        android:layout_weight="1">
+                        android:textColor="@color/black">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/editTlocation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:clickable="false"
-                            android:cursorVisible="false"
-                            android:drawableRight="@drawable/ic_baseline_arrow_drop_down_24"
-                            android:focusable="false"
-                            android:focusableInTouchMode="false"
-                            android:hint="Audit"
-                            android:inputType="none"
-                            android:singleLine="true"
-                            android:textColor="#2d2d2d" />
+                    </TextView>
 
-                    </com.google.android.material.textfield.TextInputLayout>
-
-
-                    <com.acube.jims.utils.SearchableSpinners
-                        android:id="@+id/editaudit"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
+                    <LinearLayout
+                        android:id="@+id/laytspinnercat"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginTop="5dp"
-                        android:background="@drawable/background_cornered_edit_text"
-                        android:inputType="none"
-                        android:minHeight="40dp"
-                        android:paddingStart="16sp"
-                        app:hintText="Select"
-                        tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/ed_border">
 
 
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/editaudit"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+
+                            android:dropDownSelector="@color/headercolor"
+                            android:gravity="center"
+                            android:inputType="none"
+                            android:paddingRight="10dp"
+
+                           app:hintText="Select"
+                            android:textSize="13sp">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </LinearLayout>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
 
+                <LinearLayout
+                    android:id="@+id/layt_actions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layoutaudit"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
 
-                    <com.skydoves.elasticviews.ElasticLayout
+                    android:layout_marginRight="15dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <com.skydoves.elasticviews.ElasticButton
                         android:id="@+id/downloadButton"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="120dp"
+
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-
                         android:layout_marginRight="5dp"
-                        android:background="@color/appmaincolor"
-                        android:saveEnabled="false">
 
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_download"
+                        android:background="@drawable/oval_btn_signin"
+
+                        android:text="Download"
+                        android:textColor="@color/white"
+
+                        android:textSize="15sp">
 
 
-                            tools:ignore="ContentDescription" />
-                    </com.skydoves.elasticviews.ElasticLayout>
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    </com.skydoves.elasticviews.ElasticButton>
+
+                    <com.skydoves.elasticviews.ElasticButton
+                        android:id="@+id/closeAudit"
+                        android:layout_width="120dp"
+
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+
+                        android:background="@drawable/oval_btn_signin"
+
+                        android:text="Close Audit"
+                        android:textColor="@color/white"
+
+                        android:textSize="15sp">
+
+
+                    </com.skydoves.elasticviews.ElasticButton>
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvdownloaded"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/layt_actions"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="25dp"
+
+                    android:fontFamily="@font/popins_medium"
+                    android:text="Downloaded Audits"
+                    android:textAllCaps="true"
+                    android:textColor="@color/textColor"
+                    android:textSize="13sp">
+
+                </TextView>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyvaduditlocations"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/layoutaudit"
-                    android:layout_marginTop="10dp">
+                    android:layout_below="@id/tvdownloaded"
+                    android:layout_marginTop="15dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
 

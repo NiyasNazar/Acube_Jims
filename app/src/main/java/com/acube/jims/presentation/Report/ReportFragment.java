@@ -97,7 +97,7 @@ public class ReportFragment extends BaseActivity implements ReportFilterBottomSh
                 jsonObject.addProperty("karatID", 0);
                 jsonObject.addProperty("tabType", "");
                 jsonObject.addProperty("serialNo", "");
-                mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
+                mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject,getApplicationContext());
             }
 
             @Override
@@ -314,6 +314,6 @@ public class ReportFragment extends BaseActivity implements ReportFilterBottomSh
         jsonObject.addProperty("karatID", vaKaratID);
         jsonObject.addProperty("tabType", "Found");
         jsonObject.addProperty("serialNo", "");
-        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
+        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject,getApplicationContext());
     }
 }

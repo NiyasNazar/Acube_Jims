@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".presentation.Audit.AuditFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <RelativeLayout
+                android:layout_below="@id/toolbar_app"
+                android:id="@+id/tablayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tabfound"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="19dp"
+                    android:paddingBottom="5dp"
+                    android:text="Found"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="15sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tabmissing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@id/tabfound"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="19dp"
+                    android:paddingBottom="5dp"
+                    android:text="Missing"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="15sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tablocationmismatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@id/tabmissing"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="19dp"
+                    android:paddingBottom="5dp"
+                    android:text="Location Mismatch"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="15sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tabLocationApproved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@id/tablocationmismatch"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="19dp"
+                    android:paddingBottom="5dp"
+                    android:text="Mismatch Approved"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="15sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/tabextra"
+                    android:layout_width="wrap_content"
+                    android:layout_height="35dp"
+                    android:layout_toRightOf="@id/tabLocationApproved"
+                    android:background="@drawable/tab_border"
+                    android:fontFamily="@font/montserratsemibold"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="5dp"
+
+                    android:paddingRight="19dp"
+                    android:paddingBottom="5dp"
+                    android:text="Extra"
+                    android:textColor="@color/appmaincolor"
+                    android:textSize="15sp">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+            <include
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar"
+
+
+
+                >
+
+            </include>
+
+            <RelativeLayout
+
+                android:id="@+id/nestedscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/tablayout"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/item_border_detailspage">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="14dp"
+                    android:layout_marginBottom="16dp">
+
+                    <LinearLayout
+                        android:id="@+id/laytdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+
+
+                            android:id="@+id/startbutton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_toLeftOf="@id/enddatebtn"
+                            android:background="@drawable/tab_border"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:padding="6dp"
+                            android:text="Start Date"
+                            android:textAllCaps="false"
+                            android:textSize="13sp">
+
+                        </Button>
+
+                        <Button
+                            android:id="@+id/enddatebtn"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toLeftOf="@id/btn_filter"
+
+                            android:background="@drawable/tab_border"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:padding="6dp"
+                            android:text="End Date"
+                            android:textAllCaps="false"
+                            android:textSize="13sp">
+
+                        </Button>
+
+                        <LinearLayout
+                            android:id="@+id/btn_filter"
+
+                            android:layout_width="80dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerHorizontal="true"
+
+                            android:layout_marginLeft="10dp"
+
+
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/oval_btn_signin"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Filter"
+                                android:textColor="#FFFFFF">
+
+                            </TextView>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/auditlayt"
+                        android:layout_width="200dp"
+                        android:layout_height="30dp"
+                        android:layout_marginTop="0dp"
+                        android:layout_toRightOf="@id/laytdate"
+                        android:background="@drawable/shapebg_1"
+                        android:inputType="none"
+                        android:paddingRight="10dp"
+                        android:textSize="14sp"
+                        android:visibility="gone"
+
+                        app:hintText="Select Audit">
+
+                        <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                            android:id="@+id/ed_auditid"
+                            android:layout_width="200dp"
+                            android:layout_height="30dp"
+
+
+                            android:inputType="none"
+                            android:paddingRight="10dp"
+                            android:textSize="14sp"
+
+                            app:hintText="Select Audit">
+
+                        </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:visibility="gone"
+                        android:id="@+id/laytfilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/auditlayt"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvfilter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+
+                            android:layout_marginLeft="@dimen/_12sdp"
+                            android:fontFamily="@font/montserratsemibold"
+                            android:gravity="center_horizontal"
+                            android:letterSpacing="0.01"
+                            android:text="@string/filter"
+                            android:textColor="@color/textcolor"
+                            android:textSize="@dimen/_7ssp"
+
+                            android:textStyle="normal" />
+
+                        <ImageView
+                            android:id="@+id/imvfilter"
+                            android:layout_width="@dimen/_8sdp"
+                            android:layout_height="@dimen/_8sdp"
+
+                            android:layout_centerVertical="true"
+                            android:layout_gravity="center"
+                            android:layout_marginLeft="8dp"
+
+                            android:layout_toRightOf="@id/tvfilter"
+                            android:src="@drawable/ic_filter"></ImageView>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvdate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/auditlayt"
+
+
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center"
+                        android:textAllCaps="false"
+                        android:textColor="#666666">
+
+                    </TextView>
+
+
+                    <FrameLayout
+                        android:id="@+id/container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@id/auditlayt"
+                        android:layout_marginTop="2dp"
+
+                        >
+
+                    </FrameLayout>
+
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

@@ -6,7 +6,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.acube.jims.R;
+import com.acube.jims.utils.ZoomableImageView;
 import com.bumptech.glide.Glide;
+import com.ortiz.touchview.TouchImageView;
 
 
 public class SlideshowAdapter {
@@ -16,7 +18,7 @@ public class SlideshowAdapter {
     // =============================================================================================
     private Context context;
     private ViewGroup vgContainer;
-    private ImageView ivImage;
+    private ZoomableImageView ivImage;
 
     // =============================================================================================
     // Constructor

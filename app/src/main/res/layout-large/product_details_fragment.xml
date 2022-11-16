@@ -28,16 +28,15 @@
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_below="@id/toolbar_app"
                 android:layout_height="match_parent"
                 android:layout_above="@id/bottomlayt"
+                android:layout_below="@id/toolbar_app"
                 android:fillViewport="true">
 
                 <RelativeLayout
                     android:id="@+id/laytimage"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                  >
+                    android:layout_height="wrap_content">
 
                     <androidx.viewpager.widget.ViewPager
                         android:id="@+id/viewPager"
@@ -148,13 +147,13 @@
                                                 android:gravity="start|center"
                                                 android:letterSpacing="0.01"
                                                 android:paddingLeft="10dp"
-                                                android:text="Brand Name"
+                                                android:text="Item Name"
                                                 android:textColor="#666666"
                                                 android:textSize="12sp"
                                                 android:textStyle="normal" />
 
                                             <TextView
-                                                android:id="@+id/tvbrandname"
+                                                android:id="@+id/tvitemname"
                                                 android:layout_width="0dp"
                                                 android:layout_height="26dp"
                                                 android:layout_weight="1"
@@ -432,13 +431,13 @@
                                                 android:gravity="start|center"
                                                 android:letterSpacing="0.01"
                                                 android:paddingLeft="10dp"
-                                                android:text="Group Name"
+                                                android:text="UOM"
                                                 android:textColor="#666666"
                                                 android:textSize="12sp"
                                                 android:textStyle="normal" />
 
                                             <TextView
-                                                android:id="@+id/tvgroupname"
+                                                android:id="@+id/tvuom"
                                                 android:layout_width="0dp"
                                                 android:layout_height="26dp"
                                                 android:layout_weight="1"
@@ -622,8 +621,8 @@
                     android:id="@+id/btnshare"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@drawable/oval_btn_signin"
 
 
@@ -636,17 +635,18 @@
                     android:textSize="13sp">
 
                 </androidx.appcompat.widget.AppCompatButton>
+
                 <View
                     android:layout_width="1.5dp"
-                    android:background="@color/white"
-                    android:layout_height="match_parent"></View>
+                    android:layout_height="match_parent"
+                    android:background="@color/white"></View>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btn_add_tocart"
                     style="@style/Widget.AppCompat.Button.Borderless"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="@drawable/oval_btn_signin"
                     android:backgroundTint="@color/appmaincolor"
                     android:drawablePadding="5dp"

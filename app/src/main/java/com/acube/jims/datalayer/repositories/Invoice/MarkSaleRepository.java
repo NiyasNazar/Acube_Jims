@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Invoice;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -26,8 +27,8 @@ public class MarkSaleRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void MarkSale(String Auth, JsonObject JsonObject) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void MarkSale(String Auth, JsonObject JsonObject, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
 
 
         Call<SaleSuccess> call = restApiService.markSaleOrQuotation(Auth, JsonObject);

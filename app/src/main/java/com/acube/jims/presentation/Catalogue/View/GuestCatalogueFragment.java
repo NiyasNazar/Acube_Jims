@@ -337,4 +337,9 @@ public class GuestCatalogueFragment extends BaseFragment  implements CatalogItem
 
        // FragmentHelper.replaceFragment(getActivity(), R.id.content, ProductDetailsFragment.newInstance(Id));
     }
+
+    @Override
+    public void compareitems(String ID, String serial, boolean checked) {
+
+    }
 }

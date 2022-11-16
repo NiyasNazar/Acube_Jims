@@ -38,4 +38,14 @@
     <color name="gray">#D3D4D6</color>
     <color name="darkBlue">#4A5568</color>
     <color name="secondaryButtonColor">#49609B</color>
+
+    <color name="Total">#BF8F3A</color>
+    <color name="Found">#EB984E</color>
+    <color name="Missing">#17A589</color>
+    <color name="Unknown">#1B4F72</color>
+    <color name="Mismatch"> #3498DB</color>
+
+    <color name="color_one">#fb7268</color>
+    <color name="color_white">#ededf2</color>
+    <color name="color_two">#E3E0E0</color>
 </resources>

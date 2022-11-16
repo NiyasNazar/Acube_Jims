@@ -55,7 +55,7 @@ public class LocationMistmatchReport extends BaseActivity {
 
 
 
-        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject);
+        mViewModel.FetchReports(LocalPreferences.getToken(getApplicationContext()), jsonObject,getApplicationContext());
         mViewModel.getLiveData().observe(this, new Observer<ResponseReport>() {
             @Override
             public void onChanged(ResponseReport responseReport) {

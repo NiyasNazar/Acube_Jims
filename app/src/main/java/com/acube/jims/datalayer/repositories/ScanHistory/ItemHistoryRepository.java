@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.ScanHistory;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -26,8 +27,8 @@ public class ItemHistoryRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void ItemHistory(String Auth, JsonObject jsonObject) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void ItemHistory(String Auth, JsonObject jsonObject, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
 
 
         Call<List<ResponseScanHistory>> call = restApiService.ItemHistory(Auth, jsonObject);

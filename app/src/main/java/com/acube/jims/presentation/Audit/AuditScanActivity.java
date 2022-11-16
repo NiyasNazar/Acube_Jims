@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.sqlite.db.SimpleSQLiteQuery;
@@ -24,9 +25,11 @@ import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Audit.AuditItem;
 import com.acube.jims.datalayer.models.Audit.AuditLocation;
+import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
 import com.acube.jims.datalayer.models.Audit.AuditSubCategory;
 import com.acube.jims.datalayer.models.Audit.Store;
 import com.acube.jims.datalayer.models.warehouse.ResponseWareHouse;
+import com.acube.jims.datalayer.remote.db.AuditCate;
 import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivityAuditScanBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
@@ -41,6 +44,7 @@ import com.acube.jims.presentation.Report.View.reports.TotalStockReport;
 import com.acube.jims.utils.MyValueFormatter;
 import com.acube.jims.utils.OnSingleClickListener;
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
@@ -70,19 +74,20 @@ public class AuditScanActivity extends BaseActivity {
     int systemLocationID = 0;
     int categoryId = 0;
     int storeID = 0;
-    int itemID = 0;
+    int subcatcategoryId = 0;
+
     List<AuditLocation> dataset;
     List<Store> datasetStore;
-    List<AuditItem> datasetAuditItem;
+    List<AuditSubCategory> datasetsubcat;
 
-    List<AuditSubCategory> datasetcat;
+    List<AuditCate> datasetcat;
     JSONObject jsonObjectserials;
-    boolean handheld;
+    boolean handheld, DeviceReg;
 
     String TrayMacAddress;
     List<PieEntry> pieEntryList;
     PieData pieData;
-    int total, missing, extra, mismatch,found;
+    int total, missing = 0, extra = 0, mismatch = 0, found = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,40 +99,30 @@ public class AuditScanActivity extends BaseActivity {
         datasetStore = new ArrayList<>();
         TrayMacAddress = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "TrayMacAddress");
         handheld = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "handheld");
-
+        DeviceReg = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "DeviceReg");
         datasetcat = new ArrayList<>();
-        datasetAuditItem = new ArrayList<>();
+        datasetsubcat = new ArrayList<>();
+        binding.tvauditID.setText(auditID);
 
 
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedStore().observe(this, new Observer<List<Store>>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedStore(auditID).observe(this, new Observer<List<Store>>() {
             @Override
             public void onChanged(List<Store> localstore) {
-                Log.d("onChanged", "onChanged: " + localstore.size());
-                if (localstore != null) {
-                    datasetStore = localstore;
-                    Store datasetall = new Store();
-                    datasetall.setWarehouseName("All");
-                    datasetall.setWarehouseId(0);
-                    datasetStore.add(datasetall);
-                    if (datasetStore != null && datasetStore.size() > 0) {
-                        Collections.sort(datasetStore, new Comparator() {
-                            @Override
-                            public int compare(Object o1, Object o2) {
-                                Store p1 = (Store) o1;
-                                Store p2 = (Store) o2;
-                                return p1.getWarehouseName().compareToIgnoreCase(p2.getWarehouseName());
-                            }
-                        });
-                    }
-
-
-                    ArrayAdapter<Store> arrayAdapter = new ArrayAdapter<Store>(AuditScanActivity.this, android.R.layout.simple_spinner_item, localstore);
-                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    binding.spinstore.setAdapter(arrayAdapter);
+                for (int i = 0; i < localstore.size(); i++) {
+                    binding.tvStore.setText(localstore.get(i).getWarehouseName());
                 }
+
+
             }
         });
         ///
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().gettotalAgainistaudit(auditID, systemLocationID, categoryId, 0, 1, subcatcategoryId, storeID).observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                binding.tvweight.setText("Grs.Wt " + String.format("%.2f", aDouble) + " g");
+
+            }
+        });
 
 
         DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedAuditss(auditID).observe(this, new Observer<List<AuditResults>>() {
@@ -161,31 +156,30 @@ public class AuditScanActivity extends BaseActivity {
         //
 
 
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedCategory().observe(this, new Observer<List<AuditSubCategory>>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getCategory(auditID).observe(this, new Observer<List<AuditCate>>() {
             @Override
-            public void onChanged(List<AuditSubCategory> localAudits) {
+            public void onChanged(List<AuditCate> localAudits) {
                 Log.d("onChanged", "onChanged: " + localAudits.size());
                 if (localAudits != null) {
-                    AuditSubCategory localCategory = new AuditSubCategory();
-
                     datasetcat = localAudits;
 
-                    localCategory.setSubCategoryCode("All");
-                    localCategory.setSubCategoryId(0);
-                    datasetcat.add(localCategory);
-                    if (datasetcat != null && datasetcat.size() > 0) {
+                    if (datasetcat != null && datasetcat.size() > 1) {
+                        AuditCate localCategory = new AuditCate();
+                        localCategory.setCategoryName("All");
+                        localCategory.setCategoryId(0);
+                        datasetcat.add(localCategory);
                         Collections.sort(datasetcat, new Comparator() {
                             @Override
                             public int compare(Object o1, Object o2) {
-                                AuditSubCategory p1 = (AuditSubCategory) o1;
-                                AuditSubCategory p2 = (AuditSubCategory) o2;
-                                return p1.getSubCategoryCode().compareToIgnoreCase(p2.getSubCategoryCode());
+                                AuditCate p1 = (AuditCate) o1;
+                                AuditCate p2 = (AuditCate) o2;
+                                return p1.getCategoryName().compareToIgnoreCase(p2.getCategoryName());
                             }
                         });
                     }
 
                     Log.d("onChanged", "onChanged: " + datasetcat.size());
-                    ArrayAdapter<AuditSubCategory> arrayAdapter = new ArrayAdapter<AuditSubCategory>(AuditScanActivity.this, android.R.layout.simple_spinner_item, datasetcat);
+                    ArrayAdapter<AuditCate> arrayAdapter = new ArrayAdapter<AuditCate>(AuditScanActivity.this, android.R.layout.simple_spinner_item, datasetcat);
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     binding.spincategory.setAdapter(arrayAdapter);
                 }
@@ -202,7 +196,7 @@ public class AuditScanActivity extends BaseActivity {
                         .putExtra("systemLocationID", systemLocationID)
                         .putExtra("storeID", storeID)
                         .putExtra("categoryId", categoryId)
-                        .putExtra("itemID", itemID)
+                        .putExtra("subcatID", subcatcategoryId)
                         .putExtra("url", AppConstants.BASE_URL)
                         .putExtra("macAddress", TrayMacAddress)
                         .putExtra("auditID", auditID));
@@ -253,25 +247,46 @@ public class AuditScanActivity extends BaseActivity {
 
             }
         });
-        binding.spinstore.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedLocation(auditID).observe(this, new Observer<List<AuditLocation>>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                storeID = datasetStore.get(position).getWarehouseId();
-                LoadLocationorZone(storeID);
-                updateCount();
-            }
+            public void onChanged(List<AuditLocation> localAudits) {
+                Log.d("onChanged", "onChanged: " + localAudits.size());
+                if (localAudits != null) {
+                    dataset = localAudits;
+                    if (dataset.size() > 0) {
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+                        if (dataset != null && dataset.size() > 1) {
+                            AuditLocation datasetall = new AuditLocation();
+                            datasetall.setLocationName("All");
+                            datasetall.setLocationId(0);
+                            dataset.add(datasetall);
+                            Collections.sort(dataset, new Comparator() {
+                                @Override
+                                public int compare(Object o1, Object o2) {
+                                    AuditLocation p1 = (AuditLocation) o1;
+                                    AuditLocation p2 = (AuditLocation) o2;
+                                    return p1.getLocationName().compareToIgnoreCase(p2.getLocationName());
+                                }
+                            });
+                        }
 
+                    }
+
+
+                    Log.d("onChanged", "onChanged: " + localAudits.size());
+                    ArrayAdapter<AuditLocation> arrayAdapter = new ArrayAdapter<AuditLocation>(AuditScanActivity.this, android.R.layout.simple_spinner_item, localAudits);
+                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    binding.spinlocations.setAdapter(arrayAdapter);
+                }
             }
         });
 
         binding.spincategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                categoryId = datasetcat.get(position).getSubCategoryId();
-                loadItem(categoryId);
+                categoryId = datasetcat.get(position).getCategoryId();
+
+                loadSubcat(categoryId);
                 updateCount();
                 // updateCount();
             }
@@ -281,10 +296,10 @@ public class AuditScanActivity extends BaseActivity {
 
             }
         });
-        binding.spinitem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spinsubcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                itemID = datasetAuditItem.get(position).getItemId();
+                subcatcategoryId = datasetsubcat.get(position).getSubCategoryId();
                 updateCount();
             }
 
@@ -297,71 +312,41 @@ public class AuditScanActivity extends BaseActivity {
         //updateCount();
     }
 
-    private void loadItem(int categoryId) {
+    private void loadSubcat(int categoryId) {
 
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getItems(categoryId).observe(this, new Observer<List<AuditItem>>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedSubcatCategory(auditID,categoryId).observe(this, new Observer<List<AuditSubCategory>>() {
             @Override
-            public void onChanged(List<AuditItem> localstore) {
+            public void onChanged(List<AuditSubCategory> localstore) {
                 Log.d("onChanged", "onChanged: " + localstore.size());
                 if (localstore != null) {
-                    datasetAuditItem = localstore;
-                    AuditItem datasetall = new AuditItem();
-                    datasetall.setItemCode("All");
-                    datasetall.setItemId(0);
-                    datasetAuditItem.add(datasetall);
+                    datasetsubcat = localstore;
 
-                    if (datasetAuditItem != null && datasetAuditItem.size() > 0) {
-                        Collections.sort(datasetAuditItem, new Comparator() {
+
+                    if (datasetsubcat != null && datasetsubcat.size() > 1) {
+                        AuditSubCategory datasetall = new AuditSubCategory();
+                        datasetall.setSubCategoryName("All");
+                        datasetall.setSubCategoryId(0);
+                        datasetsubcat.add(datasetall);
+                        Collections.sort(datasetsubcat, new Comparator() {
                             @Override
                             public int compare(Object o1, Object o2) {
-                                AuditItem p1 = (AuditItem) o1;
-                                AuditItem p2 = (AuditItem) o2;
-                                return p1.getItemCode().compareToIgnoreCase(p2.getItemCode());
+                                AuditSubCategory p1 = (AuditSubCategory) o1;
+                                AuditSubCategory p2 = (AuditSubCategory) o2;
+                                return p1.getSubCategoryName().compareToIgnoreCase(p2.getSubCategoryName());
                             }
                         });
                     }
 
 
-                    ArrayAdapter<AuditItem> arrayAdapter = new ArrayAdapter<AuditItem>(AuditScanActivity.this, android.R.layout.simple_spinner_item, localstore);
+                    ArrayAdapter<AuditSubCategory> arrayAdapter = new ArrayAdapter<AuditSubCategory>(AuditScanActivity.this, android.R.layout.simple_spinner_item, localstore);
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    binding.spinitem.setAdapter(arrayAdapter);
+                    binding.spinsubcategory.setAdapter(arrayAdapter);
                 }
             }
         });
     }
 
 
-    private void LoadLocationorZone(int ID) {
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedLocation(ID).observe(this, new Observer<List<AuditLocation>>() {
-            @Override
-            public void onChanged(List<AuditLocation> localAudits) {
-                Log.d("onChanged", "onChanged: " + localAudits.size());
-                if (localAudits != null) {
-                    dataset = localAudits;
-                    AuditLocation datasetall = new AuditLocation();
-                    datasetall.setLocationName("All");
-                    datasetall.setLocationId(0);
-                    dataset.add(datasetall);
-                    if (dataset != null && dataset.size() > 0) {
-                        Collections.sort(dataset, new Comparator() {
-                            @Override
-                            public int compare(Object o1, Object o2) {
-                                AuditLocation p1 = (AuditLocation) o1;
-                                AuditLocation p2 = (AuditLocation) o2;
-                                return p1.getLocationName().compareToIgnoreCase(p2.getLocationName());
-                            }
-                        });
-                    }
-
-
-                    Log.d("onChanged", "onChanged: " + localAudits.size());
-                    ArrayAdapter<AuditLocation> arrayAdapter = new ArrayAdapter<AuditLocation>(AuditScanActivity.this, android.R.layout.simple_spinner_item, localAudits);
-                    arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    binding.spinlocations.setAdapter(arrayAdapter);
-                }
-            }
-        });
-    }
 
     public String save(Context context, String jsonString) throws IOException {
 
@@ -589,8 +574,8 @@ public class AuditScanActivity extends BaseActivity {
 
         new Thread(() -> {
             String query = "SELECT COUNT(*) FROM AuditSnapShot WHERE auditID ='A0410220002' AND status ='0' AND (subCategoryId='0' OR '0'='0') AND (locationId='0' OR '0'='0') AND  (itemId='0' OR '0'='0') AND  (warehouseId='0' OR '0'='0')";
-            Integer insert = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().check((new SimpleSQLiteQuery(query)));
-            Log.d("TAG", "updateCount: "+insert);
+            //Integer insert = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().check((new SimpleSQLiteQuery(query)));
+            //   Log.d("TAG", "updateCount: " + insert);
             runOnUiThread(() -> {
                 hideProgressDialog();
                 //  updateCount();
@@ -598,9 +583,8 @@ public class AuditScanActivity extends BaseActivity {
         }).start();
 
 
-
         DatabaseClient.getInstance(getApplicationContext()).
-                getAppDatabase().auditDownloadDao().getallcountbycat(auditID, 0, 1, systemLocationID, categoryId, itemID, storeID).observe(AuditScanActivity.this, new Observer<Integer>() {
+                getAppDatabase().auditDownloadDao().getallcountbycat(auditID, 0, 1, systemLocationID, categoryId, subcatcategoryId, storeID).observe(AuditScanActivity.this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         binding.tvtotalstock.setText(String.valueOf(integer));
@@ -608,16 +592,14 @@ public class AuditScanActivity extends BaseActivity {
                         Log.d("TOtaldata", "audit:" + auditID);
                         Log.d("TOtaldata", "loc:" + systemLocationID);
                         Log.d("TOtaldata", "cat:" + categoryId);
-                        Log.d("TOtaldata", "item:" + itemID);
                         Log.d("TOtaldata", "store:" + storeID);
 
                     }
                 });
 
 
-
         DatabaseClient.getInstance(getApplicationContext()).
-                getAppDatabase().auditDownloadDao().getcount(auditID, 1, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Integer>() {
+                getAppDatabase().auditDownloadDao().getcount(auditID, 1, systemLocationID, categoryId, subcatcategoryId, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         binding.tvfound.setText(String.valueOf(integer));
@@ -625,7 +607,7 @@ public class AuditScanActivity extends BaseActivity {
                     }
                 });
         DatabaseClient.getInstance(getApplicationContext()).
-                getAppDatabase().auditDownloadDao().getcount(auditID, 0, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Integer>() {
+                getAppDatabase().auditDownloadDao().getcount(auditID, 0, systemLocationID, categoryId, subcatcategoryId, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         binding.tvmissing.setText(String.valueOf(integer));
@@ -633,7 +615,7 @@ public class AuditScanActivity extends BaseActivity {
                     }
                 });
         DatabaseClient.getInstance(getApplicationContext()).
-                getAppDatabase().auditDownloadDao().getcount(auditID, 2, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Integer>() {
+                getAppDatabase().auditDownloadDao().getcount(auditID, 2, systemLocationID, categoryId, subcatcategoryId, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         binding.tvunknown.setText(String.valueOf(integer));
@@ -642,7 +624,7 @@ public class AuditScanActivity extends BaseActivity {
                     }
                 });
         DatabaseClient.getInstance(getApplicationContext()).
-                getAppDatabase().auditDownloadDao().getcount(auditID, 3, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Integer>() {
+                getAppDatabase().auditDownloadDao().getcount(auditID, 3, systemLocationID, categoryId, subcatcategoryId, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         binding.tvlocationmismatch.setText(String.valueOf(integer));
@@ -651,27 +633,75 @@ public class AuditScanActivity extends BaseActivity {
                     }
                 });
 
-        setChart(binding.statuspiechart, total, missing, extra, mismatch,found, ColorTemplate.COLORFUL_COLORS);
+        setChart(binding.totalchart, total, 0, "TOTAL", "", ColorTemplate.JOYFUL_COLORS);
+        //  setChart(binding.foundchart, total, found, "TOTAL", "FOUND", "#EB984E");
+        //  setChart(binding.missingchart, total, missing, "TOTAL", "MISSING", "#17A589");
+        //  setChart(binding.extrachart, total, extra, "TOTAL", "EXTRA","#1B4F72");
+        //  setChart(binding.mismatch, total, mismatch, "TOTAL", "MISMATCH", "#3498DB");
 
     }
 
-    private void setChart(PieChart pieChart, int total, int missing, int extra, int mismatch,int found, int... colors) {
+    private void setChart(PieChart pieChart, int total, int value, String totallabel, String label, int[] colorfulColors) {
         pieEntryList = new ArrayList<>();
         pieChart.setUsePercentValues(false);
-        pieChart.setEntryLabelColor(Color.BLACK);
+        if (value > 0) {
+            pieChart.setMinAngleForSlices(45f);
+
+        }
+        pieChart.setEntryLabelColor(Color.WHITE);
+
+
         pieChart.getDescription().setEnabled(false);
         pieChart.getLegend().setTextColor(Color.BLACK);
+        pieChart.getLegend().setTextSize(12f);
+        pieChart.getLegend().setFormSize(15f);
+
+        pieChart.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
+        pieChart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
+        pieChart.getLegend().setOrientation(Legend.LegendOrientation.VERTICAL);
         pieChart.setDrawSliceText(false);
-        pieEntryList.add(new PieEntry(total, "TOTAL"));
-        pieEntryList.add(new PieEntry(missing, "MISSING"));
-        pieEntryList.add(new PieEntry(found, "FOUND"));
-        pieEntryList.add(new PieEntry(extra, "EXTRA"));
-        pieEntryList.add(new PieEntry(mismatch, "MISMATCH"));
+       /* if (label.equalsIgnoreCase("")) {
+            pieEntryList.add(new PieEntry(total, totallabel));
+        } else {
+            pieEntryList.add(new PieEntry(total, totallabel));
+            pieEntryList.add(new PieEntry(value, label));
+        }
+*/
+        int[] colors;
+        ArrayList<Integer> color = new ArrayList<>();
+        if (total != 0) {
+            pieEntryList.add(new PieEntry(total, "TOTAL"));
+            color.add(ContextCompat.getColor(this, R.color.Total));
+        }
+
+        if (missing != 0) {
+            pieEntryList.add(new PieEntry(missing, "MISSING"));
+            color.add(ContextCompat.getColor(this, R.color.Missing));
+
+        }
+
+        if (found != 0) {
+            pieEntryList.add(new PieEntry(found, "FOUND"));
+            color.add(ContextCompat.getColor(this, R.color.Found));
+        }
+
+        if (extra != 0) {
+            pieEntryList.add(new PieEntry(extra, "EXTRA"));
+            color.add(ContextCompat.getColor(this, R.color.Unknown));
+        }
+        if (mismatch != 0) {
+            pieEntryList.add(new PieEntry(mismatch, "MISMATCH"));
+            color.add(ContextCompat.getColor(this, R.color.Mismatch));
+        }
 
         PieDataSet pieDataSet = new PieDataSet(pieEntryList, "");
-        pieDataSet.setColors(colors);
-        pieDataSet.setValueTextSize(11f);
+        pieDataSet.setColors(color);
+        pieDataSet.setValueTextSize(15f);
         pieDataSet.setValueTextColor(Color.WHITE);
+
+        // pieChart.setDrawEntryLabels(true);
+
+
         pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieData.setValueFormatter(new ValueFormatter() {
@@ -681,7 +711,7 @@ public class AuditScanActivity extends BaseActivity {
             }
         });
 
-
+        pieChart.animateX(2000);
         pieChart.invalidate();
     }
 

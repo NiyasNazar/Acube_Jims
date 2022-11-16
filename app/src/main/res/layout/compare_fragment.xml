@@ -15,14 +15,11 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-
             android:layout_height="wrap_content">
-
 
             <include
                 android:id="@+id/toolbar_app"
-                layout="@layout/layout_toolbar"
-             >
+                layout="@layout/layout_toolbar">
 
             </include>
 
@@ -30,12 +27,12 @@
                 android:id="@+id/left_arrow"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:padding="8dp"
                 android:rotation="360"
-                android:src="@drawable/checvronleft" />
+                android:src="@drawable/checvronleft"
+                android:visibility="gone" />
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
@@ -57,8 +54,10 @@
                         android:id="@+id/view_pager"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginBottom="10dp"
 
 
                         android:background="@drawable/item_border_detailspage"
@@ -73,11 +72,11 @@
                 android:id="@+id/right_arrow"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:padding="8dp"
-                android:src="@drawable/chevronright" />
+                android:src="@drawable/chevronright"
+                android:visibility="gone" />
         </RelativeLayout>
 
     </FrameLayout>

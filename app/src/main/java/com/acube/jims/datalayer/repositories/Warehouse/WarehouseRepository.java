@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Warehouse;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -27,8 +28,8 @@ public class WarehouseRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void FetchWareHouses(String Token) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void FetchWareHouses(String Token, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<List<ResponseWareHouse>> call = restApiService.Fetchwarehouse(Token);
         call.enqueue(new Callback<List<ResponseWareHouse>>() {
             @Override

@@ -101,7 +101,7 @@ public class CustomerViewfragment extends BaseActivity implements LastViewedAdap
 
         GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
         showProgressDialog();
-        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID);
+        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID,getApplicationContext());
         customerHistoryViewModel.getCustomerLiveData().observe(this, new Observer<ResponseCustomerHistory>() {
             @Override
             public void onChanged(ResponseCustomerHistory responseCustomerHistory) {
@@ -156,6 +156,7 @@ public class CustomerViewfragment extends BaseActivity implements LastViewedAdap
     }
 
     public void SelectCustomer() {
+        LocalPreferences.storeBooleanPreference(getApplicationContext(), "salesman", false);
 
         Date todaysdate = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -276,7 +277,7 @@ public class CustomerViewfragment extends BaseActivity implements LastViewedAdap
 
                     Log.d("gsonObject", "onPostExecute: " + gsonObject);
 
-                    customerLogoutViewModel.CustomerLogout(LocalPreferences.getToken(CustomerViewfragment.this), gsonObject);
+                    customerLogoutViewModel.CustomerLogout(LocalPreferences.getToken(CustomerViewfragment.this), gsonObject,CustomerViewfragment.this);
                     LocalPreferences.removePreferences(CustomerViewfragment.this, "GuestCustomerName");
                     LocalPreferences.removePreferences(CustomerViewfragment.this, "GuestCustomerCode");
                     LocalPreferences.storeIntegerPreference(CustomerViewfragment.this, "GuestCustomerID",0);

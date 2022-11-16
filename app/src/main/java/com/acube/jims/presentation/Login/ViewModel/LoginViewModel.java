@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Login.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,8 +20,8 @@ public class LoginViewModel extends AndroidViewModel {
 
     }
 
-    public void Login(JsonObject jsonObject) {
-        repository.Login(jsonObject);
+    public void Login(JsonObject jsonObject, Context context) {
+        repository.Login(jsonObject,context);
     }
 
     public void init() {

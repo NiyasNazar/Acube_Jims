@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Analytics.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -22,8 +23,8 @@ public class WarehouseViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void FetchWareHouses(String Auth) {
-        repository.FetchWareHouses(Auth);
+    public void FetchWareHouses(String Auth, Context context) {
+        repository.FetchWareHouses(Auth,context);
     }
 
 

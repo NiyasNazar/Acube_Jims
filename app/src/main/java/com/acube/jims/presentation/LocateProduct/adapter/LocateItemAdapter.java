@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.LocateProduct.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.LocateProduct.LocateItem;
+import com.acube.jims.presentation.reading.LocateScanActivity;
+import com.acube.jims.utils.OnSingleClickListener;
 
 import java.util.List;
 
@@ -62,6 +65,14 @@ public class LocateItemAdapter extends RecyclerView.Adapter<LocateItemAdapter.Pr
             super(itemView);
 
             textViewTitle = itemView.findViewById(R.id.tv_serialnumber);
+            itemView.setOnClickListener(new OnSingleClickListener() {
+                @Override
+                public void onSingleClick(View v) {
+                    mCtx.startActivity(new Intent(mCtx, LocateScanActivity.class).putExtra("serialnos", dataset.get(getAbsoluteAdapterPosition()).getSerialnumber())
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                }
+            });
 
 
         }

@@ -2,12 +2,20 @@
 package com.acube.jims.datalayer.models.Filter;
 
 
+import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.Index;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "Colorresult", indices = @Index(value = {"id"}, unique = true))
 
 public class Colorresult {
-
+    @PrimaryKey
+    @NonNull
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -31,9 +39,11 @@ public class Colorresult {
     private String createdDate;
     @SerializedName("modifiedBy")
     @Expose
+    @Ignore
     private Object modifiedBy;
     @SerializedName("modifiedDate")
     @Expose
+    @Ignore
     private Object modifiedDate;
 
     private boolean isSelected;

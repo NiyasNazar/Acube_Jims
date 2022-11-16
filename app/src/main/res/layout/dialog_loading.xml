@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:layout_marginHorizontal="100dp"
-    android:layout_marginVertical="200dp"
     android:animateLayoutChanges="true"
+    android:background="@drawable/bg_loading_dialog"
     android:layoutDirection="ltr"
     android:paddingVertical="0dp">
 

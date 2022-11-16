@@ -1,125 +1,377 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    xmlns:card_view="http://schemas.android.com/tools"
-    android:layout_margin="5dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/item_border_detailspage">
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imvdelete"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="25dp"
 
-            android:src="@drawable/ic_delete"></ImageView>
+        <RelativeLayout
+            android:id="@+id/laytimage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cdv_image"
-            android:layout_width="100dp"
-            card_view:cardElevation="0dp"
-            app:cardElevation="0dp"
-
-            android:layout_centerVertical="true"
-            android:layout_height="100dp"
-            android:layout_marginLeft="6dp"
-            app:cardPreventCornerOverlap="false"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            app:cardCornerRadius="6.7dp">
 
             <ImageView
                 android:id="@+id/item_image"
-                android:scaleType="fitXY"
+
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/jwimage"></ImageView>
+                android:layout_height="175dp"
+
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY"
+
+                android:src="@drawable/jwimage">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/likelayout"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/halfcut">
+
+                <ImageView
+
+                    android:id="@+id/imvdelete"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+
+                    android:layout_marginRight="5dp"
+                    android:layout_marginBottom="25dp"
+                    android:src="@drawable/ic_delete"
+                    android:tint="@color/white">
+
+                </ImageView>
+
+                <CheckBox
+                    android:id="@+id/comparecheckbox"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
 
 
-        </androidx.cardview.widget.CardView>
+                    android:layout_centerInParent="true"
+                    android:buttonTint="@color/white"
 
-        <TextView
-            android:id="@+id/tv_itemname"
 
-            android:layout_width="wrap_content"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/conetentlayt"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/cdv_image"
-            android:fontFamily="@font/jtmarniebold"
-            android:maxLines="2"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:layout_below="@id/laytimage"
 
-        <TextView
-            android:id="@+id/tv_weight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_serialnumber"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="3dp"
-            android:layout_toRightOf="@id/cdv_image"
-            android:fontFamily="@font/jtmedium"
+            android:background="#bd9b16"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Item"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tv_itemname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            android:textColor="#000000"
-            android:textSize="14sp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Sl.No.#"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tv_stoneweight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_weight"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:layout_marginLeft="10dp"
+                <TextView
 
-            android:layout_toRightOf="@id/cdv_image"
+                    android:id="@+id/tv_serialnumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:fontFamily="@font/jtmedium"
+            </LinearLayout>
 
-            android:textColor="#000000"
-            android:textSize="14sp"
-            android:textStyle="normal" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvprice"
-            android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Weight"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_stoneweight"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="8dp"
-            android:layout_toRightOf="@id/cdv_image"
-            android:fontFamily="@font/jtmedium"
-            android:gravity="center_horizontal"
+                <TextView
 
-            android:textColor="#000000"
-            android:textSize="14sp" />
+                    android:id="@+id/tv_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tv_serialnumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_itemname"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/cdv_image"
-            android:fontFamily="@font/jtmedium"
+            </LinearLayout>
 
-            android:textColor="#000000"
-            android:textSize="14sp"></TextView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Desc"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Price"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tvprice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Karat"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tvkarat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </LinearLayout>
 
 
     </RelativeLayout>
-
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

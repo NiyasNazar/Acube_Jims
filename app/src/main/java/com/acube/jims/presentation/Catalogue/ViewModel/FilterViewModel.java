@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Catalogue.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,8 +22,8 @@ public class FilterViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void FetchFilters( String Auth) {
-        repository.FetchFilterItems(Auth);
+    public void FetchFilters(String Auth, Context context) {
+        repository.FetchFilterItems(Auth,context);
     }
 
     public void init() {

@@ -1,5 +1,6 @@
 package com.acube.jims.presentation.Catalogue.View;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,8 +15,11 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.acube.jims.datalayer.models.Filter.Karatresult;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Catalogue.adapter.FilterMasterAdapter;
 import com.acube.jims.presentation.Filters.View.AppliedFilterFragment;
 import com.acube.jims.presentation.Filters.View.CategoryFilterFragment;
@@ -56,8 +60,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.bottom_sheet_filter, container, false);
         List<String> dataset = new ArrayList<>();
-        dataset.add("Category");
-        dataset.add("Sub Category");
+        dataset.add("Branch");
         dataset.add("Karat");
         dataset.add("Color");
         dataset.add("Weight");
@@ -77,8 +80,6 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                 FilterPreference.storeStringPreference(requireActivity(), "subcatid", "");
                 FilterPreference.storeStringPreference(requireActivity(), "colorid", "");
                 FilterPreference.storeStringPreference(requireActivity(), "karatid", "");
-
-
                 dismiss();
             }
         });
@@ -86,9 +87,15 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
             @Override
             public void onClick(View v) {
                 CategoryFilterFragment categoryFilterFragment = new CategoryFilterFragment();
-
                 FilterPreference.clearPreferences(requireActivity());
                 ReplaceFragment(categoryFilterFragment);
+                new Thread(() -> {
+                    DatabaseClient.getInstance(requireActivity()).getAppDatabase().homeMenuDao().updatefilterstore(0);
+                    DatabaseClient.getInstance(requireActivity()).getAppDatabase().homeMenuDao().updateColor(0);
+                    DatabaseClient.getInstance(requireActivity()).getAppDatabase().homeMenuDao().updateKaratresult(0);
+
+
+                }).start();
                 Toast.makeText(getActivity(), "Filter Cleared", Toast.LENGTH_SHORT).show();
             }
         });
@@ -104,12 +111,11 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                 List<String> datasetCategory = new ArrayList<>();
                 List<String> datasetweight = new ArrayList<>();
 
-
                 datasetsubcategory = getList("subcategoryfilter");
                 datasetcolor = getList("colorcategoryfilter");
-                datasetkarat = getList("karatfilter");
+
                 datasetweight = getList("weightfilter");
-                if (datasetsubcategory != null ) {
+                if (datasetsubcategory != null) {
                     StringBuilder str = new StringBuilder("");
                     for (String eachstring : datasetsubcategory) {
                         str.append(eachstring).append(",");
@@ -123,7 +129,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                     FilterPreference.storeStringPreference(requireActivity(), "subcatid", commaseparatedlist);
                 }
 
-                if (datasetcolor != null ) {
+                if (datasetcolor != null) {
                     StringBuilder str = new StringBuilder("");
                     for (String eachstring : datasetcolor) {
                         str.append(eachstring).append(",");
@@ -136,7 +142,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                     Log.d("datasetcolor", "onClick: " + commaseparatedlist);
                     FilterPreference.storeStringPreference(requireActivity(), "colorid", commaseparatedlist);
                 }
-                if (datasetkarat != null ) {
+                if (datasetkarat != null) {
                     StringBuilder str = new StringBuilder("");
                     for (String eachstring : datasetkarat) {
                         str.append(eachstring).append(",");
@@ -149,7 +155,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                     Log.d("datasetkarat", "onClick: " + commaseparatedlist);
                     FilterPreference.storeStringPreference(requireActivity(), "karatid", commaseparatedlist);
                 }
-                if (datasetweight != null ) {
+                if (datasetweight != null) {
                     StringBuilder str = new StringBuilder("");
                     for (String eachstring : datasetweight) {
                         str.append(eachstring).append(",");
@@ -163,7 +169,7 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
                     FilterPreference.storeStringPreference(requireActivity(), "weightid", commaseparatedlist);
                 }
 
-                applyFilter.applyfilter();
+                ((ApplyFilter) requireActivity()).applyfilter();
                 dismiss();
             }
 
@@ -199,29 +205,24 @@ public class FilterBottomSheetFragment extends BottomSheetDialogFragment impleme
             ReplaceFragment(categoryFilterFragment);
 
         } else if (pos == 1) {
-            SubCatFilterFragment subCatFilterFragment = new SubCatFilterFragment();
-            ReplaceFragment(subCatFilterFragment);
-
-
-        } else if (pos == 2) {
             KaratFragment colorFilterFragment = new KaratFragment();
             ReplaceFragment(colorFilterFragment);
-        } else if (pos == 3) {
+        } else if (pos == 2) {
 
             ColorFilterFragment colorFilterFragment = new ColorFilterFragment();
             ReplaceFragment(colorFilterFragment);
 
-        } else if (pos == 4) {
+        } else if (pos == 3) {
 
             WeightFragment weightFragment = new WeightFragment();
             ReplaceFragment(weightFragment);
 
-        } else if (pos == 5) {
+        } else if (pos == 4) {
 
             PriceFragment priceFragment = new PriceFragment();
             ReplaceFragment(priceFragment);
 
-        } else if (pos == 6) {
+        } else if (pos == 5) {
 
             GenderFragment genderFragment = new GenderFragment();
             ReplaceFragment(genderFragment);

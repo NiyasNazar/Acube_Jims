@@ -1,6 +1,9 @@
 package com.acube.jims.datalayer.api;
 
+import android.content.Context;
+
 import com.acube.jims.datalayer.constants.AppConstants;
+import com.acube.jims.utils.LocalPreferences;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -10,10 +13,24 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitInstance {
     private static Retrofit retrofit = null;
 
+    public static RestApiService getApiService(Context context) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        if (retrofit == null) {
+            retrofit = new Retrofit
+                    .Builder()
+                    .baseUrl(LocalPreferences.getBaseUrl(context))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(client)
+                    .build();
+        }
+        return retrofit.create(RestApiService.class);
+    }
     public static RestApiService getApiService() {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-       interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-      OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
         if (retrofit == null) {
             retrofit = new Retrofit
                     .Builder()

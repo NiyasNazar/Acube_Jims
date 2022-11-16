@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -19,8 +20,9 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:preserveLegacyExternalStorage="true"
@@ -29,6 +31,45 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".InvoiceGenerator"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.transfer.Transferactivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.Consignment.Consignmentoptions"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.Consignment.ConsignmentScanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.Audit.ZoneAssigning"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.SmartTrayReading"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.Report.MissingComparison"
+            android:exported="false" />
+        <activity android:name=".presentation.Consignment.ConsignmentActivity" />
+        <activity android:name=".presentation.Quotation.InvoiceFragment" />
+        <activity
+            android:name=".presentation.Quotation.SaleFragment"
+            android:exported="false" />
+        <activity android:name=".presentation.ReadingRangeSettings" />
+        <activity
+            android:name=".presentation.reading.SledSmarttrayReading"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.Report.View.ItemWiseReport"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.Report.ReportDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.reading.LocateScanActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.Audit.AuditReadingActivity"
             android:exported="false" />
@@ -42,7 +83,8 @@
         <activity
             android:name=".presentation.SettingsActivity"
             android:exported="true" />
-        <activity android:name=".presentation.reading.FindMissingReadingActivity"></activity>
+        <activity android:name=".presentation.Report.ReportActivity" />
+        <activity android:name=".presentation.reading.FindMissingReadingActivity" />
         <activity android:name=".presentation.CustomerManagment.View.CustomerSalesHistoryFragment" />
         <activity android:name=".presentation.Audit.AuditFragment" />
         <activity android:name=".presentation.Audit.AuditMenuFragment" />

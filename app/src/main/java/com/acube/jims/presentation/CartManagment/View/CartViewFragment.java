@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -62,7 +63,7 @@ public class CartViewFragment extends BaseActivity implements CartItemAdapter.Up
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.cart_view_fragment);
         dataset = new ArrayList<>();
-        binding.recycartitems.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        binding.recycartitems.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         initToolBar(binding.toolbars.toolbar, "Cart", true);
 
         Delete();
@@ -82,7 +83,7 @@ public class CartViewFragment extends BaseActivity implements CartItemAdapter.Up
             }
         });
 
-        mViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(customerId));
+        mViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(customerId),getApplicationContext());
         mViewModel.getLiveData().observe(this, new Observer<ResponseCart>() {
             @Override
             public void onChanged(ResponseCart responseCart) {
@@ -119,7 +120,7 @@ public class CartViewFragment extends BaseActivity implements CartItemAdapter.Up
                 hideProgressDialog();
                 if (responseAddtoCart != null) {
                     Toast.makeText(getApplicationContext(), "Updated", Toast.LENGTH_SHORT).show();
-                    mViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(customerId));
+                    mViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(customerId),getApplicationContext());
                     // LocalPreferences.storeStringPreference(getActivity(), AppConstants.CartID,responseAddtoCart.getCartListNo());
                 } else {
                     Log.d(TAG, "onChangedsiz: ");
@@ -161,14 +162,16 @@ public class CartViewFragment extends BaseActivity implements CartItemAdapter.Up
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                FragmentHelper.replaceFragment(CartViewFragment.this, R.id.parent, new SaleFragment());
+                startActivity(new Intent(getApplicationContext(), SaleFragment.class));
             }
         });
         cdvquote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentHelper.replaceFragment(CartViewFragment.this, R.id.parent, new InvoiceFragment());
                 dialog.dismiss();
+
+                startActivity(new Intent(getApplicationContext(), InvoiceFragment.class));
+
             }
         });
         cdvshare.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +202,7 @@ public class CartViewFragment extends BaseActivity implements CartItemAdapter.Up
         items.addProperty("qty", 0);
         JsonArray jsonArray = new JsonArray();
         jsonArray.add(items);
-        addtoCartViewModel.AddtoCart(AppConstants.Authorization + AuthToken, "delete", jsonArray);
+        addtoCartViewModel.AddtoCart(AppConstants.Authorization + AuthToken, "delete", jsonArray,getApplicationContext());
 
     }
 

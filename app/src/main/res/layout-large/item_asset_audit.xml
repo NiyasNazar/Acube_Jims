@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data />
+
+    <com.skydoves.elasticviews.ElasticLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/background_cornered_edit_text"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="12sp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/assetTransferLinearLayoutCompat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="2.2"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Date"
+                    android:textColor="@color/textColor"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/requestDateTextView"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/semi_bold"
+                    android:gravity="center"
+
+                    android:textSize="18sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:textColor="@color/textColor"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/assetTransferLinearLayoutCompat"
+                app:layout_constraintTop_toTopOf="@id/assetTransferLinearLayoutCompat">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Audit Id "
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"
+                        tools:ignore="SmallSp" />
+
+                    <TextView
+                        android:id="@+id/requestByValueTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/medium"
+                        android:textSize="18sp"
+                        tools:ignore="SmallSp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="7dp"
+                    android:background="#F0F0F0" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:text="Remark"
+                        android:textColor="@color/textColor"
+                        android:textSize="18sp"
+                        tools:ignore="SmallSp" />
+
+                    <TextView
+                        android:id="@+id/tvremark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/medium"
+                        android:textSize="18sp"
+                        tools:ignore="SmallSp" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="7dp"
+                    android:background="#F0F0F0" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <ImageView
+                android:id="@+id/imvupload"
+
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_upload"
+                android:tint="@color/appmaincolor">
+
+            </ImageView>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </com.skydoves.elasticviews.ElasticLayout>
+</layout>

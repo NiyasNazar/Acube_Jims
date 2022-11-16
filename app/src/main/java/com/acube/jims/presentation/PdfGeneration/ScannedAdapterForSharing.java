@@ -59,12 +59,10 @@ public class ScannedAdapterForSharing extends RecyclerView.Adapter<ScannedAdapte
         ResponseCompare cartDetail = dataset.get(position);
         holder.textViewitemName.setText(cartDetail.getItemName());
         holder.textViewSerialnos.setText(cartDetail.getSerialNumber());
-
-
         Glide.with(mCtx)
                 .load(cartDetail.getImagePath())
-                //  .placeholder(R.drawable.placeholder)
-                //  .error(R.drawable.imagenotfound)
+                .placeholder(R.drawable.jwimage)
+                .error(R.drawable.jwimage)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -82,14 +80,18 @@ public class ScannedAdapterForSharing extends RecyclerView.Adapter<ScannedAdapte
 
 
         if (cartDetail.getStoneWeight() != null) {
+/*
             holder.textViewStoneweight.setText("Stone Weight: " + cartDetail.getStoneWeight() + " g");
+*/
         } else {
+/*
             holder.textViewStoneweight.setText("Stone Weight: N/A");
+*/
         }
         if (cartDetail.getGrossWeight() != null) {
-            holder.textViewWeight.setText("Weight: " + cartDetail.getGrossWeight() + " g");
+            holder.textViewWeight.setText("" + cartDetail.getGrossWeight() + " g");
         } else {
-            holder.textViewWeight.setText("Stone Weight: N/A");
+            holder.textViewWeight.setText("");
         }
 
 

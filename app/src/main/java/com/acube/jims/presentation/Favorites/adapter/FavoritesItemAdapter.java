@@ -36,15 +36,15 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
     DeleteProduct deleteProduct;
     List<String> comparelist;
     Comaparelist comaparelist;
-    boolean isSelectedAll=false;
-    public FavoritesItemAdapter(Context mCtx, List<ResponseFavorites> dataset, DeleteProduct deleteProduct,Comaparelist comaparelist) {
+    boolean isSelectedAll = false;
+
+    public FavoritesItemAdapter(Context mCtx, List<ResponseFavorites> dataset, DeleteProduct deleteProduct, Comaparelist comaparelist) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         this.deleteProduct = deleteProduct;
         comparelist = new ArrayList<>();
-        this.comaparelist=comaparelist;
+        this.comaparelist = comaparelist;
     }
-
 
 
     @Override
@@ -60,10 +60,13 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
         ResponseFavorites cartDetail = dataset.get(position);
         holder.textViewitemName.setText(cartDetail.getItemName());
         holder.textViewSerialnos.setText(cartDetail.getSerialNumber());
+        holder.textView_item_code.setText(cartDetail.getItemCode());
+        holder.tv_description.setText(cartDetail.getItemDesc());
+        holder.textViewPrice.setText(""+cartDetail.getMrp());
         Glide.with(mCtx)
                 .load(cartDetail.getImagePath())
-                //  .placeholder(R.drawable.placeholder)
-                //  .error(R.drawable.imagenotfound)
+                .placeholder(R.drawable.jwimage)
+                .error(R.drawable.jwimage)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -81,21 +84,25 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
 
 
         if (cartDetail.getStoneWeight() != null) {
+/*
             holder.textViewStoneweight.setText("Stone Weight: " + cartDetail.getStoneWeight() + " g");
+*/
         } else {
+/*
             holder.textViewStoneweight.setText("Stone Weight: N/A");
+*/
         }
         if (cartDetail.getGrossWeight() != null) {
-            holder.textViewWeight.setText("Weight: " + cartDetail.getGrossWeight() + " g");
+            holder.textViewWeight.setText("" + cartDetail.getGrossWeight() + " g");
         } else {
-            holder.textViewWeight.setText("Stone Weight: N/A");
+            holder.textViewWeight.setText("");
         }
-        if (!isSelectedAll){
-            Log.d("TAG", "onClick: "+"selectclick");
+        if (!isSelectedAll) {
+            Log.d("TAG", "onClick: " + "selectclick");
             holder.comparecheckbox.setChecked(false);
-            comparelist=new ArrayList<>();
-        } else if(isSelectedAll) {
-            Log.d("TAG", "onClick: "+"selectclick");
+            comparelist = new ArrayList<>();
+        } else if (isSelectedAll) {
+            Log.d("TAG", "onClick: " + "selectclick");
             holder.comparecheckbox.setChecked(true);
             comparelist.add(String.valueOf(dataset.get(position).getSerialNumber()));
         }
@@ -112,7 +119,7 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewQuantity, textViewitemName, textViewWeight, textViewStoneweight,textViewSerialnos;
+        TextView textView_item_code, textViewitemName, textViewWeight, textViewPrice, textViewStoneweight, textViewSerialnos, tv_description;
         ImageView imageViewadd, imageViewremove, ItemImage, imageviewdelete;
         CheckBox comparecheckbox;
 
@@ -120,12 +127,14 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
             super(itemView);
             textViewitemName = itemView.findViewById(R.id.tv_itemname);
             textViewSerialnos = itemView.findViewById(R.id.tv_serialnumber);
-
+            textView_item_code = itemView.findViewById(R.id.tv_item_code);
             textViewWeight = itemView.findViewById(R.id.tv_weight);
             textViewStoneweight = itemView.findViewById(R.id.tv_stoneweight);
+            textViewPrice= itemView.findViewById(R.id.tvprice);
             imageviewdelete = itemView.findViewById(R.id.imvdelete);
             ItemImage = itemView.findViewById(R.id.item_image);
             comparecheckbox = itemView.findViewById(R.id.comparecheckbox);
+            tv_description = itemView.findViewById(R.id.tv_description);
             imageviewdelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -168,12 +177,13 @@ public class FavoritesItemAdapter extends RecyclerView.Adapter<FavoritesItemAdap
         void compareitems(List<String> comparelist);
     }
 
-    public void selectAll(){
-        isSelectedAll=true;
+    public void selectAll() {
+        isSelectedAll = true;
         notifyDataSetChanged();
     }
-    public void unselectall(){
-        isSelectedAll=false;
+
+    public void unselectall() {
+        isSelectedAll = false;
         notifyDataSetChanged();
     }
 

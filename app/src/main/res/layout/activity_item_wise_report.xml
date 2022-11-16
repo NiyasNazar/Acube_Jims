@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg">
+
+
+        <include
+            android:id="@+id/toolbar_app"
+            layout="@layout/layout_toolbar">
+
+        </include>
+
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+
+            android:layout_height="match_parent"
+            android:layout_above="@id/bottomlayt"
+            android:layout_below="@id/toolbar_app"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/item_border_detailspage"
+            android:orientation="vertical"
+            tools:context=".presentation.Report.View.FoundFragment">
+
+
+            <TextView
+
+                android:id="@+id/tv_totaldata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_semibold"
+
+                android:textColor="@color/textcolor">
+
+            </TextView>
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyvfound"
+                android:layout_width="match_parent"
+
+                android:layout_height="match_parent"
+                android:layout_marginLeft="6dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="6dp"
+                android:layout_marginBottom="15dp">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_notfound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="No Records Found"
+            android:visibility="gone">
+
+        </TextView>
+
+        <ImageView
+            android:id="@+id/expanded_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/dummy_item_image"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/bottomlayt"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/appmaincolor"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Qty"
+                    android:textColor="@color/white"
+                    android:textSize="15sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/qty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/white"
+                    android:textSize="15sp">
+
+                </TextView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Price"
+                    android:textColor="@color/white"
+                    android:textSize="15sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="0"
+                    android:textColor="@color/white"
+                    android:textSize="15sp">
+
+                </TextView>
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_medium"
+                    android:text="Weight"
+                    android:textColor="@color/white"
+                    android:textSize="15sp">
+
+                </TextView>
+
+                <TextView
+                    android:id="@+id/weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_medium"
+                    android:textColor="@color/white"
+                    android:textSize="15sp">
+
+                </TextView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabcomparison"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottomlayt"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="bottom|end"
+
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="@color/appmaincolor"
+            android:src="@drawable/ic_baseline_insert_drive_file_24"
+
+            app:tint="@color/white" />
+    </RelativeLayout>
+</layout>

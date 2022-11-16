@@ -89,12 +89,13 @@
 
                 <RelativeLayout
                     android:id="@+id/laytedpassword"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/ed_email"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ed_border"
+                    android:layout_centerHorizontal="true"
 
-                    android:layout_width="300dp"                    android:layout_height="wrap_content"
-                    >
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ed_border">
 
                     <EditText
                         android:id="@+id/ed_password"
@@ -142,7 +143,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign in"
+                        android:text="Sign In"
                         android:textColor="#FFFFFF">
 
                     </TextView>
@@ -150,11 +151,32 @@
 
                 </LinearLayout>
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/laytrmemeberme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_signin"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatCheckBox
+                        android:id="@+id/rememberMeCheckBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/black"
+                        android:text="Remember me"
+                        android:textColor="@color/black" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <TextView
                     android:id="@+id/tvsettings"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
-                    android:layout_below="@id/btn_signin"
+                    android:layout_below="@id/laytrmemeberme"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="5dp"
                     android:drawableLeft="@drawable/ic_settings_svgrepo_com"

@@ -39,6 +39,8 @@ import com.acube.jims.presentation.Analytics.AnalyticsActivity;
 import com.acube.jims.presentation.Audit.AuditMenuFragment;
 import com.acube.jims.presentation.Catalogue.View.CatalogueActivity;
 import com.acube.jims.presentation.Catalogue.View.CatalogueSummaryActivity;
+import com.acube.jims.presentation.Consignment.ConsignmentActivity;
+import com.acube.jims.presentation.Consignment.Consignmentoptions;
 import com.acube.jims.presentation.CustomerManagment.View.CustomerBottomSheetFragment;
 import com.acube.jims.presentation.CustomerManagment.View.CustomerViewfragment;
 import com.acube.jims.presentation.DashBoard.DashBoardActivity;
@@ -52,6 +54,10 @@ import com.acube.jims.presentation.ItemRequest.ItemRequestActivity;
 import com.acube.jims.presentation.ItemRequest.view.SalesmanItemRequestActivity;
 import com.acube.jims.presentation.ScanItems.ScanItemsActivity;
 import com.acube.jims.R;
+import com.acube.jims.presentation.SmartTrayReading;
+import com.acube.jims.presentation.reading.SledSmarttrayReading;
+import com.acube.jims.presentation.transfer.Transferactivity;
+import com.acube.jims.rfid.DebugActivity;
 import com.acube.jims.utils.FilterPreference;
 import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.HomeFragmentBinding;
@@ -88,7 +94,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         return new HomeFragment();
     }
 
-    String AuthToken;
+    String AuthToken, UserName;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -102,7 +108,8 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         createCustomerViewModel = ViewModelProviders.of(this).get(CreateCustomerViewModel.class);
         createCustomerViewModel.init();
         LocalPreferences.storeBooleanPreference(getActivity(), "showlogout", false);
-
+        UserName = LocalPreferences.retrieveStringPreferences(requireActivity(), "UserName");
+        boolean salesman = LocalPreferences.retrieveBooleanPreferences(getActivity(), "salesman");
         binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         binding.recyvhomemenu.setHasFixedSize(true);
         binding.tvgoldrate.setText("Gold Rate " + LocalPreferences.retrieveStringPreferences(getActivity(), "GoldRate"));
@@ -110,10 +117,42 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         DatabaseClient.getInstance(getActivity()).getAppDatabase().homeMenuDao().getAll().observe(requireActivity(), new Observer<List<HomeData>>() {
             @Override
             public void onChanged(List<HomeData> homeData) {
-                if (homeData != null) {
-                    binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
+
+                Log.d("Salesman", "onChanged: " + salesman);
+                if (salesman) {
+                    if (homeData != null) {
+                        binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
+
+                    }
+                } else {
+                    List<HomeData> filteredList = new ArrayList<>();
+                    HomeData homeData1;
+                    for (int i = 0; i < homeData.size(); i++) {
+
+                        if (homeData.get(i).getMenuName().equalsIgnoreCase("ItemCatalog")) {
+                            homeData1 = new HomeData();
+                            homeData1.setMenuName(homeData.get(i).getMenuName());
+                            homeData1.setMenuText(homeData.get(i).getMenuText());
+                            filteredList.add(homeData1);
+                        }
+                        if (homeData.get(i).getMenuName().equalsIgnoreCase("Customer")) {
+                            homeData1 = new HomeData();
+                            homeData1.setMenuName(homeData.get(i).getMenuName());
+                            homeData1.setMenuText(homeData.get(i).getMenuText());
+                            filteredList.add(homeData1);
+                        }
+                        if (homeData.get(i).getMenuName().equalsIgnoreCase("Scan")) {
+                            homeData1 = new HomeData();
+                            homeData1.setMenuName(homeData.get(i).getMenuName());
+                            homeData1.setMenuText(homeData.get(i).getMenuText());
+                            filteredList.add(homeData1);
+                        }
+                    }
+                    binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), filteredList, HomeFragment.this::replaceFragment));
 
                 }
+
+
             }
         });
 
@@ -133,7 +172,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
             //FragmentHelper.replaceFragment(getActivity(), R.id.content, new CatalogueFragment());
             startActivity(new Intent(requireActivity(), CatalogueSummaryActivity.class));
 
-            FilterPreference.clearPreferences(getActivity());
+            FilterPreference.clearPreferences(requireActivity());
 
         } else if (value.equalsIgnoreCase("Customer")) {
 
@@ -147,7 +186,8 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
         } else if (value.equalsIgnoreCase("Scan")) {
             //  startActivity(new Intent(getActivity(),));
-            PerformScan();
+            //PerformScan();
+            startActivity(new Intent(getActivity(), SledSmarttrayReading.class));
 
 
         } else if (value.equalsIgnoreCase("InventoryAudit")) {
@@ -156,15 +196,21 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
         } else if (value.equalsIgnoreCase("AndroidDashboard")) {
             // startActivity(new Intent(getActivity(), DashBoardActivity.class));
+
+            String Weburl = LocalPreferences.retrieveStringPreferences(requireActivity(), "Weburl");
+            int CompanyCode = LocalPreferences.retrieveIntegerPreferences(requireActivity(), "CompanyCode");
+
             startActivity(new Intent(getActivity(), AnalyticsActivity.class)
-                    .putExtra("url", "http://acuberfid.fortiddns.com:4480/jmswebdev/maindashboardmobile/16")
+                    .putExtra("url", Weburl + "maindashboardmobile/" + CompanyCode + "/" + UserName)
                     .putExtra("title", "Dashboard"));
 
 
         } else if (value.equalsIgnoreCase("Analytics")) {
-
+            String Weburl = LocalPreferences.retrieveStringPreferences(requireActivity(), "Weburl");
+            int CompanyCode = LocalPreferences.retrieveIntegerPreferences(requireActivity(), "CompanyCode");
             startActivity(new Intent(getActivity(), AnalyticsActivity.class)
-                    .putExtra("url", "http://acuberfid.fortiddns.com:4480/jmswebdev/dataanalyticsmobile/16")
+                    .putExtra("url", Weburl + "dataanalyticsmobile/" + CompanyCode + "/" + UserName)
+
                     .putExtra("title", "Analytics"));
 
 
@@ -180,6 +226,21 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
 
         } else if (value.equalsIgnoreCase("deviceregistration")) {
             startActivity(new Intent(getActivity(), DeviceRegistrationFragment.class));
+
+        } else if (value.equalsIgnoreCase("dashboardaudit")) {
+            int CompanyCode = LocalPreferences.retrieveIntegerPreferences(requireActivity(), "CompanyCode");
+            String Weburl = LocalPreferences.retrieveStringPreferences(requireActivity(), "Weburl");
+
+            startActivity(new Intent(getActivity(), AnalyticsActivity.class)
+                    .putExtra("url", Weburl + "auditdashboardmobile/" + CompanyCode + "/" + UserName)
+
+                    .putExtra("title", "Audit Dashboard"));
+
+        } else if (value.equalsIgnoreCase("consignment")) {
+            startActivity(new Intent(getActivity(), Consignmentoptions.class));
+
+        } else if (value.equalsIgnoreCase("Transfer")) {
+            startActivity(new Intent(getActivity(), Transferactivity.class));
 
         }
 
@@ -240,7 +301,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         RecyclerView recyclerView = alertLayout.findViewById(R.id.recyvcustomerlist);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        customerViewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseCustomerListing>>() {
+        customerViewModel.getLiveData().observe(requireActivity(), new Observer<List<ResponseCustomerListing>>() {
             @Override
             public void onChanged(List<ResponseCustomerListing> responseCustomerListings) {
                 if (responseCustomerListings != null) {
@@ -294,7 +355,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
             @Override
             public void afterTextChanged(Editable keyword) {
                 if (keyword.toString().length() > 3) {
-                    customerViewModel.getCustomerSearch(AppConstants.Authorization + AuthToken, keyword.toString());
+                    customerViewModel.getCustomerSearch(AppConstants.Authorization + AuthToken, keyword.toString(),requireActivity());
                 }
 
 
@@ -321,7 +382,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         jsonObject.addProperty("customerName", vaguestname);
         jsonObject.addProperty("emailID", vaemail);
         jsonObject.addProperty("contactNumber", vamobile);
-        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token), jsonObject);
+        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token), jsonObject,getActivity());
 
     }
 

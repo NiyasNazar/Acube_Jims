@@ -20,7 +20,9 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.acube.jims.BaseActivity;
 import com.acube.jims.BaseFragment;
+import com.acube.jims.presentation.Compare.CompareFragment;
 import com.acube.jims.presentation.Quotation.adapter.DiscountItem;
 import com.acube.jims.presentation.Quotation.adapter.InvoiceAdapter;
 import com.acube.jims.R;
@@ -43,7 +45,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class SaleFragment extends BaseFragment implements InvoiceAdapter.DiscountSum {
+public class SaleFragment extends BaseActivity implements InvoiceAdapter.DiscountSum {
 
     private InvoiceViewModel mViewModel;
     RecyclerView mRecyinvoice;
@@ -65,21 +67,21 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
     double labourcharge = 0.0;
     List<DiscountItem> datasetItems;
 
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(
-                inflater, R.layout.sale_fragment, container, false);
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.sale_fragment);
         datasetItems = new ArrayList<>();
-
-        binding.recyvinvoiceitems.setLayoutManager(new LinearLayoutManager(getActivity()));
-        String Customername = LocalPreferences.retrieveStringPreferences(getContext(), "GuestCustomerName");
-        String CustomerMobile = LocalPreferences.retrieveStringPreferences(getContext(), "CustomerMobile");
+        binding.recyvinvoiceitems.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        String Customername = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "GuestCustomerName");
+        String CustomerMobile = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CustomerMobile");
         binding.tvcustomername.setText("Customer : " + Customername);
         binding.tvcustomercontactnumber.setText("Contact : " + CustomerMobile);
         saleViewModel = new ViewModelProvider(this).get(SaleViewModel.class);
         saleViewModel.init();
+        initToolBar(binding.toolbarApp.toolbar, "Invoice", true);
         String date = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()).format(new Date());
         binding.tvdate.setText(date);
 //        dataset = new ArrayList();
@@ -101,24 +103,28 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
         JsonArray jsonObject = new JsonArray();
         String[] datset = {"10001", "10002"};
         List<CartDetail> cartdata = getList();
-        List<String> filteredvalue = new ArrayList<>();
-        for (int i = 0; i < cartdata.size(); i++) {
-            filteredvalue.add(cartdata.get(i).getSerialNumber());
-
-        }
 
 
-        String[] strArray = filteredvalue.toArray(new String[filteredvalue.size()]);
+        DatabaseClient.getInstance(SaleFragment.this).getAppDatabase().scannedItemsDao().getFromSmarttool().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+
+
+                String[] strArray = strings.toArray(new String[strings.size()]);
+                mViewModel.FetchInvoice(LocalPreferences.getToken(getApplicationContext()), strArray,getApplicationContext());
+
+            }
+        });
+
         // jsonObject
-        saleViewModel.getLiveData().observe(getActivity(), new Observer<SaleSuccess>() {
+        saleViewModel.getLiveData().observe(this, new Observer<SaleSuccess>() {
             @Override
             public void onChanged(SaleSuccess jsonObject) {
                 hideProgressDialog();
-                startActivity(new Intent(getActivity(), SaleSuccessActivity.class).putExtra("invoice",jsonObject.getInvoiceNo()).putExtra("date",jsonObject.getInvoiceDate()));
+                startActivity(new Intent(getApplicationContext(), SaleSuccessActivity.class).putExtra("invoice", jsonObject.getInvoiceNo()).putExtra("date", jsonObject.getInvoiceDate()));
             }
         });
-        mViewModel.FetchInvoice(LocalPreferences.getToken(getActivity()), strArray);
-        mViewModel.getLiveData().observe(getActivity(), new Observer<List<ResponseInvoiceList>>() {
+        mViewModel.getLiveData().observe(this, new Observer<List<ResponseInvoiceList>>() {
             @Override
             public void onChanged(List<ResponseInvoiceList> responseInvoiceLists) {
 
@@ -126,28 +132,32 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
                 setList("invoicelist", responseInvoiceLists);
                 if (responseInvoiceLists != null) {
                     for (int i = 0; i < responseInvoiceLists.size(); i++) {
-                        double totalprice = responseInvoiceLists.get(i).getPriceWithoutTax() * responseInvoiceLists.get(i).getGoldWeight();
-                        double newlabrchrg = responseInvoiceLists.get(i).getLabourCharge() * responseInvoiceLists.get(i).getGoldWeight();
+                        if (responseInvoiceLists.get(i).getPriceWithoutTax() != null) {
+                            double totalprice = getValueOrDefault(responseInvoiceLists.get(i).getPriceWithoutTax(), 0.0) * getValueOrDefault(responseInvoiceLists.get(i).getGoldWeight(), 0.0);
+                            //  double newlabrchrg = getValueOrDefault(responseInvoiceLists.get(i).getLabourCharge(), 0.0) * getValueOrDefault(responseInvoiceLists.get(i).getGoldWeight(), 0.0);
+                            double newlabrchrg = getValueOrDefault(responseInvoiceLists.get(i).getLabourCharge(), 0) * getValueOrDefault(responseInvoiceLists.get(i).getGoldWeight(), 0.0);
 
-                        total += totalprice;
-                        totalItemtax += (totalprice / 100.0f) * responseInvoiceLists.get(i).getItemTax();
-                        labourchargetax += (newlabrchrg / 100.0f) * responseInvoiceLists.get(i).getLabourTax();
-                        labourcharge += newlabrchrg;
-                        labourchargewithtax += (newlabrchrg / 100.0f) * responseInvoiceLists.get(i).getLabourTax() + (newlabrchrg);
+                            total += totalprice;
+                            totalItemtax += (totalprice / 100.0f) * responseInvoiceLists.get(i).getItemTax();
+                            labourchargetax += (newlabrchrg / 100.0f) * responseInvoiceLists.get(i).getLabourTax();
+                            labourcharge += newlabrchrg;
+                            labourchargewithtax += (newlabrchrg / 100.0f) * responseInvoiceLists.get(i).getLabourTax() + (newlabrchrg);
+                        }
+
                     }
                     double tot = total + labourcharge;
                     binding.tvsalesamount.setText("Total without Tax " + tot);
-                    LocalPreferences.storeStringPreference(getActivity(), "pricewithouttax", String.valueOf(tot));
+                    LocalPreferences.storeStringPreference(getApplicationContext(), "pricewithouttax", String.valueOf(tot));
                     double totaltax = totalItemtax + labourchargetax;
-                    LocalPreferences.storeStringPreference(getActivity(), "totaltax", String.valueOf(totaltax));
+                    LocalPreferences.storeStringPreference(getApplicationContext(), "totaltax", String.valueOf(totaltax));
                     binding.tvtax.setText("Total Tax " + totaltax);
                     binding.tvDiscount.setText("Discount : " + discount);
                     netamount = total + totalItemtax + labourchargewithtax;
-                    LocalPreferences.storeStringPreference(getActivity(), "total", String.valueOf(netamount));
+                    LocalPreferences.storeStringPreference(getApplicationContext(), "total", String.valueOf(netamount));
                     Log.d("bbms", "onBindViewHolder: " + totalItemtax);
                     Log.d("bbms", "onBindViewHolder: " + labourchargetax);
                     binding.tvtotal.setText("Total " + netamount);
-                    binding.recyvinvoiceitems.setAdapter(new InvoiceAdapter(getActivity(), responseInvoiceLists, SaleFragment.this));
+                    binding.recyvinvoiceitems.setAdapter(new InvoiceAdapter(getApplicationContext(), responseInvoiceLists, SaleFragment.this));
 
 
                 }
@@ -155,7 +165,6 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
         });
 
 
-        return binding.getRoot();
     }
 
     public void showPopupWindow(final View view) {
@@ -169,7 +178,7 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
         //  final TextInputEditText etPassword = alertLayout.findViewById(R.id.tiet_password);
 
 
-        AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder alert = new AlertDialog.Builder(getApplicationContext());
         alert.setTitle("");
         // this is set the view from XML inside AlertDialog
         alert.setView(alertLayout);
@@ -183,7 +192,6 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
                 dialog.dismiss();
 
 
-
                 //FragmentHelper.replaceFragment(getActivity(), R.id.content, new InvoiceFragment());
             }
         });
@@ -193,10 +201,10 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
 
     private void markItemSale() {
         showProgressDialog();
-        int GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getActivity(), "GuestCustomerID");
-        String warehouseID = LocalPreferences.retrieveStringPreferences(getActivity(), "warehouseId");
+        int GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
+        String warehouseID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "warehouseId");
 
-        String UserID = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
+        String UserID = LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.UserID);
         JsonArray itemsarray = new JsonArray();
 
         JsonObject jsonObject = new JsonObject();
@@ -230,7 +238,7 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
         Log.d("markItemSale", "markItemSale: " + jsonObject);
         Log.d("markItemSale", "markItemSale: " + datasetItems.size());
 
-        saleViewModel.FetchInvoice(LocalPreferences.getToken(getActivity()), jsonObject);
+        saleViewModel.FetchInvoice(LocalPreferences.getToken(getApplicationContext()), jsonObject,getApplicationContext());
 
     }
 
@@ -240,7 +248,7 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
             @Override
             protected List<DiscountItem> doInBackground(Void... voids) {
                 List<DiscountItem> taskList = DatabaseClient
-                        .getInstance(getActivity())
+                        .getInstance(getApplicationContext())
                         .getAppDatabase()
                         .discountItemsDao().getAll();
                 return taskList;
@@ -281,26 +289,26 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
             protected Void doInBackground(Void... voids) {
                 try {
                     total = DatabaseClient
-                            .getInstance(getActivity())
+                            .getInstance(getApplicationContext())
                             .getAppDatabase()
                             .discountItemsDao()
 
                             .totalwithouttax();
 
                     discount = DatabaseClient
-                            .getInstance(getActivity())
+                            .getInstance(getApplicationContext())
                             .getAppDatabase()
                             .discountItemsDao()
 
                             .getdiscountsum();
                     totaltax = DatabaseClient
-                            .getInstance(getActivity())
+                            .getInstance(getApplicationContext())
                             .getAppDatabase()
                             .discountItemsDao()
                             .gettotaltax();
 
                     totalamount = DatabaseClient
-                            .getInstance(getActivity())
+                            .getInstance(getApplicationContext())
                             .getAppDatabase()
                             .discountItemsDao()
                             .gettotalpayable();
@@ -315,13 +323,13 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-                LocalPreferences.storeStringPreference(getActivity(), "discount", String.valueOf(discount));
+                LocalPreferences.storeStringPreference(getApplicationContext(), "discount", String.valueOf(discount));
                 binding.tvsalesamount.setText("Total without Tax " + total);
 
                 double discountedtotal = netamount - discount;
                 String stringdouble = Double.toString(totalamount);
                 binding.tvtotal.setText("Total " + stringdouble);
-                LocalPreferences.storeStringPreference(getActivity(), "total", String.valueOf(discountedtotal));
+                LocalPreferences.storeStringPreference(getApplicationContext(), "total", String.valueOf(discountedtotal));
                 binding.tvDiscount.setText("Discount : " + discount);
                 Log.d("dsicountsum", "doInBackground: " + totalamount);
                 Log.d("exception", "doInBackground: " + discount);
@@ -383,12 +391,12 @@ public class SaleFragment extends BaseFragment implements InvoiceAdapter.Discoun
     public <T> void setList(String key, List<T> list) {
         Gson gson = new Gson();
         String json = gson.toJson(list);
-        LocalPreferences.storeStringPreference(getActivity(), key, json);
+        LocalPreferences.storeStringPreference(getApplicationContext(), key, json);
     }
 
     public List<CartDetail> getList() {
         List<CartDetail> mMainCategory = null;
-        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), "cartitem");
+        String serializedObject = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "cartitem");
         if (serializedObject != null) {
             Gson gson = new Gson();
             Type type = new TypeToken<List<CartDetail>>() {

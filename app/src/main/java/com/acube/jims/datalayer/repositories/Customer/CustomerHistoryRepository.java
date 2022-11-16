@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Customer;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -23,9 +24,9 @@ public class CustomerHistoryRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void CustomerHistory(String Token, int  customerID) {
+    public void CustomerHistory(String Token, int  customerID, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<ResponseCustomerHistory> call = restApiService.FetchCustomerHistory(Token, String.valueOf(customerID));
         call.enqueue(new Callback<ResponseCustomerHistory>() {
             @Override

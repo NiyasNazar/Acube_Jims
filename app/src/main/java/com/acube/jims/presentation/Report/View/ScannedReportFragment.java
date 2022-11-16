@@ -79,7 +79,7 @@ public class ScannedReportFragment extends Fragment {
         jsonObject.addProperty("companyID", companyID);
         jsonObject.addProperty("warehouseID", warehouseID);
         jsonObject.addProperty("locationID", locationID);
-        mViewModel.FetchReports(LocalPreferences.getToken(getContext()), jsonObject);
+        mViewModel.FetchReports(LocalPreferences.getToken(getContext()), jsonObject,requireActivity());
 
 
         binding.tabfound.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.tab_border));

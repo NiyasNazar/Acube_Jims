@@ -56,7 +56,7 @@ public class CatalogItemAdapter extends RecyclerView.Adapter<CatalogItemAdapter.
 
         ResponseItems responseCatalogueListing = dataset.get(position);
         holder.textViewItemName.setText(responseCatalogueListing.getItemName());
-        holder.textViewPrice.setText("SAR " + Math.round(responseCatalogueListing.getMrp()));
+        holder.textViewPrice.setText("" + Math.round(responseCatalogueListing.getMrp()));
         holder.textViewSerialNo.setText(responseCatalogueListing.getSerialNumber());
         holder.textViewKarat.setText("" + responseCatalogueListing.getKaratName());
 

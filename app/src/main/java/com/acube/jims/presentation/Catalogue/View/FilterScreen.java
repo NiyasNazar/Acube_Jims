@@ -162,7 +162,7 @@ public class FilterScreen extends BottomSheetDialogFragment implements FilterMas
                     Log.d("datasetweight", "onClick: " + commaseparatedlist);
                     FilterPreference.storeStringPreference(requireActivity(), "weightid", commaseparatedlist);
                 }*/
-                ((ApplyFilter)requireActivity()).applyfilter();
+                ((ApplyFilter) requireActivity()).applyfilter();
                 Log.d("onBindViewHolder", "catID: " + FilterPreference.retrieveStringPreferences(requireActivity(), "catid"));
 
                 dismiss();

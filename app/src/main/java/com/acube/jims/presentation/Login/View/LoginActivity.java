@@ -13,12 +13,14 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.CustomerManagment.View.CustomerBottomSheetFragment;
 import com.acube.jims.presentation.CustomerManagment.View.CustomerViewfragment;
+import com.acube.jims.presentation.HomePage.View.HomePageActivity;
 import com.acube.jims.presentation.HomePage.ViewModel.HomeViewModel;
 import com.acube.jims.presentation.Login.ViewModel.LoginViewModel;
 import com.acube.jims.R;
@@ -42,6 +44,8 @@ public class LoginActivity extends BaseActivity {
     ActivityLoginBinding binding;
     LoginViewModel viewModel;
     private HomeViewModel mViewModel;
+    boolean rememberme;
+    boolean urlupdated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,9 +54,13 @@ public class LoginActivity extends BaseActivity {
         viewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
         viewModel.init();
 
-        binding.edEmail.setText("admin@suntech003.ae");
-        binding.edPassword.setText("@dminSuntech2022");
+        //   binding.edEmail.setText("admin@suntech003.ae");
+        //   binding.edPassword.setText("Admin@2022");
+
+      binding.edEmail.setText("sales@acube.com");
+      binding.edPassword.setText("Sales@2022");
         Log.d("onCreate", "onCreate: " + getMacAddr());
+        urlupdated = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "urlupdated");
 
 
         mViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
@@ -82,26 +90,56 @@ public class LoginActivity extends BaseActivity {
             }
         });
 
+        rememberme = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "rememberme");
+
+        if (rememberme) {
+            binding.rememberMeCheckBox.setChecked(true);
+            binding.edEmail.setText(LocalPreferences.retrieveStringPreferences(getApplicationContext(), "LogUser"));
+            binding.edPassword.setText(LocalPreferences.retrieveStringPreferences(getApplicationContext(), "LogPassword"));
+
+        } else {
+            binding.rememberMeCheckBox.setChecked(false);
+        }
+        binding.rememberMeCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    LocalPreferences.storeBooleanPreference(getApplicationContext(), "rememberme", true);
+
+                } else {
+                    LocalPreferences.storeBooleanPreference(getApplicationContext(), "rememberme", false);
+                }
+            }
+        });
+
+
         binding.btnSignin.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                binding.edEmail.setError(null);
-                binding.edPassword.setError(null);
-                String vaEmail = binding.edEmail.getText().toString();
-                String vaPassword = binding.edPassword.getText().toString();
-                if (vaEmail.equalsIgnoreCase("")) {
-                    binding.edEmail.setError("Field Empty");
-                } else if (vaPassword.equalsIgnoreCase("")) {
-                    binding.edPassword.setError("Field Empty");
+                if (!urlupdated){
+                    showerror("Please configure Url ");
 
-                } else if (new AppUtility(LoginActivity.this).checkInternet()) {
-                    LoginCustomer(vaEmail, vaPassword);
-                } else {
-                    customSnackBar(binding.parent, getResources().getString(R.string.no_internet));
+                }else{
+                    binding.edEmail.setError(null);
+                    binding.edPassword.setError(null);
+                    String vaEmail = binding.edEmail.getText().toString();
+                    String vaPassword = binding.edPassword.getText().toString();
+                    if (vaEmail.equalsIgnoreCase("")) {
+                        binding.edEmail.setError("Field Empty");
+                    } else if (vaPassword.equalsIgnoreCase("")) {
+                        binding.edPassword.setError("Field Empty");
 
+                    } else if (new AppUtility(LoginActivity.this).checkInternet()) {
+                        LoginCustomer(vaEmail, vaPassword);
+                    } else {
+                        customSnackBar(binding.parent, getResources().getString(R.string.no_internet));
+
+
+                    }
 
                 }
+
 
 
             }
@@ -114,23 +152,26 @@ public class LoginActivity extends BaseActivity {
                 hideProgressDialog();
                 if (homeData != null) {
                     new Thread(() -> {
+
                         DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
                                 .homeMenuDao()
-                                .insert(homeData);
+                                .deletehomemenus();
+                        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                                .homeMenuDao()
 
+                                .insert(homeData);
                         runOnUiThread(this::doLogin);
                     }).start();
 
 
-
-
                 }
+                LocalPreferences.storeBooleanPreference(getApplicationContext(), "salesman", true);
                 String CustomerCode = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "GuestCustomerCode");
                 if (CustomerCode.equalsIgnoreCase("")) {
-                    startActivity(new Intent(getApplicationContext(), CustomerBottomSheetFragment.class));
+                    startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(getApplicationContext(), CustomerViewfragment.class));
+                    startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
                     finish();
                 }
                 // binding.recyvhomemenu.setAdapter(new HomeAdapter(getActivity(), homeData, HomeFragment.this::replaceFragment));
@@ -150,6 +191,18 @@ public class LoginActivity extends BaseActivity {
                     LocalPreferences.storeStringPreference(getApplicationContext(), "CompanyID", responseLogin.getCompanyID());
                     LocalPreferences.storeStringPreference(getApplicationContext(), "warehouseId", String.valueOf(responseLogin.getWarehouseID()));
                     LocalPreferences.storeStringPreference(getApplicationContext(), "EmployeeName", responseLogin.getEmployeeName());
+                    LocalPreferences.storeStringPreference(getApplicationContext(), "Weburl", responseLogin.getWebappurl());
+                    LocalPreferences.storeStringPreference(getApplicationContext(), "UserName", responseLogin.getUserName());
+                    LocalPreferences.storeStringPreference(getApplicationContext(),"Prefix",responseLogin.getCompanyPrefix());
+                    LocalPreferences.storeStringPreference(getApplicationContext(),"Suffix",responseLogin.getCompanySuffix());
+
+                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "CompanyCode", responseLogin.getCompanyCode());
+                    if (binding.rememberMeCheckBox.isChecked()) {
+                        LocalPreferences.storeStringPreference(getApplicationContext(), "LogUser", binding.edEmail.getText().toString());
+                        LocalPreferences.storeStringPreference(getApplicationContext(), "LogPassword", binding.edPassword.getText().toString());
+
+                    }
+
                     LocalPreferences.storeBooleanPreference(getApplicationContext(), "showlogout", true);
                     List<KaratPrice> dataset = responseLogin.getKaratPriceList();
                     new Thread(() -> {
@@ -160,7 +213,7 @@ public class LoginActivity extends BaseActivity {
                         });
                     }).start();
 
-                    mViewModel.getHomeMenu(LocalPreferences.getToken(getApplicationContext()), AppConstants.HomeMenuAppName, String.valueOf(responseLogin.getRoleName()));
+                    mViewModel.getHomeMenu(LocalPreferences.getToken(getApplicationContext()), AppConstants.HomeMenuAppName, String.valueOf(responseLogin.getRoleName()), getApplicationContext());
 
 
                 } else {
@@ -178,7 +231,7 @@ public class LoginActivity extends BaseActivity {
         jsonObject.addProperty("applicationID", AppConstants.applicationID);
         jsonObject.addProperty("userName", vaEmail);
         jsonObject.addProperty("password", vaPassword);
-        viewModel.Login(jsonObject);
+        viewModel.Login(jsonObject, LoginActivity.this);
     }
 
     public <T> void setList(String key, List<T> list) {

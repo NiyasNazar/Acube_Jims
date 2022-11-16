@@ -10,6 +10,8 @@
         android:background="@android:color/transparent">
 
         <androidx.cardview.widget.CardView
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -24,114 +26,80 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/branchlayt"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="9dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+
+                    android:textSize="14sp">
+
+                    <TextView
+                        android:id="@+id/tvstoreselection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Select Store"
+                        android:textColor="#2d2d2d"
+                        android:textSize="14sp">
+
+                    </TextView>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_centerHorizontal="true"
+
+
+                        android:background="@drawable/ed_border"
+                        android:inputType="none"
+                        android:textSize="14sp"
+
+
+                        >
+
+                        <com.acube.jims.utils.SearchableSpinners
+                            android:id="@+id/spin_branches"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:textSize="10sp"
+                            app:hintText="Select">
+
+                        </com.acube.jims.utils.SearchableSpinners>                    </RelativeLayout>
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edremarks"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="10dp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="Scanned Item History"
-                    android:textSize="17sp">
+                    android:layout_marginTop="13dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/ed_border"
 
-                </TextView>
+                    android:hint="Remarks"
+                    android:inputType="textEmailAddress"
 
-                <TableRow
-                    android:id="@+id/header"
+                    android:paddingLeft="24dp"
 
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="6dp"
-                    android:orientation="horizontal">
+                    android:paddingRight="10dp"
+                    android:paddingBottom="10dp"
+                    android:textColorHint="@color/black"
+                    android:textSize="14sp">
 
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/table_border"
+                </EditText>
 
 
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Date"
-                        android:textAllCaps="false"
-                        android:textColor="#666666">
-
-                    </TextView>
-
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/table_border"
-
-
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Audit ID"
-                        android:textAllCaps="false"
-                        android:textColor="#666666">
-
-                    </TextView>
-
-                    <TextView
-
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/table_border"
-
-
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Serial No."
-                        android:textAllCaps="false"
-                        android:textColor="#666666">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/table_border"
-
-
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Location Code"
-                        android:textAllCaps="false"
-                        android:textColor="#666666">
-
-                    </TextView>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/table_border"
-                        android:fontFamily="@font/poppins_semibold"
-                        android:gravity="center"
-                        android:text="Scanned Location"
-                        android:textAllCaps="false"
-                        android:textColor="#666666">
-
-                    </TextView>
-
-
-                </TableRow>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyvitemhistory"
-                    android:layout_width="match_parent"
-
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="6dp"
-
-                    android:layout_marginRight="6dp"
-                    android:layout_marginBottom="80dp"></androidx.recyclerview.widget.RecyclerView>
 
 
             </LinearLayout>

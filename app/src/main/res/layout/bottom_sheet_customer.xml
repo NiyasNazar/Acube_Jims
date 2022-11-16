@@ -139,17 +139,18 @@
                     android:gravity="center_horizontal">
 
                     <TextView
-                        android:layout_weight="1"
                         android:id="@+id/btn_skip"
                         android:layout_width="0dp"
-                        android:gravity="center"
-
                         android:layout_height="match_parent"
+                        android:layout_weight="1"
+
                         android:fontFamily="@font/jtmarniebold"
+                        android:gravity="center"
                         android:text="Salesman"
                         android:textColor="@color/white">
 
                     </TextView>
+
                     <View
                         android:layout_width="2dp"
                         android:background="@color/white"

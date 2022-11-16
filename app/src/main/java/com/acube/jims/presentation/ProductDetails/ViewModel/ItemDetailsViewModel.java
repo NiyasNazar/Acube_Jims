@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.ProductDetails.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,12 +20,12 @@ public class ItemDetailsViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void FetchItemDetails(String Auth,String ID) {
-        repository.FetchItemDetails(Auth,ID);
+    public void FetchItemDetails(String Auth,String ID,Context context) {
+        repository.FetchItemDetails(Auth,ID,context);
 
     }
-    public void FetchoutofsctockItemDetails(String Auth,String ID) {
-        repository.FetchoutofsctockItemDetails(Auth,ID);
+    public void FetchoutofsctockItemDetails(String Auth,String ID, Context context) {
+        repository.FetchoutofsctockItemDetails(Auth,ID,context);
 
     }
     public void init() {

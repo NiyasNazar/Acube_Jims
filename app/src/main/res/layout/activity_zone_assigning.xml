@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".presentation.Audit.AuditFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar">
+
+
+            </include>
+
+            <androidx.core.widget.NestedScrollView
+                android:fillViewport="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar_app"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_border_detailspage">
+
+                <LinearLayout
+
+                    android:id="@+id/nestedscrollview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+
+
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvheader"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Store"
+                        android:textColor="@color/black"
+                        android:textSize="15sp"></TextView>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvhint"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/ed_border"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.acube.jims.utils.SearchableSpinners
+                                android:id="@+id/spstore"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp"
+                                android:inputType="none"
+                                android:minHeight="40dp"
+                                android:paddingStart="16sp"
+                                app:hintText="Select"
+                                tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+                        </LinearLayout>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvheader"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Zone/Location"
+                        android:textColor="@color/black"></TextView>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvhint"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/ed_border"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.acube.jims.utils.SearchableSpinners
+                                android:id="@+id/spzone"
+                                android:layout_width="match_parent"
+
+                                android:layout_height="match_parent"
+                                android:inputType="none"
+                                android:minHeight="40dp"
+                                android:paddingStart="16sp"
+                                app:hintText="Select"
+                                tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+                        </LinearLayout>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvheader"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:text="Category"
+                        android:textColor="@color/black"></TextView>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvhint"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="10dp"
+
+                            android:background="@drawable/ed_border"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.acube.jims.utils.SearchableSpinners
+                                android:id="@+id/spcat"
+                                android:layout_width="match_parent"
+
+                                android:layout_height="match_parent"
+                                android:inputType="none"
+                                android:minHeight="40dp"
+                                android:paddingStart="16sp"
+                                app:hintText="Select"
+                                tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+                        </LinearLayout>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvheader"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="SubCategory"
+                        android:textColor="@color/black"></TextView>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_below="@id/tvhint"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="10dp"
+                            android:background="@drawable/ed_border"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.acube.jims.utils.SearchableSpinners
+                                android:id="@+id/spsubcat"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:inputType="none"
+                                android:minHeight="40dp"
+                                android:paddingStart="16sp"
+                                app:hintText="Select"
+                                tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+                        </LinearLayout>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvheader"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Items"
+                        android:textColor="@color/black"></TextView>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvhint"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="10dp"
+
+                            android:background="@drawable/ed_border"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical">
+
+
+                            <com.acube.jims.utils.SearchableSpinners
+                                android:id="@+id/spitems"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:inputType="none"
+
+                                android:minHeight="50dp"
+                                android:paddingStart="16sp"
+                                app:hintText="Select"
+                                tools:ignore="Autofill,LabelFor,RtlSymmetry" />
+                        </LinearLayout>
+
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <Button
+                        android:id="@+id/btn_assignzone"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/oval_btn_signin"
+                        android:text="Assign Zone"
+                        android:textColor="@color/white"></Button>
+
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

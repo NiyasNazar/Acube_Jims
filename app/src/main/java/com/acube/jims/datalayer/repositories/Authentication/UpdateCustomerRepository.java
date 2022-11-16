@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Authentication;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,8 +23,8 @@ public class UpdateCustomerRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void UpdateCustomer(int ID,JsonObject jsonObject) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void UpdateCustomer(int ID, JsonObject jsonObject, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<JsonObject> call = restApiService.updateUser(ID,jsonObject);
         call.enqueue(new Callback<JsonObject>() {
             @Override

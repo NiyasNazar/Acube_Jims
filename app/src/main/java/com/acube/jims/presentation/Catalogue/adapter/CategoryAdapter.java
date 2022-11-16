@@ -1,5 +1,6 @@
 package com.acube.jims.presentation.Catalogue.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -17,10 +19,13 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
+import com.acube.jims.datalayer.models.Filter.FilterStore;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.utils.FilterPreference;
 import com.acube.jims.utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.ResponseFetchFilters;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.Gson;
 import com.muddzdev.styleabletoast.StyleableToast;
 
@@ -31,23 +36,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Produc
 
 
     private Context mCtx;
-    private int lastSelectedPosition = 0;
+    private int lastSelectedPosition = -1;
 
-    private List<ResponseFetchFilters> dataset;
+    private List<FilterStore> dataset;
     List<SubCategory> sublist;
     List<String> catlist;
     private RadioButton lastCheckedRB = null;
     int selpos;
     RefreshSelection refreshSelection;
-    boolean enableEdit;
+    boolean isSelected;
 
-    public CategoryAdapter(Context mCtx, List<ResponseFetchFilters> dataset, RefreshSelection refreshSelection) {
+    public CategoryAdapter(Context mCtx, List<FilterStore> dataset, RefreshSelection refreshSelection) {
         this.mCtx = mCtx;
         this.dataset = dataset;
         sublist = new ArrayList<>();
         catlist = new ArrayList<>();
         this.refreshSelection = refreshSelection;
-        enableEdit = FilterPreference.retrieveBooleanPreferences(mCtx, "enableEdit");
 
 
     }
@@ -69,58 +73,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Produc
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
-        holder.tvcatname.setText(dataset.get(position).getCategoryName());
+        holder.tvcatname.setText(dataset.get(position).getWarehouseName());
         // holder.imageView.setImageResource(homeData.getImage());
         //  holder.textViewItemName.setChecked(lastSelectedPosition == position);
-        int id=FilterPreference.retrieveIntegerPreferences(mCtx,"tempcat");
 
-        if (enableEdit){
-            selpos = FilterPreference.retrieveIntegerPreferences(mCtx, "cpos");
-            Log.d("Selectpos", "onBindViewHolder: " + selpos);
-            if (selpos == position) {
-                holder.catfilter.setCardBackgroundColor(Color.parseColor("#18477F"));
-                holder.tvcatname.setTextColor(Color.parseColor("#FFFFFF"));
-
-            } else {
-                holder.catfilter.setCardBackgroundColor(Color.parseColor("#BF8F3A"));
-                holder.tvcatname.setTextColor(Color.parseColor("#FFFFFF"));
-            }
-            if (selpos == position) {
-                Log.d("onBindViewHolder", "onBindViewHolder: " + selpos + dataset.get(position).getId());
-
-                FilterPreference.storeStringPreference(mCtx, "catid", String.valueOf(dataset.get(position).getId()));
-                FilterPreference.storeStringPreference(mCtx, "catname", dataset.get(position).getCategoryName());
-                setList("subcatresult", dataset.get(selpos).getSubCategories());
-                setList("colorresults", dataset.get(selpos).getColors());
-                setList("karatresults", dataset.get(selpos).getKarats());
-                setList("weightresults", dataset.get(selpos).getWeights());
-                refreshSelection.refresh();
-            }
-
-        }else{
-            Log.d("categories", "onBindViewHolder: "+id);
-            Log.d("categoriesssss", "onBindViewHolder: "+dataset.get(position).getId());
-
-            if (dataset.get(position).getId() == id) {
-                holder.catfilter.setCardBackgroundColor(Color.parseColor("#18477F"));
-                holder.tvcatname.setTextColor(Color.parseColor("#FFFFFF"));
-                Log.d("onBindViewHolder", "onBindViewHolder: " + selpos + dataset.get(position).getId());
-
-                FilterPreference.storeStringPreference(mCtx, "catid", String.valueOf(dataset.get(position).getId()));
-                FilterPreference.storeStringPreference(mCtx, "catname", dataset.get(position).getCategoryName());
-                setList("subcatresult", dataset.get(position).getSubCategories());
-                setList("colorresults", dataset.get(position).getColors());
-                setList("karatresults", dataset.get(position).getKarats());
-                setList("weightresults", dataset.get(position).getWeights());
-                refreshSelection.refresh();
-            }
-
-        }
-
-
-
-
-
+        holder.tvcatname.setChecked(dataset.get(position).isIsselected());
 
 
     }
@@ -152,7 +109,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Produc
         ImageView arrow;
         RadioGroup rdgrp;
         RecyclerView recyclerView;
-        TextView tvcatname;
+        CheckBox tvcatname;
 
         public ProductViewHolder(View itemView) {
             super(itemView);
@@ -160,24 +117,34 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Produc
             catfilter = itemView.findViewById(R.id.btn_cat_filter);
             tvcatname = itemView.findViewById(R.id.tvcatname);
             arrow = itemView.findViewById(R.id.arrow);
-            catfilter.setOnClickListener(new View.OnClickListener() {
+            tvcatname.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     boolean enableEdit = FilterPreference.retrieveBooleanPreferences(mCtx, "enableEdit");
-                    if (enableEdit){
-                        lastSelectedPosition = getAbsoluteAdapterPosition();
-                        FilterPreference.storeIntegerPreference(mCtx, "cpos", lastSelectedPosition);
-                        FilterPreference.storeStringPreference(mCtx, "catid", String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getId()));
-                        FilterPreference.storeStringPreference(mCtx, "catname", dataset.get(getAbsoluteAdapterPosition()).getCategoryName());
-                        Log.d("onBindViewHolder", "onBindViewHolder: " + selpos + dataset.get(getAbsoluteAdapterPosition()).getId());
-                        setList("subcatresult", dataset.get(getAbsoluteAdapterPosition()).getSubCategories());
+
+                    lastSelectedPosition = getAbsoluteAdapterPosition();
+                    FilterPreference.storeIntegerPreference(mCtx, "cpos", lastSelectedPosition);
+                    FilterPreference.storeIntegerPreference(mCtx, "warehouseId", dataset.get(getAbsoluteAdapterPosition()).getId());
+                    // FilterPreference.storeStringPreference(mCtx, "catname", dataset.get(getAbsoluteAdapterPosition()).getCategoryName());
+                    Log.d("onBindViewHolder", "onBindViewHolder: " + selpos + dataset.get(getAbsoluteAdapterPosition()).getId());
+                      /*  setList("subcatresult", dataset.get(getAbsoluteAdapterPosition()).getSubCategories());
                         setList("colorresults", dataset.get(getAbsoluteAdapterPosition()).getColors());
                         setList("karatresults", dataset.get(getAbsoluteAdapterPosition()).getKarats());
-                        setList("weightresults", dataset.get(getAbsoluteAdapterPosition()).getWeights());
-                        refreshSelection.refresh();
-                        notifyDataSetChanged();
-                    }else{
-                        new StyleableToast
+                        setList("weightresults", dataset.get(getAbsoluteAdapterPosition()).getWeights());*/
+
+                    new Thread(() -> {
+                        DatabaseClient.getInstance(mCtx).getAppDatabase().homeMenuDao().update(dataset.get(getAbsoluteAdapterPosition()).getId());
+
+                        ((Activity) mCtx).runOnUiThread(() -> {
+                            notifyDataSetChanged();
+
+
+                        });
+                    }).start();
+                    refreshSelection.refresh();
+
+
+                       /* new StyleableToast
                                 .Builder(mCtx)
                                 .text("Category is set to default")
                                 .textColor(Color.WHITE)
@@ -186,13 +153,11 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Produc
                                 .gravity(Gravity.BOTTOM)
                                 .length(Toast.LENGTH_LONG).solidBackground()
                                 .backgroundColor(Color.RED)
-                                .show();
-
-                    }
-
-
+                                .show();*/
 
                 }
+
+
             });
         /*    rdgrp.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 @Override

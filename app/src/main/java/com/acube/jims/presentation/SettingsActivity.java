@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
+import com.acube.jims.datalayer.constants.AppConstants;
 import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.databinding.ActivitySettingsBinding;
 import com.acube.jims.presentation.Login.View.LoginActivity;
@@ -26,7 +27,8 @@ public class SettingsActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 
         binding.edUrl.setText(LocalPreferences.getBaseUrl(getApplicationContext()));
-        binding.edUrl.setText("http://jmsapi.acubeinfotech.ae/jwl/");
+        binding.edUrl.setText(AppConstants.BASE_URL);
+
         languageUpdated = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "langUpdated");
         if (!languageUpdated) {
             binding.rdenglish.setChecked(true);
@@ -87,7 +89,6 @@ public class SettingsActivity extends BaseActivity {
 
 
         });
-
 
 
         binding.btnSave.setOnClickListener(new View.OnClickListener() {

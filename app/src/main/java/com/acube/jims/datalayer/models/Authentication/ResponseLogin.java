@@ -19,6 +19,10 @@ public class ResponseLogin {
     @SerializedName("employeeID")
     @Expose
     private Integer employeeID;
+    @SerializedName("companyCode")
+    @Expose
+    private Integer companyCode;
+
     @SerializedName("employeeName")
     @Expose
     private String employeeName;
@@ -64,6 +68,16 @@ public class ResponseLogin {
     @SerializedName("message")
     @Expose
     private String message;
+
+    @SerializedName("webappurl")
+    @Expose
+    private String webappurl;
+    @SerializedName("companyPrefix")
+    @Expose
+    private String companyPrefix;
+    @SerializedName("companySuffix")
+    @Expose
+    private String companySuffix;
 
     public String getUserName() {
         return userName;
@@ -215,5 +229,37 @@ public class ResponseLogin {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public String getWebappurl() {
+        return webappurl;
+    }
+
+    public void setWebappurl(String webappurl) {
+        this.webappurl = webappurl;
+    }
+
+    public Integer getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(Integer companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public String getCompanyPrefix() {
+        return companyPrefix;
+    }
+
+    public void setCompanyPrefix(String companyPrefix) {
+        this.companyPrefix = companyPrefix;
+    }
+
+    public String getCompanySuffix() {
+        return companySuffix;
+    }
+
+    public void setCompanySuffix(String companySuffix) {
+        this.companySuffix = companySuffix;
     }
 }

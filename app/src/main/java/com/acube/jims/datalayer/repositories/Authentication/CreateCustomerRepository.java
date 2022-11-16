@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Authentication;
 
 import android.app.Application;
+import android.content.Context;
 import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
@@ -25,8 +26,8 @@ public class CreateCustomerRepository  {
         dataset = new MutableLiveData<>();
     }
 
-    public void CreateCustomer(String Auth,JsonObject jsonObject) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void CreateCustomer(String Auth, JsonObject jsonObject, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<ResponseCreateCustomer> call = restApiService.createUser(Auth,jsonObject);
         call.enqueue(new Callback<ResponseCreateCustomer>() {
             @Override

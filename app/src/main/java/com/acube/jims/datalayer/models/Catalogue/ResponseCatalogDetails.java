@@ -3,9 +3,10 @@ package com.acube.jims.datalayer.models.Catalogue;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ResponseCatalogDetails {
+public class ResponseCatalogDetails implements Serializable {
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -30,6 +31,9 @@ public class ResponseCatalogDetails {
     @SerializedName("gender")
     @Expose
     private String gender;
+    @SerializedName("imageFilePath")
+    @Expose
+    private String imageFilePath;
 
     @SerializedName("serialNumber")
     @Expose
@@ -424,5 +428,13 @@ public class ResponseCatalogDetails {
 
     public void setSerialNumber(String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
+    public void setImageFilePath(String imageFilePath) {
+        this.imageFilePath = imageFilePath;
     }
 }

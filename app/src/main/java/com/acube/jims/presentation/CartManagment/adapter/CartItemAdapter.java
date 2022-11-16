@@ -59,12 +59,13 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
 
 //        holder.textViewQuantity.setText("" + IntValue);
         holder.textViewSerialno.setText(cartDetail.getSerialNumber());
-        holder.textViewPrice.setText("SAR "+Math.round(cartDetail.getFinalAmount()));
+
+        holder.textViewPrice.setText("" + getValueOrDefault(cartDetail.getFinalAmount(), ""));
 
         Glide.with(mCtx)
                 .load(cartDetail.getImagePath())
-                //  .placeholder(R.drawable.placeholder)
-                //  .error(R.drawable.imagenotfound)
+                .placeholder(R.drawable.jwimage)
+                .error(R.drawable.jwimage)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -80,17 +81,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
                 })
                 .into(holder.ItemImage);
 
-
-        if (cartDetail.getStoneWeight() != null) {
-            holder.textViewStoneweight.setText("Stone Weight: " + cartDetail.getStoneWeight() + " g");
-        } else {
-            holder.textViewStoneweight.setText("Stone Weight: N/A");
-        }
-        if (cartDetail.getGrossWeight() != null) {
-            holder.textViewWeight.setText("Weight: " + cartDetail.getGrossWeight() + " g");
-        } else {
-            holder.textViewWeight.setText("Stone Weight: N/A");
-        }
+        holder.textViewWeight.setText("" + getValueOrDefault(cartDetail.getStoneWeight() + " g", ""));
 
 
     }
@@ -104,7 +95,7 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewQuantity, textViewitemName, textViewWeight, textViewStoneweight, textViewSerialno,textViewPrice;
+        TextView textViewQuantity, textViewitemName, textViewWeight, textViewStoneweight, textViewSerialno, textViewPrice;
         ImageView imageViewadd, imageViewremove, ItemImage, imageviewdelete;
 
         public ProductViewHolder(View itemView) {
@@ -117,12 +108,12 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
             textViewStoneweight = itemView.findViewById(R.id.tv_stoneweight);
             ItemImage = itemView.findViewById(R.id.item_image);
             imageviewdelete = itemView.findViewById(R.id.imvdelete);
-            textViewPrice=itemView.findViewById(R.id.tvprice);
+            textViewPrice = itemView.findViewById(R.id.tvprice);
 
             imageviewdelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int pos = getAdapterPosition();
+                    int pos = getBindingAdapterPosition();
 
                     deleteProduct.removefromcart(String.valueOf(dataset.get(pos).getItemID()), String.valueOf(dataset.get(pos).getQty()), dataset.get(pos).getSerialNumber());
 
@@ -163,5 +154,9 @@ public class CartItemAdapter extends RecyclerView.Adapter<CartItemAdapter.Produc
     public interface DeleteProduct {
         void removefromcart(String itemid, String quantity, String serialno);
 
+    }
+
+    public static <T> T getValueOrDefault(T value, T defaultValue) {
+        return value == null ? defaultValue : value;
     }
 }

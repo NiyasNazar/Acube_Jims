@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Authentication;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -27,9 +28,9 @@ public class LoginRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void Login(JsonObject jsonObject) {
+    public void Login(JsonObject jsonObject, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<ResponseLogin> call = restApiService.doLogin(jsonObject);
         call.enqueue(new Callback<ResponseLogin>() {
             @Override
@@ -45,7 +46,7 @@ public class LoginRepository {
             @Override
             public void onFailure(Call<ResponseLogin> call, Throwable t) {
                 //   dataset.setValue(null);
-                Log.d("onFailure", "onFailure: ");
+                Log.d("onFailure", "onFailure: "+t.getMessage());
                 dataset.setValue(null);
             }
         });

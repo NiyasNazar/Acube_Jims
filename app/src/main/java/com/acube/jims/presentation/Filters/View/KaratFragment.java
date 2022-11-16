@@ -3,14 +3,19 @@ package com.acube.jims.presentation.Filters.View;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.acube.jims.datalayer.models.Filter.FilterStore;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Catalogue.View.FilterBottomSheetFragment;
+import com.acube.jims.presentation.Catalogue.adapter.CategoryAdapter;
 import com.acube.jims.presentation.Catalogue.adapter.FilterKaratAdapter;
 import com.acube.jims.R;
 import com.acube.jims.utils.FilterPreference;
@@ -75,8 +80,17 @@ public class KaratFragment extends Fragment implements RefreshSelection {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_karat, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recysubcategory);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),4));
-        recyclerView.setAdapter(new FilterKaratAdapter(getActivity(), getList(), KaratFragment.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        DatabaseClient.getInstance(getActivity()).getAppDatabase().homeMenuDao().getAllKaratresultStore().observe(requireActivity(), new Observer<List<Karatresult>>() {
+            @Override
+            public void onChanged(List<Karatresult> karatresults) {
+                recyclerView.setAdapter(new FilterKaratAdapter(getActivity(), karatresults, KaratFragment.this));
+
+            }
+        });
+
+
         return view;
     }
 

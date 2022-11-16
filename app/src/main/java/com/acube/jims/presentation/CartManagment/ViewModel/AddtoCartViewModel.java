@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.CartManagment.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -20,8 +21,8 @@ public class AddtoCartViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void AddtoCart(String Auth,String type, JsonArray jsonArray) {
-        repository.AddtoCart(Auth,type,jsonArray);
+    public void AddtoCart(String Auth, String type, JsonArray jsonArray, Context context) {
+        repository.AddtoCart(Auth,type,jsonArray,context);
     }
 
     public void init() {

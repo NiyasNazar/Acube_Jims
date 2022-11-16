@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.like.LikeButton;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -50,30 +52,30 @@ public class LastViewedAdapter extends RecyclerView.Adapter<LastViewedAdapter.Pr
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
         ItemViewHistory responseListing = itemViewHistoryList.get(position);
-        if (responseListing.getImagePath()!=null){
-            Glide.with(mCtx)
-                    .load(responseListing.getImagePath())
-                    .placeholder(R.drawable.jwimage)
-                    .error(R.drawable.jwimage)
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            // log exception
-                            Log.e("TAG", "Error loading image", e);
-                            return false; // important to return false so the error placeholder can be placed
-                        }
+        holder.textViewItemName.setText(responseListing.getItemName());
+        holder.textViewSerialnumber.setText(responseListing.getSerialNumber());
+        holder.textViewCode.setText(responseListing.getItemCode());
+        //  holder.tv_description.setText(responseListing.getItemDesc());
+        //  holder.textViewPrice.setText(""+responseListing.getMrp());
+        Glide.with(mCtx)
+                .load(responseListing.getImagePath())
+                .placeholder(R.drawable.jwimage)
+                .error(R.drawable.jwimage)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        // log exception
+                        Log.e("TAG", "Error loading image", e);
+                        return false; // important to return false so the error placeholder can be placed
+                    }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .into(holder.imageView);
-        }
-        holder.textViewSerialNo.setText("" + responseListing.getSerialNumber());
-        holder.textViewName.setText(responseListing.getItemName());
-        DecimalFormat format = new DecimalFormat("0.#");
-        holder.textViewWeight.setText("" + format.format(Double.parseDouble(responseListing.getGoldWeight())) + " gm");
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        return false;
+                    }
+                })
+                .into(holder.imageView);
+        holder.textViewWeight.setText("" + getValueOrDefault(responseListing.getGoldWeight(),"")+ "g");
 
     }
 
@@ -86,17 +88,29 @@ public class LastViewedAdapter extends RecyclerView.Adapter<LastViewedAdapter.Pr
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewWeight, textViewSerialNo, textViewName;
+        TextView textViewItemName, textViewWarehouse,
+                textViewGrossWeight, textViewSerialnumber, textViewPrice,
+                textViewKarat, textViewWeight, textViewCode, textviewDesc;
         ImageView imageView;
+        LikeButton mlikebtn;
+        CheckBox selectionlayout;
+
 
         public ProductViewHolder(View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(R.id.imvitemimage);
-            textViewName = itemView.findViewById(R.id.tv_itemname);
-
-            textViewSerialNo = itemView.findViewById(R.id.tv_serialnumber);
-            textViewWeight = itemView.findViewById(R.id.tv_weight);
+            textViewItemName = itemView.findViewById(R.id.tv_item_name);
+            textViewWarehouse = itemView.findViewById(R.id.tv_warehouse);
+            textViewWeight = itemView.findViewById(R.id.tv_item_weight);
+            textViewCode = itemView.findViewById(R.id.tv_item_code);
+            textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);
+            textViewGrossWeight = itemView.findViewById(R.id.tvgrossweight);
+            textViewPrice = itemView.findViewById(R.id.tvprice);
+            textviewDesc = itemView.findViewById(R.id.tv_description);
+            textViewKarat = itemView.findViewById(R.id.tvkarat);
+            textviewDesc = itemView.findViewById(R.id.tv_description);
+            imageView = itemView.findViewById(R.id.imageView);
+            selectionlayout = itemView.findViewById(R.id.fav_button);
 
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -118,5 +132,7 @@ public class LastViewedAdapter extends RecyclerView.Adapter<LastViewedAdapter.Pr
         void replacefragments(String id);
     }
 
-
+    public static <T> T getValueOrDefault(T value, T defaultValue) {
+        return value == null ? defaultValue : value;
+    }
 }

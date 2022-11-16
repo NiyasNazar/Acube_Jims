@@ -1,51 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:background="#FFFFFF"
-    android:gravity="center"
-    android:layout_height="match_parent"
- >
-    <RelativeLayout
+    xmlns:wave="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#FFFFFF">
+        android:layout_height="match_parent"
+        android:background="#FFFFFF"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:context=".MainActivity" >
+
+            <ProgressBar
+                android:id="@+id/vprogressbar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:progressDrawable="@drawable/verticalprogressbar"/>
+
+            <Button
+                android:id="@+id/start"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="- Start -" />
+
+        </LinearLayout>
+        <com.gelitenight.waveview.library.WaveView
+            android:id="@+id/mwave"
+            android:layout_width="250dp"
+
+            android:layout_height="500dp"
+            android:visibility="gone">
+
+        </com.gelitenight.waveview.library.WaveView>
+
+        <com.john.waveview.WaveView
+            android:id="@+id/wave_view"
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+
+            android:visibility="gone"
+
+            wave:above_wave_color="@color/green"
+            wave:blow_wave_color="@color/red"
+            wave:progress="20"
+
+
+            wave:wave_hz="normal"
+            wave:wave_length="middle">
+
+        </com.john.waveview.WaveView>
 
         <ImageView
-            android:id="@+id/imvlogo"
-            android:layout_width="wrap_content"
+            android:id="@+id/image"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
-            android:src="@drawable/logo">
+            android:background="#FFFFFF"
+            android:visibility="visible">
 
-        </ImageView>
 
-        <TextView
-            android:id="@+id/tvacube"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imvlogo"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/karla_bold"
-            android:text="@string/acube"
-            android:textColor="#BF8F3A"
-            android:textSize="24sp"></TextView>
+            <ImageView
 
-        <TextView
-            android:id="@+id/tvsubtitle"
+                android:id="@+id/imvlogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/logo">
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvacube"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/karla_bold"
-            android:text="@string/rfidpowered"
-            android:textColor="#666666"
-            android:textSize="14sp"></TextView>
+            </ImageView>
 
-    </RelativeLayout>
-</LinearLayout>
+            <TextView
+                android:id="@+id/tvacube"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imvlogo"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/karla_bold"
+                android:text="@string/acube"
+                android:textColor="#BF8F3A"
+                android:textSize="24sp"></TextView>
+
+            <TextView
+                android:id="@+id/tvsubtitle"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvacube"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/karla_bold"
+                android:text="@string/rfidpowered"
+                android:textColor="#666666"
+                android:textSize="14sp"></TextView>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

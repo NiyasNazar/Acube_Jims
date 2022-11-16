@@ -41,19 +41,17 @@
                 android:layout_marginTop="3dp"
                 android:background="@drawable/halfcut">
 
-                <com.like.LikeButton
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/fav_button"
-
-
                     android:layout_width="30dp"
+
+
                     android:layout_height="30dp"
                     android:layout_centerInParent="true"
-                    app:icon_size="18dp"
+                    app:buttonTint="@color/white"
 
 
-                    app:icon_type="heart"
-                    app:like_drawable="@drawable/ic__filled_heart_icon"
-                    app:unlike_drawable="@drawable/ic_unfilled_heart_icon" />
+                    />
 
             </RelativeLayout>
 
@@ -63,306 +61,394 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_below="@id/laytimage"
+
+            android:background="#bd9b16"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight=".8"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
-                    android:textAllCaps="false"
-                    android:text="Item Name"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
 
                 <TextView
                     android:layout_width="0dp"
-                    android:gravity="center"
-                    android:layout_weight=".1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_weight=".5"
                     android:ellipsize="end"
                     android:fontFamily="@font/popins_medium"
                     android:singleLine="true"
+                    android:text="Item"
                     android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
                     android:text=":"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
                 <TextView
                     android:id="@+id/tv_item_name"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/popins_medium"
                     android:singleLine="true"
+                    android:text=""
                     android:textAllCaps="false"
-                    android:text="asdasdasd"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
             </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight=".8"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="6dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/popins_medium"
-                android:singleLine="true"
-                android:textAllCaps="false"
-                android:text="Item Code"
-                android:textColor="#e6000000"
-                android:textSize="13.3sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_weight=".1"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="6dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/popins_medium"
-                android:singleLine="true"
-                android:textAllCaps="false"
-                android:text=":"
-                android:textColor="#e6000000"
-                android:textSize="13.3sp" />
-
-            <TextView
-
-                android:id="@+id/tv_item_code"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="6dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/popins_medium"
-                android:singleLine="true"
-                android:textAllCaps="false"
-                android:text="asdasdasd"
-                android:textColor="#e6000000"
-                android:textSize="13.3sp" />
-
-        </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight=".8"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
-                    android:textAllCaps="false"
-                    android:text="Description"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
 
                 <TextView
                     android:layout_width="0dp"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Weight"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight=".1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
                     android:singleLine="true"
-                    android:textAllCaps="false"
                     android:text=":"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
                 <TextView
 
-                    android:id="@+id/tv_description"
+                    android:id="@+id/tv_item_weight"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/popins_medium"
                     android:singleLine="true"
+                    android:text=""
                     android:textAllCaps="false"
-                    android:text="asdasdasd"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Code"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_item_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight=".8"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
-                    android:textAllCaps="false"
-                    android:text="Price"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
 
                 <TextView
                     android:layout_width="0dp"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Sl.No.#"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:layout_weight=".1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
                     android:ellipsize="end"
                     android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
-                    android:textAllCaps="false"
-                    android:text=":"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
-
-                <TextView
-
-                    android:id="@+id/tvprice"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
-                    android:textAllCaps="false"
-                    android:text="asdasdasd"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight=".8"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
-                    android:textAllCaps="false"
-                    android:text="Karat"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
-
-                <TextView
-                    android:layout_width="0dp"
                     android:gravity="center"
-                    android:layout_weight=".1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
                     android:singleLine="true"
-                    android:textAllCaps="false"
                     android:text=":"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
-
-                <TextView
-
-                    android:id="@+id/tvkarat"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
                     android:textAllCaps="false"
-                    android:text="asdasdasd"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight=".8"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
-                    android:textAllCaps="false"
-                    android:text="Serial#"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:gravity="center"
-                    android:layout_weight=".1"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/popins_medium"
-                    android:singleLine="true"
-                    android:textAllCaps="false"
-                    android:text=":"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
                 <TextView
 
                     android:id="@+id/tv_serialnumber"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginTop="6dp"
+                    android:layout_weight="1"
                     android:ellipsize="end"
                     android:fontFamily="@font/popins_medium"
                     android:singleLine="true"
+                    android:text=""
                     android:textAllCaps="false"
-                    android:text="asdasdasd"
-                    android:textColor="#e6000000"
-                    android:textSize="13.3sp" />
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Store"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_warehouse"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Desc"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Price"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tvprice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Karat"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tvkarat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
             </LinearLayout>
         </LinearLayout>
-
-
 
 
     </RelativeLayout>

@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.DeviceRegistration.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,8 +20,8 @@ public class DeviceRegistrationViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void GetDeviceRegistrationDetails(String Token,String vaMacaddress) {
-        repository.CheckDeviceRegistration(Token,vaMacaddress);
+    public void GetDeviceRegistrationDetails(String Token, String vaMacaddress, Context context) {
+        repository.CheckDeviceRegistration(Token,vaMacaddress,context);
     }
 
     public void init() {

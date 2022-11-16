@@ -78,7 +78,7 @@ public class ResponseCatalogueListing {
     private Object emarladWeight;
     @SerializedName("grossWeight")
     @Expose
-    private Object grossWeight;
+    private Double grossWeight;
     @SerializedName("stoneWeight")
     @Expose
     private Object stoneWeight;
@@ -132,6 +132,13 @@ public class ResponseCatalogueListing {
     @Expose
     private boolean isFavourite;
 
+    @SerializedName("warehouseName")
+    @Expose
+    private String warehouseName;
+    @SerializedName("imageFilePath")
+    @Expose
+    private String imageFilePath;
+    private boolean isSelected;
 
     public Integer getId() {
         return id;
@@ -301,11 +308,11 @@ public class ResponseCatalogueListing {
         this.emarladWeight = emarladWeight;
     }
 
-    public Object getGrossWeight() {
+    public Double getGrossWeight() {
         return grossWeight;
     }
 
-    public void setGrossWeight(Object grossWeight) {
+    public void setGrossWeight(Double grossWeight) {
         this.grossWeight = grossWeight;
     }
 
@@ -451,5 +458,29 @@ public class ResponseCatalogueListing {
 
     public void setFavourite(boolean favourite) {
         isFavourite = favourite;
+    }
+
+    public String getWarehouseName() {
+        return warehouseName;
+    }
+
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
+    }
+
+    public String getImageFilePath() {
+        return imageFilePath;
+    }
+
+    public void setImageFilePath(String imageFilePath) {
+        this.imageFilePath = imageFilePath;
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

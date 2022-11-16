@@ -77,14 +77,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
-                android:orientation="horizontal"
-                android:weightSum="3">
+                android:orientation="horizontal">
 
                 <FrameLayout
                     android:id="@+id/fragment1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight=".6"
+                    android:layout_weight=".7"
                     android:background="#F0F4F7">
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -101,10 +100,11 @@
 
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.4"
+                    android:layout_weight="1"
                     android:background="#FFF" />
 
                 <FrameLayout
+                    android:visibility="gone"
                     android:id="@+id/fragment3"
 
                     android:layout_width="0dp"
@@ -129,16 +129,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                >
 
                 <LinearLayout
+                    android:layout_margin="8dp"
                     android:id="@+id/closelayt"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/oval_btn_signin"
-                    android:gravity="center">
+                    android:backgroundTint="@color/appmaincolor"
+                    android:background="@drawable/rec_button"
+                    android:gravity="center"
+                    >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -151,15 +154,17 @@
                 </LinearLayout>
 
 
-                <LinearLayout
-                    android:id="@+id/applyfilter"
 
+                <LinearLayout
+                    android:layout_margin="8dp"
+
+                    android:id="@+id/applyfilter"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="8dp"
                     android:layout_weight="2"
-                    android:background="@drawable/oval_btn_signin"
+                    android:backgroundTint="@color/appmaincolor"
 
+                    android:background="@drawable/rec_button"
 
                     android:gravity="center">
 

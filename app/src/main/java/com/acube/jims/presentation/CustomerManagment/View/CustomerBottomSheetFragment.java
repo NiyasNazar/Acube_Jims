@@ -91,8 +91,8 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
         String CustomerCode = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "GuestCustomerCode");
         Starttime = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "CustomerSessionStartTime");
 
-        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID);
-        initToolBar(binding.toolbarApp.toolbar,Customername,true);
+        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID,getApplicationContext());
+        initToolBar(binding.toolbarApp.toolbar, Customername, true);
 
 
         customerLogoutViewModel.getCustomerLiveData().observe(this, new Observer<JsonObject>() {
@@ -121,6 +121,8 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
             public void onChanged(ResponseCreateCustomer responseCreateCustomer) {
                 hideProgressDialog();
                 if (responseCreateCustomer != null) {
+                    LocalPreferences.storeBooleanPreference(getApplicationContext(), "salesman", false);
+
                     LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerName", responseCreateCustomer.getCustomerName());
                     LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerCode", responseCreateCustomer.getCustomerCode());
                     LocalPreferences.storeIntegerPreference(getApplicationContext(), "GuestCustomerID", responseCreateCustomer.getId());
@@ -134,6 +136,7 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
         binding.btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LocalPreferences.storeBooleanPreference(getApplicationContext(), "salesman", true);
                 LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerName", "");
                 LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerCode", "");
                 LocalPreferences.storeIntegerPreference(getApplicationContext(), "GuestCustomerID", 0);
@@ -168,7 +171,7 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
             @Override
             public void afterTextChanged(Editable keyword) {
                 if (keyword.toString().length() > 3) {
-                    customerViewModel.getCustomerSearch(AppConstants.Authorization + AuthToken, keyword.toString());
+                    customerViewModel.getCustomerSearch(AppConstants.Authorization + AuthToken, keyword.toString(),getApplicationContext());
                 } else if (keyword.toString().length() <= 3) {
                     binding.recyvcustomerlist.setVisibility(View.GONE);
 
@@ -237,13 +240,13 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
         jsonObject.addProperty("customerName", vaguestname);
         jsonObject.addProperty("emailID", vaemail);
         jsonObject.addProperty("contactNumber", vamobile);
-        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(CustomerBottomSheetFragment.this, AppConstants.Token), jsonObject);
+        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(CustomerBottomSheetFragment.this, AppConstants.Token), jsonObject,getApplicationContext());
 
     }
 
     @Override
     public void replacefragments() {
-        mViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(LocalPreferences.retrieveIntegerPreferences(CustomerBottomSheetFragment.this, "GuestCustomerID")));
+        mViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(LocalPreferences.retrieveIntegerPreferences(CustomerBottomSheetFragment.this, "GuestCustomerID")),getApplicationContext());
 
         //LocalPreferences.retrieveStringPreferences(getActivity(), "GuestCustomerID");
 
@@ -255,7 +258,7 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
                 .with(CustomerBottomSheetFragment.this)
                 .setTitle("Logout Customer")
                 .setBackgroundColorRes(R.color.appmaincolor)  // for @ColorRes use setBackgroundColorRes(R.color.colorvalue)
-                .setMessage("Do you really want to Logout customer ?")
+                .setMessage("Do you really want to Logout this customer?")
                 .setNegativeBtnText("Cancel")
                 .setPositiveBtnBackgroundRes(R.color.appmaincolor)  // for @ColorRes use setPositiveBtnBackgroundRes(R.color.colorvalue)
                 .setPositiveBtnText("Yes")
@@ -330,14 +333,14 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
                 JSONObject parent = new JSONObject();
                 try {
                     parent.put("staffEngagementData", jsonObject1);
-                    parent.put("itemViewList", itemViewLIst);
+
                     JsonParser jsonParser = new JsonParser();
                     JsonObject gsonObject = new JsonObject();
                     gsonObject = (JsonObject) jsonParser.parse(parent.toString());
 
                     Log.d("gsonObject", "onPostExecute: " + gsonObject);
 
-                    customerLogoutViewModel.CustomerLogout(LocalPreferences.getToken(CustomerBottomSheetFragment.this), gsonObject);
+                    customerLogoutViewModel.CustomerLogout(LocalPreferences.getToken(CustomerBottomSheetFragment.this), gsonObject,CustomerBottomSheetFragment.this);
                     LocalPreferences.removePreferences(CustomerBottomSheetFragment.this, "GuestCustomerName");
                     LocalPreferences.removePreferences(CustomerBottomSheetFragment.this, "GuestCustomerCode");
                     LocalPreferences.storeIntegerPreference(CustomerBottomSheetFragment.this, "GuestCustomerID", 0);

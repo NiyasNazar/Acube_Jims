@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Quotation;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,8 +22,8 @@ public class InvoiceViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void FetchInvoice(String Auth, String [] array) {
-        repository.InvoiceList(Auth,array);
+    public void FetchInvoice(String Auth, String [] array, Context context) {
+        repository.InvoiceList(Auth,array,context);
     }
 
     public void init() {

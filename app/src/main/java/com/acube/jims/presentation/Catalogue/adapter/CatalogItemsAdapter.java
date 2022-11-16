@@ -6,7 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -35,6 +38,7 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private final Context context;
     replaceFregment replaceFregment;
     private boolean isLoadingAdded = false;
+
 
     public CatalogItemsAdapter(Context context, replaceFregment replaceFregment, AddtoFavorites addtoFavorites) {
         this.context = context;
@@ -87,22 +91,25 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
                 String myString = responseCatalogueListing.getItemName();
                 String upperString = myString.substring(0, 1).toUpperCase() + myString.substring(1).toLowerCase();
-
                 catalogVH.textViewItemName.setText(myString);
                 catalogVH.textViewSerialnumber.setText("" + responseCatalogueListing.getSerialNumber());
-                catalogVH.textViewKarat.setText("" + responseCatalogueListing.getKaratName());
-                catalogVH.textViewPrice.setText("SAR " + responseCatalogueListing.getMrp());
+                catalogVH.textViewKarat.setText("" + getValueOrDefault(responseCatalogueListing.getKaratName(), ""));
+                catalogVH.textViewPrice.setText("" + getValueOrDefault(responseCatalogueListing.getMrp(), ""));
                 catalogVH.textviewDesc.setText(responseCatalogueListing.getItemDesc());
                 catalogVH.textViewCode.setText(responseCatalogueListing.getItemCode());
+                catalogVH.textViewWarehouse.setText(responseCatalogueListing.getWarehouseName());
+                catalogVH.textViewWeight.setText(responseCatalogueListing.getGrossWeight()+" g");
 
                 //  catalogVH.textViewKarat.setText("" + responseCatalogueListing.getKaratName());
                 // catalogVH.textViewStock.setText(""+responseCatalogueListing.getr);
 
 
                 // holder.imageView.setImageResource(homeData.getImage());
-                if (responseCatalogueListing.getItemSubList().size() > 0) {
+
+                catalogVH.selectionlayout.setChecked(responseCatalogueListing.isSelected());
+
                     Glide.with(context)
-                            .load(responseCatalogueListing.getItemSubList().get(0).getImageFilePath())
+                            .load(responseCatalogueListing.getImageFilePath())
                             .placeholder(R.drawable.jwimage)
                             .error(R.drawable.jwimage)
                             .listener(new RequestListener<Drawable>() {
@@ -119,7 +126,7 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                                 }
                             })
                             .into(catalogVH.imageView);
-                }
+
 
 
                 break;
@@ -209,29 +216,28 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
      * Main list's content ViewHolder
      */
     protected class CatalogVH extends RecyclerView.ViewHolder {
-        TextView textViewItemName, textViewStoneWeight,
+        TextView textViewItemName, textViewWarehouse,
                 textViewGrossWeight, textViewSerialnumber, textViewPrice,
-                textViewKarat, textViewStock, textViewCode, textviewDesc;
+                textViewKarat, textViewWeight, textViewCode, textviewDesc;
         ImageView imageView;
         LikeButton mlikebtn;
+        CheckBox selectionlayout;
 
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
-         //   textViewStock = itemView.findViewById(R.id.tvstock);
-            mlikebtn = itemView.findViewById(R.id.fav_button);
-
+            textViewWarehouse = itemView.findViewById(R.id.tv_warehouse);
+            textViewWeight = itemView.findViewById(R.id.tv_item_weight);
             textViewCode = itemView.findViewById(R.id.tv_item_code);
             textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);
             textViewGrossWeight = itemView.findViewById(R.id.tvgrossweight);
             textViewPrice = itemView.findViewById(R.id.tvprice);
-
             textviewDesc = itemView.findViewById(R.id.tv_description);
             textViewKarat = itemView.findViewById(R.id.tvkarat);
-
             textviewDesc = itemView.findViewById(R.id.tv_description);
             imageView = itemView.findViewById(R.id.imageView);
-            mlikebtn.setOnLikeListener(new OnLikeListener() {
+            selectionlayout = itemView.findViewById(R.id.fav_button);
+         /*   mlikebtn.setOnLikeListener(new OnLikeListener() {
                 @Override
                 public void liked(LikeButton likeButton) {
                     addtoFavorites.addtofav(String.valueOf(dataset.get(getAdapterPosition()).getId()), dataset.get(getAdapterPosition()).getSerialNumber());
@@ -242,7 +248,26 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 public void unLiked(LikeButton likeButton) {
 
                 }
+            });*/
+
+            selectionlayout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        dataset.get(getAbsoluteAdapterPosition()).setSelected(true);
+                      //  datalist.add(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getSerialNumber()));
+                        replaceFregment.compareitems(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getId()), dataset.get(getAbsoluteAdapterPosition()).getSerialNumber(), isChecked);
+
+
+                    } else if (!isChecked) {
+                        dataset.get(getAbsoluteAdapterPosition()).setSelected(false);
+
+                        replaceFregment.compareitems(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getId()), dataset.get(getAbsoluteAdapterPosition()).getSerialNumber(), isChecked);
+                    }
+                }
             });
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -264,11 +289,15 @@ public class CatalogItemsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public interface replaceFregment {
         void replace(String Id);
+
+        void compareitems(String ID, String serial, boolean checked);
     }
 
     public interface AddtoFavorites {
         void addtofav(String id, String serialno);
     }
 
-
+    public static <T> T getValueOrDefault(T value, T defaultValue) {
+        return value == null ? defaultValue : value;
+    }
 }

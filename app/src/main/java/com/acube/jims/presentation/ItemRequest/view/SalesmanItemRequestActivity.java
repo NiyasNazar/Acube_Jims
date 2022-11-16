@@ -35,7 +35,7 @@ public class SalesmanItemRequestActivity extends BaseActivity implements  PickLi
 
     private void fetchPickList() {
         showProgressDialog();
-        RetrofitInstance.getApiService().FetchPickList(LocalPreferences.getToken(getApplicationContext())).enqueue(new Callback<List<ResponseFetchPickList>>() {
+        RetrofitInstance.getApiService(getApplicationContext()).FetchPickList(LocalPreferences.getToken(getApplicationContext())).enqueue(new Callback<List<ResponseFetchPickList>>() {
             @Override
             public void onResponse(Call<List<ResponseFetchPickList>> call, Response<List<ResponseFetchPickList>> response) {
                 showProgressDialog();

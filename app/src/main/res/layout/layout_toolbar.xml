@@ -13,7 +13,7 @@
         android:background="@android:color/transparent"
         android:fitsSystemWindows="true"
 
-      >
+        >
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -21,20 +21,22 @@
             android:layout_height="match_parent"
             android:background="@color/appmaincolor"
             android:elevation="0dp"
-            app:titleTextColor="@color/white"
             android:gravity="center"
             app:buttonGravity="center_vertical"
-            app:titleTextAppearance="@style/Toolbar.TitleText" />
+            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:titleTextColor="@color/white" />
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_gravity="end|center"
+            android:layout_height="wrap_content"
 
-            android:layout_height="wrap_content">
+            android:layout_gravity="end|center">
+
             <ImageView
                 android:id="@+id/imvcart"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center_vertical"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="10dp"
                 android:src="@drawable/ic___cart_shopping_icon"
                 android:tint="@color/white"
@@ -51,30 +53,82 @@
                 android:layout_marginRight="10dp"
                 android:clickable="false"
                 android:gravity="center"
+                android:src="@drawable/ic_customer"
+
+                android:textSize="11sp"
                 android:tint="@color/white"
 
-                android:src="@drawable/ic_customer"
+
+                android:visibility="invisible" />
+            <ImageView
+
+                android:id="@+id/BtInventory"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|center"
+                android:layout_marginRight="15dp"
+                android:clickable="false"
+                android:gravity="center"
+                android:src="@drawable/ic_wireless_connection_svgrepo_com"
+
                 android:textSize="11sp"
+                android:tint="@color/white"
 
 
                 android:visibility="invisible" />
             <ImageView
 
                 android:id="@+id/settings"
-                android:tint="@color/white"
-
                 android:layout_width="wrap_content"
+
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|center"
                 android:layout_marginRight="10dp"
                 android:clickable="false"
                 android:gravity="center"
+                android:src="@drawable/ic_settings_svgrepo_com"
 
-                android:src="@drawable/ic_ham_menu"
                 android:textSize="11sp"
+                android:tint="@color/white"
 
 
-                android:visibility="gone" />
+                android:visibility="invisible" />
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/chkselectall"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:padding="5dp"
+                android:text="Select All"
+                android:textColor="@color/white"
+                android:visibility="gone"
+                app:buttonTint="@color/white">
+
+            </androidx.appcompat.widget.AppCompatCheckBox>
+
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/imvlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_list_svgrepo_com">
+
+            </ImageView>
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/imvsmarttool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_magic">
+
+            </ImageView>
+
+
         </LinearLayout>
 
 

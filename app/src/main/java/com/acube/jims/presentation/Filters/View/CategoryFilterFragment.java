@@ -3,13 +3,18 @@ package com.acube.jims.presentation.Filters.View;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.acube.jims.datalayer.models.Filter.FilterStore;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.acube.jims.presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.presentation.Catalogue.View.FilterScreen;
 import com.acube.jims.presentation.Catalogue.adapter.CategoryAdapter;
 import com.acube.jims.R;
@@ -75,18 +80,24 @@ public class CategoryFilterFragment extends Fragment implements RefreshSelection
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_category_filter, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recysubcategory);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        recyclerView.setAdapter(new CategoryAdapter(getActivity(), getList(), CategoryFilterFragment.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        DatabaseClient.getInstance(getActivity()).getAppDatabase().homeMenuDao().getAllFilterStore().observe(requireActivity(), new Observer<List<FilterStore>>() {
+            @Override
+            public void onChanged(List<FilterStore> filterStores) {
+                recyclerView.setAdapter(new CategoryAdapter(getActivity(), filterStores, CategoryFilterFragment.this));
+
+            }
+        });
 
         return view;
     }
 
-    public List<ResponseFetchFilters> getList() {
-        List<ResponseFetchFilters> mMainCategory = null;
-        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), "catresult");
+    public List<FilterStore> getList() {
+        List<FilterStore> mMainCategory = null;
+        String serializedObject = LocalPreferences.retrieveStringPreferences(getActivity(), "branchresults");
         if (serializedObject != null) {
             Gson gson = new Gson();
-            Type type = new TypeToken<List<ResponseFetchFilters>>() {
+            Type type = new TypeToken<List<FilterStore>>() {
             }.getType();
             mMainCategory = gson.fromJson(serializedObject, type);
         }
@@ -96,7 +107,7 @@ public class CategoryFilterFragment extends Fragment implements RefreshSelection
     @Override
     public void refresh() {
 
-        FilterScreen parentFrag = ((FilterScreen) CategoryFilterFragment.this.getParentFragment());
+        FilterBottomSheetFragment parentFrag = ((FilterBottomSheetFragment) CategoryFilterFragment.this.getParentFragment());
         parentFrag.Refresh();
     }
 }

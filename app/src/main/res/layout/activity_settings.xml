@@ -8,11 +8,11 @@
     </data>
 
     <RelativeLayout
-        android:layoutDirection="ltr"
         android:id="@+id/parent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/signinpagebg"
+        android:layoutDirection="ltr"
         tools:context=".Presentation.Login.View.LoginActivity">
 
         <include
@@ -52,7 +52,6 @@
                 <EditText
                     android:id="@+id/ed_url"
 
-                    android:textDirection="ltr"
                     android:layout_width="300dp"
                     android:layout_height="50dp"
                     android:layout_below="@+id/tvsubtitle"
@@ -63,6 +62,7 @@
                     android:inputType="textEmailAddress"
                     android:paddingLeft="24dp"
                     android:paddingRight="10dp"
+                    android:textDirection="ltr"
                     android:textSize="14sp">
 
                 </EditText>
@@ -70,6 +70,7 @@
 
                 <RadioGroup
                     android:id="@+id/radiogrplanguage"
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/ed_url"
@@ -116,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="20dp"
-                        android:text="Language">
+                        android:text="Reader">
 
                     </TextView>
 
@@ -135,7 +136,6 @@
                         android:layout_margin="5dp"
                         android:text="Bluetooth"></RadioButton>
                 </RadioGroup>
-
 
 
                 <LinearLayout

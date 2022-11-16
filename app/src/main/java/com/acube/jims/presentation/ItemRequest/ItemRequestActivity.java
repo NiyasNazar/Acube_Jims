@@ -222,7 +222,7 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
                 }
             }
         });*/
-        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
+        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken,getApplicationContext());
         //setPopUpWindow();
 
 
@@ -242,7 +242,7 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
         vapriceMax = FilterPreference.retrieveStringPreferences(getApplicationContext(), "MaxValue");
         Log.d(TAG, "LoadFirstPage: " + vaSubCatID);
         vagender = FilterPreference.retrieveStringPreferences(getApplicationContext(), "gender");
-        viewModel.FetchCatalogSummary(AppConstants.Authorization + AuthToken, PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, GuestCustomerID);
+        viewModel.FetchCatalogSummary(AppConstants.Authorization + AuthToken, PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, GuestCustomerID,getApplicationContext());
 
     }
 
@@ -267,7 +267,7 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
         FetchCatalogueSummary(AppConstants.Authorization + AuthToken, currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, GuestCustomerID);
     }
     public void FetchCatalogueSummary(String Auth,int PageNum, int PageSize, String CatID, String SubCatID,String ColorCode,String KaratCode,String MinWeight,String MaxWeight,String priceMin,String priceMax,String gender,int customerID) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(getApplicationContext());
         JsonObject jsonObject=new JsonObject();
 
         jsonObject.addProperty("pageNo",PageNum);
@@ -368,7 +368,7 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
     @Override
     public void applyfilter() {
         Toast.makeText(getApplicationContext(), "FilterApplied", Toast.LENGTH_SHORT).show();
-        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
+        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken,getApplicationContext());
 
         LoadFirstPage();
 
@@ -376,7 +376,7 @@ public class ItemRequestActivity extends BaseActivity implements CatalogSummaryI
 
     @Override
     public void addtofav(String id, String serialno) {
-        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, String.valueOf(GuestCustomerID), UserId, id, "add", "", serialno);
+        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, String.valueOf(GuestCustomerID), UserId, id, "add", "", serialno,getApplicationContext());
 
     }
 }

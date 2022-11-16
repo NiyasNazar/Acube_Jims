@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Catalogue;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,8 +25,8 @@ public class ItemDetailsRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void FetchItemDetails(String Auth, String ID) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void FetchItemDetails(String Auth, String ID, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<ResponseCatalogDetails> call = restApiService.getItemDetails(Auth,ID);
         call.enqueue(new Callback<ResponseCatalogDetails>() {
             @Override
@@ -46,8 +47,8 @@ public class ItemDetailsRepository {
         });
 
     }
-    public void FetchoutofsctockItemDetails(String Auth, String ID) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void FetchoutofsctockItemDetails(String Auth, String ID, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<ResponseCatalogDetails> call = restApiService.getItemDetailsoutofstock(Auth,ID);
         call.enqueue(new Callback<ResponseCatalogDetails>() {
             @Override

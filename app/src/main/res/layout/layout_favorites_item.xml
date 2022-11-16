@@ -1,152 +1,419 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:background="@drawable/item_border_detailspage">
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="25dp"
 
+        <RelativeLayout
+            android:id="@+id/laytimage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <CheckBox
-                android:id="@+id/comparecheckbox"
-                android:gravity="center"
-                style="@style/Checkboxstyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/imvdelete"
-                android:buttonTint="@color/appmaincolor"></CheckBox>
-            <ImageView
-                android:id="@+id/imvdelete"
-                android:layout_marginTop="10dp"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
 
-                android:src="@drawable/ic_delete"></ImageView>
-        </LinearLayout>
-
-
-
-
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cdv_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerVertical="true"
-
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            app:cardCornerRadius="6.7dp"
-            app:cardElevation="0dp"
-            app:cardPreventCornerOverlap="false"
-            card_view:cardElevation="0dp">
 
             <ImageView
                 android:id="@+id/item_image"
+
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="175dp"
+
+                android:layout_centerVertical="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/jwimage"></ImageView>
+
+                android:src="@drawable/jwimage">
+
+            </ImageView>
+
+            <RelativeLayout
+                android:id="@+id/likelayout"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/halfcut">
+
+                <CheckBox
+                    android:id="@+id/comparecheckbox"
+                    android:layout_width="30dp"
 
 
-        </androidx.cardview.widget.CardView>
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:buttonTint="@color/white"
 
-        <TextView
-            android:id="@+id/tv_itemname"
 
-            android:layout_width="wrap_content"
+                    />
+
+            </RelativeLayout>
+
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imvdelete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_above="@id/conetentlayt"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="25dp"
+            android:src="@drawable/ic_delete">
+
+        </ImageView>
+
+        <LinearLayout
+            android:id="@+id/conetentlayt"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"
-            android:layout_toRightOf="@id/cdv_image"
-            android:fontFamily="@font/popins_medium"
-            android:maxLines="1"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:layout_below="@id/laytimage"
 
-        <TextView
-            android:id="@+id/tv_weight"
-            android:layout_width="wrap_content"
+            android:background="#bd9b16"
+            android:orientation="vertical">
 
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_serialnumber"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/cdv_image"
-            android:fontFamily="@font/popins_medium"
-            android:text="asdasdasdasd"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Item"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:textColor="#000000"
-            android:textSize="14sp" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tv_stoneweight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_weight"
-            android:layout_marginLeft="10dp"
+                <TextView
+                    android:id="@+id/tv_itemname"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="asdasdasd"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:layout_marginBottom="10dp"
+            </LinearLayout>
 
-            android:layout_toRightOf="@id/cdv_image"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            android:fontFamily="@font/popins_medium"
-            android:text="asdasdasdasd"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Code"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:textColor="#000000"
-            android:textSize="14sp"
-            android:textStyle="normal" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tvprice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_stoneweight"
+                <TextView
 
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="8dp"
+                    android:id="@+id/tv_item_code"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="asdasdasd"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:layout_toRightOf="@id/cdv_image"
-            android:fontFamily="@font/popins_medium"
-            android:gravity="center_horizontal"
-            android:text="asdasdasdasd"
-            android:textColor="#000000"
+            </LinearLayout>
 
-            android:textSize="14sp"
-            android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tv_serialnumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_itemname"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/cdv_image"
-            android:fontFamily="@font/popins_medium"
-            android:text="asdasdasdasd"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Sl.No.#"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
 
-            android:textColor="#000000"
-            android:textSize="14sp"></TextView>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_serialnumber"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="asdasdasd"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Weight"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_weight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="asdasdasd"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Desc"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tv_description"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="asdasdasd"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Price"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tvprice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="asdasdasd"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".5"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:text="Karat"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight=".1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text=":"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+                <TextView
+
+                    android:id="@+id/tvkarat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/popins_medium"
+                    android:singleLine="true"
+                    android:textAllCaps="false"
+                    android:textColor="#FFFFFF"
+                    android:textSize="10sp" />
+
+            </LinearLayout>
+        </LinearLayout>
 
 
     </RelativeLayout>
-
-
-</RelativeLayout>
+</androidx.cardview.widget.CardView>

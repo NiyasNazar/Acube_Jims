@@ -80,7 +80,7 @@ public class ScanItemsActivity extends BaseActivity implements CatalogItemAdapte
             JSONArray jsonArray = new JSONArray(jsonSerialNo);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject explrObject = jsonArray.getJSONObject(i);
-                status = "1";
+                status = explrObject.getString("Status");
                 serialno = explrObject.getString("SerialNo");
                 result.append(serialno);
                 result.append(",");
@@ -97,7 +97,7 @@ public class ScanItemsActivity extends BaseActivity implements CatalogItemAdapte
         jsonObject.addProperty("serialNumber", result.toString());
         AuthToken = LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token);
         Log.d("onCreate", "onCreate: " + AuthToken);
-        viewmodel.getcompareItems(AppConstants.Authorization + AuthToken, jsonObject);
+        viewmodel.getcompareItems(AppConstants.Authorization + AuthToken, jsonObject,getApplicationContext());
         binding.recyvscanned.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
         viewmodel.getLiveData().observe(this, new Observer<List<ResponseItems>>() {
             @Override
@@ -125,7 +125,7 @@ public class ScanItemsActivity extends BaseActivity implements CatalogItemAdapte
                         JSONArray jsonArray = new JSONArray(jsonSerialNo);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject explrObject = jsonArray.getJSONObject(i);
-                            status = "1";
+                            status = explrObject.getString("Status");
                             serialno = explrObject.getString("SerialNo");
                             UpdateStatus(serialno, status);
                         }
@@ -278,7 +278,7 @@ public class ScanItemsActivity extends BaseActivity implements CatalogItemAdapte
                     items.addProperty("qty", 0);
                     jsonArray.add(items);
                 }
-                addtoCartViewModel.AddtoCart(AppConstants.Authorization + AuthToken, "add", jsonArray);
+                addtoCartViewModel.AddtoCart(AppConstants.Authorization + AuthToken, "add", jsonArray,getApplicationContext());
                 dialog.dismiss();
             }
         });
@@ -286,7 +286,7 @@ public class ScanItemsActivity extends BaseActivity implements CatalogItemAdapte
         cdvshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (dataset != null && dataset.size() != 0) {
+                if (dataset!=null&&dataset.size()!=0) {
                     comparelist = new ArrayList<>();
                     for (int i = 0; i < dataset.size(); i++) {
                         comparelist.add(dataset.get(i).getSerialNumber());

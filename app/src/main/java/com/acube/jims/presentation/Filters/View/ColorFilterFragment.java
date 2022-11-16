@@ -3,16 +3,20 @@ package com.acube.jims.presentation.Filters.View;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Catalogue.View.FilterBottomSheetFragment;
 import com.acube.jims.presentation.Catalogue.adapter.FilterColorAdapter;
 import com.acube.jims.R;
+import com.acube.jims.presentation.Catalogue.adapter.FilterKaratAdapter;
 import com.acube.jims.utils.FilterPreference;
 import com.acube.jims.utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.Colorresult;
@@ -75,8 +79,14 @@ public class ColorFilterFragment extends Fragment implements RefreshSelection {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_color_filter, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recysubcategory);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(),4));
-        recyclerView.setAdapter(new FilterColorAdapter(getActivity(), getList(),ColorFilterFragment.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        DatabaseClient.getInstance(getActivity()).getAppDatabase().homeMenuDao().getAllColorresult().observe(requireActivity(), new Observer<List<Colorresult>>() {
+            @Override
+            public void onChanged(List<Colorresult> karatresults) {
+                recyclerView.setAdapter(new FilterColorAdapter(getActivity(), karatresults, ColorFilterFragment.this));
+
+            }
+        });
         return view;
     }
     public List<Colorresult> getList() {

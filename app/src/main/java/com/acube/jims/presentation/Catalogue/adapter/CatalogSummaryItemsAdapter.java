@@ -93,6 +93,7 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
                 catalogVH.textViewPrice.setText("SAR " + responseCatalogueListing.getMrp());
                 catalogVH.textviewDesc.setText(responseCatalogueListing.getItemDesc());
                 catalogVH.textViewCode.setText(responseCatalogueListing.getItemCode());
+                catalogVH.textViewStock .setText("Qty : "+responseCatalogueListing.getAvailableQty());
 
                 //catalogVH.textViewItemName.setText(myString);
                 //    int stock = responseCatalogueListing.getAvailableQty();
@@ -232,7 +233,7 @@ public class CatalogSummaryItemsAdapter extends RecyclerView.Adapter<RecyclerVie
         public CatalogVH(View itemView) {
             super(itemView);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
-            //  textViewStock = itemView.findViewById(R.id.tvstock);
+              textViewStock = itemView.findViewById(R.id.tvqty);
             mlikebtn = itemView.findViewById(R.id.fav_button);
             textviewDesc = itemView.findViewById(R.id.tv_description);
             textViewSerialnumber = itemView.findViewById(R.id.tv_serialnumber);

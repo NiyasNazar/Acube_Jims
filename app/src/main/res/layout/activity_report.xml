@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".presentation.Audit.AuditFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar"
+
+
+                >
+
+            </include>
+
+            <LinearLayout
+                android:layout_below="@id/toolbar_app"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabLayout"
+                    app:tabTextColor="@color/white"
+                    app:tabMaxWidth="0dp"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@android:color/white"
+                    app:tabMode="fixed"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/appmaincolor">
+
+
+                </com.google.android.material.tabs.TabLayout>
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                  />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

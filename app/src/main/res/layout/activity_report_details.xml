@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".presentation.Audit.AuditFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar"
+
+
+                >
+
+            </include>
+
+            <LinearLayout
+                android:id="@+id/nestedscrollview"
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar_app"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+
+                android:background="@drawable/item_border_detailspage"
+                android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+
+                    android:id="@+id/details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:gravity="center"
+
+                            android:text="Stock check report details"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@color/color_two" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="25dp"
+                            android:layout_marginBottom="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:text="Audit ID"
+                                android:textColor="@color/black"
+                                android:textSize="18sp" />
+
+                            <TextView
+                                android:id="@+id/auditID"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:fontFamily="sans-serif-light"
+                                android:text="0"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@color/color_two" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="25dp"
+                            android:layout_marginBottom="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+
+                                android:text="Warehouse Name"
+                                android:textColor="@color/black"
+                              />
+
+
+                            <TextView
+                                android:id="@+id/warehouseName"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:fontFamily="sans-serif-light"
+                                android:text="0"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@color/color_two" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="25dp"
+                            android:layout_marginBottom="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:text="Remark"
+                                android:textColor="@color/black"
+
+           />
+
+                            <TextView
+                                android:id="@+id/remark"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:fontFamily="sans-serif-light"
+                                android:text="0"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@color/color_two" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="25dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="25dp"
+                            android:layout_marginBottom="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-light"
+                                android:text="Assigned Zones"
+                                android:textColor="@color/black"
+
+                               />
+
+
+                            <TextView
+                                android:id="@+id/assignedZones"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:fontFamily="sans-serif-light"
+                                android:text="0"
+                                android:textAlignment="textEnd"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:elevation="10dp"
+                    app:cardCornerRadius="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
+                        android:layout_weight=".8"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cdvtotalstock"
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight=".12"
+                                app:cardBackgroundColor="@color/Total"
+                                app:cardCornerRadius="15dp"
+                                app:cardUseCompatPadding="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="Total Stock"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/white"
+                                     >
+
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/tvtotalstock"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="10"
+                                        android:textColor="@color/white"
+                                      >
+
+                                    </TextView>
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cdvunknown"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight=".12"
+                                app:cardBackgroundColor="@color/Unknown"
+                                app:cardCornerRadius="15dp"
+                                app:cardUseCompatPadding="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="Unknown"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/white"
+                                    >
+
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/tvunknown"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="10"
+                                        android:textColor="@color/white"
+                                     >
+
+                                    </TextView>
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cdvfound"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight=".8"
+                                app:cardBackgroundColor="@color/Found"
+                                app:cardCornerRadius="15dp"
+                                app:cardUseCompatPadding="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="Found"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/white"
+                                      >
+
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/tvfound"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="10"
+                                        android:textColor="@color/white"
+                                   >
+
+                                    </TextView>
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cdvmissing"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight=".8"
+                                app:cardBackgroundColor="@color/Missing"
+                                app:cardCornerRadius="15dp"
+                                app:cardUseCompatPadding="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="Missing"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/white"
+                                    >
+
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/tvmissing"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="10"
+                                        android:textColor="@color/white"
+                                  >
+
+                                    </TextView>
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/cdvlocationmismatch"
+
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight=".8"
+                                app:cardBackgroundColor="@color/Mismatch"
+                                app:cardCornerRadius="15dp"
+                                app:cardUseCompatPadding="true">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:gravity="center"
+
+                                        android:text="Mismatch"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/white"
+                           >
+
+                                    </TextView>
+
+                                    <TextView
+                                        android:id="@+id/tvlocationmismatch"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+
+                                        android:fontFamily="@font/jtmarniebold"
+                                        android:text="10"
+                                        android:textColor="@color/white"
+                                       >
+
+                                    </TextView>
+
+                                </LinearLayout>
+
+
+                            </androidx.cardview.widget.CardView>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+
+                </androidx.cardview.widget.CardView>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

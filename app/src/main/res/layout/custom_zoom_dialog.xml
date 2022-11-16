@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="500dp"
+    android:layout_gravity="center">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#FFF"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ozaydin.serkan.com.image_zoom_view.ImageViewZoom
+                android:id="@+id/myZoomageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/dummy_item_image" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imvclose"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right|top"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/ic_close_svgrepo_com"></ImageView>
+    </RelativeLayout>
+
+    />
+</FrameLayout>

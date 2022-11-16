@@ -9,8 +9,17 @@ import com.acube.jims.datalayer.models.Audit.AuditLocation;
 import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
 import com.acube.jims.datalayer.models.Audit.AuditSubCategory;
 import com.acube.jims.datalayer.models.Audit.Store;
+import com.acube.jims.datalayer.models.ConsignmentLine;
+import com.acube.jims.datalayer.models.Filter.Colorresult;
+import com.acube.jims.datalayer.models.Filter.FilterStore;
+import com.acube.jims.datalayer.models.Filter.Karatresult;
+import com.acube.jims.datalayer.models.Filter.Weight;
 import com.acube.jims.datalayer.models.Invoice.KaratPrice;
+import com.acube.jims.datalayer.models.OfflineConsignment;
+import com.acube.jims.datalayer.models.SelectionHolder;
+import com.acube.jims.datalayer.models.report.ItemWiseReport;
 import com.acube.jims.datalayer.remote.dbmodel.ItemRequestEntry;
+import com.acube.jims.datalayer.remote.dbmodel.Smarttool;
 import com.acube.jims.presentation.Quotation.adapter.DiscountItem;
 import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.datalayer.models.Audit.AuditResults;
@@ -20,10 +29,10 @@ import com.acube.jims.datalayer.models.LocateProduct.LocateItem;
 import com.acube.jims.datalayer.remote.dbmodel.CustomerHistory;
 
 
-@Database(entities = {HomeData.class, ResponseItems.class, CustomerHistory.class, KaratPrice.class,
-        AuditResults.class, TemDataSerial.class,
-        DiscountItem.class, LocateItem.class, ItemRequestEntry.class,
-        AuditItem.class, AuditSubCategory.class, AuditLocation.class, AuditSnapShot.class, Store.class}, version = 6, exportSchema = false)
+@Database(entities = {HomeData.class, ResponseItems.class, CustomerHistory.class, KaratPrice.class, ConsignmentLine.class,
+        AuditResults.class, TemDataSerial.class, Smarttool.class, ItemWiseReport.class, FilterStore.class,
+        DiscountItem.class, LocateItem.class, ItemRequestEntry.class, SelectionHolder.class, Karatresult.class, Colorresult.class, Weight.class,
+        AuditItem.class, AuditSnapShot.class}, version = 9, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract HomeMenuDao homeMenuDao();
 

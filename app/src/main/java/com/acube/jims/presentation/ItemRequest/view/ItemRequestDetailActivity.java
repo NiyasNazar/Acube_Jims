@@ -265,7 +265,7 @@ public class ItemRequestDetailActivity extends BaseActivity implements ItemReque
                 }
             }
         });*/
-        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
+        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken,getApplicationContext());
         //setPopUpWindow();
 
 
@@ -320,7 +320,7 @@ public class ItemRequestDetailActivity extends BaseActivity implements ItemReque
     }
 
     private void UpdatePicklist(JsonObject jsonobject) {
-        RetrofitInstance.getApiService().UpdateItemRequest(LocalPreferences.getToken(getApplicationContext()), jsonobject)
+        RetrofitInstance.getApiService(getApplicationContext()).UpdateItemRequest(LocalPreferences.getToken(getApplicationContext()), jsonobject)
                 .enqueue(new Callback<List<ItemRequestEntry>>() {
                     @Override
                     public void onResponse(Call<List<ItemRequestEntry>> call, Response<List<ItemRequestEntry>> response) {
@@ -352,7 +352,7 @@ public class ItemRequestDetailActivity extends BaseActivity implements ItemReque
 
     private void CreatePicklist(JsonObject jsonobject) {
 
-        RetrofitInstance.getApiService().CreateItemRequest(LocalPreferences.getToken(getApplicationContext()), jsonobject)
+        RetrofitInstance.getApiService(getApplicationContext()).CreateItemRequest(LocalPreferences.getToken(getApplicationContext()), jsonobject)
                 .enqueue(new Callback<List<ItemRequestEntry>>() {
                     @Override
                     public void onResponse(Call<List<ItemRequestEntry>> call, Response<List<ItemRequestEntry>> response) {
@@ -395,7 +395,7 @@ public class ItemRequestDetailActivity extends BaseActivity implements ItemReque
         vapriceMax = FilterPreference.retrieveStringPreferences(getApplicationContext(), "MaxValue");
         Log.d(TAG, "LoadFirstPage: " + vaSubCatID);
         vagender = FilterPreference.retrieveStringPreferences(getApplicationContext(), "gender");
-        viewModel.FetchCatalog(AppConstants.Authorization + AuthToken, PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, itemID, GuestCustomerID);
+        viewModel.FetchCatalog(AppConstants.Authorization + AuthToken, PAGE_START, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, itemID, GuestCustomerID,0,getApplicationContext());
 
     }
 
@@ -414,7 +414,7 @@ public class ItemRequestDetailActivity extends BaseActivity implements ItemReque
         vaPriceMin = FilterPreference.retrieveStringPreferences(getApplicationContext(), "MinValue");
         vapriceMax = FilterPreference.retrieveStringPreferences(getApplicationContext(), "MaxValue");
         vagender = FilterPreference.retrieveStringPreferences(getApplicationContext(), "gender");
-        catalogViewModelNextPage.FetchCatalog(AppConstants.Authorization + AuthToken, currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, itemID, GuestCustomerID);
+        catalogViewModelNextPage.FetchCatalog(AppConstants.Authorization + AuthToken, currentPage, AppConstants.Pagesize, vaCatID, vaSubCatID, vaColorID, vaKaratID, vaWeightMin, vaWeightMax, vaPriceMin, vapriceMax, vagender, itemID, GuestCustomerID,0,getApplicationContext());
 
     }
 
@@ -461,7 +461,7 @@ public class ItemRequestDetailActivity extends BaseActivity implements ItemReque
     @Override
     public void applyfilter() {
         Toast.makeText(getApplicationContext(), "FilterApplied", Toast.LENGTH_SHORT).show();
-        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken);
+        filterViewModel.FetchFilters(AppConstants.Authorization + AuthToken,getApplicationContext());
 
         LoadFirstPage();
 

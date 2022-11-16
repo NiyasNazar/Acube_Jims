@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Common;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,9 +25,9 @@ public class ItemDetailsFromServerRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void ResponseItems(String header,JsonObject jsonObject) {
+    public void ResponseItems(String header, JsonObject jsonObject, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<List<ResponseItems>> call = restApiService.ItemList(header,jsonObject);
         call.enqueue(new Callback<List<ResponseItems>>() {
             @Override

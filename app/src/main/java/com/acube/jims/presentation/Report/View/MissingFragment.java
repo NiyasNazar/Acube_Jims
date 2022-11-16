@@ -64,7 +64,7 @@ public class MissingFragment extends Fragment implements MissingadapterforFragme
             @Override
             public void onChanged(List<ResponseScanHistory> responseScanHistories) {
                 if (responseScanHistories != null) {
-                    showAddProductPopup(responseScanHistories);
+                    //showAddProductPopup(responseScanHistories);
 
                 }
             }
@@ -91,13 +91,13 @@ public class MissingFragment extends Fragment implements MissingadapterforFragme
         jsonObject.addProperty("warehouseID", warehouseID);
         jsonObject.addProperty("locationID", locid);
         jsonObject.addProperty("serialNo", id);
-        mViewModel.ItemHistory(LocalPreferences.getToken(getActivity()), jsonObject);
+        mViewModel.ItemHistory(LocalPreferences.getToken(getActivity()), jsonObject,requireActivity());
 
 
     }
 
     private void showAddProductPopup(List<ResponseScanHistory> responseScanHistories) {
-        LayoutInflater inflater = getLayoutInflater();
+/*        LayoutInflater inflater = getLayoutInflater();
         View alertLayout = inflater.inflate(R.layout.layout_custom_dialog, null);
         RecyclerView recyclerView = alertLayout.findViewById(R.id.recyvitemhistory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -111,7 +111,7 @@ public class MissingFragment extends Fragment implements MissingadapterforFragme
         AlertDialog dialog = alert.create();
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
-        dialog.show();
+        dialog.show();*/
 
     }
 }

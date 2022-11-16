@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.acube.jims.R;
 import com.acube.jims.databinding.ItemAssetAuditBinding;
 import com.acube.jims.datalayer.remote.db.LocalAudit;
+import com.acube.jims.utils.OnSingleClickListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,7 +58,7 @@ public class AuditAdapter extends RecyclerView.Adapter<AuditAdapter.ProductViewH
         try {
             holder.binding.requestDateTextView.setText(formatDate(responseInbound.getToBeAuditedOn()));
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         // holder.binding.tvBinRef.setText("" + responseInbound.getb);
@@ -80,7 +81,15 @@ public class AuditAdapter extends RecyclerView.Adapter<AuditAdapter.ProductViewH
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    fragmenttransition.scanaction(dataset.get(getAbsoluteAdapterPosition()).getAuditID(),"","");
+                    fragmenttransition.scanaction(dataset.get(getAbsoluteAdapterPosition()).getAuditID(), "", "");
+
+                }
+            });
+
+            binding.imvupload.setOnClickListener(new OnSingleClickListener() {
+                @Override
+                public void onSingleClick(View v) {
+                    fragmenttransition.passlist(dataset.get(getAbsoluteAdapterPosition()).getAuditID());
 
                 }
             });
@@ -91,12 +100,13 @@ public class AuditAdapter extends RecyclerView.Adapter<AuditAdapter.ProductViewH
     public interface FragmentTransition {
         void replaceFragment(String menuname);
 
-        void passlist(List<Integer> dataset);
+        void passlist(String auditId);
 
-        void scanaction(String auditId, String toBeAuditedOn,String remark);
+        void scanaction(String auditId, String toBeAuditedOn, String remark);
 
     }
-    public  String formatDate(String dateString){
+
+    public String formatDate(String dateString) {
         SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         Date date = null;
         try {

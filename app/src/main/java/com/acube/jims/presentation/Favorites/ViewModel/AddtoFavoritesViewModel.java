@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Favorites.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,8 +20,8 @@ public class AddtoFavoritesViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void AddtoFavorites(String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String viewedOn,String serialno) {
-        repository.AddtoFavorites(Auth, CustomerID, EmployeeId, ItemId, viewedOn, type,serialno);
+    public void AddtoFavorites(String Auth, String CustomerID, String EmployeeId, String ItemId, String type,String viewedOn,String serialno, Context context) {
+        repository.AddtoFavorites(Auth, CustomerID, EmployeeId, ItemId, viewedOn, type,serialno,context);
     }
 
     public void init() {

@@ -87,7 +87,8 @@ public class AddCustomerFragment extends BaseActivity {
             public void onChanged(ResponseCreateCustomer responseCreateCustomer) {
                 hideProgressDialog();
                 if (responseCreateCustomer != null) {
-                    if (responseCreateCustomer.getMessage().equalsIgnoreCase("Contact number already exist")) {
+
+                    if (responseCreateCustomer.getMessage() != null && responseCreateCustomer.getMessage().equalsIgnoreCase("Contact number already exist")) {
                         showerror(responseCreateCustomer.getMessage());
                     } else {
                         LocalPreferences.storeStringPreference(getApplicationContext(), "GuestCustomerName", responseCreateCustomer.getCustomerName());
@@ -96,6 +97,8 @@ public class AddCustomerFragment extends BaseActivity {
                         Date todaysdate = new Date();
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         String starttime = format.format(todaysdate);
+                        LocalPreferences.storeBooleanPreference(getApplicationContext(), "salesman", false);
+
                         LocalPreferences.storeStringPreference(getApplicationContext(), "CustomerSessionStartTime", starttime);
                         startActivity(new Intent(getApplicationContext(), HomePageActivity.class));
                     }
@@ -116,7 +119,7 @@ public class AddCustomerFragment extends BaseActivity {
         jsonObject.addProperty("customerName", vaguestname);
         jsonObject.addProperty("emailID", vaemail);
         jsonObject.addProperty("contactNumber", vamobile);
-        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token), jsonObject);
+        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token), jsonObject,getApplicationContext());
 
     }
 

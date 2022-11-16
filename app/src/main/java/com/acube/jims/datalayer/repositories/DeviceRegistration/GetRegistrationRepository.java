@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.DeviceRegistration;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,9 +23,9 @@ public class GetRegistrationRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void CheckDeviceRegistration(String Token,String vaMacaddress) {
+    public void CheckDeviceRegistration(String Token, String vaMacaddress, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<ResponseGetRegistered> call = restApiService.getRegisteredDetails(Token,vaMacaddress);
         call.enqueue(new Callback<ResponseGetRegistered>() {
             @Override

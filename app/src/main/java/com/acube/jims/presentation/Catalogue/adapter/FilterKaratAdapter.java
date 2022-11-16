@@ -1,5 +1,7 @@
 package com.acube.jims.presentation.Catalogue.adapter;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +17,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.acube.jims.R;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.utils.FilterPreference;
+import com.acube.jims.utils.OnSingleClickListener;
 import com.acube.jims.utils.RefreshSelection;
 import com.acube.jims.datalayer.models.Filter.Karatresult;
 import com.acube.jims.datalayer.models.Filter.SubCategory;
@@ -34,7 +39,7 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
     List<SubCategory> sublist;
     List<String> karatlist;
     RefreshSelection refreshSelection;
-    List<String>karatnames;
+    List<String> karatnames;
 
     public FilterKaratAdapter(Context mCtx, List<Karatresult> dataset, RefreshSelection refreshSelection) {
         this.mCtx = mCtx;
@@ -42,7 +47,7 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
         sublist = new ArrayList<>();
         karatlist = new ArrayList<>();
         this.refreshSelection = refreshSelection;
-        karatnames=new ArrayList<>();
+        karatnames = new ArrayList<>();
 
     }
 
@@ -60,24 +65,25 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
     }
 
     @Override
-    public void onBindViewHolder(ProductViewHolder holder, int position) {
+    public void onBindViewHolder(ProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         // ResponseCatalogueListing responseCatalogueListing = dataset.get(position);
         holder.textViewItemName.setText(dataset.get(position).getKaratName());
-        holder.cardView.setCardBackgroundColor(dataset.get(position).isSelected() ? Color.parseColor("#18477F") : Color.parseColor("#BF8F3A"));
 
 
+
+        holder.textViewItemName.setChecked(dataset.get(position).isSelected());
     }
 
 
     @Override
     public int getItemCount() {
-        return dataset==null ? 0 :dataset.size();
+        return dataset == null ? 0 : dataset.size();
     }
 
 
     class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewItemName;
+        CheckBox textViewItemName;
         CardView cardView;
         CheckBox textViewkaratcheckbox;
         ImageView imageView;
@@ -85,52 +91,44 @@ public class FilterKaratAdapter extends RecyclerView.Adapter<FilterKaratAdapter.
 
         public ProductViewHolder(View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.btn_cat_filter);
-
+            this.setIsRecyclable(false);
             textViewItemName = itemView.findViewById(R.id.tv_item_name);
             //imageView = itemView.findViewById(R.id.imageView);
 
+         textViewItemName.setOnClickListener(new OnSingleClickListener() {
+             @Override
+             public void onSingleClick(View v) {
+                 Log.d("onSingleClick", "onSingleClick0: ");
+                 new Thread(() -> {
+                     if (!dataset.get(getAbsoluteAdapterPosition()).isSelected()){
+                         DatabaseClient.getInstance(mCtx).getAppDatabase().homeMenuDao().updatekarat(1, dataset.get(getAbsoluteAdapterPosition()).getId());
+                         Log.d("onSingleClick", "onSingleClick2: ");
+                         if (!karatlist.contains(dataset.get(getAbsoluteAdapterPosition()).getId())) {
+                             karatlist.add(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getId()));
+                             karatnames.add(dataset.get(getAbsoluteAdapterPosition()).getKaratName());
+                             setList("karatfilter", karatlist);
+                             setList("karatnames", karatnames);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int position = getAbsoluteAdapterPosition();
-                    dataset.get(position).setSelected(!dataset.get(position).isSelected());
-                    if (dataset.get(position).isSelected()) {
-                        if (!karatlist.contains(dataset.get(position).getId())) {
-                            karatlist.add(String.valueOf(dataset.get(position).getId()));
-                            karatnames.add(dataset.get(position).getKaratName());
-                            setList("karatfilter", karatlist);
-                            setList("karatnames", karatnames);
-                            FilterPreference.storeBooleanPreference(mCtx, "karat" + position, true);
+                         }
+                     }else {
+                         DatabaseClient.getInstance(mCtx).getAppDatabase().homeMenuDao().updatekarat(0, dataset.get(getAbsoluteAdapterPosition()).getId());
+                         Log.d("onSingleClick", "onSingleClick2: ");
+                         karatlist.remove(String.valueOf(dataset.get(getAbsoluteAdapterPosition()).getId()));
+                         karatnames.remove(dataset.get(getAbsoluteAdapterPosition()).getKaratName());
+                         setList("karatnames", karatnames);
+                         Log.d("TAG", "onCheckedChanged: "+karatlist.toString());
+                         setList("karatfilter", karatlist);
 
-                        }
-                    }else if (!dataset.get(position).isSelected()) {
-                        FilterPreference.storeBooleanPreference(mCtx, "karat" + position, false);
+                     }
 
-                        karatlist.remove(String.valueOf(dataset.get(position).getId()));
-                        karatnames.remove(dataset.get(position).getKaratName());
-                        setList("karatnames", karatnames);
-                        Log.d("TAG", "onCheckedChanged: "+karatlist.toString());
-                        setList("karatfilter", karatlist);
-
-                    }
-
-
-
-                        Log.d("TAG", "onCheckedChanged: "+karatlist.toString());
-
-                      //  refreshSelection.refresh();
+                     ((Activity) mCtx).runOnUiThread(() -> {
+                         notifyDataSetChanged();
 
 
-                    cardView.setCardBackgroundColor(dataset.get(position).isSelected() ? Color.parseColor("#18477F") : Color.parseColor("#BF8F3A"));
-
-
-
-                }
-            });
-
-
+                     });
+                 }).start();
+             }
+         });
         }
     }
 

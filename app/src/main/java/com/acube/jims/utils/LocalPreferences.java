@@ -14,7 +14,13 @@ public class LocalPreferences {
     private static final boolean DEFAULT_BOOLEAN = false;
     private static final String DEFAULT_STRING = "";
     private static final Integer DEFAULT_INTEGER = -1;
+    private static final float DEFAULT_READFLOATVALUE = 30.0f;
 
+    public static void storeReadfloatPreference(Context context, String key, float value) {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putFloat(key, value);
+        editor.apply();
+    }
 
     //store string preference
     public static void storeStringPreference(Context context, String key, String value) {
@@ -41,7 +47,11 @@ public class LocalPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return AppConstants.Authorization+prefs.getString("Token", DEFAULT_STRING);
     }
+    public static Float retrieveReadFloatPreferences(Context context, String key) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getFloat(key, DEFAULT_READFLOATVALUE);
 
+    }
     //store int preference
     public static void storeIntegerPreference(Context context, String key, Integer value) {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();

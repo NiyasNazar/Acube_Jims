@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Compare;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,8 +22,8 @@ public class CompareViewModel extends AndroidViewModel {
     }
 
 
-    public void getcompareItems(String Token, JsonObject jsonObject) {
-        repository.CompareItems(Token, jsonObject);
+    public void getcompareItems(String Token, JsonObject jsonObject, Context context) {
+        repository.CompareItems(Token, jsonObject,context);
 
     }
 

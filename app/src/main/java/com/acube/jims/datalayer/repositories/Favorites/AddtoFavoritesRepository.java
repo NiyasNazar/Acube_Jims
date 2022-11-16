@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Favorites;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,8 +23,8 @@ public class AddtoFavoritesRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void AddtoFavorites(String Auth, String CustomerID, String EmployeeId, String itemID, String viewedOn, String type,String serialno) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void AddtoFavorites(String Auth, String CustomerID, String EmployeeId, String itemID, String viewedOn, String type, String serialno, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         JsonObject jsonObject = new JsonObject();
 
 

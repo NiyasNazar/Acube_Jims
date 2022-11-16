@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.CartManagment;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -26,8 +27,8 @@ public class AddtoCartRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void AddtoCart(String Auth, String type , JsonArray jsonArray) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void AddtoCart(String Auth, String type , JsonArray jsonArray, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
 
 
 

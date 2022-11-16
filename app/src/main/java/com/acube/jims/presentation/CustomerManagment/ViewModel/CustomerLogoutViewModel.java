@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.CustomerManagment.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -18,8 +19,8 @@ public class CustomerLogoutViewModel extends AndroidViewModel {
 
     }
 
-    public void CustomerLogout(String Auth,JsonObject jsonObject) {
-        repository.CustomerLogout(Auth,jsonObject);
+    public void CustomerLogout(String Auth, JsonObject jsonObject, Context context) {
+        repository.CustomerLogout(Auth,jsonObject,context);
     }
 
     public void init() {

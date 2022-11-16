@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".presentation.Consignment.ConsigmentOptions">
+
+        <include layout="@layout/layout_toolbar">
+
+        </include>
+
+        <RelativeLayout
+            android:id="@+id/layoutscan"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imvhomeicon"
+                android:layout_width="40dp"
+                android:src="@drawable/barcode"
+                android:layout_centerHorizontal="true"
+                android:layout_height="40dp">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/tvhomemenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consignment Scan"
+
+                android:layout_below="@+id/imvhomeicon"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+
+
+                android:textAllCaps="true"
+                android:textColor="#ab7e2f">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layoutverification"
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imvhomeicon2"
+                android:layout_width="40dp"
+                android:src="@drawable/barcode"
+                android:layout_centerHorizontal="true"
+                android:layout_height="40dp">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/tvhomemenu2"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Consignment Verification"
+
+                android:layout_below="@+id/imvhomeicon2"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto_bold"
+
+
+                android:textAllCaps="true"
+                android:textColor="#ab7e2f">
+
+            </TextView>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

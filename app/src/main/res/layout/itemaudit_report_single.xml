@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+
+        android:elevation="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!--Pie chart to display the data-->
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/piechart"
+
+                android:layout_width="0dp"
+
+
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_weight="1"
+                android:padding="6dp"
+
+                />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvauditID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="10dp"
+                    android:text="Audit ID"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical">
+
+                    <!--View to display the yellow color icon-->
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/Total" />
+
+                    <!--Text view to display R -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="Total" />
+
+                </LinearLayout>
+
+                <!--Linear layout to display Python-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical">
+
+                    <!--View to display the green color icon-->
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/Found" />
+
+                    <!--Text view to display python text -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="Found" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical">
+
+                    <!--View to display the yellow color icon-->
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/Missing" />
+
+                    <!--Text view to display R -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="Missing" />
+
+                </LinearLayout>
+
+                <!--Linear layout to display C++-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical">
+
+                    <!--View to display the red color icon-->
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/Unknown" />
+
+                    <!--Text view to display C++ text -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="Extra" />
+
+                </LinearLayout>
+
+                <!--Linear layout to display Java-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:gravity="center_vertical">
+
+                    <!--View to display the blue color icon-->
+                    <View
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:background="@color/Mismatch" />
+
+                    <!--Text view to display Java text -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="Mismatch" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+</layout>

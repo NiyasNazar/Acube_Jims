@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.HomePage;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,9 +25,9 @@ public class HomeMenuRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void getHomeMneu(String Token,String vaAppname,String vaRole) {
+    public void getHomeMneu(String Token, String vaAppname, String vaRole, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<List<HomeData>> call = restApiService.getHomeMenu(Token,vaAppname,vaRole);
         call.enqueue(new Callback<List<HomeData>>() {
             @Override

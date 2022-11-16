@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.reading.BlankFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="0dp"
+
+            android:layout_marginRight="0dp"
+
+            android:layout_marginBottom="0dp">
+
+            <LinearLayout
+                android:id="@+id/layout_details"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/laytimage"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/white"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/glideimg"
+                        android:scaleType="fitXY"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:padding="10dp"
+
+                        >
+
+                    </ImageView>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.core.widget.NestedScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="10dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:background="#F2edee"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:text="Item Name"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/tvitemname"
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:text="Description"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/tv_description"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+
+
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:background="#F2edee"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:text="Serial Number"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/tv_itemcode"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:text="Gender"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/tv_gender"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:background="#F2edee"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:text="Making Charge(min)"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/tvmakingchargemin"
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:layout_marginRight="20dp"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:text="Making Charge (max)"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+
+                                <TextView
+                                    android:id="@+id/tv_makingchrgmax"
+                                    android:layout_width="0dp"
+                                    android:layout_height="26dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/montserratsemibold"
+                                    android:gravity="start|center"
+                                    android:letterSpacing="0.01"
+                                    android:paddingLeft="10dp"
+                                    android:textColor="#666666"
+                                    android:textSize="12sp"
+                                    android:textStyle="normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginRight="20dp"
+                                    android:background="#F2edee"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text="Karat"
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+
+                                    <TextView
+                                        android:id="@+id/tv_karatname"
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text=""
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginRight="20dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text="Color"
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+
+                                    <TextView
+                                        android:id="@+id/tv_color"
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+
+                                    android:layout_height="50dp"
+                                    android:layout_marginRight="20dp"
+                                    android:background="#F2edee"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text="UOM"
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+
+                                    <TextView
+                                        android:id="@+id/tvuom"
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text=""
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginRight="20dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text="Gross Weight"
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+
+                                    <TextView
+                                        android:id="@+id/tvgrossweight"
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text=""
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+
+                                    android:layout_height="50dp"
+                                    android:layout_marginRight="20dp"
+                                    android:background="#F2edee"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text="Category"
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+
+                                    <TextView
+                                        android:id="@+id/tvcategory"
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="50dp"
+                                    android:layout_marginRight="20dp"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text="Sub-Category"
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+
+                                    <TextView
+                                        android:id="@+id/tv_subcategory"
+                                        android:layout_width="0dp"
+                                        android:layout_height="26dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/montserratsemibold"
+                                        android:gravity="start|center"
+                                        android:letterSpacing="0.01"
+                                        android:paddingLeft="10dp"
+                                        android:text=""
+                                        android:textColor="#666666"
+                                        android:textSize="12sp"
+                                        android:textStyle="normal" />
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+                    </androidx.core.widget.NestedScrollView>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

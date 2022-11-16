@@ -10,6 +10,7 @@ import android.view.View;
 import com.acube.jims.BaseActivity;
 import com.acube.jims.datalayer.models.Audit.AuditReportItems;
 import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
+import com.acube.jims.datalayer.models.SelectionHolder;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Report.ViewModel.ReportViewModel;
 import com.acube.jims.R;
@@ -19,26 +20,27 @@ import com.acube.jims.presentation.Report.adapter.Missingadapter;
 
 import java.util.List;
 
-public class FoundReportActivity extends BaseActivity {
+public class FoundReportActivity extends BaseActivity implements Missingadapter.PassId {
     ActivityFoundreportBinding binding;
     private ReportViewModel mViewModel;
-    Missingadapter  reportadapter;
+    Missingadapter reportadapter;
     int flag;
     String AuditID;
     int systemLocationID, storeID, categoryId, itemID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_foundreport);
-        binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
+        binding.recyvfound.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         initToolBar(binding.toolbarApp.toolbar, "Found", true);
         flag = getIntent().getIntExtra("flag", -1);
         binding.tvNotfound.setVisibility(View.GONE);
-        if (flag==1){
+        if (flag == 1) {
             initToolBar(binding.toolbarApp.toolbar, "Found", true);
 
-        }else{
+        } else {
             initToolBar(binding.toolbarApp.toolbar, "Unknown", true);
 
         }
@@ -51,15 +53,14 @@ public class FoundReportActivity extends BaseActivity {
         showProgressDialog();
 
 
-
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getMissing(AuditID, 1, systemLocationID,categoryId,itemID,storeID).observe(this, new Observer<List<AuditSnapShot>>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getMissing(AuditID, flag, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<List<SelectionHolder>>() {
             @Override
-            public void onChanged(List<AuditSnapShot> responseReport) {
+            public void onChanged(List<SelectionHolder> responseReport) {
                 hideProgressDialog();
                 if (responseReport != null) {
                     binding.tvTotaldata.setText("Total Items : " + responseReport.size());
 
-                    reportadapter = new Missingadapter(getApplicationContext(), responseReport,false);
+                    reportadapter = new Missingadapter(getApplicationContext(), responseReport, false, FoundReportActivity.this);
                     binding.recyvfound.setAdapter(reportadapter);
                     if (reportadapter.getItemCount() == 0) {
                         binding.tvNotfound.setVisibility(View.VISIBLE);
@@ -73,4 +74,24 @@ public class FoundReportActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    public void passid(String id, Integer locid) {
+
+    }
+
+    @Override
+    public void enlargeImage(View view, String imageUrl) {
+        showDialog(imageUrl, FoundReportActivity.this);
+
+    }
+
+    @Override
+    public void compareitems(String serial, boolean checked) {
+
+    }
+
+
+
+
 }

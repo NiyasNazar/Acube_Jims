@@ -97,7 +97,7 @@ public class ItemRequestPickListDetailsActivity extends BaseActivity {
 
     private void UpdatePicklist(JsonObject jsonObject) {
         showProgressDialog();
-        RetrofitInstance.getApiService().markpicklistCompleted(LocalPreferences.getToken(getApplicationContext()), jsonObject)
+        RetrofitInstance.getApiService(getApplicationContext()).markpicklistCompleted(LocalPreferences.getToken(getApplicationContext()), jsonObject)
                 .enqueue(new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
@@ -116,7 +116,7 @@ public class ItemRequestPickListDetailsActivity extends BaseActivity {
     }
 
     private void getPicklistforSalesman(String picklistno) {
-        RetrofitInstance.getApiService().GetItemRequestDetailsbyRequestNo(LocalPreferences.getToken(getApplicationContext()), picklistno, String.valueOf(customerid))
+        RetrofitInstance.getApiService(getApplicationContext()).GetItemRequestDetailsbyRequestNo(LocalPreferences.getToken(getApplicationContext()), picklistno, String.valueOf(customerid))
                 .enqueue(new Callback<List<ResponseItemRequestDetails>>() {
                     @Override
                     public void onResponse(Call<List<ResponseItemRequestDetails>> call, Response<List<ResponseItemRequestDetails>> response) {

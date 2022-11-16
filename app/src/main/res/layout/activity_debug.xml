@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true">
+
+                <Button
+                    android:id="@+id/btn_setup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="set up" />
+
+                <TextView
+                    android:id="@+id/tv_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="no connection" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="clear" />
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/black" />
+
+        <TextView
+            android:id="@+id/tv_print"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbarStyle="outsideOverlay"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/black" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_firmware_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get firmware version" />
+
+            <Button
+                android:id="@+id/btn_software_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get software version" />
+
+            <Button
+                android:id="@+id/btn_manufacturers_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get manufacturer information" />.
+
+            <Button
+                android:id="@+id/btn_read_single"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="single read" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Number of polls(0-65535] : " />
+
+                <EditText
+                    android:id="@+id/et_loop_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="65535" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_read_multi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="start reading more" />
+
+            <Button
+                android:id="@+id/btn_stop_read"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="stop reading" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="select area:" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_region"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/regions">
+
+                </androidx.appcompat.widget.AppCompatSpinner>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_set_region"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="set area" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="channel code" />
+
+                <EditText
+                    android:id="@+id/et_channel_index"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="00" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_set_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="set channel" />
+
+            <Button
+                android:id="@+id/btn_get_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="get channel" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_set_fhss_auto"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Automatic frequency hopping mode" />
+
+                <Button
+                    android:id="@+id/btn_set_fhss_cancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cancel automatic frequency hopping mode" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Transmit power :" />
+
+                <EditText
+                    android:id="@+id/et_pa_power"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:text="1000" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_set_pa_power"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set transmit power" />
+
+            <Button
+                android:id="@+id/btn_get_pa_power"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get transmit power" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DR" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_dr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:entries="@array/dr"></androidx.appcompat.widget.AppCompatSpinner>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="M" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:entries="@array/m"></androidx.appcompat.widget.AppCompatSpinner>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="TRext" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_t_rext"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:entries="@array/t_text"></androidx.appcompat.widget.AppCompatSpinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sel" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_sel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/sel"></androidx.appcompat.widget.AppCompatSpinner>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Session" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_session"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/session"></androidx.appcompat.widget.AppCompatSpinner>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Target" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_target_q"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/target_q"></androidx.appcompat.widget.AppCompatSpinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Q" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_q"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/q"></androidx.appcompat.widget.AppCompatSpinner>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_set_q"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Q value" />
+
+            <Button
+                android:id="@+id/btn_get_q"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Get the Q value" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mode" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_select_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/select_mode"></androidx.appcompat.widget.AppCompatSpinner>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_set_select_mode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Set Select mode" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Target" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_target"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/target"></androidx.appcompat.widget.AppCompatSpinner>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="Action" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/action"></androidx.appcompat.widget.AppCompatSpinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="memBank" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_mem_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/mem_bank"></androidx.appcompat.widget.AppCompatSpinner>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pointer" />
+
+            <EditText
+                android:id="@+id/et_pointer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00 00 00 00" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mask" />
+
+            <EditText
+                android:id="@+id/et_mask"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="00 00 00 00 00 00 00 00 00 00 00 00" />
+
+            <Button
+                android:id="@+id/btn_set_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="setSelect" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="memBank" />
+
+                <androidx.appcompat.widget.AppCompatSpinner
+                    android:id="@+id/spn_mem_bank2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/mem_bank"></androidx.appcompat.widget.AppCompatSpinner>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Word Pointer:" />
+
+                <EditText
+                    android:id="@+id/et_sa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="00 00" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Word Count:" />
+
+                <EditText
+                    android:id="@+id/et_dl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="00 08" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Data:" />
+
+            <EditText
+                android:id="@+id/et_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="00 00 00 00" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Access Password" />
+
+            <EditText
+                android:id="@+id/et_access_password2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="00 00 00 00" />
+
+            <Button
+                android:id="@+id/btn_read_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Read" />
+
+
+            <Button
+                android:id="@+id/btn_write_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Write" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Access Password" />
+
+            <EditText
+                android:id="@+id/et_access_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="00 00 00 00" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lock 操作数LD" />
+
+            <EditText
+                android:id="@+id/et_ld"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="00 00 00" />
+
+            <Button
+                android:id="@+id/btn_lock"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lock" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kill Password" />
+
+            <EditText
+                android:id="@+id/et_kill_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLines="1"
+                android:text="00 00 00 00" />
+
+            <Button
+                android:id="@+id/btn_kill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kill" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

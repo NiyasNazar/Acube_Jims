@@ -1,6 +1,9 @@
 
 package com.acube.jims.datalayer.models.Filter;
 
+import androidx.annotation.NonNull;
+import androidx.room.PrimaryKey;
+
 import java.util.List;
 
 
@@ -30,10 +33,13 @@ public class ResponseFetchFilters {
     @SerializedName("weights")
     @Expose
     private List<Weight> weights = null;
-
+    @SerializedName("storeList")
+    @Expose
+    private List<FilterStore> storeList = null;
     public Integer getId() {
         return id;
     }
+    private  boolean isselected;
 
     public void setId(Integer id) {
         this.id = id;
@@ -87,4 +93,19 @@ public class ResponseFetchFilters {
         this.weights = weights;
     }
 
+    public List<FilterStore> getStoreList() {
+        return storeList;
+    }
+
+    public void setStoreList(List<FilterStore> storeList) {
+        this.storeList = storeList;
+    }
+
+    public boolean isIsselected() {
+        return isselected;
+    }
+
+    public void setIsselected(boolean isselected) {
+        this.isselected = isselected;
+    }
 }

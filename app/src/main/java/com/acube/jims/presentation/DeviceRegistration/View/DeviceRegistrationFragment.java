@@ -60,7 +60,6 @@ public class DeviceRegistrationFragment extends BaseActivity {
         binding.edDeviceId.setText(vaDeviceID);
 
 
-
         AuthToken = LocalPreferences.retrieveStringPreferences(DeviceRegistrationFragment.this, AppConstants.Token);
         mViewModel.getLiveData().observe(DeviceRegistrationFragment.this, new Observer<ResponseGetRegistered>() {
             @Override
@@ -117,8 +116,8 @@ public class DeviceRegistrationFragment extends BaseActivity {
                 hideProgressDialog();
                 if (responseDeviceRegistration != null) {
                     customSnackBar(binding.parent, "Device registered successfully");
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(),"TrayID",responseDeviceRegistration.getTrayID());
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(),"DeviceID",responseDeviceRegistration.getId());
+                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "TrayID", responseDeviceRegistration.getTrayID());
+                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "DeviceID", responseDeviceRegistration.getId());
 
 
                 }
@@ -129,14 +128,15 @@ public class DeviceRegistrationFragment extends BaseActivity {
             public void onChanged(ResponseDeviceUpdation responseDeviceUpdation) {
                 hideProgressDialog();
                 if (responseDeviceUpdation != null) {
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(),"TrayID",responseDeviceUpdation.getTrayID());
-                    LocalPreferences.storeIntegerPreference(getApplicationContext(),"DeviceID",responseDeviceUpdation.getId());
+                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "TrayID", responseDeviceUpdation.getTrayID());
+                    LocalPreferences.storeIntegerPreference(getApplicationContext(), "DeviceID", responseDeviceUpdation.getId());
                     customSnackBar(binding.parent, "Device updated successfully");
+                    finish();
                 }
             }
         });
 
-        trayMasterViewModel.AddDeviceRegistrationDetails(LocalPreferences.getToken(DeviceRegistrationFragment.this));
+        trayMasterViewModel.AddDeviceRegistrationDetails(LocalPreferences.getToken(DeviceRegistrationFragment.this),DeviceRegistrationFragment.this);
 
         binding.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,11 +157,13 @@ public class DeviceRegistrationFragment extends BaseActivity {
                     Log.d("tray", "onClick: notregistered");
                     doAddDeviceRegistrationDetails(vaTrayMacAddress, vaTrayID, vaDeviceID);
                 }
+                LocalPreferences.storeBooleanPreference(getApplicationContext(), "DeviceReg", true);
+
             }
         });
 
 
-        mViewModel.GetDeviceRegistrationDetails(AppConstants.Authorization + AuthToken, vaDeviceID);
+        mViewModel.GetDeviceRegistrationDetails(AppConstants.Authorization + AuthToken, vaDeviceID,DeviceRegistrationFragment.this);
     }
 
     private void initViewModels() {
@@ -183,7 +185,7 @@ public class DeviceRegistrationFragment extends BaseActivity {
         jsonObject.addProperty("deviceID", vaDeviceID);
         jsonObject.addProperty("macAddress", vaMacaddress);
         jsonObject.addProperty("trayID", trayID);
-        addDeviceViewModel.AddDeviceRegistrationDetails(LocalPreferences.getToken(DeviceRegistrationFragment.this), jsonObject);
+        addDeviceViewModel.AddDeviceRegistrationDetails(LocalPreferences.getToken(DeviceRegistrationFragment.this), jsonObject,DeviceRegistrationFragment.this);
     }
 
     private void doUpdateDeviceRegistration(String vaMacaddress, int trayID, String vaDeviceID) {
@@ -194,7 +196,7 @@ public class DeviceRegistrationFragment extends BaseActivity {
         jsonObject.addProperty("deviceID", vaDeviceID);
         jsonObject.addProperty("macAddress", vaMacaddress);
         jsonObject.addProperty("trayID", trayID);
-        updateDeviceViewModel.UpdateDeviceRegistrationDetails(LocalPreferences.getToken(DeviceRegistrationFragment.this), String.valueOf(key), jsonObject);
+        updateDeviceViewModel.UpdateDeviceRegistrationDetails(LocalPreferences.getToken(DeviceRegistrationFragment.this), String.valueOf(key), jsonObject,DeviceRegistrationFragment.this);
     }
 
 

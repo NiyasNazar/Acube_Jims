@@ -59,7 +59,7 @@ public class CustomerSalesHistoryFragment extends BaseActivity implements SalesH
         String CustomerCode = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "custcode");
 
         Integer GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
-        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID);
+        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID,getApplicationContext());
         customerHistoryViewModel.getCustomerLiveData().observe(this, new Observer<ResponseCustomerHistory>() {
             @Override
             public void onChanged(ResponseCustomerHistory responseCustomerHistory) {

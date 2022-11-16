@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.CustomerManagment.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,8 +20,8 @@ public class CreateCustomerViewModel extends AndroidViewModel {
 
     }
 
-    public void CreateCustomer(String Auth,JsonObject jsonObject) {
-        repository.CreateCustomer(Auth,jsonObject);
+    public void CreateCustomer(String Auth, JsonObject jsonObject, Context context) {
+        repository.CreateCustomer(Auth,jsonObject,context);
     }
 
     public void init() {

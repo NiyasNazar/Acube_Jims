@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.ScanHistory;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,8 +22,8 @@ public class ItemHistoryViewModel extends AndroidViewModel {
     }
 
 
-    public void ItemHistory(String Token, JsonObject jsonObject) {
-        repository.ItemHistory(Token, jsonObject);
+    public void ItemHistory(String Token, JsonObject jsonObject, Context context) {
+        repository.ItemHistory(Token, jsonObject,context);
 
     }
 

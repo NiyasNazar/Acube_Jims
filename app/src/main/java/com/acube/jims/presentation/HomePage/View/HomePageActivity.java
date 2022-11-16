@@ -60,16 +60,17 @@ public class HomePageActivity extends BaseActivity implements ProductDetailsFrag
     HashMap<NavMenuModel, List<NavMenuModel>> childList = new HashMap<>();
     PopupWindow mypopupWindow;
     Dialog myDialog;
+    boolean salesman;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home_page);
         myDialog = new Dialog(HomePageActivity.this);
-        TedPermission.create()
+      /*  TedPermission.create()
                 .setPermissionListener(permissionlistener)
                 .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .check();
+                .check();*/
       /*  binding.toolbar.imvprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,6 +82,14 @@ public class HomePageActivity extends BaseActivity implements ProductDetailsFrag
 
         init();
         prepareMenuData();
+        salesman=LocalPreferences.retrieveBooleanPreferences(getApplicationContext(),"salesman");
+        if (salesman){
+            binding.toolbarApp.favorites.setVisibility(View.INVISIBLE);
+            binding.toolbarApp.imvcart.setVisibility(View.INVISIBLE);
+        }else{
+            binding.toolbarApp.favorites.setVisibility(View.VISIBLE);
+            binding.toolbarApp.imvcart.setVisibility(View.VISIBLE);
+        }
     binding.toolbarApp.pricetag.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {

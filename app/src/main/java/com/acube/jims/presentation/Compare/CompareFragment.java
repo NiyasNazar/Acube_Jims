@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 import com.acube.jims.BaseActivity;
+import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Compare.adapter.CompareItemsAdapter;
 import com.acube.jims.R;
 import com.acube.jims.utils.LocalPreferences;
@@ -22,9 +23,15 @@ import com.acube.jims.datalayer.models.Compare.ResponseCompare;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CompareFragment extends BaseActivity {
@@ -56,29 +63,49 @@ public class CompareFragment extends BaseActivity {
             }
         });
         AuthToken = LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token);
-
         mViewModel = new ViewModelProvider(this).get(CompareViewModel.class);
         mViewModel.init();
-        compareparams = new ArrayList<>();
-        compareparams = getList("compare");
-        if (compareparams != null) {
-            StringBuilder str = new StringBuilder("");
-            for (String eachstring : compareparams) {
-                str.append(eachstring).append(",");
+
+
+        DatabaseClient.getInstance(CompareFragment.this).getAppDatabase().scannedItemsDao().getFromSmarttool().observe(this, new Observer<List<String>>() {
+            @Override
+            public void onChanged(List<String> strings) {
+                Log.d("comapreItems", "onChanged: " + strings.size());
+              /*  compareparams = new ArrayList<>();
+                compareparams = strings;
+                if (compareparams != null) {
+                    StringBuilder str = new StringBuilder("");
+                    for (String eachstring : compareparams) {
+                        str.append(eachstring).append(",");
+                    }
+                    commaseparatedlist = str.toString();
+                    if (commaseparatedlist.length() > 0)
+                        commaseparatedlist
+                                = commaseparatedlist.substring(
+                                0, commaseparatedlist.length() - 1);
+
+
+                }*/
+
+                String[] strArray = strings.toArray(new String[strings.size()]);
+                JSONArray jsonArray = new JSONArray(Arrays.asList(strArray));
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("serialNo", jsonArray);
+                    JsonParser jsonParser = new JsonParser();
+                    JsonObject gsonObject = (JsonObject)jsonParser.parse(jsonObject.toString());
+                    mViewModel.getcompareItems(AppConstants.Authorization + AuthToken, gsonObject,getApplicationContext());
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
-            commaseparatedlist = str.toString();
-            if (commaseparatedlist.length() > 0)
-                commaseparatedlist
-                        = commaseparatedlist.substring(
-                        0, commaseparatedlist.length() - 1);
+        });
 
 
-        }
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("serialNumber", commaseparatedlist);
-        mViewModel.getcompareItems(AppConstants.Authorization + AuthToken, jsonObject);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.HORIZONTAL, false);
-      binding.viewPager.setHasFixedSize(true);
+        binding.viewPager.setHasFixedSize(true);
         binding.viewPager.setLayoutManager(linearLayoutManager);
         //  DividerItemDecoration itemDecor = new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL);
         //  binding.viewPager.addItemDecoration(itemDecor);

@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Report;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -25,9 +26,9 @@ public class ReportRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void FetchReport(String Token, JsonObject jsonObject) {
+    public void FetchReport(String Token, JsonObject jsonObject, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<ResponseReport> call = restApiService.FetchReport(Token, jsonObject);
         call.enqueue(new Callback<ResponseReport>() {
             @Override

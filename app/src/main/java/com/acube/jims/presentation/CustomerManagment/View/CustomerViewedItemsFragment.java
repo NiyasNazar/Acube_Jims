@@ -44,7 +44,7 @@ public class CustomerViewedItemsFragment extends BaseActivity implements LastVie
         customerHistoryViewModel = ViewModelProviders.of(this).get(CustomerHistoryViewModel.class);
         customerHistoryViewModel.init();
         int GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
-        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID);
+        customerHistoryViewModel.CustomerHistory(LocalPreferences.getToken(getApplicationContext()), GuestCustomerID,getApplicationContext());
         customerHistoryViewModel.getCustomerLiveData().observe(this, new Observer<ResponseCustomerHistory>() {
             @Override
             public void onChanged(ResponseCustomerHistory responseCustomerHistory) {

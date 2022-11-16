@@ -75,7 +75,7 @@ public class ReportCategoryFilterFragment extends Fragment implements RefreshSel
         View view = inflater.inflate(R.layout.fragment_category_filter, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recysubcategory);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(new CategoryAdapter(getActivity(), getList(), ReportCategoryFilterFragment.this));
+    //    recyclerView.setAdapter(new CategoryAdapter(getActivity(), getList(), ReportCategoryFilterFragment.this));
 
         return view;
     }

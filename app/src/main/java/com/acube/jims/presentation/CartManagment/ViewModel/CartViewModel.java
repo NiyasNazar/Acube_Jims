@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.CartManagment.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,8 +22,8 @@ public class CartViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void ViewCart(String Auth, String CustomerID) {
-        repository.ViewCart(Auth, CustomerID);
+    public void ViewCart(String Auth, String CustomerID, Context context) {
+        repository.ViewCart(Auth, CustomerID,context);
     }
 
     public void init() {

@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Favorites;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -8,6 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.acube.jims.datalayer.api.RestApiService;
 import com.acube.jims.datalayer.api.RetrofitInstance;
 import com.acube.jims.datalayer.models.Cart.ResponseCart;
+import com.acube.jims.datalayer.models.ConsignmentLine;
 import com.acube.jims.datalayer.models.Favorites.ResponseFavorites;
 
 import java.util.List;
@@ -24,8 +26,8 @@ public class ViewFavoritesRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void ViewCart(String Auth, String CustomerID) {
-        RestApiService restApiService = RetrofitInstance.getApiService();
+    public void ViewCart(String Auth, String CustomerID, Context context) {
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
 
 
         Call<List<ResponseFavorites>>  call = restApiService.ViewFavorites(Auth, CustomerID);

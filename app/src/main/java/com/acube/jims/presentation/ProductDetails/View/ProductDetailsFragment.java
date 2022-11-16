@@ -31,14 +31,22 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.acube.jims.BaseActivity;
+import com.acube.jims.datalayer.api.RetrofitInstance;
+import com.acube.jims.datalayer.models.Audit.ResponseLiveStore;
 import com.acube.jims.datalayer.models.Catalogue.ItemSub;
 import com.acube.jims.presentation.CartManagment.View.CartViewFragment;
 import com.acube.jims.presentation.CartManagment.ViewModel.AddtoCartViewModel;
+import com.acube.jims.presentation.Consignment.ConsignmentActivity;
+import com.acube.jims.presentation.CustomerManagment.View.CustomerBottomSheetFragment;
+import com.acube.jims.presentation.CustomerManagment.ViewModel.CustomerLogoutViewModel;
 import com.acube.jims.presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
 import com.acube.jims.presentation.ImageGallery.ImageGalleryActivity;
 import com.acube.jims.presentation.ProductDetails.ViewModel.ItemDetailsViewModel;
@@ -51,6 +59,7 @@ import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.datalayer.remote.dbmodel.CustomerHistory;
 import com.acube.jims.presentation.ProductDetails.adapter.ViewPagerAdapter;
+import com.acube.jims.utils.SearchableSpinners;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
@@ -59,16 +68,32 @@ import com.bumptech.glide.request.target.Target;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.normal.TedPermission;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.omega_r.libs.omegaintentbuilder.OmegaIntentBuilder;
+import com.omega_r.libs.omegaintentbuilder.downloader.DownloadCallback;
+import com.omega_r.libs.omegaintentbuilder.handlers.ContextIntentHandler;
+
+import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductDetailsFragment extends BaseActivity implements ViewPagerAdapter.Viewimage {
 
@@ -92,6 +117,9 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
     private int dotscount;
     private ImageView[] dots;
     ViewPagerAdapter viewPagerAdapter;
+    List<String> imgurl = new ArrayList<>();
+    String warehouseId;
+    CustomerLogoutViewModel customerLogoutViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +129,8 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
         binding = DataBindingUtil.setContentView(
                 this, R.layout.product_details_fragment);
         mViewModel = new ViewModelProvider(this).get(ItemDetailsViewModel.class);
+
+        customerLogoutViewModel = new ViewModelProvider(this).get(CustomerLogoutViewModel.class);
         initToolBar(binding.toolbarApp.toolbar, "Item Details", true);
         binding.toolbarApp.imvcart.setVisibility(View.VISIBLE);
         outofstock = getIntent().getBooleanExtra("outofstock", false);
@@ -116,8 +146,12 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
         addtoFavoritesViewModel = new ViewModelProvider(this).get(AddtoFavoritesViewModel.class);
         addtoCartViewModel = new ViewModelProvider(this).get(AddtoCartViewModel.class);
         addtoCartViewModel.init();
+        customerLogoutViewModel.init();
         addtoFavoritesViewModel.init();
         mViewModel.init();
+        warehouseId = LocalPreferences.retrieveStringPreferences(ProductDetailsFragment.this, "warehouseId");
+
+
         AuthToken = LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token);
         CartId = LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.CartID);
         GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
@@ -125,7 +159,14 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
-
+        boolean salesman = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "salesman");
+        if (salesman) {
+            binding.likelayout.setVisibility(View.INVISIBLE);
+            binding.toolbarApp.imvcart.setVisibility(View.INVISIBLE);
+        } else {
+            binding.likelayout.setVisibility(View.VISIBLE);
+            binding.toolbarApp.imvcart.setVisibility(View.VISIBLE);
+        }
 
         String ItemId = getIntent().getStringExtra("Id");
         if (outofstock) {
@@ -133,10 +174,10 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
             binding.btnshare.setVisibility(View.INVISIBLE);
             binding.likelayout.setVisibility(View.INVISIBLE);
 
-            mViewModel.FetchoutofsctockItemDetails(AppConstants.Authorization + AuthToken, ItemId);
+            mViewModel.FetchoutofsctockItemDetails(AppConstants.Authorization + AuthToken, ItemId, getApplicationContext());
 
         } else {
-            mViewModel.FetchItemDetails(AppConstants.Authorization + AuthToken, ItemId);
+            mViewModel.FetchItemDetails(AppConstants.Authorization + AuthToken, ItemId, getApplicationContext());
 
         }
 
@@ -159,7 +200,7 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
         binding.favButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, String.valueOf(GuestCustomerID), UserId, Id, "add", "", mSerialno);
+                addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, String.valueOf(GuestCustomerID), UserId, Id, "add", "", mSerialno, getApplicationContext());
 
             }
 
@@ -187,7 +228,6 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
             public void onClick(View v) {
                 showProgressDialog();
                 JsonObject items = new JsonObject();
-
                 items.addProperty("cartListNo", CartId);
                 items.addProperty("customerID", GuestCustomerID);
                 items.addProperty("employeeID", UserId);
@@ -196,9 +236,7 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
                 items.addProperty("qty", 0);
                 JsonArray jsonArray = new JsonArray();
                 jsonArray.add(items);
-
-
-                addtoCartViewModel.AddtoCart(AppConstants.Authorization + AuthToken, "add", jsonArray);
+                addtoCartViewModel.AddtoCart(AppConstants.Authorization + AuthToken, "add", jsonArray, getApplicationContext());
 
             }
         });
@@ -222,7 +260,7 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
 
             @Override
             public void onPageSelected(int position) {
-                for(int i = 0; i< dotscount; i++){
+                for (int i = 0; i < dotscount; i++) {
                     dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
                 }
 
@@ -236,7 +274,6 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
 
             }
         });
-
 
 
         binding.btnshare.setOnClickListener(new View.OnClickListener() {
@@ -263,11 +300,11 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
 
 
                         }
-                        viewPagerAdapter = new ViewPagerAdapter(getApplicationContext(), responseCatalogDetails.getItemSubList(),ProductDetailsFragment.this);
+                        viewPagerAdapter = new ViewPagerAdapter(getApplicationContext(), responseCatalogDetails.getItemSubList(), ProductDetailsFragment.this);
                         binding.viewPager.setAdapter(viewPagerAdapter);
                         dotscount = viewPagerAdapter.getCount();
                         dots = new ImageView[dotscount];
-                        for(int i = 0; i < dotscount; i++){
+                        for (int i = 0; i < dotscount; i++) {
 
                             dots[i] = new ImageView(ProductDetailsFragment.this);
                             dots[i].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.non_active_dot));
@@ -278,12 +315,12 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
                             binding.sliderDots.addView(dots[i], params);
 
 
-
                         }
                         dots[0].setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.active_dot));
+                        for (int i = 0; i < responseCatalogDetails.getItemSubList().size(); i++) {
+                            imgurl.add(responseCatalogDetails.getItemSubList().get(i).getImageFilePath());
 
-
-
+                        }
 
                         Glide.with(getApplicationContext())
                                 .load(responseCatalogDetails.getItemSubList().get(0).getImageFilePath())
@@ -315,21 +352,42 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
                         SaveHistory(customerHistory);
                     }
 
-                    binding.tvbrandname.setText(responseCatalogDetails.getItemBrandName());
+                    JSONArray itemViewLIst = new JSONArray();
+
+                    JSONObject parent = new JSONObject();
+                    try {
+                        JSONObject analyticsobject = new JSONObject();
+                        analyticsobject.put("customerID", GuestCustomerID);
+                        analyticsobject.put("itemID", Id);
+                        analyticsobject.put("serialNumber", Id);
+                        analyticsobject.put("trayID", 3);
+                        analyticsobject.put("employeeID", UserId);
+                        analyticsobject.put("WarehouseID", warehouseId);
+                        itemViewLIst.put(analyticsobject);
+                        parent.put("itemViewList", itemViewLIst);
+                        JsonParser jsonParser = new JsonParser();
+                        JsonObject gsonObject = new JsonObject();
+                        gsonObject = (JsonObject) jsonParser.parse(parent.toString());
+                        customerLogoutViewModel.CustomerLogout(LocalPreferences.getToken(ProductDetailsFragment.this), gsonObject, ProductDetailsFragment.this);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    binding.tvitemname.setText(responseCatalogDetails.getItemName());
                     binding.tvproductname.setText(responseCatalogDetails.getItemName());
                     binding.tvsmalldesc.setText(responseCatalogDetails.getItemDesc());
                     binding.tvDescription.setText(responseCatalogDetails.getItemDesc());
                     binding.tvItemcode.setText(responseCatalogDetails.getSerialNumber());
                     binding.tvGender.setText(responseCatalogDetails.getGender());
-                    binding.tvmakingchargemin.setText("" + responseCatalogDetails.getMakingChargeMin());
-                    binding.tvMakingchrgmax.setText("" + responseCatalogDetails.getMakingChargeMax());
-                    binding.tvKaratname.setText(responseCatalogDetails.getKaratName());
-                    binding.tvColor.setText(responseCatalogDetails.getColorName());
-                    binding.tvgroupname.setText(responseCatalogDetails.getItemGroupName());
+                    binding.tvmakingchargemin.setText("" + getValueOrDefault(responseCatalogDetails.getMakingChargeMin(), ""));
+                    binding.tvMakingchrgmax.setText("" + getValueOrDefault(responseCatalogDetails.getMakingChargeMax(), ""));
+                    binding.tvKaratname.setText(getValueOrDefault(responseCatalogDetails.getKaratName(), ""));
+                    binding.tvColor.setText(getValueOrDefault(responseCatalogDetails.getColorName(), ""));
+                    binding.tvuom.setText(responseCatalogDetails.getUomName());
                     binding.tvgrossweight.setText("" + responseCatalogDetails.getGrossWeight() + " g");
                     binding.tvcategory.setText(responseCatalogDetails.getCategoryName());
                     binding.tvSubcategory.setText(responseCatalogDetails.getSubCategoryName());
-                    emailbody = "Hey \n" + "Check this new item " + responseCatalogDetails.getItemName() + " ," + responseCatalogDetails.getGrossWeight() + "g  " + responseCatalogDetails.getKaratName() + " for " + responseCatalogDetails.getMrp();
+                    emailbody = "Hey \n" + "Check this new item " + responseCatalogDetails.getItemName() + " ," + responseCatalogDetails.getGrossWeight() + "g  " + responseCatalogDetails.getKaratName() == null ? "" : responseCatalogDetails.getKaratName() + " for " + responseCatalogDetails.getMrp();
                     if (responseCatalogDetails.getItemSubList() != null && responseCatalogDetails.getItemSubList().size() != 0) {
                         imageurl = responseCatalogDetails.getItemSubList().get(0).getImageFilePath();
 
@@ -430,9 +488,24 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
     }
 
     public void sendTextMsgOnWhatsApp(String sContactNo, String sMessage) {
+        Intent launchIntent = getPackageManager().getLaunchIntentForPackage("com.whatsapp");
+
+        OmegaIntentBuilder.from(ProductDetailsFragment.this)
+                .share()
 
 
-        Intent shareIntent = new Intent();
+                .text(emailbody)
+
+                .filesUrls(imgurl)
+                .download(new DownloadCallback() {
+                    @Override
+                    public void onDownloaded(boolean success, @NotNull ContextIntentHandler contextIntentHandler) {
+                        contextIntentHandler.startActivity();
+                    }
+                });
+
+
+       /* Intent shareIntent = new Intent();
         shareIntent.setAction(Intent.ACTION_SEND);
         shareIntent.setPackage("com.whatsapp");
         shareIntent.putExtra(Intent.EXTRA_TEXT, sMessage);
@@ -444,7 +517,7 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
             startActivity(shareIntent);
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(getApplicationContext(), "Install Whatsapp", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     private String contactIdByPhoneNumber(String phoneNumber) {
@@ -519,20 +592,94 @@ public class ProductDetailsFragment extends BaseActivity implements ViewPagerAda
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ShowEmailPopup();
                 dialog.dismiss();
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"rony8652@gmail.com"});
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailsubject);
-                emailIntent.putExtra(Intent.EXTRA_TEXT, emailbody);
-                emailIntent.putExtra(Intent.EXTRA_STREAM, getLocalBitmapUri(binding.imvsingleitemimage));
-                emailIntent.setPackage("com.google.android.gm");//Added Gmail Package to forcefully open Gmail App
-                startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
             }
+            /*    try {
+                    File rootSdDirectory = Environment.getExternalStorageDirectory();
+
+                    File pictureFile = new File(rootSdDirectory, "attachment.jpg");
+                    if (pictureFile.exists()) {
+                        pictureFile.delete();
+                    }
+                    pictureFile.createNewFile();
+
+                    FileOutputStream fos = new FileOutputStream(pictureFile);
+
+                    URL url = new URL("http://acuberfid.fortiddns.com:4480/jmsqaapi/itemimages/27/8613.jpg");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setDoOutput(true);
+                    connection.connect();
+                    InputStream in = connection.getInputStream();
+
+                    byte[] buffer = new byte[1024];
+                    int size = 0;
+                    while ((size = in.read(buffer)) > 0) {
+                        fos.write(buffer, 0, size);
+                    }
+                    fos.close();
+                    dialog.dismiss();
+                    Uri pictureUri = Uri.fromFile(pictureFile);
+
+                    Intent emailIntent = new Intent(Intent.ACTION_SEND);
+                    emailIntent.setType("text/plain");
+                    emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"rony8652@gmail.com"});
+                    emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailsubject);
+                    emailIntent.putExtra(Intent.EXTRA_TEXT, emailbody);
+                    emailIntent.putExtra(Intent.EXTRA_STREAM, pictureUri);
+                    emailIntent.setPackage("com.google.android.gm");//Added Gmail Package to forcefully open Gmail App
+                    startActivity(Intent.createChooser(emailIntent, "Pick an Email provider"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+
+                }
+
+            }*/
         });
 
 
     }
+
+    public void ShowEmailPopup() {
+
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.layout_email_dialog, null);
+        final EditText edEmail = alertLayout.findViewById(R.id.ed_email);
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(ProductDetailsFragment.this);
+        alert.setTitle("");
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+        // disallow cancel of AlertDialog on click of back button and outside touch
+        alert.setCancelable(false);
+        alert.setNegativeButton("Cancel", (dialog, which) ->
+                Log.d(TAG, "ShowEmailPopup: "));
+
+        alert.setPositiveButton("Proceed", (dialog, which) -> {
+            String vaEmail = edEmail.getText().toString();
+            OmegaIntentBuilder.from(ProductDetailsFragment.this)
+                    .share()
+
+                    .emailTo(vaEmail)
+                    .subject("")
+                    .text(emailbody)
+                    .filesUrls(imgurl)
+                    .download(new DownloadCallback() {
+                        @Override
+                        public void onDownloaded(boolean success, @NotNull ContextIntentHandler contextIntentHandler) {
+                            contextIntentHandler.startActivity();
+                        }
+                    });
+
+        });
+        AlertDialog dialog = alert.create();
+        dialog.show();
+
+
+    }
+
 
     public <T> void setList(String key, List<T> list) {
         Gson gson = new Gson();

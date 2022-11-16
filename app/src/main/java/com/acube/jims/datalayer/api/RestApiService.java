@@ -2,9 +2,15 @@ package com.acube.jims.datalayer.api;
 
 import com.acube.jims.datalayer.models.Audit.AuditResults;
 import com.acube.jims.datalayer.models.Audit.ResponseErpAuditDownload;
+import com.acube.jims.datalayer.models.Audit.ResponseLiveStore;
+import com.acube.jims.datalayer.models.Audit.ResponseReportList;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseCreateItemrequest;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseFetchPickList;
 import com.acube.jims.datalayer.models.ItemRequest.ResponseItemRequestDetails;
+import com.acube.jims.datalayer.models.ResponseConsignment;
+import com.acube.jims.datalayer.models.missingcomp.ResponseMissingComp;
+import com.acube.jims.datalayer.models.report.ItemWiseReport;
+import com.acube.jims.datalayer.models.report.ResponseItemWiseReport;
 import com.acube.jims.datalayer.remote.dbmodel.ItemRequestEntry;
 import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.datalayer.models.Analytics.ResponseAnalyticsGraph;
@@ -136,7 +142,7 @@ public interface RestApiService {
     Call<ResponseErpAuditDownload> AuditDetails(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
     @POST("ERPAudit/GetAuditHeadMobile")
-    Call<List<ResponseAudit>> AuditHeader(@Header("Authorization") String Auth,@Body JsonObject jsonObject);
+    Call<List<ResponseAudit>> AuditHeader(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
 
     @POST("Audit/GetAuditCandidateList")
     Call<List<ResponseLocationList>> AuditLocationList(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
@@ -204,5 +210,54 @@ public interface RestApiService {
 
     @POST("ItemRequest/CloseItemRequest")
     Call<JsonObject> markpicklistCompleted(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("ERPAudit/CloseERPAudit")
+    Call<JsonObject> closeanaudit(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+
+    @GET("ERPAudit/GetWarehouseUserPermission")
+    Call<List<ResponseLiveStore>> FetchLiveStore(@Header("Authorization") String Auth);
+
+    @GET("Item/GetSubCategories/{CategoryId} ")
+    Call<List<ResponseLiveSubCategory>> FetchLiveSubCategory(@Header("Authorization") String Auth, @Path("CategoryId") int ID);
+
+
+    @GET("Category")
+    Call<List<ResponseLiveCategory>> FetchLiveCategory(@Header("Authorization") String Auth);
+
+    @POST("ERPAudit/GetAuditSummary")
+    Call<ResponseAuditReport> GetAuditSummary(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @GET("Location/GetAllLocations/{ID}")
+    Call<List<ResponseLocationforreport>> GetLocationbystore(@Header("Authorization") String Auth, @Path("ID") int ID);
+
+
+    @POST("ERPAudit/GetAuditDetail")
+    Call<ResponseItemWiseReport> GetItemWiseReport(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("ERPAudit/GetAuditMissingComparison")
+    Call<ResponseMissingComp> GetMissingReport(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("ERPAudit/AuditScanUpload")
+    Call<Boolean> UploadAuditData(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("Item/GetItemDetailsFilter")
+    Call<List<com.acube.jims.datalayer.models.warehouse.ResponseItems>> getItems(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+
+    @POST("Consignment/CreateConsignment")
+    Call<ResponseConsignment> createconsignment(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("TransferOrder")
+    Call<JsonObject> createTransfer(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("Consignment/UploadConsignment")
+    Call<Boolean> uploadconsigment(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+    @POST("InventoryDownload/AssignZone")
+    Call<Boolean> assignZone(@Header("Authorization") String Auth, @Body JsonObject jsonObject);
+
+
+    //   {"status":"A1310220002","warehouseId":94,"subCategoryId":0,"locationId":0}
 
 }

@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Customer;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -24,9 +25,9 @@ public class CustomerLogoutRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void CustomerLogout(String Token, JsonObject jsonObject) {
+    public void CustomerLogout(String Token, JsonObject jsonObject, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<JsonObject> call = restApiService.CustomerLogout(Token, jsonObject);
         call.enqueue(new Callback<JsonObject>() {
             @Override

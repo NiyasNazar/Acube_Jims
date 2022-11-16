@@ -71,6 +71,7 @@ public class CustomerSearch extends BaseActivity {
             public void onChanged(ResponseCreateCustomer responseCreateCustomer) {
                 hideProgressDialog();
                 if (responseCreateCustomer != null) {
+                    LocalPreferences.storeBooleanPreference(getApplicationContext(), "salesman", false);
 
                     //   FragmentHelper.replaceFragment(CustomerSearch.this, R.id.content, new CatalogueFragment());
                     startActivity(new Intent(getApplicationContext(), CatalogueActivity.class));
@@ -91,7 +92,7 @@ public class CustomerSearch extends BaseActivity {
         jsonObject.addProperty("emailID", vaemail);
         jsonObject.addProperty("contactNumber", vamobile);
 
-        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token), jsonObject);
+        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token), jsonObject,getApplicationContext());
 
     }
 

@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <FrameLayout
+        android:id="@+id/parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/homepagebg"
+        tools:context=".presentation.Audit.AuditFragment">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <include
+                android:id="@+id/toolbar_app"
+                layout="@layout/layout_toolbar">
+
+            </include>
+
+            <LinearLayout
+                android:id="@+id/nestedscrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbar_app"
+
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/item_border_detailspage"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/expandcount"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight=".8"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cdvtotalstock"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/Total"
+                            app:cardCornerRadius="15dp"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Total Stock"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalstock"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalweight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalpcs"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cdvunknown"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
+                            app:cardBackgroundColor="@color/Unknown"
+                            app:cardCornerRadius="15dp"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Unknown"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvunknown"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalunknownweight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalunknownpcs"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cdvfound"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".5"
+                            app:cardBackgroundColor="@color/Found"
+                            app:cardCornerRadius="15dp"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Found"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvfound"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvfoundtotalweight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvfoundtotalpcs"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cdvmissing"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".5"
+                            app:cardBackgroundColor="@color/Missing"
+                            app:cardCornerRadius="15dp"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="Missing"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvmissing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalmissingweight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalmissingpcs"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cdvlocationmismatch"
+
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight=".6"
+                            app:cardBackgroundColor="@color/Mismatch"
+                            app:cardCornerRadius="15dp"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:gravity="center"
+
+                                    android:text="Location Mismatch"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvlocationmismatch"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalmismatchweight"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                                <TextView
+                                    android:id="@+id/tvtotalmismatchpcs"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:text="10"
+                                    android:textColor="@color/white"
+                                    android:textSize="15sp">
+
+                                </TextView>
+
+                            </LinearLayout>
+
+
+                        </androidx.cardview.widget.CardView>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/seriallayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="10dp"
+                    android:visibility="gone"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+
+                            android:id="@+id/layout_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="9dp">
+
+                            <TextView
+                                android:id="@+id/tvtotal"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="Total Stock\n0"
+                                android:textColor="#1d1d1d">
+
+                            </TextView>
+
+
+                            <TextView
+                                android:id="@+id/found"
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="Found\n0"
+                                android:textColor="#3CB371">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/missing"
+                                android:layout_width="wrap_content"
+
+                                android:layout_height="wrap_content"
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="Missing\n0"
+                                android:textColor="#FF0000">
+
+                            </TextView>
+
+
+                            <TextView
+                                android:id="@+id/unknown"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="Unknown\n0"
+                                android:textColor="#FFAC1C">
+
+                            </TextView>
+
+                            <TextView
+                                android:id="@+id/locationmismatch"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                android:layout_margin="3dp"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/bold"
+                                android:gravity="center"
+                                android:text="Mismatch\n0"
+                                android:textColor="@android:color/holo_blue_dark">
+
+                            </TextView>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+                    <androidx.recyclerview.widget.RecyclerView
+
+                        android:id="@+id/scannedrecyclerview"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                    </androidx.recyclerview.widget.RecyclerView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight=".2"
+                    android:gravity="center">
+
+                    <com.skydoves.elasticviews.ElasticButton
+                        android:id="@+id/BtInventory"
+                        android:layout_width="120dp"
+                        android:layout_height="50dp"
+
+                        android:background="@drawable/oval_btn_signin"
+                        android:text="Scan"
+                        android:textColor="#FFFFFF"
+                        android:textSize="15sp">
+
+                    </com.skydoves.elasticviews.ElasticButton>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </FrameLayout>
+</layout>

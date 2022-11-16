@@ -87,6 +87,7 @@
                 </androidx.appcompat.widget.AppCompatButton>
                 <View
                     android:layout_width="1.5dp"
+                    android:visibility="gone"
                     android:background="@color/white"
                     android:layout_height="match_parent"></View>
 

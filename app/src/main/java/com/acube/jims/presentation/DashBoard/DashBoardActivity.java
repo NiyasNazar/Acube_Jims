@@ -69,7 +69,7 @@ public class DashBoardActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.fragment_dash_board);
         initToolBar(binding.toolbarApp.toolbar, "Dashboard", true);
         showProgressDialog();
-        retrofitInstance = RetrofitInstance.getApiService();
+        retrofitInstance = RetrofitInstance.getApiService(getApplicationContext());
         responseWareHouses = new ArrayList<>();
         doFetchDashBoardSummary();
         FetchWareHouses();
@@ -201,7 +201,7 @@ public class DashBoardActivity extends BaseActivity {
         jsonObject.addProperty("employeePeriodFilter", 0);
         jsonObject.addProperty("graphFilter", 0);
         jsonObject.addProperty("warehouseSelected", true);
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(getApplicationContext());
         Call<ResponseTop10ProductsSold> call = restApiService.getProductsSold(LocalPreferences.getToken(getApplicationContext()), jsonObject);
         call.enqueue(new Callback<ResponseTop10ProductsSold>() {
             @Override
@@ -242,7 +242,7 @@ public class DashBoardActivity extends BaseActivity {
         jsonObject.addProperty("employeePeriodFilter", 0);
         jsonObject.addProperty("graphFilter", 0);
         jsonObject.addProperty("warehouseSelected", true);
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(getApplicationContext());
         Call<ResponseTopCategory> call = restApiService.getTopSoldCategory(LocalPreferences.getToken(getApplicationContext()), jsonObject);
         call.enqueue(new Callback<ResponseTopCategory>() {
             @Override
@@ -280,7 +280,7 @@ public class DashBoardActivity extends BaseActivity {
         jsonObject.addProperty("employeePeriodFilter", employeePeriodFilter);
         jsonObject.addProperty("graphFilter", 0);
         jsonObject.addProperty("warehouseSelected", true);
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(getApplicationContext());
         Call<ResponseDashboardpiechart> call = restApiService.getDashboardPiechart(LocalPreferences.getToken(getApplicationContext()), jsonObject);
         call.enqueue(new Callback<ResponseDashboardpiechart>() {
             @Override
@@ -383,7 +383,7 @@ public class DashBoardActivity extends BaseActivity {
         jsonObject.addProperty("graphFilter", 0);
         jsonObject.addProperty("warehouseSelected", 0);
         jsonObject.addProperty("companyID", 0);
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(getApplicationContext());
         Call<ResponseDashBoardGraph> call = restApiService.getDashboardGraph(LocalPreferences.getToken(getApplicationContext()), jsonObject);
         call.enqueue(new Callback<ResponseDashBoardGraph>() {
             @Override
@@ -405,7 +405,7 @@ public class DashBoardActivity extends BaseActivity {
 
     private void FetchWareHouses() {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(getApplicationContext());
         Call<List<ResponseWareHouse>> call = restApiService.Fetchwarehouse(LocalPreferences.getToken(getApplicationContext()));
         call.enqueue(new Callback<List<ResponseWareHouse>>() {
             @Override

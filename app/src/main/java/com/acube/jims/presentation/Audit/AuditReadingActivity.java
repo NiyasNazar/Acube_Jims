@@ -5,8 +5,10 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.sqlite.db.SimpleSQLiteQuery;
 
 import android.Manifest;
@@ -16,6 +18,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,15 +35,22 @@ import com.acube.jims.R;
 import com.acube.jims.databinding.ActivityAuditReadingBinding;
 import com.acube.jims.databinding.ActivityAuditScanBinding;
 import com.acube.jims.datalayer.constants.AppConstants;
+import com.acube.jims.datalayer.models.Audit.AuditSnapShot;
 import com.acube.jims.datalayer.models.Audit.TemDataSerial;
+import com.acube.jims.datalayer.remote.db.AppDatabase;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.acube.jims.presentation.Audit.adapter.AuditScannedAdapter;
+import com.acube.jims.presentation.DeviceRegistration.View.DeviceRegistrationFragment;
+import com.acube.jims.presentation.ReadingRangeSettings;
 import com.acube.jims.presentation.Report.View.reports.FoundReportActivity;
 import com.acube.jims.presentation.Report.View.reports.MisiingReport;
 import com.acube.jims.presentation.Report.View.reports.TotalStockReport;
+import com.acube.jims.presentation.reading.FindMissingReadingActivity;
 import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.utils.OnSingleClickListener;
 import com.acube.jims.utils.ReaderUtils;
 import com.acube.jims.utils.Utils;
+import com.acube.jims.utils.ViewDialog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.rscja.deviceapi.RFIDWithUHFBLE;
@@ -58,10 +68,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 
 public class AuditReadingActivity extends BaseActivity {
     ActivityAuditReadingBinding binding;
@@ -71,7 +84,7 @@ public class AuditReadingActivity extends BaseActivity {
     private ArrayList<HashMap<String, String>> tagList;
     private HashSet<String> hashSetTags;
     String auditID, macAddress, url;
-    int systemLocationID, storeID, categoryId, itemID;
+    int systemLocationID, storeID, categoryId, itemID, subcatID;
     Boolean handheld;
     public RFIDWithUHFBLE uhf = RFIDWithUHFBLE.getInstance();
     public BluetoothDevice mDevice = null;
@@ -85,8 +98,8 @@ public class AuditReadingActivity extends BaseActivity {
             addDataToList(info.getEPC());
         }
     };
-    private boolean mScanning;
-
+    private boolean mScanning, DeviceReg;
+    String date = "";
     private static final long SCAN_PERIOD = 30000; //10 seconds
 
     ArrayList<TemDataSerial> dataset;
@@ -96,6 +109,9 @@ public class AuditReadingActivity extends BaseActivity {
     private static final int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST = 102;
     private static final int REQUEST_ACTION_LOCATION_SETTINGS = 3;
     private Handler mBlHandler = new Handler();
+    ViewDialog alert;
+    int flag = 1;
+    float blevalue, handheldvalue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,16 +124,26 @@ public class AuditReadingActivity extends BaseActivity {
         url = getIntent().getStringExtra("url");
 
 
+        alert = new ViewDialog();
         systemLocationID = getIntent().getIntExtra("systemLocationID", 0);
         storeID = getIntent().getIntExtra("storeID", 0);
         categoryId = getIntent().getIntExtra("categoryId", 0);
+        subcatID = getIntent().getIntExtra("subcatID", 0);
         itemID = getIntent().getIntExtra("itemID", 0);
         handheld = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "handheld");
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-
+        DeleteTemp();
+        binding.toolbarApp.settings.setVisibility(View.VISIBLE);
+        binding.toolbarApp.settings.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                startActivity(new Intent(getApplicationContext(), ReadingRangeSettings.class));
+            }
+        });
+        binding.toolbarApp.imvlist.setVisibility(View.VISIBLE);
         if (handheld) {
             ReaderInit();
-
+            checkLocationEnable();
         } else {
             checkLocationEnable();
 
@@ -125,9 +151,35 @@ public class AuditReadingActivity extends BaseActivity {
         }
 
         updateCount();
+        binding.toolbarApp.imvlist.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                if (binding.expandcount.getVisibility() == View.VISIBLE) {
+                    binding.expandcount.setVisibility(View.GONE);
+                    binding.seriallayout.setVisibility(View.VISIBLE);
+                    binding.toolbarApp.imvlist.setImageResource(R.drawable.ic_view_tile_svgrepo_com);
+
+                } else {
+                    binding.expandcount.setVisibility(View.VISIBLE);
+                    binding.seriallayout.setVisibility(View.GONE);
+                    binding.toolbarApp.imvlist.setImageResource(R.drawable.ic_list_svgrepo_com);
+                }
+
+            }
+        });
+
         Log.d("subversions", "updateCount: " + systemLocationID);
 
         ReaderUtils.initSound(AuditReadingActivity.this);
+        binding.scannedrecyclerview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedAuditsbyAuditId(auditID).observe(this, new Observer<List<AuditSnapShot>>() {
+            @Override
+            public void onChanged(List<AuditSnapShot> inventoryAudits) {
+                binding.scannedrecyclerview.setAdapter(new AuditScannedAdapter(getApplicationContext(), inventoryAudits));
+            }
+        });
+
+
         binding.BtInventory.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View v) {
@@ -135,22 +187,21 @@ public class AuditReadingActivity extends BaseActivity {
                 if (handheld) {
                     startThread();
                 } else {
+                    if (DeviceReg) {
+                        if (uhf.getConnectStatus() == ConnectionStatus.CONNECTED) {
 
-                    if (checkLocationEnable()) {
-                        showBluetoothDevice(false);
-                    }
+                            readBlutoothTags();
+                        } else {
+                            alert.showDialog(AuditReadingActivity.this, "Connecting to " + macAddress);
 
 
-                   /* if (!mBtAdapter.isEnabled()) {
-                        Log.i(TAG, "onClick - BT not enabled yet");
-                        Intent enableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        bluetoothrequest.launch(enableIntent);
+                            if (checkLocationEnable()) {
+                                showBluetoothDevice(false);
+                            }
+                        }
                     } else {
-
-                            mDevice = BluetoothAdapter.getDefaultAdapter().getRemoteDevice(macAddress);
-                            connect(macAddress);
-
-                    }*/
+                        startActivity(new Intent(getApplicationContext(), DeviceRegistrationFragment.class));
+                    }
 
 
                 }
@@ -168,9 +219,7 @@ public class AuditReadingActivity extends BaseActivity {
                         .putExtra("categoryId", categoryId)
                         .putExtra("itemID", itemID)
                         .putExtra("url", AppConstants.BASE_URL)
-
                         .putExtra("auditID", auditID));
-
 
 
             }
@@ -192,7 +241,6 @@ public class AuditReadingActivity extends BaseActivity {
                         .putExtra("auditID", auditID));
 
 
-
             }
         });
 
@@ -204,19 +252,33 @@ public class AuditReadingActivity extends BaseActivity {
                 startActivity(new Intent(getApplicationContext(), FoundReportActivity.class)
                         .putExtra("systemLocationID", systemLocationID)
                         .putExtra("storeID", storeID)
+                        .putExtra("flag", 1)
+
                         .putExtra("categoryId", categoryId)
                         .putExtra("itemID", itemID)
                         .putExtra("url", AppConstants.BASE_URL)
                         .putExtra("auditID", auditID));
 
 
+            }
+        });
+        binding.cdvunknown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                startActivity(new Intent(getApplicationContext(), FoundReportActivity.class)
+                        .putExtra("systemLocationID", systemLocationID)
+                        .putExtra("storeID", storeID)
+                        .putExtra("flag", 2)
+                        .putExtra("categoryId", categoryId)
+                        .putExtra("itemID", itemID)
+                        .putExtra("url", AppConstants.BASE_URL)
+                        .putExtra("auditID", auditID));
+
 
             }
         });
-
-
-
-
 
     }
 
@@ -304,7 +366,8 @@ public class AuditReadingActivity extends BaseActivity {
 
     public void connect(String deviceAddress) {
         if (uhf.getConnectStatus() == ConnectionStatus.CONNECTED) {
-            readBlutoothTags();
+            alert.dismiss();
+
 
         } else if (uhf.getConnectStatus() == ConnectionStatus.CONNECTING) {
             showsuccess("Connecting" + macAddress);
@@ -314,11 +377,11 @@ public class AuditReadingActivity extends BaseActivity {
     }
 
     private void readBlutoothTags() {
-        uhf.setPower((int) 30.0);
+        uhf.setPower((int) blevalue);
         if (uhf.startInventoryTag()) {
             dataset = new ArrayList<>();
 
-            binding.tvbuttontext.setText("Stop");
+            binding.BtInventory.setText("Stop");
             isScanning = true;
             //  setViewEnabled(false);
             new BleTagThread().start();
@@ -351,7 +414,7 @@ public class AuditReadingActivity extends BaseActivity {
         boolean result = true;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_PERMISSION_REQUEST);
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_FINE_LOCATION_PERMISSION_REQUEST);
                 result = false;
             }
         }
@@ -370,13 +433,14 @@ public class AuditReadingActivity extends BaseActivity {
     public void ReaderInit() {
         try {
             mReader = RFIDWithUHFUART.getInstance();
+            if (mReader != null) {
+                new InitTask().execute();
+            }
         } catch (Exception ex) {
             showerror(ex.getMessage());
             return;
         }
-        if (mReader != null) {
-            new InitTask().execute();
-        }
+
 
     }
 
@@ -414,16 +478,19 @@ public class AuditReadingActivity extends BaseActivity {
         if (mReader != null) {
             mReader.free();
         }
+        if (uhf != null) {
+            uhf.free();
+        }
         super.onDestroy();
     }
 
     public void startThread() {
 
-        mReader.setPower((int) 30.0);
+        mReader.setPower((int) handheldvalue);
         if (mReader.startInventoryTag()) {
             dataset = new ArrayList<>();
 
-            binding.tvbuttontext.setText("Stop");
+            binding.BtInventory.setText("Stop");
             isScanning = true;
             //  setViewEnabled(false);
 
@@ -442,7 +509,7 @@ public class AuditReadingActivity extends BaseActivity {
             isScanning = false;
             // setViewEnabled(true);
             if (mReader.stopInventory()) {
-                binding.tvbuttontext.setText("Start");
+                binding.BtInventory.setText("Start");
             } else {
                 showerror("Inventory Stop Failed");
             }
@@ -454,7 +521,7 @@ public class AuditReadingActivity extends BaseActivity {
             isScanning = false;
             // setViewEnabled(true);
             if (uhf.stopInventory()) {
-                binding.tvbuttontext.setText("Start");
+                binding.BtInventory.setText("Start");
             } else {
                 showerror("Inventory Stop Failed");
             }
@@ -484,7 +551,7 @@ public class AuditReadingActivity extends BaseActivity {
                         msg = handler.obtainMessage();
                         msg.obj = uhftagInfo;
                         handler.sendMessage(msg);
-                        ReaderUtils.playSound(1);
+
                     }
 
 
@@ -495,20 +562,17 @@ public class AuditReadingActivity extends BaseActivity {
 
     private void addDataToList(String epc) {
         Log.d("addDataToList", "addDataToList: " + epc);
+        String epcCode = HexToString(epc);
 
-        //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
-        InsertTempserials(new TemDataSerial(HexToString(epc), auditID));
+        if (epcCode.startsWith(getPrefix()) && epcCode.endsWith(getSuffix())) {
+            epcCode = epcCode.substring(1, epcCode.lastIndexOf(getSuffix()));
 
-    }
-
-    public String HexToString(String hex) {
-        hex = hex.replaceAll("^(00)+", "");
-        byte[] bytes = new byte[hex.length() / 2];
-        for (int i = 0; i < hex.length(); i += 2) {
-            bytes[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4) + Character.digit(hex.charAt(i + 1), 16));
+            //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
+            InsertTempserials(new TemDataSerial(epcCode, auditID));
+            ReaderUtils.playSound(1);
         }
-        return new String(bytes);
     }
+
 
     private void InsertTempserials(TemDataSerial dataset) {
 
@@ -521,10 +585,19 @@ public class AuditReadingActivity extends BaseActivity {
     }
 
     private void checkexists() {
-        int systemID = 0;
-        new Thread(() -> {
-            DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().updateAudit(auditID, systemLocationID, categoryId, itemID, storeID);
 
+        Log.d("CheckExist", "checkexists: " + auditID + systemLocationID + categoryId + subcatID + storeID + date);
+
+        String username = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "EmployeeName");
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            date = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+        }
+
+        new Thread(() -> {
+            int check = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().updateAudit(auditID, systemLocationID, categoryId, subcatID, storeID, date, username);
+            Log.d("TAG", "checkexists: " + check);
+            String query = "INSERT INTO AuditSnapShot (auditID,locationId, scanLocationID,serialNumber,status,subCategoryId) Select '" + auditID + "','" + systemLocationID + "','" + systemLocationID + "'," + "SerialNo,'2','0' from TemDataSerial where SerialNo NOT IN(Select serialNumber from AuditSnapShot where auditID ='" + auditID + "')";
+            Boolean insert = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().unkwowninsert((new SimpleSQLiteQuery(query)));
          /*   if (categoryId != 0) {
                 Log.d("TAG", "checkexistswithoucat: ");
                 DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().checkauditscanwithcat(auditID, systemLocationID, categoryId);
@@ -540,7 +613,7 @@ public class AuditReadingActivity extends BaseActivity {
 
             runOnUiThread(() -> {
                 hideProgressDialog();
-              updateCount();
+                updateCount();
             });
         }).start();
     }
@@ -552,36 +625,103 @@ public class AuditReadingActivity extends BaseActivity {
                     @Override
                     public void onChanged(Integer integer) {
                         binding.tvtotalstock.setText(String.valueOf(integer));
-                    }
-                });
+                        binding.tvtotal.setText("Total \n " + integer);
 
+                        binding.tvtotalpcs.setText("Pcs " + integer);
+                    }
+
+                });
+        DatabaseClient.getInstance(getApplicationContext()).
+                getAppDatabase().auditDownloadDao().getSum(auditID, 0, 1, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Double>() {
+                    @Override
+                    public void onChanged(Double integer) {
+                        binding.tvtotalweight.setText("Grs.Wt " + String.format("%.2f", integer) + " g");
+                    }
+
+                });
 
         DatabaseClient.getInstance(getApplicationContext()).
                 getAppDatabase().auditDownloadDao().getcount(auditID, 1, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         binding.tvfound.setText(String.valueOf(integer));
+                        binding.found.setText("Found \n " + integer);
+                        binding.tvfoundtotalpcs.setText("Pcs " + integer);
+
                     }
                 });
+
+        DatabaseClient.getInstance(getApplicationContext()).
+                getAppDatabase().auditDownloadDao().getSum(auditID, 1, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Double>() {
+                    @Override
+                    public void onChanged(Double integer) {
+                        binding.tvfoundtotalweight.setText("Grs.Wt " + String.format("%.2f", integer) + " g");
+
+
+                    }
+                });
+
+        DatabaseClient.getInstance(getApplicationContext()).
+                getAppDatabase().auditDownloadDao().getSum(auditID, 0, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Double>() {
+                    @Override
+                    public void onChanged(Double integer) {
+                        binding.tvtotalmissingweight.setText("Grs.Wt " + String.format("%.2f", integer) + " g");
+
+
+                    }
+                });
+
+
         DatabaseClient.getInstance(getApplicationContext()).
                 getAppDatabase().auditDownloadDao().getcount(auditID, 0, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
+                        binding.missing.setText("Missing \n " + integer);
                         binding.tvmissing.setText(String.valueOf(integer));
+                        binding.tvtotalmissingpcs.setText("Pcs " + integer);
                     }
                 });
         DatabaseClient.getInstance(getApplicationContext()).
                 getAppDatabase().auditDownloadDao().getcount(auditID, 2, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
+                        binding.unknown.setText("Unknown \n " + integer);
+
                         binding.tvunknown.setText(String.valueOf(integer));
+                        binding.tvtotalunknownpcs.setText("Pcs " + integer);
+
                     }
                 });
+
+        DatabaseClient.getInstance(getApplicationContext()).
+                getAppDatabase().auditDownloadDao().getSum(auditID, 2, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Double>() {
+                    @Override
+                    public void onChanged(Double integer) {
+                        binding.tvtotalunknownweight.setText("Grs.Wt " + String.format("%.2f", integer) + " g");
+
+
+                    }
+                });
+
         DatabaseClient.getInstance(getApplicationContext()).
                 getAppDatabase().auditDownloadDao().getcount(auditID, 3, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
+                        binding.locationmismatch.setText("Mismatch \n " + integer);
+
                         binding.tvlocationmismatch.setText(String.valueOf(integer));
+                        binding.tvtotalmismatchpcs.setText("Pcs " + integer);
+
+                    }
+                });
+
+        DatabaseClient.getInstance(getApplicationContext()).
+                getAppDatabase().auditDownloadDao().getSum(auditID, 3, systemLocationID, categoryId, itemID, storeID).observe(this, new Observer<Double>() {
+                    @Override
+                    public void onChanged(Double integer) {
+                        binding.tvtotalmismatchweight.setText("Grs.Wt " + String.format("%.2f", integer) + " g");
+
+
                     }
                 });
 
@@ -596,9 +736,20 @@ public class AuditReadingActivity extends BaseActivity {
                     remoteBTName = "";
                     remoteBTAdd = "";
                     if (connectionStatus == ConnectionStatus.CONNECTED) {
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
                         remoteBTName = device.getName();
                         remoteBTAdd = device.getAddress();
-                        showsuccess("remoteBT" + remoteBTName);
+                        alert.dismiss();
+                        showsuccess("Bluetooth Connected Succesfully");
 
 
                     } else if (connectionStatus == ConnectionStatus.DISCONNECTED) {
@@ -648,12 +799,27 @@ public class AuditReadingActivity extends BaseActivity {
                         msg = handler.obtainMessage();
                         msg.obj = uhftagInfo;
                         handler.sendMessage(msg);
-                        ReaderUtils.playSound(1);
+
                     }
 
 
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DeviceReg = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "DeviceReg");
+        macAddress = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "TrayMacAddress");
+        blevalue = LocalPreferences.retrieveReadFloatPreferences(getApplicationContext(), "handheldble");
+        handheldvalue = LocalPreferences.retrieveReadFloatPreferences(getApplicationContext(), "handheldvalue");
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        super.onBackPressed();
     }
 }

@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
@@ -54,7 +55,7 @@ public class Favorites extends BaseActivity implements FavoritesItemAdapter.Dele
         binding = DataBindingUtil.setContentView(
                 this, R.layout.fragment_favorites);
 
-        binding.recycartitems.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        binding.recycartitems.setLayoutManager(new GridLayoutManager(getApplicationContext(),2));
         initToolBar(binding.toolbarApp.toolbar, "Favorites", true);
 
 
@@ -65,7 +66,7 @@ public class Favorites extends BaseActivity implements FavoritesItemAdapter.Dele
         showProgressDialog();
         int customerId = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
         AuthToken = LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.Token);
-        favoritesViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(customerId));
+        favoritesViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(customerId),getApplicationContext());
         favoritesViewModel.getLiveData().observe(this, new Observer<List<ResponseFavorites>>() {
             @Override
             public void onChanged(List<ResponseFavorites> responseFavorites) {
@@ -105,7 +106,7 @@ public class Favorites extends BaseActivity implements FavoritesItemAdapter.Dele
             public void onChanged(JsonObject jsonObject) {
                 hideProgressDialog();
 
-                favoritesViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(customerId));
+                favoritesViewModel.ViewCart(AppConstants.Authorization + AuthToken, String.valueOf(customerId),getApplicationContext());
             }
         });
 
@@ -117,7 +118,7 @@ public class Favorites extends BaseActivity implements FavoritesItemAdapter.Dele
         showProgressDialog();
         String UserId = LocalPreferences.retrieveStringPreferences(getApplicationContext(), AppConstants.UserID);
         int customerId = LocalPreferences.retrieveIntegerPreferences(getApplicationContext(), "GuestCustomerID");
-        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, String.valueOf(customerId), UserId, String.valueOf(itemid), "delete", "", serialno);
+        addtoFavoritesViewModel.AddtoFavorites(AppConstants.Authorization + AuthToken, String.valueOf(customerId), UserId, String.valueOf(itemid), "delete", "", serialno,getApplicationContext());
 
     }
 

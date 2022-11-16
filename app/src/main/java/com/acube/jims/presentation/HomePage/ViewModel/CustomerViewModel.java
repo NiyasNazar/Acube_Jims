@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.HomePage.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,8 +22,8 @@ public class CustomerViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void getCustomerSearch(String Token, String keyword) {
-        repository.getCustomer(Token, keyword);
+    public void getCustomerSearch(String Token, String keyword, Context context) {
+        repository.getCustomer(Token, keyword,context);
 
     }
 

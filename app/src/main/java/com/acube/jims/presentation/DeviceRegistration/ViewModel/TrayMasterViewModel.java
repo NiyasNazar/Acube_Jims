@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.DeviceRegistration.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,8 +22,8 @@ public class TrayMasterViewModel extends AndroidViewModel {
         super(application);
     }
 
-    public void AddDeviceRegistrationDetails(String Token) {
-        repository.TrayMaster(Token);
+    public void AddDeviceRegistrationDetails(String Token, Context context) {
+        repository.TrayMaster(Token,context);
     }
 
     public void init() {

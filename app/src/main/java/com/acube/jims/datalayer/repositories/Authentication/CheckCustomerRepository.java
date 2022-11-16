@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Authentication;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -22,9 +23,9 @@ public class CheckCustomerRepository  {
         dataset = new MutableLiveData<>();
     }
 
-    public void CheckCustomer(String vaphonenum) {
+    public void CheckCustomer(String vaphonenum, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<ResponseCheckCustomer> call = restApiService.CheckUserExists(vaphonenum);
         call.enqueue(new Callback<ResponseCheckCustomer>() {
             @Override

@@ -1,6 +1,7 @@
 package com.acube.jims.datalayer.repositories.Compare;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -25,9 +26,9 @@ public class CompareRepository {
         dataset = new MutableLiveData<>();
     }
 
-    public void CompareItems(String header,JsonObject jsonObject) {
+    public void CompareItems(String header, JsonObject jsonObject, Context context) {
 
-        RestApiService restApiService = RetrofitInstance.getApiService();
+        RestApiService restApiService = RetrofitInstance.getApiService(context);
         Call<List<ResponseCompare>> call = restApiService.compareList(header,jsonObject);
         call.enqueue(new Callback<List<ResponseCompare>>() {
             @Override

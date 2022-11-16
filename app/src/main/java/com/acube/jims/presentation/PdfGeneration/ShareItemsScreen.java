@@ -39,7 +39,7 @@ public class ShareItemsScreen extends BaseActivity {
 
         mViewModel = new ViewModelProvider(this).get(CartViewModel.class);
         mViewModel.init();
-        mViewModel.ViewCart(LocalPreferences.getToken(getApplicationContext()), String.valueOf(customerId));
+        mViewModel.ViewCart(LocalPreferences.getToken(getApplicationContext()), String.valueOf(customerId),getApplicationContext());
         mViewModel.getLiveData().observe(this, new Observer<ResponseCart>() {
             @Override
             public void onChanged(ResponseCart responseCart) {

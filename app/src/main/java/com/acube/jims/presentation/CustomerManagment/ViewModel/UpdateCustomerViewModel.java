@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.CustomerManagment.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -18,8 +19,8 @@ public class UpdateCustomerViewModel extends AndroidViewModel {
 
     }
 
-    public void UpdateCustomer(int ID, JsonObject jsonObject) {
-        repository.UpdateCustomer(ID, jsonObject);
+    public void UpdateCustomer(int ID, JsonObject jsonObject, Context context) {
+        repository.UpdateCustomer(ID, jsonObject,context);
     }
 
     public void init() {

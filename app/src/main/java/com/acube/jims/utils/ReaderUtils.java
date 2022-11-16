@@ -51,7 +51,7 @@ public class ReaderUtils {
             soundPool.play(soundMap.get(id), volumnRatio, // 左声道音量
                     volumnRatio, // 右声道音量
                     1, // 优先级，0为最低
-                    0, // 循环次数，0无不循环，-1无永远循环
+                    5, // 循环次数，0无不循环，-1无永远循环
                     1 // 回放速度 ，该值在0.5-2.0之间，1为正常速度
             );
         } catch (Exception e) {

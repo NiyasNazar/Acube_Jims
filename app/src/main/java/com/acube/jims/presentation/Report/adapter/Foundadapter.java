@@ -1,6 +1,7 @@
 package com.acube.jims.presentation.Report.adapter;
 
 import android.content.Context;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +18,9 @@ import com.acube.jims.presentation.ScanItems.ResponseItems;
 import com.acube.jims.R;
 import com.acube.jims.datalayer.models.Audit.Found;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.List;
 
@@ -50,7 +53,13 @@ public class Foundadapter extends RecyclerView.Adapter<Foundadapter.ProductViewH
     @Override
     public void onBindViewHolder(ProductViewHolder holder, int position) {
 
+      /*  File file = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES + "/JMS/CompressedImages/" + responseAuditDownload.getImageName() + ".JPG"); //Creates app specific folder
+        Glide.with(mCtx).load(file)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .placeholder(R.drawable.nopreview)
 
+                .skipMemoryCache(true)
+                .into(holder.imageView);*/
         AuditReportItems found = dataset.get(position);
         holder.tvlocationname.setText("System Location : " + found.getSystemLocationName());
         holder.textViewItemName.setText("Item : " + found.getItemName());

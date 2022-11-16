@@ -104,6 +104,7 @@
                     android:layout_weight="1"
                     android:background="#FFF" />
                 <FrameLayout
+                    android:visibility="gone"
                     android:id="@+id/fragment3"
 
                     android:layout_width="0px"
@@ -137,6 +138,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:backgroundTint="@color/appmaincolor"
                     android:background="@drawable/rec_button"
                     android:gravity="center"
                     >
@@ -160,7 +162,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="2"
-                    android:backgroundTint="#3699ff"
+                    android:backgroundTint="@color/appmaincolor"
 
                     android:background="@drawable/rec_button"
 

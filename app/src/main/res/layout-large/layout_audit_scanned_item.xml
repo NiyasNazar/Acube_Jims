@@ -31,11 +31,11 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textColor="#FFF"
-                    android:text="asdasdasd"
+                    android:text=""
 
                     android:fontFamily="@font/medium"
 
-                    android:textSize="10sp"
+                    android:textSize="13sp"
                     android:textStyle="bold">
 
                 </TextView>
@@ -48,12 +48,12 @@
                     android:paddingLeft="5dp"
                     android:layout_marginTop="2dp"
                     android:layout_weight="1"
-                    android:text="asdasdasd"
+                    android:text=""
 
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="#FFF"
-                    android:textSize="8sp">
+                    android:textSize="11sp">
 
                 </TextView>
             </LinearLayout>
@@ -74,10 +74,10 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:paddingLeft="5dp"
-                    android:text="asdasdasd"
+                    android:text=""
 
                     android:textColor="#FFF"
-                    android:textSize="8sp">
+                    android:textSize="11sp">
 
                 </TextView>
 
@@ -88,11 +88,11 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:paddingLeft="5dp"
-                    android:text="asdasdasd"
+                    android:text=""
 
                     android:maxLines="2"
                     android:textColor="#FFF"
-                    android:textSize="8sp">
+                    android:textSize="11sp">
 
                 </TextView>
             </LinearLayout>

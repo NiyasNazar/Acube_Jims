@@ -196,7 +196,7 @@ public class AuditScanActivity extends BaseActivity {
                         .putExtra("systemLocationID", systemLocationID)
                         .putExtra("storeID", storeID)
                         .putExtra("categoryId", categoryId)
-                        .putExtra("subcatID", subcatcategoryId)
+                        .putExtra("subcatID", 0)
                         .putExtra("url", AppConstants.BASE_URL)
                         .putExtra("macAddress", TrayMacAddress)
                         .putExtra("auditID", auditID));

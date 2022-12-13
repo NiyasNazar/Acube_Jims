@@ -34,8 +34,8 @@
 
                 <ImageView
                     android:id="@+id/imvlogo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/logo">
@@ -52,7 +52,7 @@
                     android:fontFamily="@font/karla_bold"
                     android:text="@string/acube"
                     android:textColor="#BF8F3A"
-                    android:textSize="24sp"></TextView>
+                    android:textSize="18sp"></TextView>
 
                 <TextView
                     android:id="@+id/tvsubtitle"
@@ -65,7 +65,7 @@
                     android:fontFamily="@font/karla_bold"
                     android:text="@string/rfidpowered"
                     android:textColor="#666666"
-                    android:textSize="14sp"></TextView>
+                    android:textSize="13sp"></TextView>
 
                 <EditText
                     android:id="@+id/ed_email"
@@ -128,11 +128,11 @@
                 <LinearLayout
                     android:id="@+id/btn_signin"
                     android:layout_width="139dp"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_below="@id/laytedpassword"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="57dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
 
 
                     android:layout_marginBottom="15dp"
@@ -155,9 +155,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_signin"
-                    android:gravity="center"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatCheckBox

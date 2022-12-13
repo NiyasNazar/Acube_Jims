@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
 import com.acube.jims.utils.AppUtility;
+import com.acube.jims.utils.LocalPreferences;
 import com.google.android.material.snackbar.Snackbar;
 import com.muddzdev.styleabletoast.StyleableToast;
 
@@ -90,6 +91,21 @@ public abstract class BaseFragment extends Fragment {
 
 
     }
+    public String getPrefix() {
+        return LocalPreferences.retrieveStringPreferences(requireActivity(), "Prefix");
+    }
 
+    public String getSuffix() {
+        return LocalPreferences.retrieveStringPreferences(requireActivity(), "Suffix");
+    }
+    public String HexToString(String hex) {
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < hex.length(); i += 2) {
+            String str = hex.substring(i, i + 2);
+            output.append((char) Integer.parseInt(str, 16));
+        }
+        System.out.println(output.toString().trim());
+        return output.toString().trim();
+    }
 
 }

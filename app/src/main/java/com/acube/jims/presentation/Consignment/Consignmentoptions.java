@@ -2,6 +2,7 @@ package com.acube.jims.presentation.Consignment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProvider;
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
+import com.acube.jims.databinding.ActivityConsigmentOptionsBinding;
+import com.acube.jims.databinding.ConsignmentOptionsBinding;
 import com.acube.jims.databinding.ReportMenuBinding;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.presentation.Audit.AuditFragment;
@@ -27,14 +30,18 @@ public class Consignmentoptions extends BaseActivity implements AuditMenuAdapter
     private ReportViewModel mViewModel;
 
 
-    ReportMenuBinding binding;
+    ConsignmentOptionsBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.report_menu);
-        initToolBar(binding.toolbarApp.toolbar, "Consignment", true);
-        binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getApplicationContext(), 3));
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+
+
+        binding = DataBindingUtil.setContentView(this, R.layout.consignment_options);
+
+
+        binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getApplicationContext(), 2));
         binding.recyvhomemenu.setHasFixedSize(true);
         binding.recyvhomemenu.setAdapter(new AuditMenuAdapter(getApplicationContext(), getList(), Consignmentoptions.this));
         mViewModel = new ViewModelProvider(this).get(ReportViewModel.class);
@@ -47,10 +54,11 @@ public class Consignmentoptions extends BaseActivity implements AuditMenuAdapter
     public void replaceFragment(String menuname) {
         if (menuname.equalsIgnoreCase("Consignment Scan")) {
             startActivity(new Intent(getApplicationContext(), ConsignmentActivity.class));
-
+            finish();
 
         } else if (menuname.equalsIgnoreCase("Consignment Verification")) {
             startActivity(new Intent(getApplicationContext(), ConsignmentScanActivity.class));
+            finish();
             // FilterPreference.clearPreferences(getActivity());
         } else if (menuname.equalsIgnoreCase("Locate Product")) {
             // FragmentHelper.replaceFragment(getActivity(), R.id.content, new LocateProduct());

@@ -99,7 +99,7 @@ int GuestCustomerID;
         binding.tvCustomername.setText("Customer : " + Customername + "  -  " + CustomerCode);
         binding.tvCustomercode.setText("Customer Code : " + CustomerCode);
         addtoFavoritesViewModel = new ViewModelProvider(this).get(AddtoFavoritesViewModel.class);
-        GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getActivity(), "GuestCustomerID");
+        GuestCustomerID = LocalPreferences.retrieveIntegerPreferences(getActivity(), "GuestCustomerID") ;
         UserId = LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.UserID);
         addtoFavoritesViewModel.init();
 

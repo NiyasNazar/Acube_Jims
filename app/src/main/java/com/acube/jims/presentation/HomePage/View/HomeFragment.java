@@ -6,16 +6,24 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.ComponentName;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,15 +33,25 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.os.Message;
+import android.provider.Settings;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.acube.jims.BaseFragment;
+import com.acube.jims.datalayer.models.Audit.ResponseLiveStore;
 import com.acube.jims.datalayer.models.Audit.TemDataSerial;
 import com.acube.jims.presentation.Analytics.AnalyticsActivity;
 import com.acube.jims.presentation.Audit.AuditMenuFragment;
@@ -52,6 +70,7 @@ import com.acube.jims.presentation.HomePage.adapter.HomeAdapter;
 import com.acube.jims.presentation.CustomerManagment.ViewModel.CreateCustomerViewModel;
 import com.acube.jims.presentation.ItemRequest.ItemRequestActivity;
 import com.acube.jims.presentation.ItemRequest.view.SalesmanItemRequestActivity;
+import com.acube.jims.presentation.ProductDetails.View.ProductDetailsFragment;
 import com.acube.jims.presentation.ScanItems.ScanItemsActivity;
 import com.acube.jims.R;
 import com.acube.jims.presentation.SmartTrayReading;
@@ -66,9 +85,19 @@ import com.acube.jims.datalayer.models.Authentication.ResponseCreateCustomer;
 import com.acube.jims.datalayer.models.CustomerManagment.ResponseCustomerListing;
 import com.acube.jims.datalayer.models.HomePage.HomeData;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.acube.jims.utils.OnSingleClickListener;
+import com.acube.jims.utils.ReaderUtils;
+import com.acube.jims.utils.Utils;
+import com.acube.jims.utils.ViewDialog;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.gun0912.tedpermission.normal.TedPermission;
+import com.rscja.deviceapi.RFIDWithUHFBLE;
+import com.rscja.deviceapi.RFIDWithUHFUART;
+import com.rscja.deviceapi.entity.UHFTAGInfo;
+import com.rscja.deviceapi.interfaces.ConnectionStatus;
+import com.rscja.deviceapi.interfaces.ConnectionStatusCallback;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -80,6 +109,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTransition, CustomerListAdapter.ReplaceFragment {
@@ -89,12 +119,47 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
     CustomerViewModel customerViewModel;
     private CreateCustomerViewModel createCustomerViewModel;
     AlertDialog dialog;
+    public RFIDWithUHFUART mReader;
+    public boolean isScanning = false;
+    private HashMap<String, String> map;
+    private List<String> tagList;
+    String auditID, macAddress, url;
+    int systemLocationID, storeID, categoryId, itemID;
+    Boolean handheld;
+    public RFIDWithUHFBLE uhf = RFIDWithUHFBLE.getInstance();
+    public BluetoothDevice mDevice = null;
+    BTStatus btStatus = new BTStatus();
+    public String remoteBTName = "";
+    public String remoteBTAdd = "";
 
     public static HomeFragment newInstance() {
         return new HomeFragment();
     }
 
+    private boolean mScanning, DeviceReg;
+    String date = "";
+    private static final long SCAN_PERIOD = 30000; //10 seconds
+
+    ArrayList<TemDataSerial> dataset;
+    public BluetoothAdapter mBtAdapter = null;
+    private static final int ACCESS_FINE_LOCATION_PERMISSION_REQUEST = 100;
+    private static final int WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST = 101;
+    private static final int READ_EXTERNAL_STORAGE_PERMISSION_REQUEST = 102;
+    private static final int REQUEST_ACTION_LOCATION_SETTINGS = 3;
+    private Handler mBlHandler = new Handler();
+    ViewDialog alert;
+    int flag = 1;
+    float blevalue, handheldvalue;
+
     String AuthToken, UserName;
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            UHFTAGInfo info = (UHFTAGInfo) msg.obj;
+            addDataToList(info.getEPC());
+        }
+    };
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -113,7 +178,9 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         binding.recyvhomemenu.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         binding.recyvhomemenu.setHasFixedSize(true);
         binding.tvgoldrate.setText("Gold Rate " + LocalPreferences.retrieveStringPreferences(getActivity(), "GoldRate"));
-
+        handheld = LocalPreferences.retrieveBooleanPreferences(requireActivity(), "handheld");
+        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+        ReaderUtils.initSound(requireActivity());
         DatabaseClient.getInstance(getActivity()).getAppDatabase().homeMenuDao().getAll().observe(requireActivity(), new Observer<List<HomeData>>() {
             @Override
             public void onChanged(List<HomeData> homeData) {
@@ -242,9 +309,248 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         } else if (value.equalsIgnoreCase("Transfer")) {
             startActivity(new Intent(getActivity(), Transferactivity.class));
 
+        } else if (value.equalsIgnoreCase("Itemlookup")) {
+            showPopupWindow();
+
         }
 
 
+    }
+
+    public void showPopupWindow() {
+
+        LayoutInflater inflater = getLayoutInflater();
+        View alertLayout = inflater.inflate(R.layout.pop_up_layout_lookup, null);
+        EditText EtSearch = alertLayout.findViewById(R.id.ed_search);
+        AppCompatButton btScan = alertLayout.findViewById(R.id.btn_scan);
+        ImageView search_btn = alertLayout.findViewById(R.id.search_btn);
+
+        if (handheld) {
+            ReaderInit();
+        } else {
+            uhf.init(requireActivity());
+            checkLocationEnable();
+
+        }
+
+        //  final TextInputEditText etPassword = alertLayout.findViewById(R.id.tiet_password);
+
+
+        AlertDialog.Builder alert = new AlertDialog.Builder(requireActivity());
+        alert.setTitle("Item Lookup");
+        // this is set the view from XML inside AlertDialog
+        alert.setView(alertLayout);
+
+        AlertDialog dialog = alert.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.show();
+        btScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (handheld) {
+                    UHFTAGInfo uhftagInfo = mReader.inventorySingleTag();
+                    if (uhftagInfo != null) {
+
+                        String epc = uhftagInfo.getEPC();
+                        String epcCode = HexToString(epc);
+
+                        if (epcCode.startsWith(getPrefix()) && epcCode.endsWith(getSuffix())) {
+                            epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
+
+                            EtSearch.setText(epcCode);
+
+                            //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
+
+                            ReaderUtils.playSound(1);
+                        } else {
+                            Log.d("invalid", "addDataToList: ");
+                        }
+
+                    }
+                } else {
+                    checkLocationEnable();
+
+                }
+
+
+            }
+        });
+        search_btn.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                String vaID = EtSearch.getText().toString();
+                if (vaID.equalsIgnoreCase("")) {
+
+                } else {
+                    startActivity(new Intent(requireActivity(), ProductDetailsFragment.class).putExtra("Id", vaID));
+                    dialog.dismiss();
+
+                }
+
+            }
+        });
+
+    }
+
+    private String addDataToList(String epc) {
+
+        Log.d("addDataToList", "addDataToList: " + epc);
+        String epcCode = HexToString(epc);
+
+        if (epcCode.startsWith(getPrefix()) && epcCode.endsWith(getSuffix())) {
+            epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
+
+
+            //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
+
+            ReaderUtils.playSound(1);
+        } else {
+            Log.d("invalid", "addDataToList: ");
+        }
+        return epcCode;
+    }
+
+    private void readBlutoothTags() {
+        uhf.setPower((int) blevalue);
+        UHFTAGInfo info = uhf.inventorySingleTag();
+        if (info != null) {
+            Message msg;
+            msg = handler.obtainMessage();
+            msg.obj = info;
+            handler.sendMessage(msg);
+
+        }
+
+
+    }
+
+    private boolean checkLocationEnable() {
+        boolean result = true;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (requireActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_FINE_LOCATION_PERMISSION_REQUEST);
+                result = false;
+            }
+        }
+        if (!isLocationEnabled()) {
+            Utils.alert(requireActivity(), R.string.get_location_permission, getString(R.string.tips_open_the_ocation_permission), R.drawable.ic_icon_jewelry, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivityForResult(intent, REQUEST_ACTION_LOCATION_SETTINGS);
+                }
+            });
+        }
+        return result;
+    }
+
+    class BTStatus implements ConnectionStatusCallback<Object> {
+        @Override
+        public void getStatus(final ConnectionStatus connectionStatus, final Object device1) {
+            requireActivity().runOnUiThread(new Runnable() {
+                public void run() {
+                    BluetoothDevice device = (BluetoothDevice) device1;
+                    remoteBTName = "";
+                    remoteBTAdd = "";
+                    if (connectionStatus == ConnectionStatus.CONNECTED) {
+                        if (ActivityCompat.checkSelfPermission(requireActivity(), Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        remoteBTName = device.getName();
+                        remoteBTAdd = device.getAddress();
+                        alert.dismiss();
+                        showsuccess("Bluetooth Connected Succesfully");
+
+
+                    } else if (connectionStatus == ConnectionStatus.DISCONNECTED) {
+
+                    }
+
+
+                }
+            });
+        }
+    }
+
+
+    ActivityResultLauncher<Intent> bluetoothrequest = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        showsuccess("Bluetooth has turned on");
+                    } else {
+                        showerror("Problem in BT Turning ON ");
+                    }
+                }
+            });
+
+    private boolean isLocationEnabled() {
+        int locationMode = 0;
+        String locationProviders;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            try {
+                locationMode = Settings.Secure.getInt(requireActivity().getContentResolver(), Settings.Secure.LOCATION_MODE);
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+        } else {
+            locationProviders = Settings.Secure.getString(requireActivity().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+    }
+
+    public void ReaderInit() {
+        try {
+            mReader = RFIDWithUHFUART.getInstance();
+            if (mReader != null) {
+                new InitTask().execute();
+            }
+        } catch (Exception ex) {
+            showerror(ex.getMessage());
+            return;
+        }
+
+
+    }
+
+    public class InitTask extends AsyncTask<String, Integer, Boolean> {
+        @Override
+        protected Boolean doInBackground(String... params) {
+            // TODO Auto-generated method stub
+            mReader.free();
+            return mReader.init();
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            hideProgressDialog();
+            if (!result) {
+                Toast.makeText(requireActivity(), "Initialization fail", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireActivity(), "Initialization Success", Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            // TODO Auto-generated method stub
+            super.onPreExecute();
+            showProgressDialog();
+
+        }
     }
 
     private void PerformScan() {
@@ -355,7 +661,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
             @Override
             public void afterTextChanged(Editable keyword) {
                 if (keyword.toString().length() > 3) {
-                    customerViewModel.getCustomerSearch(AppConstants.Authorization + AuthToken, keyword.toString(),requireActivity());
+                    customerViewModel.getCustomerSearch(AppConstants.Authorization + AuthToken, keyword.toString(), requireActivity());
                 }
 
 
@@ -382,7 +688,7 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
         jsonObject.addProperty("customerName", vaguestname);
         jsonObject.addProperty("emailID", vaemail);
         jsonObject.addProperty("contactNumber", vamobile);
-        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token), jsonObject,getActivity());
+        createCustomerViewModel.CreateCustomer(AppConstants.Authorization + LocalPreferences.retrieveStringPreferences(getActivity(), AppConstants.Token), jsonObject, getActivity());
 
     }
 
@@ -470,4 +776,6 @@ public class HomeFragment extends BaseFragment implements HomeAdapter.FragmentTr
                     }
                 }
             });
+
+
 }

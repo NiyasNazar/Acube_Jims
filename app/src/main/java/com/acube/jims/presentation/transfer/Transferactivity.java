@@ -355,7 +355,7 @@ public class Transferactivity extends BaseActivity {
         try {
             mReader = RFIDWithUHFUART.getInstance();
             if (mReader != null) {
-                new Transferactivity.InitTask().execute();
+                new InitTask().execute();
             }
         } catch (Exception ex) {
             showerror(ex.getMessage());
@@ -499,8 +499,8 @@ public class Transferactivity extends BaseActivity {
             Log.d("addDataToList", "addDataToList: " + epc);
             String epcCode = HexToString(epc);
 
-            if (epcCode.startsWith("S")&&epcCode.endsWith("|")) {
-                epcCode = epcCode.substring(1, epcCode.lastIndexOf("|"));
+            if (epcCode.startsWith(getPrefix())&&epcCode.endsWith(getSuffix())) {
+                epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
                 tagList.add(epcCode);
 
                 //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));

@@ -127,7 +127,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-light"
 
-                                android:text="Warehouse Name"
+                                android:text="Store Name"
                                 android:textColor="@color/black"
                               />
 

@@ -646,11 +646,10 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
     }
 
     private void addDataToList(String epc) {
-        Log.d("addDataToList", "addDataToList: " + epc);
         String epcCode = HexToString(epc);
 
-        if (epcCode.startsWith("S")) {
-            epcCode = epcCode.substring(1, epcCode.lastIndexOf("|"));
+        if (epcCode.startsWith(getPrefix())&&epcCode.endsWith(getSuffix())) {
+            epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
 
             //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
             InsertTempserials(new TemDataSerial(epcCode, auditID));
@@ -658,14 +657,7 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
         }
     }
 
-    public String HexToString(String hex) {
-        hex = hex.replaceAll("^(00)+", "");
-        byte[] bytes = new byte[hex.length() / 2];
-        for (int i = 0; i < hex.length(); i += 2) {
-            bytes[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4) + Character.digit(hex.charAt(i + 1), 16));
-        }
-        return new String(bytes);
-    }
+
 
     private void InsertTempserials(TemDataSerial dataset) {
 

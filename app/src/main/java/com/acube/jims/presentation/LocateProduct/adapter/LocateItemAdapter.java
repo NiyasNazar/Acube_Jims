@@ -68,8 +68,7 @@ public class LocateItemAdapter extends RecyclerView.Adapter<LocateItemAdapter.Pr
             itemView.setOnClickListener(new OnSingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
-                    mCtx.startActivity(new Intent(mCtx, LocateScanActivity.class).putExtra("serialnos", dataset.get(getAbsoluteAdapterPosition()).getSerialnumber())
-                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+              fragmenttransition.replaceFragment(dataset.get(getAbsoluteAdapterPosition()).getSerialnumber());
 
                 }
             });
@@ -79,7 +78,7 @@ public class LocateItemAdapter extends RecyclerView.Adapter<LocateItemAdapter.Pr
     }
 
     public interface FragmentTransition {
-        void replaceFragment(String menuname);
+        void replaceFragment(String serial);
 
     }
 }

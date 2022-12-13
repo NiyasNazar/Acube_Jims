@@ -138,7 +138,11 @@ public class ItemWiseReport extends BaseActivity implements ItemWiseadapter.Pass
             binding.fabcomparison.setVisibility(View.GONE);
 
         }
+        new Thread(() -> {
+            DatabaseClient.getInstance(ItemWiseReport.this).getAppDatabase().auditDownloadDao().deleteItemWiseReport();
 
+
+        }).start();
         binding.fabcomparison.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View v) {
@@ -217,6 +221,12 @@ public class ItemWiseReport extends BaseActivity implements ItemWiseadapter.Pass
                     hideProgressDialog();
                     ResponseItemWiseReport responseItemWiseReport = response.body();
                     dataset = responseItemWiseReport.getResult();
+                    new Thread(() -> {
+                        DatabaseClient.getInstance(ItemWiseReport.this).getAppDatabase().auditDownloadDao().insertItemWiseReport(dataset);
+
+
+
+                    }).start();
                     binding.qty.setText("" + responseItemWiseReport.getTotalQty());
                     binding.weight.setText("" + responseItemWiseReport.getTotalWeight() + " g");
 

@@ -32,13 +32,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".InvoiceGenerator"
+            android:name=".presentation.ItemLookup.ItemLookupActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.Quotation.InvoiceGenerator"
             android:exported="false" />
         <activity
             android:name=".presentation.transfer.Transferactivity"
             android:exported="false" />
         <activity
             android:name=".presentation.Consignment.Consignmentoptions"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert"
             android:exported="false" />
         <activity
             android:name=".presentation.Consignment.ConsignmentScanActivity"

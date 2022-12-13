@@ -53,9 +53,9 @@ public class CompareItemsAdapter extends RecyclerView.Adapter<CompareItemsAdapte
 
         //  binding = inflater.inflate(R.layout.layout_compare_item, parent, false);
         if (dataset.size() > 3) {
-            binding.parent.getLayoutParams().width = width / 3;
+            binding.parent.getLayoutParams().width = width / 2;
         } else {
-            binding.parent.getLayoutParams().width = width /dataset.size();
+            binding.parent.getLayoutParams().width = width /2;
         }
         /// THIS LINE WILL DIVIDE OUR VIEW INTO NUMBERS OF PARTS
 

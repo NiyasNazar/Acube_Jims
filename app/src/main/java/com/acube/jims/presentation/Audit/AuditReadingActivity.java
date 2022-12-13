@@ -127,7 +127,8 @@ public class AuditReadingActivity extends BaseActivity {
         alert = new ViewDialog();
         systemLocationID = getIntent().getIntExtra("systemLocationID", 0);
         storeID = getIntent().getIntExtra("storeID", 0);
-        categoryId = getIntent().getIntExtra("categoryId", 0);
+         /*= getIntent().getIntExtra("categoryId", 0);*/
+        categoryId=0;
         subcatID = getIntent().getIntExtra("subcatID", 0);
         itemID = getIntent().getIntExtra("itemID", 0);
         handheld = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "handheld");
@@ -594,7 +595,12 @@ public class AuditReadingActivity extends BaseActivity {
         }
 
         new Thread(() -> {
+/*
             int check = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().updateAudit(auditID, systemLocationID, categoryId, subcatID, storeID, date, username);
+*/
+            int check = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().updateAudit(auditID, systemLocationID, date, username);
+
+
             Log.d("TAG", "checkexists: " + check);
             String query = "INSERT INTO AuditSnapShot (auditID,locationId, scanLocationID,serialNumber,status,subCategoryId) Select '" + auditID + "','" + systemLocationID + "','" + systemLocationID + "'," + "SerialNo,'2','0' from TemDataSerial where SerialNo NOT IN(Select serialNumber from AuditSnapShot where auditID ='" + auditID + "')";
             Boolean insert = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().unkwowninsert((new SimpleSQLiteQuery(query)));

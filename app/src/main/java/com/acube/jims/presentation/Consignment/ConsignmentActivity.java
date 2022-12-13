@@ -518,12 +518,12 @@ public class ConsignmentActivity extends BaseActivity {
     }
 
     private void addDataToList(String epc) {
-        Log.d("addDataToList", "addDataToList: " + epc);
         String epcCode = HexToString(epc);
 
-        if (epcCode.startsWith("S")&&epcCode.endsWith("|")) {
-            epcCode = epcCode.substring(1, epcCode.lastIndexOf("|"));
+        if (epcCode.startsWith(getPrefix())&&epcCode.endsWith(getSuffix())) {
+            epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
             tagList.add(epcCode);
+            Log.d("addDataToList", "addDataToList: " + epcCode);
 
             //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
             adapter.notifyDataSetChanged();

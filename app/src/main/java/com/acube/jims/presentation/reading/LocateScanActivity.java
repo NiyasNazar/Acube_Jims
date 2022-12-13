@@ -213,7 +213,7 @@ public class LocateScanActivity extends BaseActivity {
 
 
                     Glide.with(getApplicationContext())
-                            .load(responseCatalogDetails.getItemSubList().get(0).getImageFilePath())
+                            .load(responseCatalogDetails.getImageFilePath())
                             .placeholder(R.drawable.jwimage)
                             .error(R.drawable.jwimage)
                             .listener(new RequestListener<Drawable>() {
@@ -767,7 +767,7 @@ public class LocateScanActivity extends BaseActivity {
     }
 
     private void startLocation() {
-        serialnos = getSuffix() + serialnos +getPrefix();
+        serialnos = getPrefix() + serialnos +getSuffix();
         StringBuffer sb = new StringBuffer();
         //Converting string to character array
         char ch[] = serialnos.toCharArray();

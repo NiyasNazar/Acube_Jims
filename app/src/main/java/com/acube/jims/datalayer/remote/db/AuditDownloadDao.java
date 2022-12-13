@@ -172,8 +172,15 @@ public interface AuditDownloadDao {
     @Query("UPDATE  InventoryAudit set status='1', scanLocationID=:locID where auditID=:auditID AND   status <>'2' AND  serialNumber IN(Select SerialNo from TemDataSerial) AND categoryID=:catID")
     void checkauditscanwithcat(String auditID, int locID, int catID);
 
+/*
     @Query("UPDATE  AuditSnapShot set status='1', scanLocationID=:locID ,scanneddate=:date,scannedBy=:scanneduser where auditID=:auditID AND   status <>'2' AND  serialNumber IN(Select SerialNo from TemDataSerial) AND (:catID=0 OR categoryId=:catID) AND (:locID=0 OR locationId=:locID ) AND (:SubcatID=0 OR subCategoryId=:SubcatID) AND  (:warehouseId =0 OR warehouseId=:warehouseId)")
-    int updateAudit(String auditID, int locID, int catID, int SubcatID, int warehouseId, String date, String scanneduser);
+*/
+    /*
+    @Query("UPDATE  AuditSnapShot set status='1', scanLocationID=:locID ,scanneddate=:date,scannedBy=:scanneduser where auditID=:auditID AND   status <>'2' AND  serialNumber IN(Select SerialNo from TemDataSerial) AND (:catID=0 OR categoryId=:catID) AND (:locID=0 OR locationId=:locID ) AND (:SubcatID=0 OR subCategoryId=:SubcatID) AND  (:warehouseId =0 OR warehouseId=:warehouseId)")
+*/
+
+    @Query("UPDATE  AuditSnapShot set status='1', scanLocationID=:locID ,scanneddate=:date,scannedBy=:scanneduser where auditID=:auditID AND   status <>'2' AND  serialNumber IN(Select SerialNo from TemDataSerial)")
+    int updateAudit(String auditID, int locID,String date, String scanneduser);
 
     @Query("UPDATE  AuditSnapShot set status='1', scanLocationID=:locID ,scanneddate=:date,scannedBy=:scanneduser where auditID=:auditID AND   status <>'2' AND  serialNumber IN(Select serialNumber from SelectionHolder where serialNumber=:serial) AND (subCategoryId=:catID OR '0'='0') AND (locationId=:locID OR '0'='0') AND  (itemId=:itemID OR '0'='0') AND  (warehouseId=:warehouseId OR '0'='0')")
     int updateFindmissing(String auditID, int locID, int catID, int itemID, int warehouseId, String serial, String date, String scanneduser);

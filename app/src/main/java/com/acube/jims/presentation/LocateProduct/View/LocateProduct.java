@@ -54,7 +54,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class LocateProduct extends BaseActivity {
+public class LocateProduct extends BaseActivity implements LocateItemAdapter.FragmentTransition {
 
     private LocateProductViewModel mViewModel;
     public RFIDWithUHFUART mReader;
@@ -375,6 +375,11 @@ public class LocateProduct extends BaseActivity {
         }
 
 
+    }
+
+    @Override
+    public void replaceFragment(String serial) {
+        startActivity(new Intent(getApplicationContext(), LocateScanActivity.class).putExtra("serialnos", serial));
     }
 
     public class InitTask extends AsyncTask<String, Integer, Boolean> {

@@ -11,10 +11,10 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent"
-        android:background="@drawable/homepagebg"
         tools:context=".presentation.Consignment.ConsigmentOptions">
 
-        <include layout="@layout/layout_toolbar">
+        <include layout="@layout/layout_toolbar"
+            android:visibility="gone">
 
         </include>
 

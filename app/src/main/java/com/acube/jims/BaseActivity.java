@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Report.View.reports.MisiingReport;
@@ -62,12 +63,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-      /*  if (Build.VERSION.SDK_INT >= 21)
+      if (Build.VERSION.SDK_INT >= 21)
         {
             getWindow().setStatusBarColor(ContextCompat.getColor(this,R.color.appmaincolor)); //status bar or the time bar at the top (see example image1)
 
              // Navigation bar the soft bottom of some phones like nexus and some Samsung note series  (see example image2)
-        }*/
+        }
         dialog = new Dialog(BaseActivity.this);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.setContentView(R.layout.dialog_loading);

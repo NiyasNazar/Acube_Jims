@@ -33,6 +33,13 @@ public class LocateItemAdapter extends RecyclerView.Adapter<LocateItemAdapter.Pr
 
     }
 
+    public LocateItemAdapter(Context mCtx, List<LocateItem> dataset, FragmentTransition fragmenttransition) {
+        this.mCtx = mCtx;
+        this.dataset = dataset;
+        this.fragmenttransition = fragmenttransition;
+
+    }
+
     @Override
     public ProductViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
@@ -68,7 +75,7 @@ public class LocateItemAdapter extends RecyclerView.Adapter<LocateItemAdapter.Pr
             itemView.setOnClickListener(new OnSingleClickListener() {
                 @Override
                 public void onSingleClick(View v) {
-              fragmenttransition.replaceFragment(dataset.get(getAbsoluteAdapterPosition()).getSerialnumber());
+                    fragmenttransition.replaceFragment(dataset.get(getAbsoluteAdapterPosition()).getSerialnumber());
 
                 }
             });

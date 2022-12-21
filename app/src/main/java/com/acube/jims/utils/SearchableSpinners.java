@@ -92,13 +92,16 @@ public class SearchableSpinners extends Spinner implements View.OnTouchListener,
                     _items.add(_arrayAdapter.getItem(i));
                 }
                 // Change end.
+                if (!_searchableListDialog.isAdded()) {
+                    _searchableListDialog.show(scanForActivity(_context).getFragmentManager(), "TAG");
 
-                _searchableListDialog.show(scanForActivity(_context).getFragmentManager(), "TAG");
+                }
             }
         }
         return true;
     }
-    public void show(){
+
+    public void show() {
         if (null != _arrayAdapter) {
 
             // Refresh content #6
@@ -111,7 +114,10 @@ public class SearchableSpinners extends Spinner implements View.OnTouchListener,
             }
             // Change end.
 
-            _searchableListDialog.show(scanForActivity(_context).getFragmentManager(), "TAG");
+            if (!_searchableListDialog.isAdded()) {
+                _searchableListDialog.show(scanForActivity(_context).getFragmentManager(), "TAG");
+
+            }
         }
     }
 

@@ -67,7 +67,7 @@ public class ResponseAudit {
 
     @Override
     public String toString() {
-        return auditID;
+        return auditID + "-" + remark;
     }
 
     public List<AuditResults> getAuditResultsList() {

@@ -13,22 +13,22 @@
         android:background="@drawable/homepagebg"
         tools:context=".presentation.Audit.AuditFragment">
 
-        <RelativeLayout
-
+        <androidx.core.widget.NestedScrollView
+            android:fillViewport="true"
+            android:background="@drawable/item_border_detailspage"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
 
             <LinearLayout
                 android:id="@+id/nestedscrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="8dp"
 
-                android:background="@drawable/item_border_detailspage"
                 android:orientation="vertical">
 
 
@@ -43,6 +43,7 @@
 
 
                         <TextView
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -69,7 +70,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginRight="10dp"
-                                app:hintText="Select"
+                                app:hintText="Select Store"
 
                                 android:dropDownSelector="@color/headercolor"
                                 android:gravity="center"
@@ -186,7 +187,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyvauditsummary"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="8dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -195,7 +198,7 @@
             </LinearLayout>
 
 
-        </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </FrameLayout>
 </layout>

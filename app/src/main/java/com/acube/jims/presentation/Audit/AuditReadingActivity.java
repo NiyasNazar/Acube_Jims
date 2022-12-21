@@ -40,6 +40,7 @@ import com.acube.jims.datalayer.models.Audit.TemDataSerial;
 import com.acube.jims.datalayer.remote.db.AppDatabase;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Audit.adapter.AuditScannedAdapter;
+import com.acube.jims.presentation.Consignment.ConsignmentScanActivity;
 import com.acube.jims.presentation.DeviceRegistration.View.DeviceRegistrationFragment;
 import com.acube.jims.presentation.ReadingRangeSettings;
 import com.acube.jims.presentation.Report.View.reports.FoundReportActivity;
@@ -112,6 +113,7 @@ public class AuditReadingActivity extends BaseActivity {
     ViewDialog alert;
     int flag = 1;
     float blevalue, handheldvalue;
+    boolean result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,8 +129,8 @@ public class AuditReadingActivity extends BaseActivity {
         alert = new ViewDialog();
         systemLocationID = getIntent().getIntExtra("systemLocationID", 0);
         storeID = getIntent().getIntExtra("storeID", 0);
-         /*= getIntent().getIntExtra("categoryId", 0);*/
-        categoryId=0;
+        /*= getIntent().getIntExtra("categoryId", 0);*/
+        categoryId = 0;
         subcatID = getIntent().getIntExtra("subcatID", 0);
         itemID = getIntent().getIntExtra("itemID", 0);
         handheld = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "handheld");
@@ -432,18 +434,36 @@ public class AuditReadingActivity extends BaseActivity {
     }
 
     public void ReaderInit() {
+
         try {
             mReader = RFIDWithUHFUART.getInstance();
             if (mReader != null) {
-                new InitTask().execute();
+
+                new Thread(() -> {
+                    try {
+                        result = mReader.init(AuditReadingActivity.this);
+                    } catch (Exception e) {
+                        Log.d("ReaderInit", "ReaderInit: " + e.getMessage());
+                    }
+
+                    runOnUiThread(() -> {
+                        if (!result) {
+                            Toast.makeText(AuditReadingActivity.this, "Initialization fail", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(AuditReadingActivity.this, "Initialization Success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).start();
+                // new InitTask().execute();
             }
         } catch (Exception ex) {
             showerror(ex.getMessage());
-            return;
+
         }
 
 
     }
+
 
     public class InitTask extends AsyncTask<String, Integer, Boolean> {
         @Override

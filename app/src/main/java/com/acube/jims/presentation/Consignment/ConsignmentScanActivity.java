@@ -23,6 +23,7 @@ import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
@@ -47,6 +48,7 @@ import com.acube.jims.datalayer.models.ConsignmentLine;
 import com.acube.jims.datalayer.models.OfflineConsignment;
 import com.acube.jims.datalayer.models.ResponseConsignment;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
+import com.acube.jims.datalayer.remote.db.ExcelLines;
 import com.acube.jims.presentation.Audit.AuditFragment;
 import com.acube.jims.presentation.Audit.AuditReadingActivity;
 import com.acube.jims.presentation.Audit.adapter.AuditScannedAdapter;
@@ -61,6 +63,7 @@ import com.acube.jims.utils.OnSingleClickListener;
 import com.acube.jims.utils.ReaderUtils;
 import com.acube.jims.utils.Utils;
 import com.acube.jims.utils.ViewDialog;
+import com.ajts.androidmads.library.SQLiteToExcel;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rscja.deviceapi.RFIDWithUHFBLE;
@@ -70,6 +73,8 @@ import com.rscja.deviceapi.interfaces.ConnectionStatus;
 import com.rscja.deviceapi.interfaces.ConnectionStatusCallback;
 import com.rscja.deviceapi.interfaces.ScanBTCallback;
 
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -103,10 +108,12 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
             addDataToList(info.getEPC());
         }
     };
+    boolean result;
     private boolean mScanning, DeviceReg;
     String date = "";
     private static final long SCAN_PERIOD = 30000; //10 seconds
     List<ConsignmentLine> consignmentLinesdata;
+    List<ExcelLines> excelLinesList;
     ArrayList<TemDataSerial> dataset;
     public BluetoothAdapter mBtAdapter = null;
     private static final int ACCESS_FINE_LOCATION_PERMISSION_REQUEST = 100;
@@ -118,7 +125,9 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
     int flag = 1;
     float blevalue, handheldvalue;
     List<OfflineConsignment> consigndataset;
-    String consignmentID;
+    String consignmentID = "";
+    File file;
+    SQLiteToExcel sqLiteToExcel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +138,6 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
         auditID = getIntent().getStringExtra("auditID");
         macAddress = getIntent().getStringExtra("macAddress");
         url = getIntent().getStringExtra("url");
-
-
         alert = new ViewDialog();
         systemLocationID = getIntent().getIntExtra("systemLocationID", 0);
         storeID = getIntent().getIntExtra("storeID", 0);
@@ -139,6 +146,67 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
         handheld = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "handheld");
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
         DeleteTemp();
+        binding.toolbarApp.imvexport.setVisibility(View.VISIBLE);
+        binding.toolbarApp.imvexport.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                sqLiteToExcel = new SQLiteToExcel(getApplicationContext(), "db_homemenu");
+
+                if (consignmentID.equalsIgnoreCase("")) {
+                    showerror("Please select consigmnemnt for exporting");
+
+                } else {
+                    ExcelLines excelLines;
+                    excelLinesList = new ArrayList<>();
+                    for (int i = 0; i < consignmentLinesdata.size(); i++) {
+                        excelLines = new ExcelLines();
+                        excelLines.setSerialNumber(consignmentLinesdata.get(i).getSerialNumber());
+                        excelLines.setConsignmentId(consignmentLinesdata.get(i).getConsignmentId());
+                        excelLinesList.add(excelLines);
+
+                    }
+                    new Thread(() -> {
+                        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                                .homeMenuDao()
+                                .deleteexcellines();
+                        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase()
+                                .homeMenuDao()
+                                .insertforexcel(excelLinesList);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                sqLiteToExcel.exportSingleTable("ExcelLines", consignmentID + ".xls", new SQLiteToExcel.ExportListener() {
+                                    @Override
+                                    public void onStart() {
+                                        showProgressDialog();
+
+                                    }
+
+                                    @Override
+                                    public void onCompleted(String filePath) {
+                                        showsuccess(filePath);
+                                        hideProgressDialog();
+
+                                    }
+
+                                    @Override
+                                    public void onError(Exception e) {
+                                        showerror(e.getMessage());
+                                        hideProgressDialog();
+
+                                    }
+                                });
+
+
+                            }
+                        });
+                    }).start();
+                }
+
+
+            }
+        });
         binding.toolbarApp.settings.setVisibility(View.VISIBLE);
         binding.toolbarApp.settings.setOnClickListener(new OnSingleClickListener() {
             @Override
@@ -147,20 +215,13 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
             }
         });
         binding.toolbarApp.imvlist.setVisibility(View.VISIBLE);
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().homeMenuDao().getofflineconsignment().observe(this, new Observer<List<OfflineConsignment>>() {
-            @Override
-            public void onChanged(List<OfflineConsignment> consignmentLines) {
-                consigndataset = consignmentLines;
-                ArrayAdapter<OfflineConsignment> arrayAdapter = new ArrayAdapter<OfflineConsignment>(ConsignmentScanActivity.this, android.R.layout.simple_spinner_item, consignmentLines);
-                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                binding.spinconsignments.setAdapter(arrayAdapter);
-            }
-        });
+        getconsigments();
         binding.spinconsignments.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 consignmentID = consigndataset.get(i).getConsignmentId();
                 showlist(consignmentID);
+                updateCount();
 
 
             }
@@ -291,6 +352,22 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
 
     }
 
+    private void getconsigments() {
+        new Thread(() -> {
+            // do background stuff here
+            consigndataset = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().homeMenuDao().getofflineconsignment();
+
+            ArrayAdapter<OfflineConsignment> arrayAdapter = new ArrayAdapter<OfflineConsignment>(ConsignmentScanActivity.this, android.R.layout.simple_spinner_item, consigndataset);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            binding.spinconsignments.setAdapter(arrayAdapter);
+
+            runOnUiThread(() -> {
+
+            });
+        }).start();
+
+    }
+
     private void uploadconsignment(JsonObject body) {
         showProgressDialog();
         RetrofitInstance.getApiService(getApplicationContext()).uploadconsigment(LocalPreferences.getToken(getApplicationContext()), body).enqueue(new Callback<Boolean>() {
@@ -329,6 +406,7 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
             @Override
             public void onChanged(List<ConsignmentLine> consignmentLines) {
                 consignmentLinesdata = new ArrayList<>();
+
                 consignmentLinesdata = consignmentLines;
                 binding.scannedrecyclerview.setAdapter(new ConsigScannedadapter(getApplicationContext(), consignmentLines, ConsignmentScanActivity.this));
             }
@@ -484,18 +562,36 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
     }
 
     public void ReaderInit() {
+
         try {
             mReader = RFIDWithUHFUART.getInstance();
             if (mReader != null) {
-                new InitTask().execute();
+
+                new Thread(() -> {
+                    try {
+                        result = mReader.init(ConsignmentScanActivity.this);
+                    } catch (Exception e) {
+                        Log.d("ReaderInit", "ReaderInit: " + e.getMessage());
+                    }
+
+                    runOnUiThread(() -> {
+                        if (!result) {
+                            Toast.makeText(ConsignmentScanActivity.this, "Initialization fail", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ConsignmentScanActivity.this, "Initialization Success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).start();
+                // new InitTask().execute();
             }
         } catch (Exception ex) {
             showerror(ex.getMessage());
-            return;
+
         }
 
 
     }
+
 
     @Override
     public void passid(String id, String serial) {
@@ -648,7 +744,7 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
     private void addDataToList(String epc) {
         String epcCode = HexToString(epc);
 
-        if (epcCode.startsWith(getPrefix())&&epcCode.endsWith(getSuffix())) {
+        if (epcCode.startsWith(getPrefix()) && epcCode.endsWith(getSuffix())) {
             epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
 
             //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
@@ -656,7 +752,6 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
             ReaderUtils.playSound(1);
         }
     }
-
 
 
     private void InsertTempserials(TemDataSerial dataset) {
@@ -678,7 +773,7 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
 
         new Thread(() -> {
             DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().homeMenuDao().updateconsignment(consignmentID, 40);
-            String query = "INSERT INTO ConsignmentLine (consignmentId, serialNumber,status) Select '" + consignmentID + "'," + "SerialNo,'70' from TemDataSerial where SerialNo NOT IN(Select serialNumber from ConsignmentLine where consignmentId ='" + consignmentID + "')";
+            String query = "INSERT OR REPLACE INTO ConsignmentLine (consignmentId, serialNumber,status) Select '" + consignmentID + "'," + "SerialNo,'70' from TemDataSerial where SerialNo NOT IN(Select serialNumber from ConsignmentLine where consignmentId ='" + consignmentID + "')";
             Boolean insert = DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().unkwowninsert((new SimpleSQLiteQuery(query)));
          /*   if (categoryId != 0) {
                 Log.d("TAG", "checkexistswithoucat: ");
@@ -702,11 +797,11 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
 
     private void updateCount() {
         DatabaseClient.getInstance(getApplicationContext()).
-                getAppDatabase().homeMenuDao().getallcountbycat(consignmentID, 50, 40, 60,30).observe(this, new Observer<Integer>() {
+                getAppDatabase().homeMenuDao().getallcountbycat(consignmentID, 50, 40, 60, 30).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
                         binding.tvtotal.setText("Total  \n " + integer);
-                        Log.d("count", "onChanged: "+integer);
+                        Log.d("count", "onChanged: " + integer);
 
                     }
 

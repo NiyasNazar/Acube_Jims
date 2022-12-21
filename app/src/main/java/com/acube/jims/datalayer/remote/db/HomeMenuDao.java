@@ -84,6 +84,13 @@ public interface HomeMenuDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertgoldrate(List<KaratPrice> karatPrices);
 
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insertforexcel(List<ExcelLines> karatPrices);
+
+    @Query("delete from ExcelLines ")
+    void deleteexcellines();
+
     @Delete
     void delete(HomeData homeMenu);
 
@@ -95,7 +102,7 @@ public interface HomeMenuDao {
     void insertOfflineConsignment(List<ConsignmentLine> offlineConsignment);
 
     @Query("SELECT DISTINCT consignmentId FROM ConsignmentLine")
-    LiveData<List<OfflineConsignment>> getofflineconsignment();
+    List<OfflineConsignment> getofflineconsignment();
 
     @Query("SELECT * FROM ConsignmentLine where consignmentId=:consignmentID")
     LiveData<List<ConsignmentLine>> getconsignmentId(String consignmentID);

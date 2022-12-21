@@ -29,7 +29,7 @@ import com.acube.jims.datalayer.models.LocateProduct.LocateItem;
 import com.acube.jims.datalayer.remote.dbmodel.CustomerHistory;
 
 
-@Database(entities = {HomeData.class, ResponseItems.class, CustomerHistory.class, KaratPrice.class, ConsignmentLine.class,
+@Database(entities = {HomeData.class, ResponseItems.class, CustomerHistory.class, KaratPrice.class, ConsignmentLine.class, ExcelLines.class,
         AuditResults.class, TemDataSerial.class, Smarttool.class, ItemWiseReport.class, FilterStore.class,
         DiscountItem.class, LocateItem.class, ItemRequestEntry.class, SelectionHolder.class, Karatresult.class, Colorresult.class, Weight.class,
         AuditItem.class, AuditSnapShot.class}, version = 9, exportSchema = false)

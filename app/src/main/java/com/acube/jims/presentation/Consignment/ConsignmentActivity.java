@@ -115,7 +115,7 @@ public class ConsignmentActivity extends BaseActivity {
     public String remoteBTName = "";
     public String remoteBTAdd = "";
     int storeId = 0;
-
+    boolean result;
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -375,14 +375,31 @@ public class ConsignmentActivity extends BaseActivity {
     }
 
     public void ReaderInit() {
+
         try {
             mReader = RFIDWithUHFUART.getInstance();
             if (mReader != null) {
-                new InitTask().execute();
+
+                new Thread(() -> {
+                    try {
+                        result = mReader.init(ConsignmentActivity.this);
+                    } catch (Exception e) {
+                        Log.d("ReaderInit", "ReaderInit: " + e.getMessage());
+                    }
+
+                    runOnUiThread(() -> {
+                        if (!result) {
+                            Toast.makeText(ConsignmentActivity.this, "Initialization fail", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(ConsignmentActivity.this, "Initialization Success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).start();
+               // new InitTask().execute();
             }
         } catch (Exception ex) {
             showerror(ex.getMessage());
-            return;
+           
         }
 
 
@@ -393,8 +410,8 @@ public class ConsignmentActivity extends BaseActivity {
         @Override
         protected Boolean doInBackground(String... params) {
             // TODO Auto-generated method stub
-            mReader.free();
-            return mReader.init();
+
+            return mReader.init(ConsignmentActivity.this);
         }
 
         @Override
@@ -520,7 +537,7 @@ public class ConsignmentActivity extends BaseActivity {
     private void addDataToList(String epc) {
         String epcCode = HexToString(epc);
 
-        if (epcCode.startsWith(getPrefix())&&epcCode.endsWith(getSuffix())) {
+        if (epcCode.startsWith(getPrefix()) && epcCode.endsWith(getSuffix())) {
             epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
             tagList.add(epcCode);
             Log.d("addDataToList", "addDataToList: " + epcCode);
@@ -530,7 +547,6 @@ public class ConsignmentActivity extends BaseActivity {
             ReaderUtils.playSound(1);
         }
     }
-
 
 
     private void InsertTempserials(OfflineConsignment dataset) {

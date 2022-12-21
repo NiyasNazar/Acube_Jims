@@ -79,7 +79,7 @@ public class LocateProduct extends BaseActivity implements LocateItemAdapter.Fra
         DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().locateItemsDao().getAll().observe(this, new Observer<List<LocateItem>>() {
             @Override
             public void onChanged(List<LocateItem> locateItems) {
-                binding.recylocateitems.setAdapter(new LocateItemAdapter(getApplicationContext(), locateItems));
+                binding.recylocateitems.setAdapter(new LocateItemAdapter(getApplicationContext(), locateItems,LocateProduct.this));
             }
         });
 

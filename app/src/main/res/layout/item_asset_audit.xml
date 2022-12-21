@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data />
     <com.skydoves.elasticviews.ElasticLayout
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -132,8 +132,8 @@
             <ImageView
                 android:id="@+id/imvupload"
 
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
                 android:layout_gravity="center_vertical"
                 android:src="@drawable/ic_upload"
                 android:tint="@color/appmaincolor">

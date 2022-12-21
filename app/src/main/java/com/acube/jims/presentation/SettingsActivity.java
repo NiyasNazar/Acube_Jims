@@ -28,7 +28,7 @@ public class SettingsActivity extends BaseActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 
         binding.edUrl.setText(LocalPreferences.getBaseUrl(getApplicationContext()));
-       // binding.edUrl.setText(AppConstants.BASE_URL);
+      // binding.edUrl.setText(AppConstants.BASE_URL);
         handheld = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "handheld");
 
         if (handheld) {

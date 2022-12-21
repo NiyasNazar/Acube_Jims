@@ -13,10 +13,11 @@
         android:background="@drawable/homepagebg"
         tools:context=".presentation.Audit.AuditFragment">
 
-        <RelativeLayout
+        <androidx.core.widget.NestedScrollView
+            android:fillViewport="true"
 
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
 
             <LinearLayout
@@ -45,6 +46,7 @@
 
 
                         <TextView
+                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
@@ -69,9 +71,9 @@
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spinstore"
                                 android:layout_width="match_parent"
-                                android:layout_height="50dp"
+                                android:layout_height="45dp"
                                 android:layout_marginRight="10dp"
-                                app:hintText="Select"
+                                app:hintText="Select Store"
 
                                 android:dropDownSelector="@color/headercolor"
                                 android:gravity="center"
@@ -88,6 +90,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
+                            android:visibility="gone"
                             android:text="Location/zone"
                             android:textColor="@color/black">
 
@@ -109,7 +112,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:layout_marginRight="10dp"
-                                app:hintText="Select"
+                                app:hintText="Select Location/zone"
 
                                 android:dropDownSelector="@color/headercolor"
                                 android:gravity="center"
@@ -226,6 +229,7 @@
                     android:id="@+id/recyvauditsummary"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginTop="8dp">
 
                 </androidx.recyclerview.widget.RecyclerView>
@@ -234,7 +238,7 @@
             </LinearLayout>
 
 
-        </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </FrameLayout>
 </layout>

@@ -129,7 +129,7 @@
                         android:id="@+id/downloadButton"
                         android:layout_width="120dp"
 
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
@@ -140,7 +140,7 @@
                         android:text="Download"
                         android:textColor="@color/white"
 
-                        android:textSize="15sp">
+                        android:textSize="12sp">
 
 
                     </com.skydoves.elasticviews.ElasticButton>
@@ -149,7 +149,7 @@
                         android:id="@+id/closeAudit"
                         android:layout_width="120dp"
 
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
@@ -160,7 +160,7 @@
                         android:text="Close Audit"
                         android:textColor="@color/white"
 
-                        android:textSize="15sp">
+                        android:textSize="12sp">
 
 
                     </com.skydoves.elasticviews.ElasticButton>
@@ -171,13 +171,13 @@
                 <TextView
                     android:id="@+id/tvdownloaded"
                     android:layout_width="match_parent"
-                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/layt_actions"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="25dp"
-
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/popins_medium"
+
+                    android:gravity="center"
                     android:text="Downloaded Audits"
                     android:textAllCaps="true"
                     android:textColor="@color/textColor"

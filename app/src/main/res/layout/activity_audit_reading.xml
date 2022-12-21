@@ -450,7 +450,7 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
-                            android:gravity="center"
+                            android:layout_gravity="center"
 
                             android:id="@+id/layout_count"
                             android:layout_width="wrap_content"
@@ -460,6 +460,7 @@
                             <TextView
                                 android:id="@+id/tvtotal"
                                 android:layout_width="wrap_content"
+                                android:textSize="12sp"
                                 android:layout_height="wrap_content"
 
                                 android:layout_margin="3dp"
@@ -475,6 +476,7 @@
                             <TextView
                                 android:id="@+id/found"
                                 android:layout_width="wrap_content"
+                                android:textSize="12sp"
 
                                 android:layout_height="wrap_content"
                                 android:layout_margin="3dp"
@@ -489,6 +491,7 @@
                             <TextView
                                 android:id="@+id/missing"
                                 android:layout_width="wrap_content"
+                                android:textSize="12sp"
 
                                 android:layout_height="wrap_content"
                                 android:layout_margin="3dp"
@@ -505,6 +508,7 @@
                                 android:id="@+id/unknown"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textSize="12sp"
 
                                 android:layout_margin="3dp"
                                 android:layout_weight="1"
@@ -519,6 +523,7 @@
                                 android:id="@+id/locationmismatch"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:textSize="12sp"
 
                                 android:layout_margin="3dp"
                                 android:layout_weight="1"
@@ -536,7 +541,7 @@
                         android:id="@+id/scannedrecyclerview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="6dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
                 </LinearLayout>
@@ -551,7 +556,7 @@
                     <com.skydoves.elasticviews.ElasticButton
                         android:id="@+id/BtInventory"
                         android:layout_width="120dp"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
 
                         android:background="@drawable/oval_btn_signin"
                         android:text="Scan"

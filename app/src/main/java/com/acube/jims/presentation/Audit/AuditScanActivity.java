@@ -88,6 +88,7 @@ public class AuditScanActivity extends BaseActivity {
     List<PieEntry> pieEntryList;
     PieData pieData;
     int total, missing = 0, extra = 0, mismatch = 0, found = 0;
+    String catnames = "", subcatname = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +163,10 @@ public class AuditScanActivity extends BaseActivity {
                 Log.d("onChanged", "onChanged: " + localAudits.size());
                 if (localAudits != null) {
                     datasetcat = localAudits;
+
+                    for (int j = 0; j < datasetcat.size(); j++) {
+                        binding.tvcategory.append("" + datasetcat.get(j).getCategoryName() + "\n");
+                    }
 
                     if (datasetcat != null && datasetcat.size() > 1) {
                         AuditCate localCategory = new AuditCate();
@@ -314,13 +319,15 @@ public class AuditScanActivity extends BaseActivity {
 
     private void loadSubcat(int categoryId) {
 
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedSubcatCategory(auditID,categoryId).observe(this, new Observer<List<AuditSubCategory>>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedSubcatCategory(auditID, categoryId).observe(this, new Observer<List<AuditSubCategory>>() {
             @Override
             public void onChanged(List<AuditSubCategory> localstore) {
                 Log.d("onChanged", "onChanged: " + localstore.size());
                 if (localstore != null) {
                     datasetsubcat = localstore;
-
+                    for (int j = 0; j < datasetsubcat.size(); j++) {
+                        binding.tvsubcategory.append("" + datasetsubcat.get(j).getSubCategoryName() + "\n");
+                    }
 
                     if (datasetsubcat != null && datasetsubcat.size() > 1) {
                         AuditSubCategory datasetall = new AuditSubCategory();
@@ -345,7 +352,6 @@ public class AuditScanActivity extends BaseActivity {
             }
         });
     }
-
 
 
     public String save(Context context, String jsonString) throws IOException {

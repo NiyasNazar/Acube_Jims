@@ -449,6 +449,7 @@
                         android:layout_height="wrap_content">
 
                         <LinearLayout
+                            android:layout_gravity="center"
 
                             android:id="@+id/layout_count"
                             android:layout_width="wrap_content"

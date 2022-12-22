@@ -102,12 +102,12 @@ public class ItemWiseadapter extends RecyclerView.Adapter<ItemWiseadapter.Produc
 
         }
 
-      holder.selectionlayout.setOnClickListener(new OnSingleClickListener() {
-          @Override
-          public void onSingleClick(View v) {
-              checkCheckBox(position, !checkedItems.get(position));
-          }
-      });
+        holder.selectionlayout.setOnClickListener(new OnSingleClickListener() {
+            @Override
+            public void onSingleClick(View v) {
+                checkCheckBox(position, !checkedItems.get(position));
+            }
+        });
 
 //        holder.tvcategory.setText("Category : " + missing.getCategoryName());
         Glide.with(mCtx)
@@ -128,9 +128,6 @@ public class ItemWiseadapter extends RecyclerView.Adapter<ItemWiseadapter.Produc
                     }
                 })
                 .into(holder.imageView);
-
-
-
 
 
     }
@@ -173,6 +170,13 @@ public class ItemWiseadapter extends RecyclerView.Adapter<ItemWiseadapter.Produc
                 likelayt.setVisibility(View.GONE);
 
             }
+
+            imageView.setOnClickListener(new OnSingleClickListener() {
+                @Override
+                public void onSingleClick(View v) {
+                    passId.enlargeImage(imageView, dataset.get(getAbsoluteAdapterPosition()).getImageUrl());
+                }
+            });
 
 
      /*       selectionlayout.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -240,15 +244,18 @@ public class ItemWiseadapter extends RecyclerView.Adapter<ItemWiseadapter.Produc
         isSelectedAll = true;
         notifyDataSetChanged();
     }
+
     public void removeSelection() {
         checkedItems = new SparseBooleanArray();
         datalist = new ArrayList<>();
         notifyDataSetChanged();
     }
+
     public void unselectall() {
         isSelectedAll = false;
         notifyDataSetChanged();
     }
+
     public void checkCheckBox(int position, boolean value) {
         passId.compareitems(dataset.get(position).getSerialNumber(), value);
 

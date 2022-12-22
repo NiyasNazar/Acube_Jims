@@ -69,6 +69,7 @@ import com.acube.jims.presentation.Catalogue.View.CatalogueActivity;
 import com.acube.jims.presentation.Compare.CompareFragment;
 import com.acube.jims.presentation.DeviceRegistration.View.DeviceRegistrationFragment;
 import com.acube.jims.presentation.Favorites.ViewModel.AddtoFavoritesViewModel;
+import com.acube.jims.presentation.ImageGallery.ImageZoomerActivity;
 import com.acube.jims.presentation.PdfGeneration.ShareScannedItems;
 import com.acube.jims.presentation.Quotation.InvoiceFragment;
 import com.acube.jims.presentation.Quotation.SaleFragment;
@@ -84,6 +85,7 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.rscja.deviceapi.RFIDWithUHFBLE;
@@ -603,7 +605,7 @@ public class SledSmarttrayReading extends BaseActivity {
     }
 
     private void getItemDetails(String epcCode) {
-         RetrofitInstance.getApiService(getApplicationContext()).getItemDetails(LocalPreferences.getToken(getApplicationContext()), epcCode).enqueue(new Callback<ResponseCatalogDetails>() {
+        RetrofitInstance.getApiService(getApplicationContext()).getItemDetails(LocalPreferences.getToken(getApplicationContext()), epcCode).enqueue(new Callback<ResponseCatalogDetails>() {
             @Override
             public void onResponse(Call<ResponseCatalogDetails> call, Response<ResponseCatalogDetails> response) {
                 if (response.body() != null && response.code() == 200) {
@@ -612,10 +614,16 @@ public class SledSmarttrayReading extends BaseActivity {
 
 
                     TransitionManager.beginDelayedTransition(binding.parent, transition);*/
+
+                    Gson gson = new Gson();
+                    String myJson = gson.toJson(response.body());
+                    Log.d("TAGRESPONSE", "onResponse: " + myJson);
+
+
                     ResponseCatalogDetails responseCatalogDetails = response.body();
                     getSupportFragmentManager().beginTransaction()
                             .setCustomAnimations(R.anim.slide_in_up, R.anim.slide_out_right)
-                            .replace(R.id.container,  SingleReadingView.newInstance(responseCatalogDetails))
+                            .replace(R.id.container, SingleReadingView.newInstance(myJson))
                             .commit();
                   /*  ResponseCatalogDetails responseCatalogDetails = response.body();
                     binding.tvitemname.setText(responseCatalogDetails.getItemName());
@@ -899,6 +907,14 @@ public class SledSmarttrayReading extends BaseActivity {
                         }
                     })
                     .into(viewHolder.ItemImage);
+
+            viewHolder.ItemImage.setOnClickListener(new OnSingleClickListener() {
+                @Override
+                public void onSingleClick(View v) {
+                    startActivity(new Intent(getApplicationContext(), ImageZoomerActivity.class).putExtra("imageResId", tagList.get(position).getImagepath()));
+
+                }
+            });
             if (lastSelectedPosition == position) {
 
             } else if (position == lastsel) {

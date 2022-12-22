@@ -1,49 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="5dp"
-    app:cardUseCompatPadding="true">
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+
+    <TextView
+
+        android:id="@+id/tv_serialnumber"
+        android:layout_gravity="center_vertical"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        />
 
+    <TextView
 
-        <TextView
+        android:id="@+id/tv_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+         />
 
-            android:id="@+id/tv_serialnumber"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/popins_medium"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5px"
+        android:background="@color/color_two"></View>
 
-        <TextView
-
-            android:id="@+id/tv_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:fontFamily="@font/popins_medium"
-            android:singleLine="true"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="12sp" />
-
-
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

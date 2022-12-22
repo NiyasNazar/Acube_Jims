@@ -104,7 +104,7 @@ public class AuditScanActivity extends BaseActivity {
         datasetcat = new ArrayList<>();
         datasetsubcat = new ArrayList<>();
         binding.tvauditID.setText(auditID);
-
+        updateCount();
 
         DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedStore(auditID).observe(this, new Observer<List<Store>>() {
             @Override
@@ -212,13 +212,13 @@ public class AuditScanActivity extends BaseActivity {
             }
 
         });
-        binding.tvtotalstock.setOnClickListener(new View.OnClickListener() {
+    /*    binding.tvtotalstock.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), TotalStockReport.class).putExtra("auditID", auditID));
 
             }
-        });
+        });*/
         binding.tvmissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -285,13 +285,13 @@ public class AuditScanActivity extends BaseActivity {
                 }
             }
         });
-
+        loadSubcat(categoryId);
         binding.spincategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoryId = datasetcat.get(position).getCategoryId();
 
-                loadSubcat(categoryId);
+
                 updateCount();
                 // updateCount();
             }
@@ -319,7 +319,7 @@ public class AuditScanActivity extends BaseActivity {
 
     private void loadSubcat(int categoryId) {
 
-        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedSubcatCategory(auditID, categoryId).observe(this, new Observer<List<AuditSubCategory>>() {
+        DatabaseClient.getInstance(getApplicationContext()).getAppDatabase().auditDownloadDao().getDownloadedSubcatCategory(auditID).observe(this, new Observer<List<AuditSubCategory>>() {
             @Override
             public void onChanged(List<AuditSubCategory> localstore) {
                 Log.d("onChanged", "onChanged: " + localstore.size());
@@ -593,7 +593,7 @@ public class AuditScanActivity extends BaseActivity {
                 getAppDatabase().auditDownloadDao().getallcountbycat(auditID, 0, 1, systemLocationID, categoryId, subcatcategoryId, storeID).observe(AuditScanActivity.this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        binding.tvtotalstock.setText(String.valueOf(integer));
+                        //  binding.tvtotalstock.setText(String.valueOf(integer));
                         total = integer;
                         Log.d("TOtaldata", "audit:" + auditID);
                         Log.d("TOtaldata", "loc:" + systemLocationID);
@@ -608,7 +608,7 @@ public class AuditScanActivity extends BaseActivity {
                 getAppDatabase().auditDownloadDao().getcount(auditID, 1, systemLocationID, categoryId, subcatcategoryId, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        binding.tvfound.setText(String.valueOf(integer));
+                        //  binding.tvfound.setText(String.valueOf(integer));
                         found = integer;
                     }
                 });
@@ -616,7 +616,7 @@ public class AuditScanActivity extends BaseActivity {
                 getAppDatabase().auditDownloadDao().getcount(auditID, 0, systemLocationID, categoryId, subcatcategoryId, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        binding.tvmissing.setText(String.valueOf(integer));
+                        //   binding.tvmissing.setText(String.valueOf(integer));
                         missing = integer;
                     }
                 });
@@ -624,7 +624,7 @@ public class AuditScanActivity extends BaseActivity {
                 getAppDatabase().auditDownloadDao().getcount(auditID, 2, systemLocationID, categoryId, subcatcategoryId, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        binding.tvunknown.setText(String.valueOf(integer));
+                        //  binding.tvunknown.setText(String.valueOf(integer));
                         extra = integer;
 
                     }
@@ -633,7 +633,7 @@ public class AuditScanActivity extends BaseActivity {
                 getAppDatabase().auditDownloadDao().getcount(auditID, 3, systemLocationID, categoryId, subcatcategoryId, storeID).observe(this, new Observer<Integer>() {
                     @Override
                     public void onChanged(Integer integer) {
-                        binding.tvlocationmismatch.setText(String.valueOf(integer));
+                        //    binding.tvlocationmismatch.setText(String.valueOf(integer));
                         mismatch = integer;
 
                     }
@@ -648,6 +648,7 @@ public class AuditScanActivity extends BaseActivity {
     }
 
     private void setChart(PieChart pieChart, int total, int value, String totallabel, String label, int[] colorfulColors) {
+        Log.d("SETCHART", "setChart: ");
         pieEntryList = new ArrayList<>();
         pieChart.setUsePercentValues(false);
         if (value > 0) {
@@ -656,16 +657,21 @@ public class AuditScanActivity extends BaseActivity {
         }
         pieChart.setEntryLabelColor(Color.WHITE);
 
+        pieChart.setDrawEntryLabels(false);
 
         pieChart.getDescription().setEnabled(false);
-        pieChart.getLegend().setTextColor(Color.BLACK);
+       /* pieChart.getLegend().setTextColor(Color.BLACK);
         pieChart.getLegend().setTextSize(12f);
+
         pieChart.getLegend().setFormSize(15f);
 
         pieChart.getLegend().setVerticalAlignment(Legend.LegendVerticalAlignment.TOP);
         pieChart.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.RIGHT);
-        pieChart.getLegend().setOrientation(Legend.LegendOrientation.VERTICAL);
+        pieChart.getLegend().setOrientation(Legend.LegendOrientation.VERTICAL);*/
+        pieChart.getLegend().setEnabled(false);
+
         pieChart.setDrawSliceText(false);
+        pieChart.setDrawEntryLabels(false);
        /* if (label.equalsIgnoreCase("")) {
             pieEntryList.add(new PieEntry(total, totallabel));
         } else {
@@ -678,22 +684,26 @@ public class AuditScanActivity extends BaseActivity {
         if (total != 0) {
             pieEntryList.add(new PieEntry(total, "TOTAL"));
             color.add(ContextCompat.getColor(this, R.color.Total));
+            binding.tvtotal.setText("Total (" + total + ")");
         }
 
         if (missing != 0) {
             pieEntryList.add(new PieEntry(missing, "MISSING"));
             color.add(ContextCompat.getColor(this, R.color.Missing));
-
+            binding.tvmissing.setText("Missing (" + missing + ")");
         }
 
         if (found != 0) {
             pieEntryList.add(new PieEntry(found, "FOUND"));
             color.add(ContextCompat.getColor(this, R.color.Found));
+            binding.tvfound.setText("Found (" + found + ")");
+
         }
 
         if (extra != 0) {
             pieEntryList.add(new PieEntry(extra, "EXTRA"));
             color.add(ContextCompat.getColor(this, R.color.Unknown));
+            binding.tvunknown.setText("Unknown (" + extra + ")");
         }
         if (mismatch != 0) {
             pieEntryList.add(new PieEntry(mismatch, "MISMATCH"));
@@ -704,9 +714,12 @@ public class AuditScanActivity extends BaseActivity {
         pieDataSet.setColors(color);
         pieDataSet.setValueTextSize(15f);
         pieDataSet.setValueTextColor(Color.WHITE);
-
+        pieChart.setUsePercentValues(false);
+        pieChart.setDrawSliceText(false);
         // pieChart.setDrawEntryLabels(true);
-
+        pieChart.setExtraBottomOffset(20f);
+        pieChart.setExtraLeftOffset(20f);
+        pieChart.setExtraRightOffset(20f);
 
         pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);

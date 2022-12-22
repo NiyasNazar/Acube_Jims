@@ -170,6 +170,8 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
 
             @Override
             public void afterTextChanged(Editable keyword) {
+                binding.imvsearch.setVisibility(View.GONE);
+
                 if (keyword.toString().length() > 3) {
                     customerViewModel.getCustomerSearch(AppConstants.Authorization + AuthToken, keyword.toString(),getApplicationContext());
                 } else if (keyword.toString().length() <= 3) {
@@ -210,6 +212,8 @@ public class CustomerBottomSheetFragment extends BaseActivity implements Custome
                     adapter = new CustomerListAdapter(CustomerBottomSheetFragment.this, dataset, CustomerBottomSheetFragment.this::replacefragments);
                     binding.recyvcustomerlist.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                    binding.imvsearch.setVisibility(View.GONE);
+
                     binding.tvNodatafound.setVisibility(View.VISIBLE);
 
                 }

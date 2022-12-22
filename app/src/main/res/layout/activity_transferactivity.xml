@@ -32,35 +32,46 @@
             android:background="@drawable/item_border_detailspage"
             android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tvscanCount"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/black">
+
+            </TextView>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/scannedrecyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@id/btoomlayt"
+                android:layout_below="@id/tvscanCount"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp">
 
             </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:id="@+id/btoomlayt"
-                android:gravity="center"
-                android:layout_marginBottom="10dp"
-
-                android:layout_alignParentBottom="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
+
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:gravity="center">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/BtInventory"
                     android:layout_width="139dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/oval_btn_signin"
 
 
@@ -73,18 +84,18 @@
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btcreate"
-                    android:visibility="gone"
                     android:layout_width="139dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="5dp"
-                    android:layout_gravity="center_horizontal"
                     android:background="@drawable/oval_btn_signin"
-
-
                     android:gravity="center"
+
+
                     android:text="Create"
-                    android:textColor="#FFFF">
+                    android:textColor="#FFFF"
+                    android:visibility="gone">
 
 
                 </androidx.appcompat.widget.AppCompatButton>

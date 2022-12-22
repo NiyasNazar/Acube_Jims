@@ -5,50 +5,37 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.acube.jims.BaseActivity;
 import com.acube.jims.R;
-import com.acube.jims.databinding.ActivityFindmissingReadingBinding;
 import com.acube.jims.databinding.ActivityLocateScanBinding;
 import com.acube.jims.datalayer.api.RetrofitInstance;
 import com.acube.jims.datalayer.models.Audit.TemDataSerial;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
-import com.acube.jims.presentation.LocateProduct.View.LocateProduct;
-import com.acube.jims.presentation.SplashActivity;
 import com.acube.jims.utils.LocalPreferences;
 import com.acube.jims.utils.OnSingleClickListener;
 import com.acube.jims.utils.ReaderUtils;
@@ -67,12 +54,10 @@ import com.rscja.deviceapi.interfaces.IUHF;
 import com.rscja.deviceapi.interfaces.IUHFLocationCallback;
 import com.rscja.deviceapi.interfaces.ScanBTCallback;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.TimerTask;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -121,13 +106,14 @@ public class LocateScanActivity extends BaseActivity {
     HashSet<String> hashSet;
     private FindMissingReadingActivity.ScanAdapter adapter;
     String epcCode;
+    boolean result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_locate_scan);
-        initToolBar(binding.toolbarApp.toolbar, "Inventory Scan", true);
+        initToolBar(binding.toolbarApp.toolbar, "Locate Item", true);
         auditID = getIntent().getStringExtra("auditID");
         macAddress = LocalPreferences.retrieveStringPreferences(getApplicationContext(), "TrayMacAddress");
 
@@ -155,6 +141,8 @@ public class LocateScanActivity extends BaseActivity {
         binding.waveLoadingView.setProgressValue(5);
         binding.waveLoadingView.startAnimation();
         binding.waveLoadingView.setWaveColor(Color.parseColor("#C41E3A"));
+        hashSetTags = new HashSet<>();
+        ;
 
         binding.waveLoadingView.setAnimDuration(2000);
         binding.waveLoadingView.setWaveBgColor(Color.parseColor("#FAFAFA"));
@@ -165,16 +153,17 @@ public class LocateScanActivity extends BaseActivity {
             public void onSingleClick(View v) {
                 //   new asyncTaskUpdateProgress().execute();
                 if (handheld) {
-                    if (isScanning) {
+                  /*  if (isScanning) {
                         stopLocation();
                     } else {
                         startLocation();
                     }
-
+*/
+                    startLocation();
                 } else {
-                    if (isScanning){
+                    if (isScanning) {
                         stopBLELocation();
-                    }else{
+                    } else {
                         if (checkLocationEnable()) {
                             showBluetoothDevice(false);
                         }
@@ -458,15 +447,33 @@ public class LocateScanActivity extends BaseActivity {
     }
 
     public void ReaderInit() {
+
         try {
             mReader = RFIDWithUHFUART.getInstance();
+
+
+            new Thread(() -> {
+                try {
+                    result = mReader.init(LocateScanActivity.this);
+                } catch (Exception e) {
+                    Log.d("ReaderInit", "ReaderInit: " + e.getMessage());
+                }
+
+                runOnUiThread(() -> {
+                    if (!result) {
+                        Toast.makeText(LocateScanActivity.this, "Initialization fail", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LocateScanActivity.this, "Initialization Success", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }).start();
+            // new InitTask().execute();
+
         } catch (Exception ex) {
             showerror(ex.getMessage());
-            return;
+
         }
-        if (mReader != null) {
-            new InitTask().execute();
-        }
+
 
     }
 
@@ -521,16 +528,11 @@ public class LocateScanActivity extends BaseActivity {
         mReader.stopLocation();
 
 
-
-
-
-
-
     }
 
-    public void startThread() {
+    public void startThread(String EPC) {
 
-        mReader.setPower((int) 30.0);
+
         if (mReader.startInventoryTag()) {
             dataset = new ArrayList<>();
 
@@ -539,7 +541,7 @@ public class LocateScanActivity extends BaseActivity {
             //  setViewEnabled(false);
 
 
-            new TagThread().start();
+            new TagThread("").start();
         } else {
             stopInventory();
 //					mContext.playSound(2);
@@ -573,10 +575,9 @@ public class LocateScanActivity extends BaseActivity {
     }
 
     class TagThread extends Thread {
-        private HashSet<String> hashSetTags;
 
-        TagThread() {
-            hashSetTags = new HashSet<>();
+        TagThread(String EPC) {
+
         }
 
         public void run() {
@@ -587,17 +588,17 @@ public class LocateScanActivity extends BaseActivity {
                 if (uhftagInfo != null) {
                     String epc = uhftagInfo.getEPC();
 
-                    if (this.hashSetTags.contains(epc)) {
+                    if (hashSetTags.contains(epc)) {
                         Log.i("tagExists", "EPC Already Exists:" + epc);
-
+                        msg = handler.obtainMessage();
+                        msg.obj = uhftagInfo;
+                        handler.sendMessage(msg);
                     } else {
-                        this.hashSetTags.add(epc);
-
+                     //  hashSetTags.add(epc);
+                        Log.i("tagExists", "EPC NOT Exists:" + epc);
 
                     }
-                    msg = handler.obtainMessage();
-                    msg.obj = uhftagInfo;
-                    handler.sendMessage(msg);
+
 
                 }
             }
@@ -605,34 +606,41 @@ public class LocateScanActivity extends BaseActivity {
     }
 
     private void addDataToList(String epc, String epcAndTidUser, String rssi) {
+        double data=Double.parseDouble(rssi);
 
-        epcCode = "";
-        epcCode = HexToString(epc);
-
-        if (epcCode.startsWith(getPrefix()) && epcCode.endsWith(getSuffix())) {
-            epcCode = epcCode.substring(1, epcCode.lastIndexOf(getSuffix()));
-
-
-
-            if (epcCode.equalsIgnoreCase("2200000813")) {
-                Log.d("addDataToList", "addDataToList: " + rssi);
-                val = Math.abs(Double.parseDouble(rssi));
-
-                new Handler(Looper.getMainLooper()).post(new Runnable() {
-                    @Override
-                    public void run() {
-                        //do stuff like remove view etc
-
-                    }
-                });
-
-            }
-
-            //     ReaderUtils.playSound(1);
-            update();
+        double answer = Math.abs(data);
+        Log.d("RSSI", "addDataToList: "+answer);
+        ReaderUtils.playSound(1);
+        if (data < 30) {
+            binding.waveLoadingView.setCenterTitle("Far");
+            binding.waveLoadingView.setWaveColor(Color.parseColor("#C41E3A"));
+            binding.waveLoadingView.setProgressValue(30);
+        } else {
+            binding.waveLoadingView.setProgressValue((int) data);
 
         }
+        int Value = binding.waveLoadingView.getProgressValue();
 
+        Log.d("getLocationValue", "getLocationValue: " + Value);
+        if (Value > 0 && Value <= 30) {
+            binding.waveLoadingView.setCenterTitle("Far");
+            binding.waveLoadingView.setWaveColor(Color.parseColor("#C41E3A"));
+
+        } else if (Value > 30 && Value < 60) {
+            binding.waveLoadingView.setCenterTitle("Around");
+
+            binding.waveLoadingView.setWaveColor(Color.parseColor("#FFA500"));
+        } else if (Value > 60 && Value < 85) {
+            binding.waveLoadingView.setCenterTitle("Near");
+
+            binding.waveLoadingView.setWaveColor(Color.parseColor("#FFEA00"));
+
+        } else if (Value > 85) {
+            binding.waveLoadingView.setWaveColor(Color.parseColor("#008000"));
+            binding.waveLoadingView.setCenterTitle("Found");
+
+
+        }
 
     }
 
@@ -748,9 +756,7 @@ public class LocateScanActivity extends BaseActivity {
                 uhftagInfo = uhf.readTagFromBuffer();
                 if (uhftagInfo != null) {
                     String epc = uhftagInfo.getEPC();
-                    msg = handler.obtainMessage();
-                    msg.obj = uhftagInfo;
-                    handler.sendMessage(msg);
+
                     if (this.hashSetTags.contains(epc)) {
                         Log.i("tagExists", "EPC Already Exists:" + epc);
 
@@ -767,8 +773,9 @@ public class LocateScanActivity extends BaseActivity {
     }
 
     private void startLocation() {
-        serialnos = getPrefix() + serialnos +getSuffix();
+        serialnos = getPrefix() + serialnos + getSuffix();
         StringBuffer sb = new StringBuffer();
+
         //Converting string to character array
         char ch[] = serialnos.toCharArray();
         for (int i = 0; i < ch.length; i++) {
@@ -777,8 +784,10 @@ public class LocateScanActivity extends BaseActivity {
         }
         String EPC = sb.toString();
         Log.d("startLocation", "startLocation: " + EPC);
+        hashSetTags.add("53425230333037307C000000");
+        startThread(EPC);
         /*  53524E30313330377C000000*/
-        boolean result = mReader.startLocation(LocateScanActivity.this, EPC, IUHF.Bank_EPC, 32, new IUHFLocationCallback() {
+       /* boolean result = mReader.startLocation(LocateScanActivity.this, EPC, IUHF.Bank_EPC, 32, new IUHFLocationCallback() {
             @Override
             public void getLocationValue(int data) {
                 ReaderUtils.playSound(1);
@@ -814,15 +823,16 @@ public class LocateScanActivity extends BaseActivity {
                 }
 
             }
-        });
-        if (!result) {
+        });*/
+        Log.d("CHECKRESULT", "startLocation: " + result);
+        Log.d("CHECKRESULT", "startLocation: " + mReader.isWorking());
+       /* if (!result) {
 
             showerror("Failed please try after some time");
-            return;
         } else {
             isScanning = true;
             binding.tvbuttontext.setText("Stop");
-        }
+        }*/
 
 
     }

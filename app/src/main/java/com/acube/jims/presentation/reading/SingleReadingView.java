@@ -1,5 +1,6 @@
 package com.acube.jims.presentation.reading;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -16,23 +17,34 @@ import com.acube.jims.BaseFragment;
 import com.acube.jims.R;
 import com.acube.jims.databinding.FragmentBlankBinding;
 import com.acube.jims.datalayer.models.Catalogue.ResponseCatalogDetails;
+import com.acube.jims.presentation.ImageGallery.ImageZoomerActivity;
+import com.acube.jims.utils.OnSingleClickListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import ozaydin.serkan.com.image_zoom_view.ImageViewZoom;
 
 
 public class SingleReadingView extends BaseFragment {
 
     ResponseCatalogDetails responseCatalogDetails;
+    String value;
+
     public SingleReadingView() {
         // Required empty public constructor
     }
-    public static SingleReadingView newInstance(ResponseCatalogDetails describable) {
+
+    public static SingleReadingView newInstance(String describable) {
         SingleReadingView fragment = new SingleReadingView();
         Bundle bundle = new Bundle();
-        bundle.putSerializable("DESCRIBABLE_KEY", describable);
+        bundle.putString("DESCRIBABLE_KEY", describable);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -47,9 +59,14 @@ public class SingleReadingView extends BaseFragment {
 
         binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_blank, container, false);
+
         if (getArguments() != null) {
-            responseCatalogDetails = (ResponseCatalogDetails) getArguments().getSerializable(
-                    "DESCRIBABLE_KEY");
+
+            value = getArguments().getString("DESCRIBABLE_KEY");
+            Gson gson = new Gson();
+            responseCatalogDetails = gson.fromJson(value,
+                    ResponseCatalogDetails.class);
+
             binding.tvitemname.setText(responseCatalogDetails.getItemName());
             binding.tvDescription.setText(responseCatalogDetails.getItemDesc());
             binding.tvItemcode.setText(responseCatalogDetails.getSerialNumber());
@@ -80,10 +97,17 @@ public class SingleReadingView extends BaseFragment {
                         }
                     })
                     .into(binding.glideimg);
+            binding.laytimage.setOnClickListener(new OnSingleClickListener() {
+                @Override
+                public void onSingleClick(View v) {
+                    startActivity(new Intent(requireActivity(), ImageZoomerActivity.class).putExtra("imageResId", responseCatalogDetails.getImageFilePath()));
+                }
+            });
 
         }
         return binding.getRoot();
     }
+
     public static <T> T getValueOrDefault(T value, T defaultValue) {
         return value == null ? defaultValue : value;
     }

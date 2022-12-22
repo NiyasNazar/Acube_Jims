@@ -39,8 +39,199 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
 
-                android:background="@drawable/item_border_detailspage"
                 android:orientation="vertical">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="8dp"
+                    app:cardCornerRadius="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="45dp"
+                            android:background="#adbcab">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="15dp"
+                                android:text="Report Details"
+                                android:textColor="#FFF">
+
+                            </TextView>
+                        </RelativeLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="35dp"
+                                android:background="#e5ebe6"></View>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="25dp"
+                                android:layout_marginBottom="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Audit ID"
+                                    android:textColor="@color/black"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/auditID"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+
+                                    android:text="0"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/black" />
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="35dp"
+                                android:background="#e5ebe6"></View>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="25dp"
+                                android:layout_marginBottom="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                 
+
+                                    android:text="Store Name"
+                                    android:textColor="@color/black" />
+
+
+                                <TextView
+                                    android:id="@+id/warehouseName"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+
+                                    android:text="0"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="35dp"
+                                android:background="#e5ebe6"></View>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="25dp"
+                                android:layout_marginBottom="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                   
+                                    android:text="Remark"
+                                    android:textColor="@color/black"
+
+                                    />
+
+                                <TextView
+                                    android:id="@+id/remark"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                   
+                                    android:text="0"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginLeft="15dp"
+                                android:layout_marginTop="5dp"
+                                android:layout_marginRight="35dp"
+                                android:background="#e5ebe6"></View>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="25dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="25dp"
+                                android:layout_marginBottom="10dp">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                   
+                                    android:text="Assigned Zones"
+                                    android:textColor="@color/black"
+
+                                    />
+
+
+                                <TextView
+                                    android:id="@+id/assignedZones"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                   
+                                    android:text="0"
+                                    android:textAlignment="textEnd"
+                                    android:textColor="@color/black"
+                                    android:textStyle="bold" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
 
@@ -54,173 +245,6 @@
                     android:elevation="10dp"
                     app:cardCornerRadius="10dp">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:gravity="center"
-
-                            android:text="Stock check report details"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@color/color_two" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:text="Audit ID"
-                                android:textColor="@color/black"
-                                android:textSize="18sp" />
-
-                            <TextView
-                                android:id="@+id/auditID"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:fontFamily="sans-serif-light"
-                                android:text="0"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-                        </RelativeLayout>
-
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@color/color_two" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-
-                                android:text="Store Name"
-                                android:textColor="@color/black"
-                              />
-
-
-                            <TextView
-                                android:id="@+id/warehouseName"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:fontFamily="sans-serif-light"
-                                android:text="0"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@color/color_two" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:text="Remark"
-                                android:textColor="@color/black"
-
-           />
-
-                            <TextView
-                                android:id="@+id/remark"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:fontFamily="sans-serif-light"
-                                android:text="0"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                        </RelativeLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:layout_marginLeft="20dp"
-                            android:layout_marginRight="20dp"
-                            android:background="@color/color_two" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="25dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginRight="25dp"
-                            android:layout_marginBottom="10dp">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-light"
-                                android:text="Assigned Zones"
-                                android:textColor="@color/black"
-
-                               />
-
-
-                            <TextView
-                                android:id="@+id/assignedZones"
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
-                                android:fontFamily="sans-serif-light"
-                                android:text="0"
-                                android:textAlignment="textEnd"
-                                android:textColor="@color/black"
-                                android:textStyle="bold" />
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
 
@@ -228,13 +252,31 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:elevation="10dp"
-                    app:cardCornerRadius="10dp">
+                    android:layout_marginRight="8dp"
 
+                    app:cardCornerRadius="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="#adbcab">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginLeft="15dp"
+                            android:text="Summary"
+                            android:textColor="#FFF">
+
+                        </TextView>
+                    </RelativeLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -255,7 +297,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight=".12"
                                 app:cardBackgroundColor="@color/Total"
-                                app:cardCornerRadius="15dp"
+                                app:cardCornerRadius="5dp"
                                 app:cardUseCompatPadding="true">
 
                                 <LinearLayout
@@ -271,8 +313,7 @@
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="Total Stock"
                                         android:textAllCaps="true"
-                                        android:textColor="@color/white"
-                                     >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -284,8 +325,7 @@
 
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="10"
-                                        android:textColor="@color/white"
-                                      >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -301,7 +341,7 @@
                                 android:layout_height="0dp"
                                 android:layout_weight=".12"
                                 app:cardBackgroundColor="@color/Unknown"
-                                app:cardCornerRadius="15dp"
+                                app:cardCornerRadius="5dp"
                                 app:cardUseCompatPadding="true">
 
                                 <LinearLayout
@@ -318,8 +358,7 @@
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="Unknown"
                                         android:textAllCaps="true"
-                                        android:textColor="@color/white"
-                                    >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -331,8 +370,7 @@
 
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="10"
-                                        android:textColor="@color/white"
-                                     >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -356,9 +394,9 @@
 
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight=".8"
+                                android:layout_weight="1"
                                 app:cardBackgroundColor="@color/Found"
-                                app:cardCornerRadius="15dp"
+                                app:cardCornerRadius="5dp"
                                 app:cardUseCompatPadding="true">
 
                                 <LinearLayout
@@ -375,8 +413,7 @@
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="Found"
                                         android:textAllCaps="true"
-                                        android:textColor="@color/white"
-                                      >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -388,8 +425,7 @@
 
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="10"
-                                        android:textColor="@color/white"
-                                   >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -403,9 +439,9 @@
 
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight=".8"
+                                android:layout_weight="1"
                                 app:cardBackgroundColor="@color/Missing"
-                                app:cardCornerRadius="15dp"
+                                app:cardCornerRadius="5dp"
                                 app:cardUseCompatPadding="true">
 
                                 <LinearLayout
@@ -422,8 +458,7 @@
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="Missing"
                                         android:textAllCaps="true"
-                                        android:textColor="@color/white"
-                                    >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -435,8 +470,7 @@
 
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="10"
-                                        android:textColor="@color/white"
-                                  >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -450,9 +484,9 @@
 
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
-                                android:layout_weight=".8"
+                                android:layout_weight="1"
                                 app:cardBackgroundColor="@color/Mismatch"
-                                app:cardCornerRadius="15dp"
+                                app:cardCornerRadius="5dp"
                                 app:cardUseCompatPadding="true">
 
                                 <LinearLayout
@@ -469,8 +503,7 @@
 
                                         android:text="Mismatch"
                                         android:textAllCaps="true"
-                                        android:textColor="@color/white"
-                           >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -482,8 +515,7 @@
 
                                         android:fontFamily="@font/jtmarniebold"
                                         android:text="10"
-                                        android:textColor="@color/white"
-                                       >
+                                        android:textColor="@color/white">
 
                                     </TextView>
 
@@ -496,7 +528,7 @@
                         </LinearLayout>
 
                     </LinearLayout>
-
+                    </LinearLayout>
 
 
                 </androidx.cardview.widget.CardView>

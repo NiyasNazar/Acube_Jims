@@ -51,19 +51,20 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="15dp"
                             android:fontFamily="@font/popins_medium"
-
-
                             android:textAllCaps="true"
+
+
                             android:textColor="@color/black"
-                            android:textSize="15sp">
+                            android:textSize="15sp"
+                            android:visibility="gone">
 
                         </TextView>
+
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -88,16 +89,17 @@
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_marginLeft="15dp"
-                                        android:text="Audit Summary"                                        android:textColor="#FFF">
+                                        android:text="Audit Summary"
+                                        android:textColor="#FFF">
 
                                     </TextView>
                                 </RelativeLayout>
 
                                 <LinearLayout
-                                    android:layout_marginTop="10dp"
-
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content">
+
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="10dp">
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -273,10 +275,10 @@
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_marginBottom="15dp"
-
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="5dp">
+
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginBottom="15dp">
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -314,12 +316,12 @@
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:visibility="gone"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:text="Store"
-                            android:textColor="@color/black">
+                            android:textColor="@color/black"
+                            android:visibility="gone">
 
                         </TextView>
 
@@ -336,45 +338,45 @@
 
 
                             <com.acube.jims.utils.SearchableSpinners
-                                android:visibility="gone"
                                 android:id="@+id/spinlocations"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
                                 android:layout_marginRight="10dp"
-
-
                                 android:dropDownSelector="@color/headercolor"
+
+
                                 android:gravity="center"
                                 android:inputType="none"
-
                                 android:paddingRight="10dp"
-                                android:textSize="13sp">
+
+                                android:textSize="13sp"
+                                android:visibility="gone">
 
                             </com.acube.jims.utils.SearchableSpinners>
                         </LinearLayout>
 
                         <TextView
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="10dp"
                             android:text="Category"
+                            android:textColor="@color/black"
 
-                            android:textColor="@color/black">
+                            android:visibility="gone">
 
                         </TextView>
 
                         <LinearLayout
-                            android:visibility="gone"
                             android:id="@+id/laytspinnercat"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-
                             android:layout_marginRight="10dp"
-                            android:background="@drawable/ed_border">
+
+                            android:background="@drawable/ed_border"
+                            android:visibility="gone">
 
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
@@ -398,9 +400,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
-                            android:visibility="gone"
                             android:text="Sub Category"
-                            android:textColor="@color/black">
+                            android:textColor="@color/black"
+                            android:visibility="gone">
 
                         </TextView>
 
@@ -417,16 +419,16 @@
 
                             <com.toptoche.searchablespinnerlibrary.SearchableSpinner
                                 android:id="@+id/spinsubcategory"
-                                android:visibility="gone"
                                 android:layout_width="match_parent"
                                 android:layout_height="45dp"
-
                                 android:dropDownSelector="@color/headercolor"
+
                                 android:gravity="center"
                                 android:inputType="none"
-
                                 android:paddingRight="10dp"
-                                android:textSize="13sp">
+
+                                android:textSize="13sp"
+                                android:visibility="gone">
 
                             </com.toptoche.searchablespinnerlibrary.SearchableSpinner>
                         </LinearLayout>
@@ -467,83 +469,124 @@
                         </LinearLayout>
                     </LinearLayout>
 
-                    <com.github.mikephil.charting.charts.PieChart
-                        android:id="@+id/totalchart"
-                        android:layout_width="match_parent"
-                        android:layout_height="250dp"
-                        android:layout_margin="2dp"
-                        android:layout_marginTop="20dp" />
-
-
                     <LinearLayout
-                        android:id="@+id/layout_count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal">
 
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginRight="5dp"
-                        android:gravity="center"
-                        android:visibility="gone">
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/totalchart"
+                            android:layout_width="0dp"
+                            android:layout_height="250dp"
+                            android:layout_margin="2dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_weight="1" />
 
-                        <TextView
-                            android:id="@+id/tvtotalstock"
+                        <LinearLayout
+                            android:layout_gravity="center_vertical"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Total"
-                            android:textColor="#000000">
+                            android:layout_weight=".5"
+                            android:orientation="vertical">
 
-                        </TextView>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp">
 
-                        <TextView
-                            android:id="@+id/tvfound"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Found"
-                            android:textColor="#000000">
+                                <!--View to display the green color icon-->
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/Total" />
 
-                        </TextView>
+                                <!--Text view to display python text -->
+                                <TextView
+                                    android:id="@+id/tvtotal"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="Total"
+                                    android:textColor="@color/black" />
 
-                        <TextView
-                            android:id="@+id/tvmissing"
-                            android:layout_width="0dp"
+                            </LinearLayout>
 
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Missing"
-                            android:textColor="#000000">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp">
 
-                        </TextView>
+                                <!--View to display the green color icon-->
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/Missing" />
 
-                        <TextView
-                            android:id="@+id/tvunknown"
+                                <!--Text view to display python text -->
+                                <TextView
+                                    android:id="@+id/tvmissing"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="Missing"
+                                    android:textColor="@color/black" />
 
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Unknown"
-                            android:textColor="#000000">
+                            </LinearLayout>
 
-                        </TextView>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp">
 
-                        <TextView
-                            android:id="@+id/tvlocationmismatch"
+                                <!--View to display the green color icon-->
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/Found" />
 
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="Loc mismatch"
-                            android:textColor="#000000">
+                                <!--Text view to display python text -->
+                                <TextView
+                                    android:id="@+id/tvfound"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="Found"
+                                    android:textColor="@color/black" />
 
-                        </TextView>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="15dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginTop="5dp">
+
+                                <!--View to display the green color icon-->
+                                <View
+                                    android:layout_width="15dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/Unknown" />
+
+                                <!--Text view to display python text -->
+                                <TextView
+                                    android:id="@+id/tvunknown"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingLeft="10dp"
+                                    android:text="Unknown"
+                                    android:textColor="@color/black" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
                     </LinearLayout>
+
+
+
                 </LinearLayout>
             </androidx.core.widget.NestedScrollView>
 

@@ -32,6 +32,9 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".presentation.ImageGallery.ImageZoomerActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ItemLookup.ItemLookupActivity"
             android:exported="false" />
         <activity
@@ -42,8 +45,8 @@
             android:exported="false" />
         <activity
             android:name=".presentation.Consignment.Consignmentoptions"
-            android:theme="@style/Theme.AppCompat.Dialog.Alert"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Dialog.Alert" />
         <activity
             android:name=".presentation.Consignment.ConsignmentScanActivity"
             android:exported="false" />

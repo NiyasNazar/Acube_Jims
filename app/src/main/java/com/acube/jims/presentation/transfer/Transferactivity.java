@@ -50,6 +50,7 @@ import com.acube.jims.datalayer.models.ResponseConsignment;
 import com.acube.jims.datalayer.remote.db.DatabaseClient;
 import com.acube.jims.presentation.Audit.ZoneAssigning;
 import com.acube.jims.presentation.Consignment.ConsignmentActivity;
+import com.acube.jims.presentation.Consignment.ConsignmentScanActivity;
 import com.acube.jims.presentation.DeviceRegistration.View.DeviceRegistrationFragment;
 import com.acube.jims.presentation.ReadingRangeSettings;
 import com.acube.jims.utils.LocalPreferences;
@@ -92,6 +93,7 @@ public class Transferactivity extends BaseActivity {
     public String remoteBTAdd = "";
     int FromstoreId = 0;
     int TostoreId = 0;
+    boolean result;
 
     Handler handler = new Handler() {
         @Override
@@ -170,7 +172,7 @@ public class Transferactivity extends BaseActivity {
 
         ReaderUtils.initSound(Transferactivity.this);
 
-
+        binding.tvscanCount.setText("Total Scanned :" + tagList.size());
         binding.BtInventory.setOnClickListener(new OnSingleClickListener() {
             @Override
             public void onSingleClick(View v) {
@@ -351,15 +353,33 @@ public class Transferactivity extends BaseActivity {
         return result;
     }
 
+
     public void ReaderInit() {
+
         try {
             mReader = RFIDWithUHFUART.getInstance();
             if (mReader != null) {
-                new InitTask().execute();
+
+                new Thread(() -> {
+                    try {
+                        result = mReader.init(Transferactivity.this);
+                    } catch (Exception e) {
+                        Log.d("ReaderInit", "ReaderInit: " + e.getMessage());
+                    }
+
+                    runOnUiThread(() -> {
+                        if (!result) {
+                            Toast.makeText(Transferactivity.this, "Initialization fail", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(Transferactivity.this, "Initialization Success", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }).start();
+                // new InitTask().execute();
             }
         } catch (Exception ex) {
             showerror(ex.getMessage());
-            return;
+
         }
 
 
@@ -495,26 +515,24 @@ public class Transferactivity extends BaseActivity {
     }
 
     private void addDataToList(String epc) {
-        if(isHexNumber(epc)){
+        if (isHexNumber(epc)) {
             Log.d("addDataToList", "addDataToList: " + epc);
             String epcCode = HexToString(epc);
 
-            if (epcCode.startsWith(getPrefix())&&epcCode.endsWith(getSuffix())) {
+            if (epcCode.startsWith(getPrefix()) && epcCode.endsWith(getSuffix())) {
                 epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
                 tagList.add(epcCode);
+                binding.tvscanCount.setText("Total Scanned :" + tagList.size());
 
                 //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
                 adapter.notifyDataSetChanged();
                 ReaderUtils.playSound(1);
-            }else{
+            } else {
                 Log.d("invalid", "addDataToList: ");
             }
         }
 
     }
-
-
-
 
 
     class BTStatus implements ConnectionStatusCallback<Object> {

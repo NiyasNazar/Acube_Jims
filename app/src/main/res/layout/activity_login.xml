@@ -18,8 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
 
 
             android:elevation="5dp"
@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="30dp">
+                android:padding="5dp">
 
                 <ImageView
                     android:id="@+id/imvlogo"
@@ -89,12 +89,13 @@
 
                 <RelativeLayout
                     android:id="@+id/laytedpassword"
+                    android:layout_width="300dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_height="wrap_content"
                     android:layout_below="@+id/ed_email"
-                    android:layout_marginTop="12dp"
-                    android:background="@drawable/ed_border"
 
-                    android:layout_width="300dp"                    android:layout_height="wrap_content"
-                    >
+                    android:layout_marginTop="12dp"
+                    android:background="@drawable/ed_border">
 
                     <EditText
                         android:id="@+id/ed_password"
@@ -142,7 +143,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign in"
+                        android:text="LOGIN"
                         android:textColor="#FFFFFF">
 
                     </TextView>

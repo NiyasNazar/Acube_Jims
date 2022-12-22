@@ -18,8 +18,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
 
 
             android:elevation="5dp"
@@ -30,12 +30,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
-                android:padding="30dp">
+                android:padding="5dp">
 
                 <ImageView
                     android:id="@+id/imvlogo"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:src="@drawable/logo">
@@ -52,7 +52,7 @@
                     android:fontFamily="@font/karla_bold"
                     android:text="@string/acube"
                     android:textColor="#BF8F3A"
-                    android:textSize="24sp"></TextView>
+                    android:textSize="18sp"></TextView>
 
                 <TextView
                     android:id="@+id/tvsubtitle"
@@ -65,7 +65,7 @@
                     android:fontFamily="@font/karla_bold"
                     android:text="@string/rfidpowered"
                     android:textColor="#666666"
-                    android:textSize="14sp"></TextView>
+                    android:textSize="13sp"></TextView>
 
                 <EditText
                     android:id="@+id/ed_email"
@@ -90,9 +90,9 @@
                 <RelativeLayout
                     android:id="@+id/laytedpassword"
                     android:layout_width="300dp"
+                    android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/ed_email"
-                    android:layout_centerHorizontal="true"
 
                     android:layout_marginTop="12dp"
                     android:background="@drawable/ed_border">
@@ -129,21 +129,21 @@
                 <LinearLayout
                     android:id="@+id/btn_signin"
                     android:layout_width="139dp"
-                    android:layout_height="50dp"
+                    android:layout_height="45dp"
                     android:layout_below="@id/laytedpassword"
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="57dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
 
 
-                    android:layout_marginBottom="36dp"
+                    android:layout_marginBottom="15dp"
                     android:background="@drawable/oval_btn_signin"
                     android:gravity="center">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Sign In"
+                        android:text="LOGIN"
                         android:textColor="#FFFFFF">
 
                     </TextView>
@@ -157,12 +157,13 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/btn_signin"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatCheckBox
                         android:id="@+id/rememberMeCheckBox"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:buttonTint="@color/black"

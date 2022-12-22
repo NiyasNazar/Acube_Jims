@@ -169,6 +169,7 @@ public class ConsignmentActivity extends BaseActivity {
                 ShowconsigmentPopup();
             }
         });
+        binding.tvscanCount.setText("Total Scanned :" + tagList.size());
 
         DeleteTemp();
         binding.toolbarApp.settings.setVisibility(View.VISIBLE);
@@ -541,6 +542,7 @@ public class ConsignmentActivity extends BaseActivity {
             epcCode = epcCode.substring(getPrefix().length(), epcCode.lastIndexOf(getSuffix()));
             tagList.add(epcCode);
             Log.d("addDataToList", "addDataToList: " + epcCode);
+            binding.tvscanCount.setText("Total Scanned :" + tagList.size());
 
             //   Log.d("addDataToList", "addDataToList: " + HexToString(epc));
             adapter.notifyDataSetChanged();

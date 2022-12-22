@@ -35,11 +35,11 @@
                 <LinearLayout
                     android:id="@+id/parent"
                     android:layout_width="match_parent"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
                     android:layout_height="match_parent"
                     android:layout_above="@id/bottomlayt"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
 
                     android:background="@drawable/item_border_detailspage"
                     android:orientation="vertical"
@@ -47,13 +47,13 @@
 
 
                     <LinearLayout
-                        android:gravity="center_horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="18dp"
-
-
                         android:layout_marginBottom="5dp"
+
+
+                        android:gravity="center_horizontal"
                         android:orientation="horizontal">
 
                         <EditText
@@ -108,6 +108,15 @@
 
                         </androidx.recyclerview.widget.RecyclerView>
 
+                        <ImageView
+                            android:id="@+id/imvsearch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/ic__search">
+
+                        </ImageView>
+
                         <TextView
                             android:id="@+id/tv_nodatafound"
                             android:layout_width="wrap_content"
@@ -128,12 +137,12 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:background="@color/appmaincolor"
                     android:id="@+id/bottomlayt"
                     android:layout_width="match_parent"
-
                     android:layout_height="50dp"
+
                     android:layout_alignParentBottom="true"
+                    android:background="@color/appmaincolor"
 
 
                     android:gravity="center_horizontal">
@@ -153,16 +162,17 @@
 
                     <View
                         android:layout_width="2dp"
-                        android:background="@color/white"
-                        android:layout_height="match_parent"></View>
-                    <TextView
-                        android:layout_weight="1.5"
-                        android:id="@+id/btbguestlogin"
-                        android:gravity="center"
-                        android:layout_width="0dp"
-
                         android:layout_height="match_parent"
+                        android:background="@color/white"></View>
+
+                    <TextView
+                        android:id="@+id/btbguestlogin"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.5"
+
                         android:fontFamily="@font/jtmarniebold"
+                        android:gravity="center"
                         android:text="Guest"
                         android:textColor="@color/white">
 

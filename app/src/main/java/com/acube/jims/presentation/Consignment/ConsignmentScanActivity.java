@@ -325,12 +325,21 @@ public class ConsignmentScanActivity extends BaseActivity implements ConsigScann
             public void onSingleClick(View v) {
 
                 if (handheld) {
-                    startThread();
+                    if (consignmentID!=null&&!consignmentID.equalsIgnoreCase("")){
+                        startThread();
+                    }else{
+                        showerror("Please select a consignment");
+                    }
+
                 } else {
                     if (DeviceReg) {
                         if (uhf.getConnectStatus() == ConnectionStatus.CONNECTED) {
+                            if (consignmentID!=null&&!consignmentID.equalsIgnoreCase("")){
+                                readBlutoothTags();
+                            }else{
+                                showerror("Please select a consignment");
+                            }
 
-                            readBlutoothTags();
                         } else {
                             alert.showDialog(ConsignmentScanActivity.this, "Connecting to " + macAddress);
 

@@ -87,8 +87,8 @@ public interface AuditDownloadDao {
     LiveData<List<ItemWiseReport>> getItemwiseReport();
 
 
-    @Query("SELECT DISTINCT subCategoryName,subCategoryId  FROM AuditSnapShot where auditID=:ID AND categoryId=:catID AND  categoryId IS NOT NULL")
-    LiveData<List<AuditSubCategory>> getDownloadedSubcatCategory(String ID, int catID);
+    @Query("SELECT DISTINCT subCategoryName,subCategoryId  FROM AuditSnapShot where auditID=:ID  AND  categoryId IS NOT NULL")
+    LiveData<List<AuditSubCategory>> getDownloadedSubcatCategory(String ID);
 
     @Query("SELECT DISTINCT categoryId,categoryName  FROM AuditSnapShot where auditID=:ID AND categoryId IS NOT NULL")
     LiveData<List<AuditCate>> getCategory(String ID);

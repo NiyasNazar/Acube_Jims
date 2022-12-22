@@ -107,7 +107,14 @@
                             android:layout_marginRight="10dp">
 
                         </androidx.recyclerview.widget.RecyclerView>
+                        <ImageView
+                            android:id="@+id/imvsearch"
+                            android:layout_width="wrap_content"
+                            android:src="@drawable/ic__search"
+                            android:layout_centerInParent="true"
+                            android:layout_height="200dp">
 
+                        </ImageView>
                         <TextView
                             android:id="@+id/tv_nodatafound"
                             android:layout_width="wrap_content"

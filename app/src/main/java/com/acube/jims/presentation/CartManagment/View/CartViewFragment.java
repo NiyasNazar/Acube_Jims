@@ -25,6 +25,7 @@ import com.acube.jims.presentation.CartManagment.ViewModel.AddtoCartViewModel;
 import com.acube.jims.presentation.CartManagment.ViewModel.CartViewModel;
 import com.acube.jims.presentation.CartManagment.adapter.CartItemAdapter;
 import com.acube.jims.presentation.PdfGeneration.ShareItemsScreen;
+import com.acube.jims.presentation.PdfGeneration.ShareScannedItems;
 import com.acube.jims.presentation.Quotation.InvoiceFragment;
 import com.acube.jims.presentation.Quotation.SaleFragment;
 import com.acube.jims.R;
@@ -177,7 +178,7 @@ public class CartViewFragment extends BaseActivity implements CartItemAdapter.Up
         cdvshare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartViewFragment.this, ShareItemsScreen.class));
+                startActivity(new Intent(getApplicationContext(), ShareScannedItems.class));
 
 
                 dialog.dismiss();

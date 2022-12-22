@@ -79,17 +79,17 @@ public class CartItemAdapterForSharing extends RecyclerView.Adapter<CartItemAdap
                 .into(holder.ItemImage);
 
 
-        if (cartDetail.getStoneWeight() != null) {
+       /* if (cartDetail.getStoneWeight() != null) {
             holder.textViewStoneweight.setText("Stone Weight: " + cartDetail.getStoneWeight() + " g");
         } else {
             holder.textViewStoneweight.setText("Stone Weight: N/A");
-        }
-        if (cartDetail.getGrossWeight() != null) {
+        }*/
+     /*   if (cartDetail.getGrossWeight() != null) {
             holder.textViewWeight.setText(" Weight: " + cartDetail.getGrossWeight() + " g");
         } else {
             holder.textViewWeight.setText("Stone Weight: N/A");
         }
-
+*/
 
     }
 

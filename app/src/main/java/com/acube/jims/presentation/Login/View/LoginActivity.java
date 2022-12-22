@@ -58,8 +58,8 @@ public class LoginActivity extends BaseActivity {
         //   binding.edEmail.setText("admin@suntech003.ae");
         //   binding.edPassword.setText("Admin@2022");
 
-    // binding.edEmail.setText("sales@acube.com");
-    // binding.edPassword.setText("Sales@2022");
+     binding.edEmail.setText("sales@acube.com");
+    binding.edPassword.setText("Sales@2022");
         Log.d("onCreate", "onCreate: " + getMacAddr());
         urlupdated = LocalPreferences.retrieveBooleanPreferences(getApplicationContext(), "urlupdated");
 
